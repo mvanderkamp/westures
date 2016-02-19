@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZingTouch</title>
+    <script src="../bower_components/system.js/dist/system.js"></script>
+    <script>
+        //Define dependency paths
+        System.config({
+            baseURL : '../',
+            transpiler : 'traceur',
+            map : {
+                traceur : 'bower_components/traceur/traceur.js'
+            }
+        });
+        System.paths = {
+            main : 'src/core/main.js'
+            //main : 'dist/zingtouch.min.js'
+        };
+        //Import the app and run it.
+        System.import('main').then(function(main) {
+            console.log(main.ZingTouch);
+            document.getElementById('zone').innerHTML = "It works!";
+        });
+    </script>
+    <style>
+        #zone {
+            border: 1px solid #b5bd68;
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="zone"></div>
+</body>
+<script>
+    document.getElementById('zone').addEventListener('swipe', function(event){
+        console.log("Zone detected")
+    }, false);
+</script>
+</html>
