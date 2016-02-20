@@ -16,4 +16,4 @@ function interpreter(element, input, Handler) {
   };
 }
 
-export {interpreter};
+export default interpreter;

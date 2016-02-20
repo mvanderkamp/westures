@@ -21,9 +21,9 @@ var state = {
   clearState: function () {
   },
 
-  addGesture: function () {
+  addBinding: function () {
   }
 
 };
 
-export {state};
+export default state;

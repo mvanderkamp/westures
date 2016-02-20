@@ -1,4 +1,4 @@
-import {ZingTouch} from './../src/ZingTouch.js';
+import ZingTouch from './../src/ZingTouch.js';
 /**
  * Tests the user-facing API, ensuring the object functions while not exposing private members.
  */

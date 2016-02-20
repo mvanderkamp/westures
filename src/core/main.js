@@ -1,5 +1,5 @@
-import {ZingTouch} from './../ZingTouch.js';
-import {arbiter} from './arbiter.js';
+import ZingTouch from './../ZingTouch.js';
+import arbiter from './arbiter.js';
 
 //Perform polyfills and setup window listeners.
 var eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
@@ -10,4 +10,4 @@ eventNames.forEach((val, idx, arr) => {
 });
 
 window.ZingTouch = ZingTouch;
-export {ZingTouch};
+export default ZingTouch;

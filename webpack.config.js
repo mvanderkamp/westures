@@ -8,13 +8,13 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: path.join(__dirname, 'src'),
+        //test: path.join(__dirname, 'src'),
+        test: /\.js$/,
         loader: 'babel-loader',
         query: {
           presets: ['es2015']
         }
       }
     ]
-  },
-  webpack: webpackConfig
+  }
 };

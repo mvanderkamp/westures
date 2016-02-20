@@ -1,8 +1,8 @@
-import {state} from './state.js'
-import {ZingTouch} from './../ZingTouch.js';
-import {Input} from './../classes/Input.js';
-import {interpreter} from './interpreter.js';
-import {dispatcher} from './dispatcher.js';
+import state from './state.js'
+import ZingTouch from './../ZingTouch.js';
+import Input from './classes/Input.js';
+import interpreter from './interpreter.js';
+import dispatcher from './dispatcher.js';
 
 /**
  * Responsible for :
@@ -40,4 +40,4 @@ function arbiter(event) {
   }
 }
 
-export {arbiter};
+export default arbiter;

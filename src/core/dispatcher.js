@@ -1,4 +1,4 @@
-import {state} from './state.js';
+import state from './state.js';
 
 /**
  * Emits data at the target element and bubbles up from
@@ -26,4 +26,4 @@ function emitEvent(target, event) {
   }
 }
 
-export {dispatcher};
+export default dispatcher;

@@ -1,20 +1,21 @@
+var path = require('path');
+var webpackConfig = require('./webpack.config');
+
 module.exports = function (config) {
   config.set({
-    basePath: '',
-    frameworks: ['browserify', 'mocha', 'chai'],
+    basePath: './',
+    frameworks: ['mocha', 'chai'],
     files: [
-      'src/**/*.js',
-      'test/**/*.js'
+      './src/core/main.js',
+      './test/**/*.js'
     ],
     exclude: [],
     preprocessors: {
-      'src/**/*.js': ['browserify'],
-      'test/**/*.js': ['browserify']
+      './src/**/*.js': ['webpack', 'sourcemap'],
+      './test/**/*.js': ['webpack', 'sourcemap']
     },
-    browserify: {
-      debug: true,
-      transform: ['babelify']
-    },
-    browsers: ['PhantomJS']
+    browsers: ['PhantomJS'],
+    webpack: webpackConfig,
+    webpackMiddleware:{ noInfo:true }
   });
 };
