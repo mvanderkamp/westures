@@ -19,12 +19,13 @@
         };
         //Import the app and run it.
         System.import('main').then(function(main) {
-            console.log(main.ZingTouch);
             document.getElementById('zone').innerHTML = "It works!";
+            //window.ZingTouch = main.ZingTouch;
+            bindAreas();
         });
     </script>
     <style>
-        #zone {
+        .touchable {
             border: 1px solid #b5bd68;
             width: 300px;
             height: 300px;
@@ -32,11 +33,20 @@
     </style>
 </head>
 <body>
-    <div id="zone"></div>
+    <div id="zone" class='touchable'></div>
+    <div id="tap" class='touchable'></div>
 </body>
 <script>
     document.getElementById('zone').addEventListener('swipe', function(event){
         console.log("Zone detected")
     }, false);
+
+    function bindAreas(){
+        var eleTap = document.getElementById('tap');
+        ZingTouch.bind(eleTap, 'tap', function (event) {
+            console.log("tapped")
+        }, false);
+    }
+
 </script>
 </html>

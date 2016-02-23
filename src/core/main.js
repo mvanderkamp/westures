@@ -10,4 +10,5 @@ eventNames.forEach((val, idx, arr) => {
 });
 
 window.ZingTouch = ZingTouch;
-export default ZingTouch;
+export {ZingTouch};
+

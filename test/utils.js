@@ -9,7 +9,6 @@ describe('util', function () {
   });
 });
 
-
 describe('util.getGestureType', function () {
 
   it('should return tap if the string is a valid binding', function () {

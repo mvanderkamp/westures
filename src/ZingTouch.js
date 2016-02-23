@@ -2,14 +2,13 @@ import state from './core/state.js';
 import Gesture from './gestures/Gesture.js';
 import Tap from './gestures/Tap.js';
 import util from './core/util.js';
-import Binder from './core/classes/Binder.js';
 
 /**
  * Responsible for creating and destroying bound events, along with appending operations to them.
  * @type {{Gesture: Gesture, Tap: Tap, bind: ZingTouch.bind, unbind: ZingTouch.unbind}}
  */
 var ZingTouch = {
-  //Constructors
+  //Basic Constructors
   Gesture: Gesture,
   Tap: Tap,
 
@@ -25,16 +24,16 @@ var ZingTouch = {
    */
   bind: function (element, gesture, handler, capture) {
     if (element && element.tagName !== 'undefined') {
-      //Determine function signature
       if (!gesture) {
         return new Binding(element);
-      }
+      } else {
+        if (util.isValidGesture(gesture)) {
+          var binding = state.addBinding(element, gesture, handler);
+          element.addEventListener(util.getGestureType(gesture), handler, capture);
+        }
 
-    if(type = util.getGestureType(gesture)) {
-        state.addBinding(element, gesture);
-        element.addEventListener(type, handler, capture);
+        //TODO : Error if its not a valid binding?
       }
-
     }
   },
 

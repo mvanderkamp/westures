@@ -5,14 +5,15 @@
  * @param Handler
  * @returns metadata about the gesture
  */
-function interpreter(element, input, Handler) {
+function interpreter(bindings, event) {
   console.log('Inside interpreter');
+  console.log(bindings);
   return {
-    type: 'swipe',
-    info: {
+    type: 'tap',
+    target: bindings[0].element,
+    data: {
       bar: 'foo'
-    },
-    terminated: true
+    }
   };
 }
 

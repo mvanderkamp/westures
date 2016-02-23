@@ -1,37 +1,42 @@
+import Event from './Event.js';
+
+var ACTIVE_TOLERANCE = 100;
+var id = 0;
 /**
- * Hold important input information and normalizes events across browsers.
+ * Hold important input information.
  */
 class Input {
-  constructor(event) {
-    this.initialTarget = event.target;
-    this.initialEvent = event;
-    this.type = this.normalizeEvent(event.type);
-    this.x = event.x;
-    this.y = event.y;
+  constructor(ev) {
+    var event = new Event(ev);
+    this.current = this.initial = event;
+    this.id = id++;
+
+    //this.history = [event]; //A history of events. Useful for calculating momentum. (Might only need previous state?).
+    this.last = null;
   }
 
   /**
-   * Normalize mouse and other input types to be touch.
-   * @param {string}
-   * @returns {string} - The type of mouse event
+   * Receives an input, updates the internal state of what the input has done next.
+   * Returns true if the input is active, false if inactive
    */
-  normalizeEvent(type) {
-    switch (type) {
-      case 'mousedown' :
-      case 'touchstart' :
-        return 'start';
-        break;
-      case 'mousemove' :
-      case 'touchmove' :
-        return 'move';
-        break;
-      case 'mouseup' :
-      case 'touchend' :
-        return 'end';
-        break;
-      default :
-        return null;
+  update(ev) {
+    if (this.current) {
+
+      this.last = this.current;
+      this.current = null;
+
+      //TODO: Determine if this input participated in this event. For multi-touch/user
+      if (ev.clientX <= this.last.clientX + ACTIVE_TOLERANCE &&
+        ev.clientX >= this.last.clientX - ACTIVE_TOLERANCE &&
+        ev.clientY <= this.last.clientY + ACTIVE_TOLERANCE &&
+        ev.clientY >= this.last.clientY - ACTIVE_TOLERANCE
+      ) {
+        this.current = new Event(ev);
+        return true;
+      }
     }
+
+    return false;
   }
 }
 

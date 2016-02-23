@@ -5,13 +5,13 @@ import state from './state.js';
  * @param type - The type of event to emit
  * @param data
  */
-function dispatcher(type, data) {
+function dispatcher(type, target, data) {
   var newEvent = new CustomEvent(type, {
     detail: {
       foo: 'bar'
     }
   });
-  emitEvent(state.currentTarget, newEvent);
+  emitEvent(target, newEvent);
 }
 
 /**
