@@ -12,53 +12,36 @@ import util from './util.js';
  * 3. Negotiating with the Interpreter what event should occur
  * @param ev - The event emitted from the window object.
  */
+
+//TODO : Assume that there will never be a case where the number of inputs is reduced. In the event of a touchend, reset all states.
 function arbiter(ev) {
-
-  //Retrieve current inputs and update them;  else, create new ones.
-  var activeInputs = [];
-  if (state.inputs.length === 0) {
-
-    var inputs = (ev.touches) ? ev.touches : ({ 0: ev });
-    for (let idx in inputs) {
-      console.log(ev.type);
-      if (util.normalizeEvent(ev.type) === 'start') {
-
-        state.inputs.push(new Input(inputs[idx]));
-      }
-    }
-
-    activeInputs = state.inputs;
-  } else {
-    //Retrieve the inputs array from the state, update them, and determine new actions to be taken.
-    activeInputs = state.updateInputs(ev);
+  //Return if a gesture is not in progress and won't be.
+  if (state.inputs.length === 0 && util.normalizeEvent(ev.type) !== 'start') {
+    return;
   }
 
-  if (activeInputs && activeInputs.length > 0) {
-    var bindings = [];
-    activeInputs.forEach((input, idx, arr) => {
+  //Return if all gestures did not originate from the same target.
+  if (ev.touches && ev.touches.length !== ev.targetTouches.length) {
+    state.inputs = [];
+    return;
+  }
 
-      //Dispatch Event
-      var binding = state.retrieveBinding(ev.target);
-      if (binding) {
-        bindings.push(binding);
-      }
+  //Update the state with the new events
+  var inputs = state.updateInputs(ev);
 
-      //Cleanup
-      if (input.current.type === 'end') {
-        state.removeInput(input.id);
-      }
-    });
-
-    if (bindings.length > 0) {
-      var action = interpreter(bindings, event);
-      if (action) {
-        dispatcher(action.type, action.target, action.data);
-      }
-
+  //Retrieve the initial target from any one of the inputs
+  var bindings = state.retrieveBindings(ev.target);
+  if (bindings.length > 0) {
+    var action = interpreter(bindings, event);
+    if (action) {
+      dispatcher(action.type, action.target, action.data);
     }
   }
 
-  //TODO : Obtain the appropriate element->gesture relations
+  //If gesture has finished, reset state.
+  if (util.normalizeEvent(ev.type) === 'end') {
+    state.inputs = [];
+  }
 
 }
 

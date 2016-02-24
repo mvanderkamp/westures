@@ -16,7 +16,7 @@ var ZingTouch = {
    * Bind an element to a specific registered gesture with multiple function signatures.
    * bind(element)
    * bind(element, gesture, handler, [capture])
-   * @param {mixed} element - = The element object.
+   * @param {mixed} element - The element object.
    * @param {mixed} gesture - Either a string, or a Gesture object.
    * @param {Function} handler - The function to execute when an event is emitted.
    * @param {boolean} capture - capture/bubble

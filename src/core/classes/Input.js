@@ -1,42 +1,35 @@
 import Event from './Event.js';
 
-var ACTIVE_TOLERANCE = 100;
-var id = 0;
 /**
- * Hold important input information.
+ * Tracks a single input and contains information about the current event, the previous event,
+ * and various aggregated information about the input.
+ * All inputs are destroyed on any touchend event.
  */
 class Input {
-  constructor(ev) {
-    var event = new Event(ev);
+  constructor(ev, touchIndex) {
+    var event = new Event(ev, touchIndex);
     this.current = this.initial = event;
-    this.id = id++;
-
-    //this.history = [event]; //A history of events. Useful for calculating momentum. (Might only need previous state?).
+    this.index = (touchIndex) ? touchIndex : 0; //This index refers to the event.touches index.
     this.last = null;
+    this.velocity = 0;
+    this.progress = {}; //Storage for metadata of each gesture.
   }
 
   /**
    * Receives an input, updates the internal state of what the input has done next.
-   * Returns true if the input is active, false if inactive
+   * //TODO : Should be handled by the browser, changed touches etc.
    */
-  update(ev) {
-    if (this.current) {
+  update(ev, touchIndex) {
+    this.last = this.current;
+    this.current = new Event(ev, touchIndex);
 
-      this.last = this.current;
-      this.current = null;
+    //this.index //should never have to change this based upon the touchend/reset principle
+    this.velocity = this.calculateVelocity();
+  }
 
-      //TODO: Determine if this input participated in this event. For multi-touch/user
-      if (ev.clientX <= this.last.clientX + ACTIVE_TOLERANCE &&
-        ev.clientX >= this.last.clientX - ACTIVE_TOLERANCE &&
-        ev.clientY <= this.last.clientY + ACTIVE_TOLERANCE &&
-        ev.clientY >= this.last.clientY - ACTIVE_TOLERANCE
-      ) {
-        this.current = new Event(ev);
-        return true;
-      }
-    }
+  calculateVelocity() {
+    return 0;
 
-    return false;
   }
 }
 

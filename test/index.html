@@ -37,14 +37,12 @@
     <div id="tap" class='touchable'></div>
 </body>
 <script>
-    document.getElementById('zone').addEventListener('swipe', function(event){
-        console.log("Zone detected")
-    }, false);
 
     function bindAreas(){
-        var eleTap = document.getElementById('tap');
-        ZingTouch.bind(eleTap, 'tap', function (event) {
-            console.log("tapped")
+        var target = document.getElementById('tap');
+        ZingTouch.bind(target, 'tap', function (event) {
+            console.log(event.detail);
+
         }, false);
     }
 

@@ -1,6 +1,8 @@
 import Binding from './classes/Binding.js';
+import Input from './classes/Input.js';
 import Tap from './../gestures/Tap.js';
 import Gesture from './../gestures/Gesture.js';
+import util from './util.js';
 
 var state = {
   inputs: [], //Contains current inputs (touches) on the screen
@@ -27,47 +29,46 @@ var state = {
     this.bindings.push(new Binding(element, gesture, handler));
     return this.bindings[this.bindings.length - 1];
   },
-  /**
-   * Updates the inputs based on the current event. If the input is still active but did not participate in this event,
-   * it's currentState will be set to null.
-   * Returns a subset of inputs that participated in this event.
-   */
-  updateInputs: function (ev) {
-    var activeInputs = [];
-    this.inputs.forEach((input, idx, arr)=> {
-      if (input.update(ev)) {
-        activeInputs.push(input);
-      }
-
-    });
-
-    return activeInputs;
-  },
-
-  /**
-   * Removes the input from the array based upon it's id.
-   * @param id
-   */
-  removeInput: function (id) {
-    this.inputs.forEach((input, idx, arr)=> {
-      if (input.id === id) {
-        this.inputs.splice(idx, 1);
-      }
-    });
-  },
 
   /**
    * Retrieves the Binding by which an element is associated to.
    * @param element
    */
-  retrieveBinding: function (element) {
+  retrieveBindings: function (element) {
+    var matches = [];
     for (var i = 0; i < this.bindings.length; i++) {
       if (this.bindings[i].element === element) {
-        return this.bindings[i];
+        matches.push(this.bindings[i]);
       }
     }
 
-    return null;
+    return matches;
+  },
+
+  /**
+   * Updates the inputs based on the current event.
+   * Creates new Inputs if none exist, or more inputs were received.
+   * @returns all updated inputs.
+   */
+  updateInputs: function (ev) {
+
+    if (ev.touches) {
+      for (let idx in ev.touches) {
+        if (util.normalizeEvent(ev.type) === 'start') {
+          this.inputs.push(new Input(ev, idx));
+        } else {
+          this.inputs[idx].update(ev, idx);
+        }
+      }
+    } else {
+      if (util.normalizeEvent(ev.type) === 'start') {
+        this.inputs.push(new Input(ev));
+      } else {
+        this.inputs[0].update(ev);
+      }
+    }
+
+    return this.inputs;
   }
 
 };

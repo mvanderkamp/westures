@@ -7,9 +7,7 @@ import state from './state.js';
  */
 function dispatcher(type, target, data) {
   var newEvent = new CustomEvent(type, {
-    detail: {
-      foo: 'bar'
-    }
+    detail: data
   });
   emitEvent(target, newEvent);
 }

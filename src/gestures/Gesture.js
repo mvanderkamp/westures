@@ -3,14 +3,20 @@ class Gesture {
     this.type = null;
   }
 
-  didOccur() {
-    return true;
-  }
-  /**
-   *
-   */
   getType() {
     return this.type;
+  }
+
+  start() {
+
+  }
+
+  move() {
+
+  }
+
+  end() {
+
   }
 
 }

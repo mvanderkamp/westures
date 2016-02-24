@@ -5,11 +5,18 @@ import util from '../util.js';
  * An event wrapper that normalizes browser differences
  */
 class Event {
-  constructor(ev) {
+  constructor(ev, touchIdx) {
     this.originalEvent = ev;
     this.type = util.normalizeEvent(ev.type);
-    this.clientX = event.clientX;
-    this.clientY = event.clientY;
+
+    if (touchIdx) {
+      this.touches[touchIdx].clientX = ev.clientX;
+      this.touches[touchIdx].clientY = ev.clientY;
+    } else {
+      this.clientX = ev.clientX;
+      this.clientY = ev.clientY;
+    }
+
   }
 
 }
