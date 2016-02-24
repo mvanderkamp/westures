@@ -2,7 +2,7 @@ import state from './state.js';
 import util from './util.js';
 
 function interpreter(bindings, event) {
-  var type = util.normalizeEvent(event.type);
+  var evType = util.normalizeEvent(event.type);
   var target = bindings[0].element;
 
   var metaData = {};
@@ -10,7 +10,7 @@ function interpreter(bindings, event) {
   //Iterate through each
   for (var name in state.registeredGestures) {
     let gesture = state.registeredGestures[name];
-    let result = gesture[type](state.inputs);
+    let result = gesture[evType](state.inputs);
     if (result) {
       metaData[name] = result;
     }
@@ -23,8 +23,9 @@ function interpreter(bindings, event) {
     return {
       type: key,
       target: target,
-      data: metaData[name]
-    }
+      data: metaData[key]
+    };
+
   } else {
     return null;
   }

@@ -8,15 +8,15 @@ class Gesture {
   }
 
   start() {
-
+    return null;
   }
 
   move() {
-
+    return null;
   }
 
   end() {
-
+    return null;
   }
 
 }

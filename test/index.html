@@ -20,7 +20,6 @@
         //Import the app and run it.
         System.import('main').then(function(main) {
             document.getElementById('zone').innerHTML = "It works!";
-            //window.ZingTouch = main.ZingTouch;
             bindAreas();
         });
     </script>
@@ -40,10 +39,14 @@
 
     function bindAreas(){
         var target = document.getElementById('tap');
-        ZingTouch.bind(target, 'tap', function (event) {
-            console.log(event.detail);
+//        ZingTouch.bind(target, 'tap', function (event) {
+//            console.log('Tap:','interval of ', event.detail.interval);
+//        }, false);
 
-        }, false);
+        var fizzbuzz = ZingTouch.bind(target)
+                .tap(function(event){
+                    console.log('Tap:','interval of ', event.detail.interval);
+                }, false);
     }
 
 </script>

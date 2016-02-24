@@ -1,44 +1,46 @@
 import Gesture from './Gesture.js';
 
 class Tap extends Gesture {
-  constructor() {
+  constructor(maxDelay, numInputs) {
     super();
     this.type = 'tap';
-    this.maxDelay = 300;
-    this.fingers = 1;
+    this.maxDelay = (maxDelay) ? maxDelay : 300;
+    this.numInputs = (numInputs) ? numInputs : 1;
   }
 
   start(inputs) {
 
-    if (inputs.length > 1) {
-      return null;
+    if (inputs.length === this.numInputs) {
+      var progress = inputs[0].getGestureProgress(this.type);
+      progress.start = new Date().getTime();
     }
 
-    if (!inputs[0].progress[this.type]) {
-      inputs[0].progress[this.type] = {};
-    }
-
-    //Record the timestamp
-    inputs[0].progress[this.type].start = new Date().getTime();
     return null;
   }
 
   move(inputs) {
+    inputs[0].resetProgress(this.type);
     return null;
   }
 
   end(inputs) {
-    if (inputs.length > 1) {
+    if (inputs.length > this.numInputs) {
       return null;
     }
 
-    var progress = inputs[0].progress[this.type];
-    var interval = new Date().getTime() - progress.start;
-    if (this.maxDelay >= interval) {
-      return {
-        interval: interval
-      };
+    var progress = inputs[0].getGestureProgress(this.type);
+    if (Object.keys(progress).length !== 0) {
+      var interval = new Date().getTime() - progress.start;
+      if (this.maxDelay >= interval) {
+        return {
+          interval: interval
+        };
+      } else {
+        inputs[0].resetProgress(this.type);
+      }
     }
+
+    return null;
 
   }
 

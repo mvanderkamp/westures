@@ -29,7 +29,22 @@ class Input {
 
   calculateVelocity() {
     return 0;
+  }
 
+  /**
+   * Returns the progress of the specified gesture
+   * @param type
+   */
+  getGestureProgress(type) {
+    if (!this.progress[type]) {
+      this.progress[type] = {};
+    }
+
+    return this.progress[type];
+  }
+
+  resetProgress(type) {
+    this.progress[type] = {};
   }
 }
 

@@ -2,6 +2,8 @@ import state from './core/state.js';
 import Gesture from './gestures/Gesture.js';
 import Tap from './gestures/Tap.js';
 import util from './core/util.js';
+import Binder from './core/classes/Binder.js';
+import Binding from './core/classes/Binding.js';
 
 /**
  * Responsible for creating and destroying bound events, along with appending operations to them.
@@ -23,18 +25,25 @@ var ZingTouch = {
    * @returns {object} - a chainable object that has the same function as bind.
    */
   bind: function (element, gesture, handler, capture) {
-    if (element && element.tagName !== 'undefined') {
-      if (!gesture) {
-        return new Binding(element);
-      } else {
-        if (util.isValidGesture(gesture)) {
-          var binding = state.addBinding(element, gesture, handler);
-          element.addEventListener(util.getGestureType(gesture), handler, capture);
-        }
-
-        //TODO : Error if its not a valid binding?
-      }
+    if (element && typeof element.tagName === 'undefined') {
+      throw new Error('Parameter element is an invalid object.');
     }
+
+    if (!gesture) {
+      return new Binder(element);
+    } else {
+      if (!util.isValidGesture(gesture)) {
+        throw new Error('Parameter gesture is invalid.');
+      }
+
+      if (typeof handler !== 'function') {
+        throw new Error('Parameter handler is invalid.');
+      }
+
+      var binding = state.addBinding(element, gesture, handler, capture);
+      element.addEventListener(util.getGestureType(gesture), handler, capture);
+    }
+
   },
 
   bindOnce: function () {

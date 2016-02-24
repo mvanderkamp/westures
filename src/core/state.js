@@ -16,7 +16,7 @@ var state = {
    * @param element {object} - The element the gesture is bound to.
    * @param gesture {string/object} - Either a name of a registered gesture, or an unregistered Gesture object.
    */
-  addBinding: function (element, gesture, handler) {
+  addBinding: function (element, gesture, handler, capture) {
     if (typeof gesture === 'string') {
       gesture = this.registeredGestures[gesture];
       if (typeof gesture === 'undefined') {
@@ -26,7 +26,7 @@ var state = {
       return null;
     }
 
-    this.bindings.push(new Binding(element, gesture, handler));
+    this.bindings.push(new Binding(element, gesture, handler, capture));
     return this.bindings[this.bindings.length - 1];
   },
 
