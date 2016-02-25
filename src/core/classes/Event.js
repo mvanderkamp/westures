@@ -4,13 +4,15 @@ import util from '../util.js';
  * An event wrapper that normalizes browser differences
  */
 class Event {
-  constructor(ev, touchIdx) {
+  constructor(ev, touchIndex) {
+    //noinspection JSUnusedGlobalSymbols
     this.originalEvent = ev;
     this.type = util.normalizeEvent(ev.type);
+    this.touches = [];
 
-    if (touchIdx) {
-      this.touches[touchIdx].clientX = ev.clientX;
-      this.touches[touchIdx].clientY = ev.clientY;
+    if (touchIndex) {
+      this.touches[touchIndex].clientX = ev.clientX;
+      this.touches[touchIndex].clientY = ev.clientY;
     } else {
       this.clientX = ev.clientX;
       this.clientY = ev.clientY;

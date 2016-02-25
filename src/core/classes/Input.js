@@ -5,13 +5,22 @@ import Event from './Event.js';
  * and various aggregated information about the input.
  * All inputs are destroyed on any touchend event.
  */
+
+const DEFAULT_VELOCITY = 0;
 class Input {
   constructor(ev, touchIndex) {
+    //noinspection JSClosureCompilerSyntax
     var event = new Event(ev, touchIndex);
+
+    //noinspection JSUnusedGlobalSymbols
     this.current = this.initial = event;
-    this.index = (touchIndex) ? touchIndex : 0; //This index refers to the event.touches index.
+
+    //This index refers to the event.touches index.
+    this.index = (touchIndex) ? touchIndex : 0;
+
+    //noinspection JSUnusedGlobalSymbols
     this.last = null;
-    this.velocity = 0;
+    this.velocity = DEFAULT_VELOCITY;
     this.progress = {}; //Storage for metadata of each gesture.
   }
 
@@ -20,15 +29,17 @@ class Input {
    * //TODO : Should be handled by the browser, changed touches etc.
    */
   update(ev, touchIndex) {
+    //noinspection JSUnusedGlobalSymbols
     this.last = this.current;
+
+    //noinspection JSClosureCompilerSyntax
     this.current = new Event(ev, touchIndex);
 
-    //this.index //should never have to change this based upon the touchend/reset principle
     this.velocity = this.calculateVelocity();
   }
 
   calculateVelocity() {
-    return 0;
+    return this.velocity;
   }
 
   /**

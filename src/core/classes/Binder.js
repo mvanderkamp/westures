@@ -8,14 +8,21 @@ class Binder {
     this.element = element;
 
     for (var key in state.registeredGestures) {
-      this[key] = function (handler, capture) {
-        state.addBinding(this.element, key, handler, capture);
-        this.element.addEventListener(key, handler, capture);
-        return this;
-      };
+      if (state.registeredGestures.hasOwnProperty(key)) {
+
+        (function (key) {
+          this[key] = function (handler, capture) {
+            state.addBinding(this.element, key, handler, capture);
+
+            this.element.addEventListener(key, handler, capture);
+            return this;
+          };
+        })(key);
+
+      }
     }
 
   }
-};
+}
 
 export default Binder;

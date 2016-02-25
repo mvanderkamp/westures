@@ -17,8 +17,8 @@ var util = {
   },
   /**
    * Normalize mouse and other input types to be touch.
-   * @param {string}
-   * @returns {string} - The type of mouse event
+   * @param type
+   * @returns {*}
    */
   normalizeEvent: function (type) {
     switch (type) {

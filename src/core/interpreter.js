@@ -9,9 +9,11 @@ function interpreter(bindings, event) {
 
   //Iterate through each
   for (var name in state.registeredGestures) {
+    //noinspection JSUnfilteredForInLoop
     let gesture = state.registeredGestures[name];
     let result = gesture[evType](state.inputs);
     if (result) {
+      //noinspection JSUnfilteredForInLoop
       metaData[name] = result;
     }
   }

@@ -15,6 +15,8 @@ var state = {
    * unregistered, it's reference will be saved in as a binding.
    * @param element {object} - The element the gesture is bound to.
    * @param gesture {string/object} - Either a name of a registered gesture, or an unregistered Gesture object.
+   * @param handler
+   * @param capture
    */
   addBinding: function (element, gesture, handler, capture) {
     if (typeof gesture === 'string') {
@@ -53,11 +55,13 @@ var state = {
   updateInputs: function (ev) {
 
     if (ev.touches) {
-      for (let idx in ev.touches) {
-        if (util.normalizeEvent(ev.type) === 'start') {
-          this.inputs.push(new Input(ev, idx));
-        } else {
-          this.inputs[idx].update(ev, idx);
+      for (var index in ev.touches) {
+        if (ev.touches.hasOwnProperty(index)) {
+          if (util.normalizeEvent(ev.type) === 'start') {
+            this.inputs.push(new Input(ev, index));
+          } else {
+            this.inputs[index].update(ev, index);
+          }
         }
       }
     } else {
@@ -74,3 +78,4 @@ var state = {
 };
 
 export default state;
+

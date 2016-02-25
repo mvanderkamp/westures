@@ -39,14 +39,14 @@
 
     function bindAreas(){
         var target = document.getElementById('tap');
-//        ZingTouch.bind(target, 'tap', function (event) {
-//            console.log('Tap:','interval of ', event.detail.interval);
-//        }, false);
+        ZingTouch.bind(target, 'tap', function (event) {
+            console.log('Tap:','interval of ', event.detail.interval);
+        }, false);
 
-        var fizzbuzz = ZingTouch.bind(target)
-                .tap(function(event){
-                    console.log('Tap:','interval of ', event.detail.interval);
-                }, false);
+//         ZingTouch.bind(target)
+//                .tap(function(event){
+//                    console.log('Tap:','interval of ', event.detail.interval);
+//                }, false);
     }
 
 </script>

@@ -1,3 +1,7 @@
+/**
+ * @file ZingTouch.js
+ */
+
 import state from './core/state.js';
 import Gesture from './gestures/Gesture.js';
 import Tap from './gestures/Tap.js';
@@ -7,7 +11,6 @@ import Binding from './core/classes/Binding.js';
 
 /**
  * Responsible for creating and destroying bound events, along with appending operations to them.
- * @type {{Gesture: Gesture, Tap: Tap, bind: ZingTouch.bind, unbind: ZingTouch.unbind}}
  */
 var ZingTouch = {
   //Basic Constructors
@@ -18,8 +21,8 @@ var ZingTouch = {
    * Bind an element to a specific registered gesture with multiple function signatures.
    * bind(element)
    * bind(element, gesture, handler, [capture])
-   * @param {mixed} element - The element object.
-   * @param {mixed} gesture - Either a string, or a Gesture object.
+   * @param {object} element - The element object.
+   * @param {string|Object} gesture - Either a string, or a Gesture object.
    * @param {Function} handler - The function to execute when an event is emitted.
    * @param {boolean} capture - capture/bubble
    * @returns {object} - a chainable object that has the same function as bind.
@@ -40,29 +43,29 @@ var ZingTouch = {
         throw new Error('Parameter handler is invalid.');
       }
 
-      var binding = state.addBinding(element, gesture, handler, capture);
+      state.addBinding(element, gesture, handler, capture);
       element.addEventListener(util.getGestureType(gesture), handler, capture);
     }
 
-  },
+  },/*bind*/
 
   bindOnce: function () {
 
-  },
+  },/*bindOnce*/
 
   /**
    * Unbinds an element from either the specified gesture or all if not specified.
-   * @param {mixed} element - Retrieves either the element to remove or a qualified string to pass to querySelector
+   * @param {element|string} element - Retrieves either the element to remove or a qualified string to pass to querySelector
    * @param {string} gesture - A String representing the gesture, or the Gesture object used to originally bind.
    */
   unbind: function (element, gesture) {
-  },
+  },/*unbind*/
 
   unregister: function () {
-  },
+  },/*unregister*/
 
   register: function () {
-  }
+  }/*register*/
 };
 
 export default ZingTouch;

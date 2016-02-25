@@ -1,9 +1,9 @@
-import state from './state.js';
-import ZingTouch from './../ZingTouch.js';
+import dispatcher from './dispatcher.js';
 import Input from './classes/Input.js';
 import interpreter from './interpreter.js';
-import dispatcher from './dispatcher.js';
+import state from './state.js';
 import util from './util.js';
+import ZingTouch from './../ZingTouch.js';
 
 /**
  * Responsible for :
@@ -12,8 +12,6 @@ import util from './util.js';
  * 3. Negotiating with the Interpreter what event should occur
  * @param ev - The event emitted from the window object.
  */
-
-//TODO : Assume that there will never be a case where the number of inputs is reduced. In the event of a touchend, reset all states.
 function arbiter(ev) {
   //Return if a gesture is not in progress and won't be.
   if (state.inputs.length === 0 && util.normalizeEvent(ev.type) !== 'start') {
@@ -27,7 +25,7 @@ function arbiter(ev) {
   }
 
   //Update the state with the new events
-  var inputs = state.updateInputs(ev);
+  state.updateInputs(ev);
 
   //Retrieve the initial target from any one of the inputs
   var bindings = state.retrieveBindings(ev.target);

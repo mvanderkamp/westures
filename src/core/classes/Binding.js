@@ -8,8 +8,10 @@ class Binding {
     this.element = element;
     this.gesture = gesture;
     this.handler = handler;
+
+    //noinspection JSUnusedGlobalSymbols
     this.capture = capture;
   }
-};
+}
 
 export default Binding;
