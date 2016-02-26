@@ -1,3 +1,8 @@
+/**
+ * @file arbiter.js
+ * Contains logic for the dispatcher
+ */
+
 import dispatcher from './dispatcher.js';
 import Input from './classes/Input.js';
 import interpreter from './interpreter.js';
@@ -10,6 +15,7 @@ import ZingTouch from './../ZingTouch.js';
  * 1. Receiving all touch events in the window
  * 2. Determining which gestures are linked to the target element
  * 3. Negotiating with the Interpreter what event should occur
+ * 4. Sending events to the dispatcher to emit events to the target.
  * @param ev - The event emitted from the window object.
  */
 function arbiter(ev) {
@@ -30,7 +36,7 @@ function arbiter(ev) {
   //Retrieve the initial target from any one of the inputs
   var bindings = state.retrieveBindings(ev.target);
   if (bindings.length > 0) {
-    var action = interpreter(bindings, event);
+    var action = interpreter(bindings, ev);
     if (action) {
       dispatcher(action.type, action.target, action.data);
     }
@@ -41,6 +47,6 @@ function arbiter(ev) {
     state.inputs = [];
   }
 
-}
+}/*arbiter*/
 
 export default arbiter;

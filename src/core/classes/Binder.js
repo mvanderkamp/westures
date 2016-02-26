@@ -1,27 +1,26 @@
+/**
+ * @file Binder.js
+ */
 import state from './../state.js';
 
 /**
- * Generates bindings for the state object.
+ * A chainable object that contains a single element to be bound upon.
+ * Called from ZingTouch.bind(), and is used to chain over gesture callbacks.
+ * @class
  */
 class Binder {
   constructor(element) {
     this.element = element;
-
     for (var key in state.registeredGestures) {
       if (state.registeredGestures.hasOwnProperty(key)) {
-
-        (function (key) {
-          this[key] = function (handler, capture) {
-            state.addBinding(this.element, key, handler, capture);
-
-            this.element.addEventListener(key, handler, capture);
-            return this;
+        (function (key, self) {
+          self[key] = function (handler, capture) {
+            state.addBinding(self.element, key, handler, capture);
+            return self;
           };
-        })(key);
-
+        })(key, this);
       }
     }
-
   }
 }
 

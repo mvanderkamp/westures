@@ -86,33 +86,8 @@ describe('ZingTouch.bind(element, gesture, handler, [capture])', function () {
     }).to.throw(Error);
   });
 
-  it('should accept a Gesture object as the gesture parameter', function () {
-    expect.true.to.be.false;
-  });
+  //it('should accept a Gesture object as the gesture parameter', function () {
+  //  expect.true.to.be.false;
+  //});
 
-  //it('should return a chainable Binder object if only an element parameter is provided', function () {
-  //  var ztBound = ZingTouch.bind(document.body);
-  //  expect(ztBound).to.be.an.instanceof(Binder);
-  //});
-  //
-  //it('should return a chainable Binder object that contains all of the registered gestures', function () {
-  //  var ztBound = ZingTouch.bind(document.body);
-  //  var registeredGestures = Object.keys(state.registeredGestures);
-  //  for (var gesture in ztBound) {
-  //    if (gesture !== 'element') {
-  //      expect(registeredGestures).to.include(gesture);
-  //    }
-  //  }
-  //});
-  //
-  //it('should properly create a Binding after a chained function', function () {
-  //  var handler = function (event) {};
-  //
-  //  expect(state.retrieveBindings(document.body).length).to.equal(0);
-  //  ZingTouch.bind(document.body)
-  //    .tap(handler, false);
-  //
-  //  expect(state.retrieveBindings(document.body).length).to.equal(1);
-  //
-  //});
 });

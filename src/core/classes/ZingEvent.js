@@ -1,9 +1,15 @@
+/**
+ * @file ZingEvent.js
+ * Contains logic for ZingEvents
+ */
+
 import util from '../util.js';
 
 /**
- * An event wrapper that normalizes browser differences
+ * An event wrapper that normalizes events across browsers and input devices
+ * @class ZingEvent
  */
-class Event {
+class ZingEvent {
   constructor(ev, touchIndex) {
     //noinspection JSUnusedGlobalSymbols
     this.originalEvent = ev;
@@ -22,4 +28,4 @@ class Event {
 
 }
 
-export default Event;
+export default ZingEvent;

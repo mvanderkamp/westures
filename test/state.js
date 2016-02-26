@@ -59,3 +59,14 @@ describe('state.addBinding', function () {
     expect(state.bindings).to.be.empty;
   });
 });
+
+//describe('state.retrieveBindings', function () {
+//
+//  it('should return an empty array if no bindings are associated to that element', function () {
+//
+//  });
+//
+//  it('should return an array with bindings that are a', function () {
+//
+//  });
+//});

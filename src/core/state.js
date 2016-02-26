@@ -1,15 +1,26 @@
+/**
+ * @file state.js
+ * Contains information about state in ZingTouch and is responsible for updates based of events
+ */
+
 import Binding from './classes/Binding.js';
 import Input from './classes/Input.js';
 import Tap from './../gestures/Tap.js';
 import Gesture from './../gestures/Gesture.js';
 import util from './util.js';
 
+/**
+ *  Contains the state of each Input, bound elements, and a list of registered gestures
+ */
 var state = {
-  inputs: [], //Contains current inputs (touches) on the screen
-  bindings: [], //Collection of element -> binding relations,
-  registeredGestures: { //Functions with keys to be iterated and used in the interpreter.
+  inputs: [],
+  bindings: [],
+
+  //Functions with keys to be iterated and used in the interpreter.
+  registeredGestures: {
     tap: new Tap()
   },
+
   /**
    * Creates a new binding with the given element and gesture object. If the gesture object provided is
    * unregistered, it's reference will be saved in as a binding.
@@ -17,6 +28,7 @@ var state = {
    * @param gesture {string/object} - Either a name of a registered gesture, or an unregistered Gesture object.
    * @param handler
    * @param capture
+   * @returns {null|Binding} - null if the gesture could not be found, the new Binding otherwise
    */
   addBinding: function (element, gesture, handler, capture) {
     if (typeof gesture === 'string') {
@@ -28,13 +40,16 @@ var state = {
       return null;
     }
 
-    this.bindings.push(new Binding(element, gesture, handler, capture));
-    return this.bindings[this.bindings.length - 1];
+    var binding = new Binding(element, gesture, handler, capture);
+    this.bindings.push(binding);
+    element.addEventListener(util.getGestureType(gesture), handler, capture);
+    return binding;
   },
 
   /**
    * Retrieves the Binding by which an element is associated to.
    * @param element
+   * @returns {Array} - An array of Bindings to which that element is bound
    */
   retrieveBindings: function (element) {
     var matches = [];
@@ -50,7 +65,7 @@ var state = {
   /**
    * Updates the inputs based on the current event.
    * Creates new Inputs if none exist, or more inputs were received.
-   * @returns all updated inputs.
+   * @returns array all updated inputs.
    */
   updateInputs: function (ev) {
 
