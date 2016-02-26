@@ -1,6 +1,6 @@
-import state from './../src/core/state.js';
-import Tap from './../src/gestures/Tap.js';
-import Gesture from './../src/gestures/Gesture.js';
+import {state, getGestureType} from './../../src/core/state.js';
+import Tap from './../../src/gestures/Tap.js';
+import Gesture from './../../src/gestures/Gesture.js';
 
 describe('state', function () {
   it('should be instantiated', function () {
@@ -58,6 +58,27 @@ describe('state.addBinding', function () {
     expect(binding).to.be.null;
     expect(state.bindings).to.be.empty;
   });
+});
+
+describe('getGestureType', function () {
+
+  it('should return tap if the string is a valid binding', function () {
+    expect(getGestureType('tap')).to.equal('tap');
+  });
+
+  it('should return null for an invalid string key binding', function () {
+    expect(getGestureType('quadruple-tap')).to.be.null;
+  });
+
+  it('should return tap for a valid gesture object', function () {
+    var tapGesture = new Tap();
+    expect(getGestureType(tapGesture)).to.equal('tap');
+  });
+
+  it('should return null for an invalid object', function () {
+    expect(getGestureType({})).to.be.null;
+  });
+
 });
 
 //describe('state.retrieveBindings', function () {

@@ -2,8 +2,8 @@
  * @file Binder.js
  * Tests Binder class
  */
-import Binder from './../src/core/classes/Binder.js';
-import state from './../src/core/state.js';
+import Binder from './../../../src/core/classes/Binder.js';
+import state from './../../../src/core/state.js';
 
 describe('Binder', function () {
   it('should be instantiated', function () {

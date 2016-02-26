@@ -42,7 +42,7 @@ var state = {
 
     var binding = new Binding(element, gesture, handler, capture);
     this.bindings.push(binding);
-    element.addEventListener(util.getGestureType(gesture), handler, capture);
+    element.addEventListener(getGestureType(gesture), handler, capture);
     return binding;
   },
 
@@ -89,8 +89,21 @@ var state = {
 
     return this.inputs;
   }
-
 };
 
-export default state;
+/**
+ * Returns the key value of the gesture provided.
+ * @param {Object} gesture - A Gesture object
+ * @returns {null|String} - returns the key value of the valid gesture, null otherwise.
+ */
+function getGestureType(gesture) {
+  if (typeof gesture === 'string' && (Object.keys(state.registeredGestures)).indexOf(gesture) > -1) {
+    return gesture;
+  } else if (gesture instanceof Gesture) {
+    return gesture.getType();
+  } else {
+    return null;
+  }
+}/*getGestureType*/
 
+export {state as default, state, getGestureType};

@@ -1,6 +1,8 @@
-import ZingTouch from './../src/ZingTouch.js';
+import {ZingTouch, isValidGesture} from './../src/ZingTouch.js';
 import Binder from './../src/core/classes/Binder.js';
 import state from './../src/core/state.js';
+import Gesture from  './../src/gestures/Gesture.js';
+import Tap from  './../src/gestures/Tap.js';
 
 /**
  * Tests the user-facing API, ensuring the object functions while not exposing private members.
@@ -89,5 +91,29 @@ describe('ZingTouch.bind(element, gesture, handler, [capture])', function () {
   //it('should accept a Gesture object as the gesture parameter', function () {
   //  expect.true.to.be.false;
   //});
+
+});
+
+describe('util.isValidGesture', function () {
+  it('should return true for a valid key of a gesture', function () {
+    expect(isValidGesture('tap')).to.be.true;
+  });
+
+  it('should return false for an invalid key of a gesture ', function () {
+    expect(isValidGesture('foobar')).to.be.false;
+  });
+
+  it('should return true for a valid gesture object', function () {
+    expect(isValidGesture(new Gesture())).to.be.true;
+    expect(isValidGesture(new Tap())).to.be.true;
+  });
+
+  it('should return false for an invalid gesture object', function () {
+    expect(isValidGesture({})).to.be.false;
+  });
+
+  it('should return false for an invalid gesture object', function () {
+    expect(isValidGesture({})).to.be.false;
+  });
 
 });

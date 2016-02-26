@@ -33,7 +33,7 @@ var ZingTouch = {
     if (!gesture) {
       return new Binder(element);
     } else {
-      if (!util.isValidGesture(gesture)) {
+      if (!isValidGesture(gesture)) {
         throw new Error('Parameter gesture is invalid.');
       }
 
@@ -85,4 +85,14 @@ var ZingTouch = {
 
 };
 
-export default ZingTouch;
+/**
+ * Determines whether the string is a registered gesture or the object is of type Gesture.
+ * @param {string|Object} gesture - Either the gesture or gesture's key
+ * @returns {boolean} - true if a valid gesture
+ */
+function isValidGesture(gesture) {
+  return (typeof gesture === 'string' && (Object.keys(state.registeredGestures)).indexOf(gesture) > -1)
+    || (gesture instanceof Gesture);
+}/*isValidGesture*/
+
+export {ZingTouch as default, ZingTouch, isValidGesture};
