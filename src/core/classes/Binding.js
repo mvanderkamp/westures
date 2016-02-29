@@ -16,7 +16,7 @@ class Binding {
     this.handler = handler;
 
     //noinspection JSUnusedGlobalSymbols
-    this.capture = capture;
+    this.capture = (capture) ? capture : false;
   }
 }
 

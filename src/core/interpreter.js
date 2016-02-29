@@ -19,24 +19,19 @@ function interpreter(bindings, event) {
   var target = bindings[0].element;
   var metaData = {};
 
-  for (var name in state.registeredGestures) {
-    if (state.registeredGestures.hasOwnProperty(name)) {
-      let gesture = state.registeredGestures[name];
-      let result = gesture[evType](state.inputs);
-      if (result) {
-        metaData[name] = result;
-      }
+  bindings.forEach(function (binding, index, arr) {
+    let result = binding.gesture[evType](state.inputs);
+    if (result) {
+      metaData[binding.gesture.getType()] = result;
     }
-  }
+  });
 
   //TODO: Determine which event will be emitted (only 1!)
-  var key = 'tap';
-
-  if (metaData[key]) {
+  if (metaData.tap) {
     return {
-      type: key,
+      type: 'tap',
       target: target,
-      data: metaData[key]
+      data: metaData.tap
     };
 
   } else {

@@ -51,7 +51,8 @@ describe('ZingTouch.bind(element)', function () {
   });
 
   it('should properly create a Binding after a chained function', function () {
-    var handler = function (event) {};
+    var handler = function (event) {
+    };
 
     expect(state.retrieveBindings(document.body).length).to.equal(0);
     ZingTouch.bind(document.body)
@@ -69,14 +70,16 @@ describe('ZingTouch.bind(element, gesture, handler, [capture])', function () {
 
   it('should throw an error if the element parameter is invalid', function () {
     expect(function () {
-      ZingTouch.bind({}, 'tap', function () {}, false);
+      ZingTouch.bind({}, 'tap', function () {
+      }, false);
 
     }).to.throw(Error);
   });
 
   it('should throw an error if the gesture parameter is invalid', function () {
     expect(function () {
-      ZingTouch.bind(document.body, {}, function () {}, false);
+      ZingTouch.bind(document.body, {}, function () {
+      }, false);
 
     }).to.throw(Error);
   });
@@ -88,9 +91,13 @@ describe('ZingTouch.bind(element, gesture, handler, [capture])', function () {
     }).to.throw(Error);
   });
 
-  //it('should accept a Gesture object as the gesture parameter', function () {
-  //  expect.true.to.be.false;
-  //});
+  it('should accept a Gesture object as the gesture parameter', function () {
+    expect(function () {
+      ZingTouch.bind(document.body, new ZingTouch.Tap(), function () {
+      }, false);
+
+    }).to.not.throw(Error);
+  });
 
 });
 

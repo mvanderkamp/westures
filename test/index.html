@@ -43,10 +43,14 @@
 //            console.log('Tap:','interval of ', event.detail.interval);
 //        }, false);
 
-         ZingTouch.bind(target)
-                .tap(function(event){
-                    console.log('Tap:','interval of ', event.detail.interval);
-                }, false);
+//         ZingTouch.bind(target)
+//                .tap(function(event){
+//                    console.log('Tap:','interval of ', event.detail.interval);
+//                }, false);
+
+        ZingTouch.bind(target, new ZingTouch.Tap(), function(event) {
+            console.log('Tap:','interval of ', event.detail.interval);
+        });
     }
 
 </script>

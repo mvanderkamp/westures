@@ -79,9 +79,7 @@ describe('getGestureType', function () {
     expect(getGestureType({})).to.be.null;
   });
 
-});
-
-//describe('state.retrieveBindings', function () {
+});//describe('state.retrieveBindings', function () {
 //
 //  it('should return an empty array if no bindings are associated to that element', function () {
 //
@@ -91,3 +89,5 @@ describe('getGestureType', function () {
 //
 //  });
 //});
+
+
