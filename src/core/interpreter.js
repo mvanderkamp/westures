@@ -18,7 +18,6 @@ function interpreter(bindings, event) {
   var evType = util.normalizeEvent(event.type);
   var target = bindings[0].element;
   var metaData = {};
-
   bindings.forEach(function (binding, index, arr) {
     let result = binding.gesture[evType](state.inputs);
     if (result) {

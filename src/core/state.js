@@ -68,10 +68,9 @@ var state = {
    * @returns array all updated inputs.
    */
   updateInputs: function (ev) {
-
     if (ev.touches) {
       for (var index in ev.touches) {
-        if (ev.touches.hasOwnProperty(index)) {
+        if (ev.touches.hasOwnProperty(index) && Number.isInteger(parseInt(index))) {
           if (util.normalizeEvent(ev.type) === 'start') {
             this.inputs.push(new Input(ev, index));
           } else {
@@ -104,6 +103,7 @@ function getGestureType(gesture) {
   } else {
     return null;
   }
-}/*getGestureType*/
+}
+/*getGestureType*/
 
 export {state as default, state, getGestureType};

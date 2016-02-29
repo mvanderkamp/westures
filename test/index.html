@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>ZingTouch</title>
     <script src="../bower_components/system.js/dist/system.js"></script>
+    <!--<script src="../dist/zingtouch.min.js"></script>-->
+
     <script>
         //Define dependency paths
         System.config({
@@ -36,7 +38,6 @@
     <div id="tap" class='touchable'></div>
 </body>
 <script>
-
     function bindAreas(){
         var target = document.getElementById('tap');
 //        ZingTouch.bind(target, 'tap', function (event) {
@@ -51,6 +52,7 @@
         ZingTouch.bind(target, new ZingTouch.Tap(), function(event) {
             console.log('Tap:','interval of ', event.detail.interval);
         });
+
     }
 
 </script>

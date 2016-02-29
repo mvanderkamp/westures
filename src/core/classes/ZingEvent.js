@@ -14,11 +14,15 @@ class ZingEvent {
     //noinspection JSUnusedGlobalSymbols
     this.originalEvent = ev;
     this.type = util.normalizeEvent(ev.type);
-    this.touches = [];
+    this.touches = {};
 
     if (touchIndex) {
-      this.touches[touchIndex].clientX = ev.clientX;
-      this.touches[touchIndex].clientY = ev.clientY;
+      if (!this.touches[touchIndex]) {
+        this.touches[touchIndex] = {
+          clientX: ev.touches[touchIndex].clientX,
+          clientY: ev.touches[touchIndex].clientY
+        };
+      }
     } else {
       this.clientX = ev.clientX;
       this.clientY = ev.clientY;
