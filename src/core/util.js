@@ -30,6 +30,21 @@ var util = {
       default :
         return null;
     }
-  }/*normalizeEvent*/
+  },
+  /*normalizeEvent*/
+
+  /**
+   * Determines if the current and previous coordinates are within a certain tolerance.
+   * @param {Number} currentX - Current event's x coordinate
+   * @param {Number} currentY - Current event's y coordinate
+   * @param {Number} previousX - Previous event's x coordinate
+   * @param {Number} previousY - Previous event's y coordinate
+   * @param {Number} tolerance - The tolerance in pixel value.
+   * @returns {boolean} - true if the current coordinates are within the tolerance, false otherwise
+   */
+  isWithin(currentX, currentY, previousX, previousY, tolerance) {
+    return ((Math.abs(currentY - previousY) < tolerance && Math.abs(currentX - previousX) < tolerance));
+  }
+  /*isWithin*/
 };
 export default util;

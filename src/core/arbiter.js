@@ -16,37 +16,42 @@ import ZingTouch from './../ZingTouch.js';
  * 2. Determining which gestures are linked to the target element
  * 3. Negotiating with the Interpreter what event should occur
  * 4. Sending events to the dispatcher to emit events to the target.
- * @param ev - The event emitted from the window object.
+ * @param event - The event emitted from the window object.
  */
-function arbiter(ev) {
+function arbiter(event) {
   //Return if a gesture is not in progress and won't be.
-  if (state.inputs.length === 0 && util.normalizeEvent(ev.type) !== 'start') {
+  if (state.inputs.length === 0 && util.normalizeEvent(event.type) !== 'start') {
     return;
   }
 
-  //Return if all gestures did not originate from the same target.
-  if (ev.touches && ev.touches.length !== ev.targetTouches.length) {
-    state.inputs = [];
+  //Update the state with the new events. If the event is stopped, return;
+  if (!state.updateInputs(event)) {
     return;
   }
-
-  //Update the state with the new events
-  state.updateInputs(ev);
 
   //Retrieve the initial target from any one of the inputs
-  var bindings = state.retrieveBindings(ev.target);
+  var bindings = state.retrieveBindings(event.target);
   if (bindings.length > 0) {
-    var action = interpreter(bindings, ev);
-    if (action) {
-      dispatcher(action.type, action.target, action.data);
+    event.preventDefault();
+    var gesture = interpreter(bindings, event);
+    if (gesture) {
+      dispatcher(gesture.binding, gesture.data);
+      state.resetInputs();
     }
   }
 
-  //If gesture has finished, reset state.
-  if (util.normalizeEvent(ev.type) === 'end') {
-    state.inputs = [];
+  var endCount = 0;
+  for (var i = 0; i < state.inputs.length; i++) {
+    if (state.inputs[i].getCurrentEventType() === 'end') {
+      endCount++;
+    }
   }
 
-}/*arbiter*/
+  if (endCount === state.inputs.length) {
+    state.resetInputs();
+  }
+
+}
+/*arbiter*/
 
 export default arbiter;

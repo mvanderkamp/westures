@@ -10,26 +10,25 @@ import util from '../util.js';
  * @class ZingEvent
  */
 class ZingEvent {
-  constructor(ev, touchIndex) {
+  /**
+   * @constructor
+   * @param {Event} event - The event object being wrapped
+   * @param {Number} touchIndex - The index of touch if applicable
+   */
+  constructor(event, touchIndex) {
     //noinspection JSUnusedGlobalSymbols
-    this.originalEvent = ev;
-    this.type = util.normalizeEvent(ev.type);
-    this.touches = {};
-
-    if (touchIndex) {
-      if (!this.touches[touchIndex]) {
-        this.touches[touchIndex] = {
-          clientX: ev.touches[touchIndex].clientX,
-          clientY: ev.touches[touchIndex].clientY
-        };
+    this.originalEvent = event;
+    this.type = util.normalizeEvent(event.type);
+    if (touchIndex !== null && event.changedTouches) {
+      for (var i = 0; i < event.changedTouches.length; i++) {
+        this.x = event.changedTouches[i].clientX;
+        this.y = event.changedTouches[i].clientY;
       }
     } else {
-      this.clientX = ev.clientX;
-      this.clientY = ev.clientY;
+      this.x = event.clientX;
+      this.y = event.clientY;
     }
-
   }
-
 }
 
 export default ZingEvent;

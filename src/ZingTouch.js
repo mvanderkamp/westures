@@ -43,7 +43,8 @@ var ZingTouch = {
 
       state.addBinding(element, gesture, handler, capture);
     }
-  }, /*bind*/
+  },
+  /*bind*/
 
   /**
    * Bind an element and sets up actions to remove the binding once it has been emitted for the first time.
@@ -56,7 +57,8 @@ var ZingTouch = {
    * @returns {Object} - a chainable object that has the same function as bind.
    */
   bindOnce(element, gesture, handler, capture) {
-  }, /*bindOnce*/
+  },
+  /*bindOnce*/
 
   /**
    * Unbinds an element from either the specified gesture or all if no element is specified.
@@ -65,7 +67,8 @@ var ZingTouch = {
    * @returns {Array} - An array of Gestures that were unbound to the element;
    */
   unbind(element, gesture) {
-  }, /*unbind*/
+  },
+  /*unbind*/
 
   /**
    * Registers a new gesture with an assigned key
@@ -73,15 +76,16 @@ var ZingTouch = {
    * @param {Object} gesture - A gesture object
    */
   register(key, gesture) {
-  },/*register*/
+  }, /*register*/
 
   /**
-   * Unregisters a gesture from ZingTouch's state such that it is no longer emittable.
+   * Un-registers a gesture from ZingTouch's state such that it is no longer emittable.
    * @param {String|Object} gesture - Gesture key, or a Gesture object.
    * @returns {Object} - The Gesture object that was unregistered or null if it could not be found.
    */
   unregister(gesture) {
-  } /*unregister*/
+  }
+  /*unregister*/
 
 };
 
@@ -93,6 +97,7 @@ var ZingTouch = {
 function isValidGesture(gesture) {
   return (typeof gesture === 'string' && (Object.keys(state.registeredGestures)).indexOf(gesture) > -1)
     || (gesture instanceof Gesture);
-}/*isValidGesture*/
+}
+/*isValidGesture*/
 
 export {ZingTouch as default, ZingTouch, isValidGesture};

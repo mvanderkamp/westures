@@ -15,6 +15,7 @@ import util from './util.js';
 var state = {
   inputs: [],
   bindings: [],
+  numGestures: 0,
 
   //Functions with keys to be iterated and used in the interpreter.
   registeredGestures: {
@@ -38,13 +39,19 @@ var state = {
       }
     } else if (!(gesture instanceof Gesture)) {
       return null;
+    } else {
+      gesture.setId(this.numGestures++);
     }
 
-    var binding = new Binding(element, gesture, handler, capture);
-    this.bindings.push(binding);
-    element.addEventListener(getGestureType(gesture), handler, capture);
-    return binding;
+    if (gesture instanceof Gesture) {
+      var binding = new Binding(element, gesture, handler, capture);
+      this.bindings.push(binding);
+      element.addEventListener(gesture.getId(), handler, capture);
+      return binding;
+    }
+
   },
+  /*addBinding*/
 
   /**
    * Retrieves the Binding by which an element is associated to.
@@ -61,33 +68,60 @@ var state = {
 
     return matches;
   },
+  /*retrieveBindings*/
 
   /**
    * Updates the inputs based on the current event.
    * Creates new Inputs if none exist, or more inputs were received.
-   * @returns array all updated inputs.
+   * @param {Event} event -The event object
+   * @returns {boolean} - Returns true if the update was successful, false if the event cancelled the current gesture
    */
-  updateInputs: function (ev) {
-    if (ev.touches) {
-      for (var index in ev.touches) {
-        if (ev.touches.hasOwnProperty(index) && Number.isInteger(parseInt(index))) {
-          if (util.normalizeEvent(ev.type) === 'start') {
-            this.inputs.push(new Input(ev, index));
+  updateInputs: function (event) {
+    //Return if all gestures did not originate from the same target
+    if (event.touches && event.touches.length !== event.targetTouches.length) {
+      console.log('not on the same target');
+      state.resetInputs();
+      return false;
+    }
+
+    if (event.touches) {
+      for (var index in event.changedTouches) {
+        if (event.changedTouches.hasOwnProperty(index) && Number.isInteger(parseInt(index))) {
+          var id = event.changedTouches[index].identifier;
+          if (util.normalizeEvent(event.type) === 'start') {
+            if (this.inputs[id]) {
+              //This should restart the inputs and cancel out any gesture.
+              this.resetInputs();
+              return false;
+            } else {
+              this.inputs.push(new Input(event, id));
+            }
           } else {
-            this.inputs[index].update(ev, index);
+            if (this.inputs[id]) {
+              this.inputs[id].update(event, id);
+            }
           }
         }
       }
     } else {
-      if (util.normalizeEvent(ev.type) === 'start') {
-        this.inputs.push(new Input(ev));
+      if (util.normalizeEvent(event.type) === 'start') {
+        this.inputs.push(new Input(event));
       } else {
-        this.inputs[0].update(ev);
+        this.inputs[0].update(event);
       }
     }
 
-    return this.inputs;
+    return true;
+  },
+  /*updateInputs*/
+
+  /**
+   * Removes all inputs from the state, allowing for a new gesture.
+   */
+  resetInputs: function () {
+    this.inputs = [];
   }
+  /*resetInputs*/
 };
 
 /**

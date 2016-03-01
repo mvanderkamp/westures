@@ -16,23 +16,20 @@ import util from './util.js';
  */
 function interpreter(bindings, event) {
   var evType = util.normalizeEvent(event.type);
-  var target = bindings[0].element;
-  var metaData = {};
-  bindings.forEach(function (binding, index, arr) {
+  var candidates = [];
+  bindings.forEach(function (binding) {
     let result = binding.gesture[evType](state.inputs);
     if (result) {
-      metaData[binding.gesture.getType()] = result;
+      candidates.push({
+        binding: binding,
+        data: result
+      });
     }
   });
 
-  //TODO: Determine which event will be emitted (only 1!)
-  if (metaData.tap) {
-    return {
-      type: 'tap',
-      target: target,
-      data: metaData.tap
-    };
-
+  //TODO : Determine which gesture to emit, or all.
+  if (candidates.length > 0) {
+    return candidates[0];
   } else {
     return null;
   }

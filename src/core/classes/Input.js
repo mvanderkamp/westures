@@ -4,6 +4,7 @@
  */
 
 import ZingEvent from './ZingEvent.js';
+import util from './../util.js';
 
 const DEFAULT_VELOCITY = 0;
 /**
@@ -39,7 +40,8 @@ class Input {
     this.last = this.current;
     this.current = new ZingEvent(ev, touchIndex);
     this.velocity = this.calculateVelocity();
-  } /*update*/
+  }
+  /*update*/
 
   /**
    * Stub to calculate the input's current velocity.
@@ -47,7 +49,8 @@ class Input {
    */
   calculateVelocity() {
     return this.velocity;
-  }/*calculateVelocity*/
+  }
+  /*calculateVelocity*/
 
   /**
    * Returns the progress/state object of the specified gesture
@@ -57,10 +60,20 @@ class Input {
   getGestureProgress(type) {
     if (!this.progress[type]) {
       this.progress[type] = {};
-    }/*getGestureProgress*/
+    }
 
     return this.progress[type];
   }
+  /*getGestureProgress*/
+
+  /**
+   * Returns the normalized current event type.
+   * @returns {string}
+   */
+  getCurrentEventType() {
+    return this.current.type;
+  }
+  /*getCurrentEventType*/
 
   /**
    * Resets a progress/state object of the specified gesture.
@@ -68,7 +81,8 @@ class Input {
    */
   resetProgress(type) {
     this.progress[type] = {};
-  }/*resetProgress*/
+  }
+  /*resetProgress*/
 }
 
 export default Input;

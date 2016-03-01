@@ -11,6 +11,7 @@
 class Gesture {
   constructor() {
     this.type = null;
+    this.id = null;
   }
 
   /**
@@ -19,7 +20,26 @@ class Gesture {
    */
   getType() {
     return this.type;
-  }/*getType*/
+  }
+  /*getType*/
+
+  /**
+   * Set the id of the gesture to be called during an event
+   * @param {Number} id
+   */
+  setId(id) {
+    this.id = id;
+  }
+  /*setId*/
+
+  /**
+   * Return the id of the event. If the id does not exist, return the type.
+   * @return {string}
+   */
+  getId() {
+    return (this.id) ? this.id : this.type;
+  }
+  /*getId*/
 
   /**
    * start() - Event hook for the start of a gesture
@@ -28,7 +48,8 @@ class Gesture {
    */
   start(inputs) {
     return null;
-  }/*start*/
+  }
+  /*start*/
 
   /**
    * move() - Event hook for the move of a gesture
@@ -36,16 +57,18 @@ class Gesture {
    * @returns {null} - Default of null   */
   move(inputs) {
     return null;
-  }/*move*/
+  }
+  /*move*/
 
   /**
-   * endinputs() - Event hook for the move of a gesture
+   * end() - Event hook for the move of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
    * @returns {null} - Default of null
    */
   end(inputs) {
     return null;
-  }/*end*/
+  }
+  /**/
 
 }
 
