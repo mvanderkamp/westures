@@ -5,6 +5,7 @@
 
 import Binding from './classes/Binding.js';
 import Input from './classes/Input.js';
+import Pan from './../gestures/Pan.js';
 import Tap from './../gestures/Tap.js';
 import Gesture from './../gestures/Gesture.js';
 import util from './util.js';
@@ -19,7 +20,8 @@ var state = {
 
   //Functions with keys to be iterated and used in the interpreter.
   registeredGestures: {
-    tap: new Tap()
+    tap: new Tap(),
+    pan: new Pan()
   },
 
   /**
@@ -83,7 +85,6 @@ var state = {
   updateInputs: function (event) {
     //Return if all gestures did not originate from the same target
     if (event.touches && event.touches.length !== event.targetTouches.length) {
-      console.log('not on the same target');
       state.resetInputs();
       return false;
     }

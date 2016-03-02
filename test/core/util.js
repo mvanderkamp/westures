@@ -2,8 +2,7 @@
  * @file utils.js
  * Tests the user-facing API, ensuring the object functions while not exposing private members.
  */
-import Gesture from './../../src/gestures/Gesture.js';
-import Tap from './../../src/gestures/Tap.js';
+
 import util from './../../src/core/util.js';
 
 describe('util', function () {

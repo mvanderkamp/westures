@@ -4,7 +4,6 @@
  */
 
 import state from './state.js';
-import Gesture from './../gestures/Gesture.js';
 
 var util = {
 
@@ -44,7 +43,14 @@ var util = {
    */
   isWithin(currentX, currentY, previousX, previousY, tolerance) {
     return ((Math.abs(currentY - previousY) < tolerance && Math.abs(currentX - previousX) < tolerance));
-  }
+  },
   /*isWithin*/
+
+  /**
+   * Calculates the distance between two points.
+   */
+  distanceBetweenTwoPoints(x0, x1, y0, y1) {
+    return Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0)));
+  }
 };
 export default util;

@@ -66,6 +66,9 @@
             console.log('4 finger Tap:','interval of ', event.detail.interval);
         });
 
+        ZingTouch.bind(target, new ZingTouch.Pan(), function(event) {
+            console.log('Panning:','interval of ', event.detail.interval);
+        });
     }
 
 </script>

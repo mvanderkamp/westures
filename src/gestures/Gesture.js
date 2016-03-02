@@ -45,7 +45,7 @@ class Gesture {
   /**
    * start() - Event hook for the start of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
-   * @returns {null} - Default of null
+   * @returns {null|Object}  - Default of null
    */
   start(inputs) {
     return null;
@@ -56,7 +56,7 @@ class Gesture {
   /**
    * move() - Event hook for the move of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
-   * @returns {null} - Default of null   */
+   * @returns {null|Object} - Default of null   */
   move(inputs) {
     return null;
   }
@@ -66,7 +66,7 @@ class Gesture {
   /**
    * end() - Event hook for the move of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
-   * @returns {null} - Default of null
+   * @returns {null|Object}  - Default of null
    */
   end(inputs) {
     return null;

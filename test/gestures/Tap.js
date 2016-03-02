@@ -20,12 +20,3 @@ describe('Tap', function () {
     expect(_tap.numInputs).to.equal(2);
   });
 });
-
-//
-//class Tap extends Gesture {
-//  constructor(maxDelay, numInputs) {
-//    super();
-//    this.type = 'tap';
-//    this.maxDelay = (maxDelay) ? maxDelay : DEFAULT_DELAY_MS;
-//    this.numInputs = (numInputs) ? numInputs : DEFAULT_INPUTS;
-//  }

@@ -32,11 +32,10 @@ class Tap extends Gesture {
   start(inputs) {
 
     if (inputs.length === this.numInputs) {
-      var _this = this;
-      inputs.forEach(function (input) {
-        var progress = input.getGestureProgress(_this.type);
+      for (var i = 0; i < inputs.length; i++) {
+        var progress = inputs[i].getGestureProgress(this.type);
         progress.start = new Date().getTime();
-      });
+      }
     }
 
     return null;
@@ -67,7 +66,7 @@ class Tap extends Gesture {
   /*move*/
 
   /**
-   * end() - Event hook for the move of a gesture
+   * end() - Event hook for the end of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
    * @returns {null|Object} - null if the gesture is not to be emitted, Object with information otherwise.
    */
