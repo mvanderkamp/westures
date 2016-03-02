@@ -13,6 +13,7 @@ class ZingEvent {
   /**
    * @constructor
    * @param {Event} event - The event object being wrapped
+   * @param {Object} event.changedTouches - The TouchList representing points that participated in the event
    * @param {Number} touchIndex - The index of touch if applicable
    */
   constructor(event, touchIndex) {

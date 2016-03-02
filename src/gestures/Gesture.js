@@ -41,6 +41,7 @@ class Gesture {
   }
   /*getId*/
 
+  //noinspection JSUnusedLocalSymbols
   /**
    * start() - Event hook for the start of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
@@ -51,6 +52,7 @@ class Gesture {
   }
   /*start*/
 
+  //noinspection JSUnusedLocalSymbols
   /**
    * move() - Event hook for the move of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
@@ -60,6 +62,7 @@ class Gesture {
   }
   /*move*/
 
+  //noinspection JSUnusedLocalSymbols
   /**
    * end() - Event hook for the move of a gesture
    * @param {Array} inputs - The array of Inputs on the screen

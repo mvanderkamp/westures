@@ -74,6 +74,10 @@ var state = {
    * Updates the inputs based on the current event.
    * Creates new Inputs if none exist, or more inputs were received.
    * @param {Event} event -The event object
+   * @param {Object} event.touches - The TouchList representing the list of  all contact points
+   * @param {Object} event.targetTouches - The TouchList representing the list of points whose
+   * touchstart occurred in the same target element as the same event.
+   * @param {Object} event.changedTouches - The TouchList representing points that participated in the event
    * @returns {boolean} - Returns true if the update was successful, false if the event cancelled the current gesture
    */
   updateInputs: function (event) {

@@ -32,7 +32,7 @@ class Input {
 
   /**
    * Receives an input, updates the internal state of what the input has done next.
-   * @param {Object} ev - The event object to wrap
+   * @param {Event} ev - The event object to wrap
    * @param touchIndex - The index of inputs (usually from event.touches)
    */
   update(ev, touchIndex) {
