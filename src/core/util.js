@@ -3,8 +3,6 @@
  * Various accessor and mutator functions to handle state and validation.
  */
 
-import state from './state.js';
-
 var util = {
 
   /**
@@ -33,7 +31,7 @@ var util = {
   /*normalizeEvent*/
 
   /**
-   * Determines if the current and previous coordinates are within a certain tolerance.
+   * Determines if the current and previous coordinates are within or up to a certain tolerance.
    * @param {Number} currentX - Current event's x coordinate
    * @param {Number} currentY - Current event's y coordinate
    * @param {Number} previousX - Previous event's x coordinate
@@ -42,12 +40,13 @@ var util = {
    * @returns {boolean} - true if the current coordinates are within the tolerance, false otherwise
    */
   isWithin(currentX, currentY, previousX, previousY, tolerance) {
-    return ((Math.abs(currentY - previousY) < tolerance && Math.abs(currentX - previousX) < tolerance));
+    return ((Math.abs(currentY - previousY) <= tolerance) && (Math.abs(currentX - previousX) <= tolerance));
   },
   /*isWithin*/
 
   /**
    * Calculates the distance between two points.
+   * @returns {Number} The numerical value between two points
    */
   distanceBetweenTwoPoints(x0, x1, y0, y1) {
     return Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0)));

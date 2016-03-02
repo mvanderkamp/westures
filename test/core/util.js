@@ -31,3 +31,32 @@ describe('util.normalizeEvent', function () {
     expect(util.normalizeEvent('foobar')).to.be.null;
   });
 });
+
+describe('util.isWithin', function () {
+
+  it('should expect be true when points are within a tolerance', function () {
+    expect(util.isWithin(0, 0, 0, 0, 10)).to.be.true;
+    expect(util.isWithin(10, 10, 10, 10, 0)).to.be.true;
+    expect(util.isWithin(0, -10, 9, 0, 10)).to.be.true;
+  });
+
+  it('should expect be false when points are outside a tolerance', function () {
+    expect(util.isWithin(0, 0, 0, 0, -1)).to.be.false;
+    expect(util.isWithin(10, 10, 20, 20, 0)).to.be.false;
+  });
+});
+
+describe('util.distanceBetweenTwoPoints', function () {
+  it('should return a distance of 5', function () {
+    expect(util.distanceBetweenTwoPoints(0, 4, 0, 3)).to.equal(5);
+  });
+
+  it('should return a distance of 0', function () {
+    expect(util.distanceBetweenTwoPoints(0, 0, 0, 0)).to.equal(0);
+  });
+
+  it('should return a distance of 0', function () {
+    expect(util.distanceBetweenTwoPoints('foo', 0, 0, 0)).to.be.NaN;
+  });
+
+});
