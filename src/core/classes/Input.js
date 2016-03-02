@@ -18,14 +18,12 @@ class Input {
     var event = new ZingEvent(ev, touchIndex);
 
     //noinspection JSUnusedGlobalSymbols
-    this.current = this.initial = event;
+    this.current = this.last = this.initial = event;
 
     //This index refers to the event.touches index.
     //noinspection JSUnusedGlobalSymbols
     this.index = (touchIndex) ? touchIndex : 0;
 
-    //noinspection JSUnusedGlobalSymbols
-    this.last = null;
     this.velocity = DEFAULT_VELOCITY;
     this.progress = {}; //Storage for metadata of each gesture.
   }
