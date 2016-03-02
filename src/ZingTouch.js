@@ -6,6 +6,7 @@
 import Binder from './core/classes/Binder.js';
 import Binding from './core/classes/Binding.js';
 import Gesture from './gestures/Gesture.js';
+import Expand from './gestures/Expand.js';
 import Pan from './gestures/Pan.js';
 import Pinch from './gestures/Pinch.js';
 import Tap from './gestures/Tap.js';
@@ -15,9 +16,10 @@ import util from './core/util.js';
 var ZingTouch = {
   //Constructors
   Gesture: Gesture,
-  Tap: Tap,
+  Expand: Expand,
   Pan: Pan,
   Pinch: Pinch,
+  Tap: Tap,
 
   /**
    * Bind an element to a registered/unregistered gesture with multiple function signatures.
