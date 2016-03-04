@@ -127,8 +127,19 @@ var state = {
    */
   resetInputs: function () {
     this.inputs = [];
-  }
+  },
   /*resetInputs*/
+
+  numActiveInputs: function () {
+    var count = 0;
+    for (var i = 0; i < this.inputs.length; i++) {
+      if (this.inputs[i].current.type !== 'end') {
+        count++;
+      }
+    }
+
+    return count;
+  }
 };
 
 /**

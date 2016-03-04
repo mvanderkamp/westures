@@ -14,8 +14,8 @@ const DEFAULT_VELOCITY = 0;
  * @class Input
  */
 class Input {
-  constructor(ev, touchIndex) {
-    var event = new ZingEvent(ev, touchIndex);
+  constructor(event, touchIndex) {
+    var event = new ZingEvent(event, touchIndex);
 
     //noinspection JSUnusedGlobalSymbols
     this.current = this.last = this.initial = event;
@@ -30,15 +30,19 @@ class Input {
 
   /**
    * Receives an input, updates the internal state of what the input has done next.
-   * @param {Event} ev - The event object to wrap
+   * @param {Event} event - The event object to wrap
    * @param touchIndex - The index of inputs (usually from event.touches)
    */
-  update(ev, touchIndex) {
+  update(event, touchIndex) {
     //noinspection JSUnusedGlobalSymbols
     this.last = this.current;
-    this.current = new ZingEvent(ev, touchIndex);
+    if (event.touches[touchIndex]) {
+      this.current = new ZingEvent(event, touchIndex);
+    }
+
     this.velocity = this.calculateVelocity();
   }
+
   /*update*/
 
   /**
@@ -48,6 +52,7 @@ class Input {
   calculateVelocity() {
     return this.velocity;
   }
+
   /*calculateVelocity*/
 
   /**
@@ -62,6 +67,7 @@ class Input {
 
     return this.progress[type];
   }
+
   /*getGestureProgress*/
 
   /**
@@ -71,6 +77,7 @@ class Input {
   getCurrentEventType() {
     return this.current.type;
   }
+
   /*getCurrentEventType*/
 
   /**
@@ -80,6 +87,7 @@ class Input {
   resetProgress(type) {
     this.progress[type] = {};
   }
+
   /*resetProgress*/
 }
 

@@ -46,10 +46,29 @@ var util = {
 
   /**
    * Calculates the distance between two points.
+   * @param x0
+   * @param x1
+   * @param y0
+   * @param y1
    * @returns {Number} The numerical value between two points
    */
   distanceBetweenTwoPoints(x0, x1, y0, y1) {
     return Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0)));
+  },
+
+  /**
+   * Calculates the midpoint coordinates between two points.
+   * @param x0
+   * @param x1
+   * @param y0
+   * @param y1
+   * @returns {Array} The coordinates of the midpoint.
+   */
+  getMidpoint(x0, x1, y0, y1) {
+    return {
+      x: ((x0 + x1) / 2),
+      y: ((y0 + y1) / 2)
+    };
   }
 };
 export default util;

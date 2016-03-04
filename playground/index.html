@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZingTouch</title>
+    <script src="../../bower_components/system.js/dist/system.js"></script>
+    <!--<script src="../dist/zingtouch.min.js"></script>-->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+        //Define dependency paths
+        System.config({
+            baseURL : '../',
+            transpiler : 'traceur',
+            map : {
+                traceur : 'bower_components/traceur/traceur.js'
+            }
+        });
+        System.paths = {
+            main : 'src/core/main.js'
+            //main : 'dist/zingtouch.min.js'
+        };
+        //Import the app and run it.
+        System.import('main').then(function(main) {
+            document.getElementById('zone').innerHTML = "It works!";
+            bindAreas();
+        });
+    </script>
+    <style>
+        .touchable {
+            border: 1px solid #b5bd68;
+            width: 100%;
+            height: 600px;
+            z-index: 1000;
+            position:absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="zone"></div>
+<div id="tap" class='touchable'></div>
+<div id="myChart"></div>
+</body>
+<script>
+    function bindAreas(){
+        var target = document.getElementById('tap');
+//        ZingTouch.bind(target, 'tap', function (event) {
+//            console.log('Tap:','interval of ', event.detail.interval);
+//        }, false);
+
+//         ZingTouch.bind(target)
+//                .tap(function(event){
+//                    console.log('Tap:','interval of ', event.detail.interval);
+//                }, false);
+
+
+//        ZingTouch.bind(target, new ZingTouch.Tap(), function(event) {
+//            console.log('Tap:','interval of ', event.detail.interval);
+//        });
+//
+//        ZingTouch.bind(target, new ZingTouch.Tap(1000,2), function(event) {
+//            console.log('2 finger Tap:','interval of ', event.detail.interval);
+//        });
+//
+//        ZingTouch.bind(target, new ZingTouch.Tap(1000,3), function(event) {
+//            console.log('3 finger Tap:','interval of ', event.detail.interval);
+//        });
+//
+//        ZingTouch.bind(target, new ZingTouch.Tap(1000,4), function(event) {
+//            console.log('4 finger Tap:','interval of ', event.detail.interval);
+//        });
+//
+//        ZingTouch.bind(target, new ZingTouch.Pan(), function(event) {
+//            console.log('Panning:','interval of ', event.detail);
+//        });
+//
+//
+//        ZingTouch.bind(target, new ZingTouch.Pan(3), function(event) {
+//            console.log('3 finger Panning:','interval of ', event.detail);
+//        });
+//
+//        ZingTouch.bind(target, new ZingTouch.Pinch(), function(event) {
+//            console.log('Pinch:','distance ', event.detail.distance);
+//        });
+//
+//        ZingTouch.bind(target, new ZingTouch.Pan(2), function(event) {
+//            console.log('2 finger Panning:','interval of ', event.detail);
+//        });
+        ZingTouch.bind(target, new ZingTouch.Rotate(), function(event) {
+
+            var angle = event.detail;
+            console.log(event.detail)
+        });
+
+    }
+
+</script>
+</html>

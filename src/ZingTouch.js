@@ -9,6 +9,7 @@ import Gesture from './gestures/Gesture.js';
 import Expand from './gestures/Expand.js';
 import Pan from './gestures/Pan.js';
 import Pinch from './gestures/Pinch.js';
+import Rotate from './gestures/Rotate.js';
 import Tap from './gestures/Tap.js';
 import state from './core/state.js';
 import util from './core/util.js';
@@ -20,6 +21,7 @@ var ZingTouch = {
   Pan: Pan,
   Pinch: Pinch,
   Tap: Tap,
+  Rotate: Rotate,
 
   /**
    * Bind an element to a registered/unregistered gesture with multiple function signatures.
