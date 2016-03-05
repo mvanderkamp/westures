@@ -32,7 +32,6 @@ function arbiter(event) {
   if (!state.updateInputs(event)) {
     return;
   }
-
   //Retrieve the initial target from any one of the inputs
   var bindings = state.retrieveBindings(event.target);
   if (bindings.length > 0) {

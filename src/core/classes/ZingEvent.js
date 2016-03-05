@@ -20,9 +20,20 @@ class ZingEvent {
     //noinspection JSUnusedGlobalSymbols
     this.originalEvent = event;
     this.type = util.normalizeEvent(event.type);
-    if (touchIndex !== null && event.touches) {
-      this.x = event.touches[touchIndex].clientX;
-      this.y = event.touches[touchIndex].clientY;
+
+    //TODO: Normalize this better...
+    if (event.touches) {
+      if (event.touches[touchIndex]) {
+        this.x = event.touches[touchIndex].clientX;
+        this.y = event.touches[touchIndex].clientY;
+      } else if (event.changedTouches) {
+        for (var i = 0; i < event.changedTouches.length; i++) {
+          if (event.changedTouches[i].identifier === touchIndex) {
+            this.x = event.changedTouches[i].clientX;
+            this.y = event.changedTouches[i].clientY;
+          }
+        }
+      }
     } else {
       this.x = event.clientX;
       this.y = event.clientY;

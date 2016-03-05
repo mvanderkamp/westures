@@ -30,27 +30,24 @@ class Rotate extends Gesture {
 
       //Translate the current pivot point.
       var angle = getAngle(referencePivot.x, referencePivot.y, input.current.x + diffX, input.current.y + diffY);
+
+      for (var i = 0; i < inputs.length; i++) {
+        var progress = inputs[i].getGestureProgress(this.getId());
+        progress.previousAngle = angle;
+      }
+
       return {
-        detail: angle
+        angle: angle
       };
     }
 
     return null;
   }
-
 }
 
 function getAngle(pivotX, pivotY, x, y) {
   var angle = Math.atan2(y - pivotY, x - pivotX) * (180 / Math.PI);
-  if (angle === 0) {
-    console.log('err');
-  }
-
-  if (angle < 0) {
-    return 360 + angle;
-  } else {
-    return angle;
-  }
+  return 360 - ((angle < 0) ? (360 + angle) : angle);
 }
 
 function getRightMostEvent(input0, input1) {

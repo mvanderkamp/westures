@@ -90,7 +90,9 @@ var state = {
       state.resetInputs();
       return false;
     }
-
+    if(util.normalizeEvent(event.type) === 'end') {
+      console.log('here');
+    }
     if (event.touches) {
       for (var index in event.changedTouches) {
         if (event.changedTouches.hasOwnProperty(index) && Number.isInteger(parseInt(index))) {

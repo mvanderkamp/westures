@@ -36,10 +36,7 @@ class Input {
   update(event, touchIndex) {
     //noinspection JSUnusedGlobalSymbols
     this.last = this.current;
-    if (event.touches[touchIndex]) {
-      this.current = new ZingEvent(event, touchIndex);
-    }
-
+    this.current = new ZingEvent(event, touchIndex);
     this.velocity = this.calculateVelocity();
   }
 

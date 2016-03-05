@@ -43,14 +43,14 @@
 <script>
     function bindAreas(){
         var target = document.getElementById('tap');
-//        ZingTouch.bind(target, 'tap', function (event) {
-//            console.log('Tap:','interval of ', event.detail.interval);
-//        }, false);
+        ZingTouch.bind(target, 'tap', function (event) {
+            console.log('Tap:','interval of ', event.detail.interval);
+        }, false);
 
-//         ZingTouch.bind(target)
-//                .tap(function(event){
-//                    console.log('Tap:','interval of ', event.detail.interval);
-//                }, false);
+         ZingTouch.bind(target)
+                .tap(function(event){
+                    console.log('Tap:','interval of ', event.detail.interval);
+                }, false);
 
 
 //        ZingTouch.bind(target, new ZingTouch.Tap(), function(event) {
@@ -73,23 +73,29 @@
 //            console.log('Panning:','interval of ', event.detail);
 //        });
 //
-//
-//        ZingTouch.bind(target, new ZingTouch.Pan(3), function(event) {
-//            console.log('3 finger Panning:','interval of ', event.detail);
-//        });
-//
-//        ZingTouch.bind(target, new ZingTouch.Pinch(), function(event) {
-//            console.log('Pinch:','distance ', event.detail.distance);
-//        });
+
+
+        ZingTouch.bind(target, new ZingTouch.Pinch(), function(event) {
+            console.log('Pinch:','distance ', event.detail.distance);
+        });
+
+        ZingTouch.bind(target, new ZingTouch.Expand(), function(event) {
+            console.log('Expand:','distance ', event.detail.distance);
+        });
+
+
+        ZingTouch.bind(target, new ZingTouch.Pan(2), function(event) {
+            console.log('3 finger Panning:','interval of ', event.detail);
+        });
 //
 //        ZingTouch.bind(target, new ZingTouch.Pan(2), function(event) {
 //            console.log('2 finger Panning:','interval of ', event.detail);
 //        });
-        ZingTouch.bind(target, new ZingTouch.Rotate(), function(event) {
-
-            var angle = event.detail;
-            console.log(event.detail)
-        });
+//        ZingTouch.bind(target, new ZingTouch.Rotate(), function(event) {
+//
+//            var angle = event.detail;
+//            console.log(event.detail)
+//        });
 
     }
 
