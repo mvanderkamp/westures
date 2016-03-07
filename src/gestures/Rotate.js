@@ -9,16 +9,25 @@ import util from './../core/util.js';
 
 const DEFAULT_INPUTS = 2;
 
+/**
+ * Gesture object detailing Rotate functionality.
+ * @class Rotate
+ * @extends Gesture
+ */
 class Rotate extends Gesture {
   constructor() {
     super();
     this.type = 'rotate';
   }
 
-  start(inputs) {
-    //Track reference points and angle.
-  }
-
+  /**
+   * move() - Event hook for the move of a gesture
+   * @param {Array} inputs - The array of Inputs on the screen
+   * @returns {null} - Null if this event did not occur
+   * @returns {Object} obj.angle - The current angle along the unit circle
+   * @returns {Object} obj.distance - The angular distance travelled from the initial right most point.
+   * @returns {Object} obj.change - The change of angle between the last position and the current position.
+   */
   move(inputs) {
     if (state.numActiveInputs() === DEFAULT_INPUTS) {
 
@@ -29,15 +38,23 @@ class Rotate extends Gesture {
       var input = getRightMostEvent(inputs[0], inputs[1]);
 
       //Translate the current pivot point.
-      var angle = getAngle(referencePivot.x, referencePivot.y, input.current.x + diffX, input.current.y + diffY);
+      var currentAngle = util.getAngle(referencePivot.x, referencePivot.y, input.current.x + diffX, input.current.y + diffY);
 
-      for (var i = 0; i < inputs.length; i++) {
-        var progress = inputs[i].getGestureProgress(this.getId());
-        progress.previousAngle = angle;
+      var progress = input.getGestureProgress(this.getId());
+      if (!progress.initialAngle) {
+        progress.initialAngle = progress.previousAngle = currentAngle;
+        progress.distance = progress.change = 0;
+      } else {
+        progress.change = util.getAngularDistance(progress.previousAngle, currentAngle);
+        progress.distance = progress.distance + progress.change;
       }
 
+      progress.previousAngle = currentAngle;
+
       return {
-        angle: angle
+        angle: currentAngle,
+        distance: progress.distance,
+        change: progress.change
       };
     }
 
@@ -45,17 +62,8 @@ class Rotate extends Gesture {
   }
 }
 
-function getAngle(pivotX, pivotY, x, y) {
-  var angle = Math.atan2(y - pivotY, x - pivotX) * (180 / Math.PI);
-  return 360 - ((angle < 0) ? (360 + angle) : angle);
-}
-
 function getRightMostEvent(input0, input1) {
-  if (input0.initial.x < input1.initial.x) {
-    return input1;
-  } else {
-    return input0;
-  }
+  return (input0.initial.x < input1.initial.x) ? input1 : input0;
 }
 
 export default Rotate;

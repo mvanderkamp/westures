@@ -3,6 +3,9 @@
  * Various accessor and mutator functions to handle state and validation.
  */
 
+const CIRCLE_DEGREES = 360;
+const HALF_CIRCLE_DEGREES = 180;
+
 var util = {
 
   /**
@@ -69,6 +72,38 @@ var util = {
       x: ((x0 + x1) / 2),
       y: ((y0 + y1) / 2)
     };
+  },
+  /**
+   * Calculates the angle between the projection and an origin point.
+   *   |                (projectionX,projectionY)
+   *   |             /°
+   *   |          /
+   *   |       /
+   *   |    / θ
+   *   | /__________
+   *   ° (originX, originY)
+   * @param {number} originX
+   * @param {number} originY
+   * @param {number} projectionX
+   * @param {number} projectionY
+   * @returns {number} - Degree along the unit circle where the project lies
+   */
+  getAngle(originX, originY, projectionX, projectionY) {
+    var angle = Math.atan2(projectionY - originY, projectionX - originX) * ((HALF_CIRCLE_DEGREES) / Math.PI);
+    return CIRCLE_DEGREES - ((angle < 0) ? (CIRCLE_DEGREES + angle) : angle);
+  },
+  /**
+   * Calculates the angular distance in degrees between two angles along the unit circle
+   * @param {number} start - The starting point in degrees
+   * @param {number} end - The ending point in degrees
+   * @returns {number} The number of degrees between the starting point ant ending point. Negative
+   * degrees denote a clockwise direction, and positive a counter-clockwise direction.
+   */
+  getAngularDistance(start, end) {
+    var angle = (end - start) % CIRCLE_DEGREES;
+    var sign = (angle < 0) ? 1 : -1;
+    angle = Math.abs(angle);
+    return (angle > HALF_CIRCLE_DEGREES) ? sign * (CIRCLE_DEGREES - angle) : sign * angle;
   }
 };
 export default util;
