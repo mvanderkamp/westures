@@ -29,21 +29,24 @@ class Swipe extends Gesture {
     return null;
   }
 
-  //Store the last 10 events to get a good resolution of
   move(inputs) {
     if (this.numInputs === inputs.length) {
       var input = util.getRightMostInput(inputs);
       var progress = input.getGestureProgress(this.getId());
 
-      if (progress.currentMove) {
-        progress.lastMove = progress.currentMove;
+      if (!progress.moves) {
+        progress.moves = [];
       }
 
-      progress.currentMove = {
+      progress.moves.push({
         time: new Date().getTime(),
         x: input.current.x,
         y: input.current.y
-      };
+      });
+
+      if (progress.length > 10) {
+        progress.moves.shift();
+      }
     }
 
     return null;
@@ -61,22 +64,37 @@ class Swipe extends Gesture {
     var input = util.getRightMostInput(inputs);
     var progress = input.getGestureProgress(this.getId());
 
-    if (progress.currentMove && progress.lastMove) {
+    if (progress.moves.length > 2) {
 
       //Return if the input has not moved in MAX_REST_TIME ms.
-      if ((new Date().getTime()) - progress.currentMove.time > MAX_REST_TIME) {
+      var currentMove = progress.moves.pop();
+
+      if ((new Date().getTime()) - currentMove.time > MAX_REST_TIME) {
         return null;
       }
+ 
+      var lastMove;
+      var index = progress.moves.length - 1;
 
-      //Date is unreliable, so we distort the cases where the time is the same.
-      if (progress.lastMove.time === progress.currentMove.time) {
-        progress.currentMove.time += TIME_DISTORTION;
+      //Date is unreliable, so we retrieve the last move event where the time is not the same. .
+      while (index !== -1) {
+        if (progress.moves[index].time !== currentMove.time) {
+          lastMove = progress.moves[index];
+          break;
+        }
+
+        index--;
       }
 
-      var velocity = util.getVelocity(progress.lastMove.x, progress.lastMove.y, progress.lastMove.time,
-        progress.currentMove.x, progress.currentMove.y, progress.currentMove.time);
+      //If the date is REALLY unreliable, we apply a time distortion to the last event.
+      if (!lastMove) {
+        lastMove = progress.moves.pop();
+        lastMove.time += TIME_DISTORTION;
+      }
 
-      console.log(velocity);
+      var velocity = util.getVelocity(lastMove.x, lastMove.y, lastMove.time,
+        currentMove.x, currentMove.y, currentMove.time);
+
       if (velocity > ESCAPE_VELOCITY) {
         return {
           velocity: velocity
