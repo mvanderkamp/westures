@@ -75,18 +75,18 @@
 //
 
 
-        ZingTouch.bind(target, new ZingTouch.Pinch(), function(event) {
-            console.log('Pinch:','distance ', event.detail.distance);
-        });
-
-        ZingTouch.bind(target, new ZingTouch.Expand(), function(event) {
-            console.log('Expand:','distance ', event.detail.distance);
-        });
-
-
-        ZingTouch.bind(target, new ZingTouch.Pan(2), function(event) {
-            console.log('3 finger Panning:','interval of ', event.detail);
-        });
+//        ZingTouch.bind(target, new ZingTouch.Pinch(), function(event) {
+//            console.log('Pinch:','distance ', event.detail.distance);
+//        });
+//
+//        ZingTouch.bind(target, new ZingTouch.Expand(), function(event) {
+//            console.log('Expand:','distance ', event.detail.distance);
+//        });
+//
+//
+//        ZingTouch.bind(target, new ZingTouch.Pan(2), function(event) {
+//            console.log('3 finger Panning:','interval of ', event.detail);
+//        });
 //
 //        ZingTouch.bind(target, new ZingTouch.Pan(2), function(event) {
 //            console.log('2 finger Panning:','interval of ', event.detail);
@@ -97,6 +97,9 @@
 //            console.log(event.detail)
 //        });
 
+        ZingTouch.bind(target, new ZingTouch.Swipe(), function(event) {
+            console.log('Swipe:','velocity of ', event.detail);
+        });
     }
 
 </script>

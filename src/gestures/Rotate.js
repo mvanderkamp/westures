@@ -35,7 +35,7 @@ class Rotate extends Gesture {
       var currentPivot = util.getMidpoint(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
       var diffX = referencePivot.x - currentPivot.x;
       var diffY = referencePivot.y - currentPivot.y;
-      var input = getRightMostEvent(inputs[0], inputs[1]);
+      var input = util.getRightMostInput(inputs);
 
       //Translate the current pivot point.
       var currentAngle = util.getAngle(referencePivot.x, referencePivot.y, input.current.x + diffX, input.current.y + diffY);
@@ -60,10 +60,6 @@ class Rotate extends Gesture {
 
     return null;
   }
-}
-
-function getRightMostEvent(input0, input1) {
-  return (input0.initial.x < input1.initial.x) ? input1 : input0;
 }
 
 export default Rotate;

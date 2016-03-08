@@ -53,7 +53,7 @@ var util = {
    * @param x1
    * @param y0
    * @param y1
-   * @returns {Number} The numerical value between two points
+   * @returns {number} The numerical value between two points
    */
   distanceBetweenTwoPoints(x0, x1, y0, y1) {
     return Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0)));
@@ -104,6 +104,37 @@ var util = {
     var sign = (angle < 0) ? 1 : -1;
     angle = Math.abs(angle);
     return (angle > HALF_CIRCLE_DEGREES) ? sign * (CIRCLE_DEGREES - angle) : sign * angle;
+  },
+
+  /**
+   * Calculates the velocity of pixel/milliseconds between two points
+   * @param {Number} startX
+   * @param {Number} startY
+   * @param {Number} startTime
+   * @param {Number} endX
+   * @param {Number} endY
+   * @param {Number} endTime
+   * @returns {Number} velocity of px/time
+   */
+  getVelocity(startX, startY, startTime, endX, endY, endTime) {
+
+    var distance = this.distanceBetweenTwoPoints(startX, endX, startY, endY);
+    return (distance / (endTime - startTime));
+  },
+  /**
+   * Returns the input of the farthest right.
+   * @param inputs
+   */
+  getRightMostInput(inputs) {
+    var input = null;
+    var distance = Number.MIN_VALUE;
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[0].initial.x > distance) {
+        input = inputs[0];
+      }
+    }
+
+    return input;
   }
 };
 export default util;
