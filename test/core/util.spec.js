@@ -5,12 +5,14 @@
 
 import util from './../../src/core/util.js';
 
+/** @test {util} */
 describe('util', function () {
   it('should be instantiated', function () {
     expect(util).to.not.equal(null);
   });
 });
 
+/** @test {util.normalizeEvent} */
 describe('util.normalizeEvent', function () {
   it('should expect to emit start', function () {
     expect(util.normalizeEvent('mousedown')).to.equal('start');
@@ -32,6 +34,7 @@ describe('util.normalizeEvent', function () {
   });
 });
 
+/** @test {util.isWithin} */
 describe('util.isWithin', function () {
 
   it('should expect be true when points are within a tolerance', function () {
@@ -46,6 +49,7 @@ describe('util.isWithin', function () {
   });
 });
 
+/** @test {util.distanceBetweenTwoPoints} */
 describe('util.distanceBetweenTwoPoints', function () {
   it('should return a distance of 5', function () {
     expect(util.distanceBetweenTwoPoints(0, 4, 0, 3)).to.equal(5);
@@ -58,9 +62,9 @@ describe('util.distanceBetweenTwoPoints', function () {
   it('should return a distance of 0', function () {
     expect(util.distanceBetweenTwoPoints('foo', 0, 0, 0)).to.be.NaN;
   });
-
 });
 
+/** @test {util.getAngle} */
 describe('util.getAngle', function () {
 
   it('should return an angle of 45', function () {
@@ -74,9 +78,9 @@ describe('util.getAngle', function () {
   it('should return an angle of 180', function () {
     expect(util.getAngle(0, 0, -3, 0)).to.equal(180);
   });
-
 });
 
+/** @test {util.getAngularDistance} */
 describe('util.getAngularDistance', function () {
 
   it('should return an angle of 45', function () {
@@ -94,5 +98,4 @@ describe('util.getAngularDistance', function () {
   it('should return an angle of 0', function () {
     expect(util.getAngularDistance(360, 360)).to.equal(0);
   });
-
 });

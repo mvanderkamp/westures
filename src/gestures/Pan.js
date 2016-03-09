@@ -13,7 +13,6 @@ const DEFAULT_INPUTS = 1;
  * A Pan is defined as a normal movement in any direction on a screen. Pan gestures do not track start events and
  * can interact with pinch and expand gestures.
  * @class Pan
- * @extends Gesture
  */
 class Pan extends Gesture {
   /**

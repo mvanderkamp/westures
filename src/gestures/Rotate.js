@@ -12,7 +12,6 @@ const DEFAULT_INPUTS = 2;
 /**
  * A Rotate is defined as two inputs moving about a circle, maintaining a relatively equal radius.
  * @class Rotate
- * @extends Gesture
  */
 class Rotate extends Gesture {
   /**

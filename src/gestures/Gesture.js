@@ -5,12 +5,10 @@
 
 /**
  * The Gesture class that all gestures inherit from.
- * @class Gesture
  */
 class Gesture {
   /**
    * Constructor function for the Gesture class.
-   * @class Gesture
    */
   constructor() {
     /**

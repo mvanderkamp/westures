@@ -17,7 +17,6 @@ const MAX_PROGRESS_STACK = 10;
  * A swipe is defined as input(s) moving in the same direction in an relatively increasing velocity and leaving the screen
  * at some point before it drops below it's escape velocity.
  * @class Swipe
- * @extends Gesture
  */
 class Swipe extends Gesture {
 

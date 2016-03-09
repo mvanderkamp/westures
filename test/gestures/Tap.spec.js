@@ -4,6 +4,7 @@
  */
 import Tap from './../../src/gestures/Tap.js';
 
+/** @test {Tap} */
 describe('Tap', function () {
   it('should be instantiated', function () {
     expect(Tap).to.not.equal(null);

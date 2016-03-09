@@ -5,6 +5,7 @@
 import Binder from './../../../src/core/classes/Binder.js';
 import state from './../../../src/core/state.js';
 
+/** @test {Binder} */
 describe('Binder', function () {
   it('should be instantiated', function () {
     expect(Binder).to.not.equal(null);

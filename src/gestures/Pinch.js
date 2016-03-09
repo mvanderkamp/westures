@@ -13,7 +13,6 @@ const DEFAULT_INPUTS = 2;
  * A Pinch is defined as two inputs moving closer together from each other. This gesture does not
  * account for any start/end events to allow for the event to interact with the Pan and Pinch events.
  * @class Pinch
- * @extends Gesture
  */
 class Pinch extends Gesture {
 

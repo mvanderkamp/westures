@@ -13,7 +13,6 @@ const DEFAULT_MOVE_PX_TOLERANCE = 10;
 /**
  * A Tap is defined as a touchstart to touchend event in quick succession.
  * @class Tap
- * @extends Gesture
  */
 class Tap extends Gesture {
   /**

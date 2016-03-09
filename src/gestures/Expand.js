@@ -13,7 +13,6 @@ const DEFAULT_INPUTS = 2;
  * An Expand is defined as two inputs moving farther away from each other. This gesture does not
  * account for any start/end events to allow for the event to interact with the Pan and Pinch events.
  * @class Expand
- * @extends Gesture
  */
 class Expand extends Gesture {
   /**
