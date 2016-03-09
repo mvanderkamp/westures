@@ -5,6 +5,7 @@
 
 import util from '../util.js';
 
+const INITIAL_COORDINATE = 0;
 /**
  * An event wrapper that normalizes events across browsers and input devices
  * @class ZingEvent
@@ -18,10 +19,31 @@ class ZingEvent {
    */
   constructor(event, touchIndex) {
     //noinspection JSUnusedGlobalSymbols
+    /**
+     * The event object being wrapped
+     * @type {Event}
+     */
     this.originalEvent = event;
+
+    /**
+     * The type of event or null if it is an event not predetermined.
+     * @see util.normalizeEvent
+     * @type {String | null}
+     */
     this.type = util.normalizeEvent(event.type);
 
-    //TODO: Normalize this better...
+    /**
+     * The X coordinate for the event, based off of the client.
+     * @type {number}
+     */
+    this.x = INITIAL_COORDINATE;
+
+    /**
+     * The Y coordinate for the event, based off of the client.
+     * @type {number}
+     */
+    this.y = INITIAL_COORDINATE;
+
     if (event.touches) {
       if (event.touches[touchIndex]) {
         this.x = event.touches[touchIndex].clientX;

@@ -11,12 +11,12 @@ import util from './util.js';
 import ZingTouch from './../ZingTouch.js';
 
 /**
- * Responsible for :
+ * Function that handles event flow.
  * 1. Receiving all touch events in the window
  * 2. Determining which gestures are linked to the target element
  * 3. Negotiating with the Interpreter what event should occur
  * 4. Sending events to the dispatcher to emit events to the target.
- * @param event - The event emitted from the window object.
+ * @param {event} event - The event emitted from the window object.
  */
 function arbiter(event) {
 
@@ -32,6 +32,7 @@ function arbiter(event) {
   if (!state.updateInputs(event)) {
     return;
   }
+
   //Retrieve the initial target from any one of the inputs
   var bindings = state.retrieveBindings(event.target);
   if (bindings.length > 0) {

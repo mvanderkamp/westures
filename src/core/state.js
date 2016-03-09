@@ -29,7 +29,7 @@ var state = {
   /**
    * Creates a new binding with the given element and gesture object. If the gesture object provided is
    * unregistered, it's reference will be saved in as a binding.
-   * @param element {object} - The element the gesture is bound to.
+   * @param element {Object} - The element the gesture is bound to.
    * @param gesture {string/object} - Either a name of a registered gesture, or an unregistered Gesture object.
    * @param handler
    * @param capture
@@ -144,6 +144,7 @@ var state = {
 
 /**
  * Returns the key value of the gesture provided.
+ * @private
  * @param {Object} gesture - A Gesture object
  * @returns {null|String} - returns the key value of the valid gesture, null otherwise.
  */

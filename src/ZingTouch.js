@@ -15,6 +15,11 @@ import Tap from './gestures/Tap.js';
 import state from './core/state.js';
 import util from './core/util.js';
 
+/**
+ * @type {Object}
+ * @parameter {Gesture} Gesture
+ * @namespace ZingTouch
+ */
 var ZingTouch = {
   //Constructors
   Gesture: Gesture,
@@ -27,8 +32,11 @@ var ZingTouch = {
 
   /**
    * Bind an element to a registered/unregistered gesture with multiple function signatures.
-   * 1. bind(element) - chainable
-   * 2. bind(element, gesture, handler, [capture])
+   * @memberof ZingTouch
+   * @example
+   * bind(element) - chainable
+   * @example
+   * bind(element, gesture, handler, [capture])
    * @param {Object} element - The element object.
    * @param {String|Object} gesture - Gesture key, or a Gesture object.
    * @param {Function} handler - The function to execute when an event is emitted.
@@ -101,6 +109,7 @@ var ZingTouch = {
 
 /**
  * Determines whether the string is a registered gesture or the object is of type Gesture.
+ * @private
  * @param {string|Object} gesture - Either the gesture or gesture's key
  * @returns {boolean} - true if a valid gesture
  */

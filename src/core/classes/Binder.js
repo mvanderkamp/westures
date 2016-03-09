@@ -9,7 +9,15 @@ import state from './../state.js';
  * @class
  */
 class Binder {
+  /**
+   * Constructor function for Binder
+   * @param {Element} element - The element to bind gestures to.
+   */
   constructor(element) {
+    /**
+     * The element to bind gestures to
+     * @type {Element}
+     */
     this.element = element;
     for (var key in state.registeredGestures) {
       if (state.registeredGestures.hasOwnProperty(key)) {

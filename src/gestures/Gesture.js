@@ -4,9 +4,8 @@
  */
 
 /**
- * Gesture object detailing Tap functionality.
- * @class Tap
- * @extends Gesture
+ * Gesture object
+ * @class Gesture
  */
 class Gesture {
   constructor() {

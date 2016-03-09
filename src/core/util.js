@@ -6,6 +6,10 @@
 const CIRCLE_DEGREES = 360;
 const HALF_CIRCLE_DEGREES = 180;
 
+/**
+ * @type {Object}
+ * @namespace util
+ */
 var util = {
 
   /**

@@ -7,8 +7,8 @@ import state from './state.js';
 
 /**
  * Emits data at the target element if available, and bubbles up from the target. Called from the arbiter.
- * @param binding - An object of type Binding
- * @param data - The metadata to emit
+ * @param {Object} binding - An object of type Binding
+ * @param {Object} data - The metadata to emit
  */
 function dispatcher(binding, data) {
 
