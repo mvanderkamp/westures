@@ -4,18 +4,31 @@
  */
 
 /**
- * Gesture object detailing Tap functionality.
- * @class Tap
- * @extends Gesture
+ * The Gesture class that all gestures inherit from.
+ * @class Gesture
  */
 class Gesture {
+  /**
+   * Constructor function for the Gesture class.
+   * @class Gesture
+   */
   constructor() {
+    /**
+     * The generic string type of gesture.
+     * @type {('expand'|'pan'|'pinch'|'rotate'|'swipe'|'tap')}
+     */
     this.type = null;
+
+    /**
+     * The unique identifier for each gesture determined at bind time by the state object. This allows for
+     * distinctions across instance variables of Gestures that are created on the fly (e.g. Tap-1, Tap-2, etc).
+     * @type {String|null}
+     */
     this.id = null;
   }
 
   /**
-   * getType() - Returns the type of the gesture
+   * getType() - Returns the generic type of the gesture
    * @returns {String} - The type of gesture
    */
   getType() {
@@ -25,7 +38,7 @@ class Gesture {
 
   /**
    * Set the id of the gesture to be called during an event
-   * @param {Number} id
+   * @param {Number} id - The unique identifier of the gesture being created.
    */
   setId(id) {
     this.id = id;
@@ -34,7 +47,7 @@ class Gesture {
 
   /**
    * Return the id of the event. If the id does not exist, return the type.
-   * @return {string}
+   * @return {String}
    */
   getId() {
     return (this.id) ? this.id : this.type;
@@ -56,7 +69,8 @@ class Gesture {
   /**
    * move() - Event hook for the move of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
-   * @returns {null|Object} - Default of null   */
+   * @returns {null|Object} - Default of null
+   */
   move(inputs) {
     return null;
   }
@@ -71,7 +85,7 @@ class Gesture {
   end(inputs) {
     return null;
   }
-  /**/
+  /*end*/
 
 }
 

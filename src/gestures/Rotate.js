@@ -10,20 +10,31 @@ import util from './../core/util.js';
 const DEFAULT_INPUTS = 2;
 
 /**
- * Gesture object detailing Rotate functionality.
+ * A Rotate is defined as two inputs moving about a circle, maintaining a relatively equal radius.
  * @class Rotate
  * @extends Gesture
  */
 class Rotate extends Gesture {
+  /**
+   * Constructor function for the Rotate class.
+   */
   constructor() {
     super();
+
+    /**
+     * The type of the Gesture.
+     * @type {String}
+     */
     this.type = 'rotate';
   }
 
   /**
-   * move() - Event hook for the move of a gesture
+   * move() - Event hook for the move of a gesture. Obtains the midpoint of two the two inputs and
+   * calculates the projection of the right most input along a unit circle to obtain an angle. This angle is compared
+   * to the previously calculated angle to output the change of distance, and is compared to the initial angle to output
+   * the distance from the initial angle to the current angle.
    * @param {Array} inputs - The array of Inputs on the screen
-   * @returns {null} - Null if this event did not occur
+   * @returns {null} - null if this event did not occur
    * @returns {Object} obj.angle - The current angle along the unit circle
    * @returns {Object} obj.distance - The angular distance travelled from the initial right most point.
    * @returns {Object} obj.change - The change of angle between the last position and the current position.
@@ -60,6 +71,7 @@ class Rotate extends Gesture {
 
     return null;
   }
+  /*move*/
 }
 
 export default Rotate;

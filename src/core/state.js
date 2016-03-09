@@ -14,6 +14,8 @@ import util from './util.js';
 
 /**
  *  Contains the state of each Input, bound elements, and a list of registered gestures
+ * @type {Object}
+ * @namespace state
  */
 var state = {
   inputs: [],
@@ -28,11 +30,11 @@ var state = {
 
   /**
    * Creates a new binding with the given element and gesture object. If the gesture object provided is
-   * unregistered, it's reference will be saved in as a binding.
-   * @param element {object} - The element the gesture is bound to.
-   * @param gesture {string/object} - Either a name of a registered gesture, or an unregistered Gesture object.
-   * @param handler
-   * @param capture
+   * unregistered, it's reference will be saved in as a binding to be later referenced
+   * @param  {Object} element - The element the gesture is bound to.
+   * @param {String|Object} gesture  - Either a name of a registered gesture, or an unregistered Gesture object.
+   * @param {Function} handler - The function handler to be called when the event is emitted. Used to bind/unbind.
+   * @param {Boolean} capture - Whether the gesture is to be detected in the capture of bubble phase. Used to bind/unbind.
    * @returns {null|Binding} - null if the gesture could not be found, the new Binding otherwise
    */
   addBinding: function (element, gesture, handler, capture) {
@@ -59,7 +61,7 @@ var state = {
 
   /**
    * Retrieves the Binding by which an element is associated to.
-   * @param element
+   * @param {Element} element - The element to find bindings to.
    * @returns {Array} - An array of Bindings to which that element is bound
    */
   retrieveBindings: function (element) {
@@ -130,6 +132,10 @@ var state = {
   },
   /*resetInputs*/
 
+  /**
+   * Counts the number of active inputs at any given time.
+   * @returns {Number} - The number of active inputs.
+   */
   numActiveInputs: function () {
     var count = 0;
     for (var i = 0; i < this.inputs.length; i++) {
@@ -140,10 +146,12 @@ var state = {
 
     return count;
   }
+  /*numActiveInputs*/
 };
 
 /**
  * Returns the key value of the gesture provided.
+ * @private
  * @param {Object} gesture - A Gesture object
  * @returns {null|String} - returns the key value of the valid gesture, null otherwise.
  */

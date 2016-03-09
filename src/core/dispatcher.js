@@ -6,9 +6,10 @@
 import state from './state.js';
 
 /**
- * Emits data at the target element if available, and bubbles up from the target. Called from the arbiter.
- * @param binding - An object of type Binding
- * @param data - The metadata to emit
+ * Emits data at the target element if available, and bubbles up from the target to the parent until the
+ * document has been reached. Called from the arbiter.
+ * @param {Binding} binding - An object of type Binding
+ * @param {Object|null} data - The metadata computed by the gesture being emitted.
  */
 function dispatcher(binding, data) {
 
@@ -22,7 +23,7 @@ function dispatcher(binding, data) {
 
 /**
  * Emits the new event recursively until the document is reached.
- * @param {Node} target - Element object to emit the event to.
+ * @param {Element} target - Element object to emit the event to.
  * @param {Event} event - The CustomEvent to emit.
  */
 function emitEvent(target, event) {

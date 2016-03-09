@@ -9,7 +9,16 @@ import state from './../state.js';
  * @class
  */
 class Binder {
+  /**
+   * Constructor function for the Binder class.
+   * @param {Element} element - The element to bind gestures to.
+   * @returns {Object} - Returns 'this' to be chained over and over again.
+   */
   constructor(element) {
+    /**
+     * The element to bind gestures to.
+     * @type {Element}
+     */
     this.element = element;
     for (var key in state.registeredGestures) {
       if (state.registeredGestures.hasOwnProperty(key)) {
@@ -22,6 +31,7 @@ class Binder {
       }
     }
   }
+  /*constructor*/
 }
 
 export default Binder;
