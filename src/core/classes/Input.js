@@ -1,88 +1,89 @@
 /**
  * @file Input.js
- * Contains logic for the class Input
  */
 
 import ZingEvent from './ZingEvent.js';
 import util from './../util.js';
 
 /**
- * Tracks a single input and contains information about the current event, the previous event,
- * and various aggregated information about the input.
- * All inputs are destroyed on any touchend event.
+ * Tracks a single input and contains information about the current, previous, and initial events.
+ * Contains the progress of each Input and it's associated gestures.
  * @class Input
  */
 class Input {
 
   /**
-   * Constructor for the Input class.
-   * @param {Event} currentEvent - The Event object from the window
-   * @param {Number} touchIndex - The index which
+   * Constructor function for the Input class.
+   * @param {Event} event - The Event object from the window
+   * @param {Number} [index=0] - The identifier for each input event (taken from event.changedTouches)
    */
-  constructor(currentEvent, touchIndex) {
-    var event = new ZingEvent(currentEvent, touchIndex);
+  constructor(event, index) {
+    var currentEvent = new ZingEvent(event, index);
 
     /**
      * Holds the initial event object. A touchstart/mousedown event.
      * @type {ZingEvent}
      */
-    this.initial = event;
+    this.initial = currentEvent;
 
     /**
-     * Holds the current event taking place
+     * Holds the most current event for this Input, disregarding any other past, current, and
+     * future events that other Inputs participate in. e.g. This event ended in an 'end' event, but another Input
+     * is still participating in events -- this will not be updated in such cases.
      * @type {ZingEvent}
      */
-    this.current = event;
+    this.current = currentEvent;
 
     /**
-     * Holds the previous event that took place
+     * Holds the previous event that took place.
      * @type {ZingEvent}
      */
-    this.last = event;
+    this.previous = currentEvent;
 
+    //noinspection JSUnusedGlobalSymbols
     /**
      * Refers to the event.touches index, or 0 if a simple mouse event occurred.
      * @type {Number}
      */
-    this.index = (touchIndex) ? touchIndex : 0;
+    this.index = (index) ? index : 0;
 
     /**
-     * Stores metadata for each gesture using each gesture's uid.
+     * Stores internal state between events for each gesture based off of the gesture's id.
      * @type {Object}
      */
-    this.progress = {}; //Storage for metadata of each gesture.
+    this.progress = {};
   }
   /*constructor*/
 
   /**
    * Receives an input, updates the internal state of what the input has done next.
-   * @param {Event} event - The event object to wrap
-   * @param touchIndex - The index of inputs (usually from event.touches)
+   * @param {Event} event - The event object to wrap with a ZingEvent.
+   * @param {Number} touchIndex - The index of inputs (usually from event.touches)
    */
   update(event, touchIndex) {
     //noinspection JSUnusedGlobalSymbols
-    this.last = this.current;
+    this.previous = this.current;
     this.current = new ZingEvent(event, touchIndex);
   }
   /*update*/
 
   /**
-   * Returns the progress/state object of the specified gesture
-   * @param {String} type - The key for a gesture
-   * @return {Object} - The progress of the gesture. Creates an empty object if no progress has begun.
+   * Returns the progress of the specified gesture.
+   * @param {String} id - The identifier for each unique Gesture's progress.
+   * @returns {Object} - The progress of the gesture. Creates an empty object if no progress has begun.
    */
-  getGestureProgress(type) {
-    if (!this.progress[type]) {
-      this.progress[type] = {};
+  getGestureProgress(id) {
+    if (!this.progress[id]) {
+      this.progress[id] = {};
     }
 
-    return this.progress[type];
+    return this.progress[id];
   }
   /*getGestureProgress*/
 
   /**
-   * Returns the normalized current event type.
-   * @returns {string}
+   * Returns the normalized current Event's type.
+   * @returns {String} The current event's type ( start | move | end )
    */
   getCurrentEventType() {
     return this.current.type;
@@ -91,10 +92,10 @@ class Input {
 
   /**
    * Resets a progress/state object of the specified gesture.
-   * @param type
+   * @param {String} id - The identifier of the specified gesture
    */
-  resetProgress(type) {
-    this.progress[type] = {};
+  resetProgress(id) {
+    this.progress[id] = {};
   }
   /*resetProgress*/
 

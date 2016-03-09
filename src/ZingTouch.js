@@ -16,8 +16,8 @@ import state from './core/state.js';
 import util from './core/util.js';
 
 /**
+ * The global API interface for ZingTouch
  * @type {Object}
- * @parameter {Gesture} Gesture
  * @namespace ZingTouch
  */
 var ZingTouch = {
@@ -66,6 +66,7 @@ var ZingTouch = {
 
   /**
    * Bind an element and sets up actions to remove the binding once it has been emitted for the first time.
+   * @memberof ZingTouch
    * 1. bind(element) - chainable
    * 2. bind(element, gesture, handler, [capture])
    * @param {Object} element - The element object.
@@ -80,6 +81,7 @@ var ZingTouch = {
 
   /**
    * Unbinds an element from either the specified gesture or all if no element is specified.
+   * @memberof ZingTouch
    * @param {Element|String} element - Either the element to remove or a string key
    * @param {String} gesture - A String representing the gesture
    * @returns {Array} - An array of Gestures that were unbound to the element;

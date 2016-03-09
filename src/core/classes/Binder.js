@@ -10,12 +10,13 @@ import state from './../state.js';
  */
 class Binder {
   /**
-   * Constructor function for Binder
+   * Constructor function for the Binder class.
    * @param {Element} element - The element to bind gestures to.
+   * @returns {Object} - Returns 'this' to be chained over and over again.
    */
   constructor(element) {
     /**
-     * The element to bind gestures to
+     * The element to bind gestures to.
      * @type {Element}
      */
     this.element = element;
@@ -30,6 +31,7 @@ class Binder {
       }
     }
   }
+  /*constructor*/
 }
 
 export default Binder;

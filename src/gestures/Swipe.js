@@ -11,24 +11,42 @@ const DEFAULT_INPUTS = 1;
 const MAX_REST_TIME = 100;
 const ESCAPE_VELOCITY = 0.2;
 const TIME_DISTORTION = 100;
+const MAX_PROGRESS_STACK = 10;
 
 /**
- * Gesture object detailing Swipe functionality.
+ * A swipe is defined as input(s) moving in the same direction in an relatively increasing velocity and leaving the screen
+ * at some point before it drops below it's escape velocity.
  * @class Swipe
  * @extends Gesture
  */
 class Swipe extends Gesture {
+
+  /**
+   * Constructor function for the Swipe class.
+   */
   constructor(numInputs) {
     super();
+    /**
+     * The type of the Gesture
+     * @type {String}
+     */
     this.type = 'swipe';
+
+    /**
+     * The number of inputs to trigger a Swipe can be variable, and the maximum number being a factor of the browser.
+     * @type {Number}
+     */
     this.numInputs = (numInputs) ? numInputs : DEFAULT_INPUTS;
+
+    //TODO: Allow maxRestTime, escapeVelocity, and timeDistortion to be modifiable.
   }
 
-  start(inputs) {
-
-    return null;
-  }
-
+  /**
+   * Event hook for the move of a gesture. Captures an input's x/y coordinates and the time of it's event on
+   * a stack.
+   * @param inputs
+   * @returns {null}
+   */
   move(inputs) {
     if (this.numInputs === inputs.length) {
       var input = util.getRightMostInput(inputs);
@@ -44,18 +62,18 @@ class Swipe extends Gesture {
         y: input.current.y
       });
 
-      if (progress.length > 10) {
+      if (progress.length > MAX_PROGRESS_STACK) {
         progress.moves.shift();
       }
     }
 
     return null;
   }
-
   /*move*/
 
   /**
-   * end() - Event hook for the end of a gesture. This assumes that no other event can be started until all inputs are off of the screen.
+   * Determines if the input's history validates a swipe motion. Determines if it did not come to a complete stop (MAX_REST_TIME),
+   * and if it had enough of a velocity to be considered (ESCAPE_VELOCITY).
    * @param {Array} inputs - The array of Inputs on the screen
    * @returns {null} - null if the gesture is not to be emitted, Object with information otherwise.
    */
@@ -101,11 +119,8 @@ class Swipe extends Gesture {
         };
       }
     }
-
     return null;
-
   }
-
   /*end*/
 }
 

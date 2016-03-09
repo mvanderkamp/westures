@@ -11,8 +11,7 @@ import util from './util.js';
  * what event will be emitted. Called from the arbiter.
  * @param {Array} bindings - An array containing Binding objects that associate the element to an event handler.
  * @param {Object} event - The event emitted from the window.
- * @returns {null|Object} - null if a gesture will not be emitted, otherwise an Object with information
- * for the dispatcher.
+ * @returns {Object | null} - Returns an object containing a binding and metadata, or null if a gesture will not be emitted.
  */
 function interpreter(bindings, event) {
   var evType = util.normalizeEvent(event.type);
@@ -27,7 +26,7 @@ function interpreter(bindings, event) {
     }
   });
 
-  //TODO : Determine which gesture to emit, or all.
+  //TODO : Determine which gesture to emit, or all. For now, we return the bindings in order which they were bound.
   if (candidates.length > 0) {
     return candidates[0];
   } else {
