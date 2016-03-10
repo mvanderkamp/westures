@@ -110,6 +110,8 @@ var ZingTouch = {
 
       i--;
     }
+
+    return unbound;
   },
   /*unbind*/
 

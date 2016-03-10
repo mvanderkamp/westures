@@ -28,8 +28,8 @@ class Swipe extends Gesture {
    * @param {Number} [options.maxRestTime] - The maximum resting time a point has between it's last
    *  move and current move events.
    * @param {Number} [options.escapeVelocity] - The minimum velocity the input has to be at to emit a swipe.
-   * @param {Number} [options.timeDistortion] - A value of time in milliseconds to distort between events.
-   * @param {Number} [options.maxProgressStack]-The maximum amount of move events to keep
+   * @param {Number} [options.timeDistortion] - (EXPERIMENTAL) A value of time in milliseconds to distort between events.
+   * @param {Number} [options.maxProgressStack] - (EXPERIMENTAL)The maximum amount of move events to keep
    * track of for a swipe.
    */
   constructor(options) {
@@ -62,7 +62,7 @@ class Swipe extends Gesture {
     this.escapeVelocity = (options && options.escapeVelocity) ? options.escapeVelocity : DEFAULT_ESCAPE_VELOCITY;
 
     /**
-     * A value of time in milliseconds to distort between events. Browsers do not accurately
+     * (EXPERIMENTAL) A value of time in milliseconds to distort between events. Browsers do not accurately
      * measure time with the Date constructor in milliseconds, so consecutive events sometimes
      * display the same timestamp but different x/y coordinates. This will distort a previous time
      * in such cases by the timeDistortion's value.
@@ -71,7 +71,7 @@ class Swipe extends Gesture {
     this.timeDistortion = (options && options.timeDistortion) ? options.timeDistortion : DEFAULT_TIME_DISTORTION;
 
     /**
-     * The maximum amount of move events to keep track of for a swipe. This helps give a more
+     * (EXPERIMENTAL) The maximum amount of move events to keep track of for a swipe. This helps give a more
      * accurate estimate of the user's velocity.
      * @type {number}
      */

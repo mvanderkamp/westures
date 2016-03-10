@@ -51,7 +51,7 @@ class Pan extends Gesture {
         var progress = inputs[i].getGestureProgress(this.getId());
         progress.active = true;
         data[i] = {
-          distance: util.distanceBetweenTwoPoints(inputs[i].initial.x, inputs[i].current.x,
+          distanceFromOrigin: util.distanceBetweenTwoPoints(inputs[i].initial.x, inputs[i].current.x,
             inputs[i].initial.y, inputs[i].current.y)
         };
       }

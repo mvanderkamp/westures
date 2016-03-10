@@ -9,7 +9,7 @@
   "scripts": {
     "build": "webpack"
   },
-  "author": "",
+  "author": "ZingChart",
   "jscsConfig": {
     "maxErrors": null,
     "disallowTrailingWhitespace": false,
