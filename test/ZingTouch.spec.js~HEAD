@@ -4,11 +4,10 @@ import state from './../src/core/state.js';
 import Gesture from  './../src/gestures/Gesture.js';
 import Tap from  './../src/gestures/Tap.js';
 
-/**
- * Tests the user-facing API, ensuring the object functions while not exposing private members.
- */
+/** @test {ZingTouch} */
 describe('ZingTouch', function () {
 
+  /** @test {ZingTouch#constructor */
   it('should be instantiated', function () {
     expect(ZingTouch).to.not.equal(null);
   });
@@ -23,6 +22,7 @@ describe('ZingTouch', function () {
 
 });
 
+/** @test {ZingTouch.bind} */
 describe('ZingTouch.bind(element)', function () {
   it('should exist', function () {
     expect(ZingTouch.bind).to.exist;

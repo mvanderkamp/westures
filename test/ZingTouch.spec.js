@@ -63,6 +63,7 @@ describe('ZingTouch.bind(element)', function () {
   });
 });
 
+/** @test {ZingTouch.bind} */
 describe('ZingTouch.bind(element, gesture, handler, [capture])', function () {
   it('should exist', function () {
     expect(ZingTouch.bind).to.exist;
@@ -101,7 +102,8 @@ describe('ZingTouch.bind(element, gesture, handler, [capture])', function () {
 
 });
 
-describe('util.isValidGesture', function () {
+/** @test {isValidGesture} */
+describe('isValidGesture', function () {
   it('should return true for a valid key of a gesture', function () {
     expect(isValidGesture('tap')).to.be.true;
   });

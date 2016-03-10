@@ -35,12 +35,16 @@ var state = {
   },
 
   /**
-   * Creates a new binding with the given element and gesture object. If the gesture object provided is
-   * unregistered, it's reference will be saved in as a binding to be later referenced
+   * Creates a new binding with the given element and gesture object.
+   * If the gesture object provided is unregistered, it's reference will be saved in as a binding to
+   * be later referenced.
    * @param  {Element} element - The element the gesture is bound to.
-   * @param {String|Object} gesture  - Either a name of a registered gesture, or an unregistered Gesture object.
-   * @param {Function} handler - The function handler to be called when the event is emitted. Used to bind/unbind.
-   * @param {Boolean} capture - Whether the gesture is to be detected in the capture of bubble phase. Used to bind/unbind.
+   * @param {String|Object} gesture  - Either a name of a registered gesture, or an unregistered
+   *  Gesture object.
+   * @param {Function} handler - The function handler to be called when the event is emitted.
+   * Used to bind/unbind.
+   * @param {Boolean} capture - Whether the gesture is to be detected in the capture of bubble
+   * phase. Used to bind/unbind.
    * @param {Boolean} bindOnce - Option to bind once and only emit the event once.
    * @returns {null|Binding} - null if the gesture could not be found, the new Binding otherwise
    */
@@ -90,8 +94,10 @@ var state = {
    * @param {Object} event.touches - The TouchList representing the list of  all contact points
    * @param {Object} event.targetTouches - The TouchList representing the list of points whose
    * touchstart occurred in the same target element as the same event.
-   * @param {Object} event.changedTouches - The TouchList representing points that participated in the event
-   * @returns {boolean} - Returns true if the update was successful, false if the event cancelled the current gesture
+   * @param {Object} event.changedTouches - The TouchList representing points that participated
+   * in the event
+   * @returns {boolean} - Returns true if the update was successful, false if the event cancelled
+   * the current gesture
    */
   updateInputs: function (event) {
     //Return if all gestures did not originate from the same target
@@ -163,7 +169,8 @@ var state = {
  * @returns {null|String} - returns the key value of the valid gesture, null otherwise.
  */
 function getGestureType(gesture) {
-  if (typeof gesture === 'string' && (Object.keys(state.registeredGestures)).indexOf(gesture) > -1) {
+  if (typeof gesture === 'string' &&
+    (Object.keys(state.registeredGestures)).indexOf(gesture) > -1) {
     return gesture;
   } else if (gesture instanceof Gesture) {
     return gesture.getType();

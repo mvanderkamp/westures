@@ -2,12 +2,14 @@ import {state, getGestureType} from './../../src/core/state.js';
 import Tap from './../../src/gestures/Tap.js';
 import Gesture from './../../src/gestures/Gesture.js';
 
+/** @test {state} */
 describe('state', function () {
   it('should be instantiated', function () {
     expect(state).to.not.equal(null);
   });
 });
 
+/** @test {state.addBinding} */
 describe('state.addBinding', function () {
   beforeEach(function () {
     state.bindings = [];
@@ -60,6 +62,7 @@ describe('state.addBinding', function () {
   });
 });
 
+/** @test {getGestureType} */
 describe('getGestureType', function () {
 
   it('should return tap if the string is a valid binding', function () {
@@ -79,15 +82,4 @@ describe('getGestureType', function () {
     expect(getGestureType({})).to.be.null;
   });
 
-});//describe('state.retrieveBindings', function () {
-//
-//  it('should return an empty array if no bindings are associated to that element', function () {
-//
-//  });
-//
-//  it('should return an array with bindings that are a', function () {
-//
-//  });
-//});
-
-
+});

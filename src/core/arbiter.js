@@ -21,8 +21,8 @@ import ZingTouch from './../ZingTouch.js';
 function arbiter(event) {
 
   /*
-    Return if a gesture is not in progress and won't be.
-    Also catches the case where a previous event is in a partial state (2 finger pan, waits for both inputs to reach touchend)
+    Return if a gesture is not in progress and won't be. Also catches the case where a previous
+    event is in a partial state (2 finger pan, waits for both inputs to reach touchend)
    */
   if (state.inputs.length === 0 && util.normalizeEvent(event.type) !== 'start') {
     return;
@@ -43,7 +43,8 @@ function arbiter(event) {
     }
   }
 
-  //TODO : Need to catch the document.addEventListener case and to iterate through all the registered gestures.
+  //TODO : Need to catch the document.addEventListener case and to iterate
+  // through all the registered gestures.
 
   var endCount = 0;
   for (var i = 0; i < state.inputs.length; i++) {

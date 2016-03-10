@@ -48,7 +48,8 @@ var util = {
    * @returns {boolean} - true if the current coordinates are within the tolerance, false otherwise
    */
   isWithin(currentX, currentY, previousX, previousY, tolerance) {
-    return ((Math.abs(currentY - previousY) <= tolerance) && (Math.abs(currentX - previousX) <= tolerance));
+    return ((Math.abs(currentY - previousY) <= tolerance) &&
+    (Math.abs(currentX - previousX) <= tolerance));
   },
   /*isWithin*/
 
@@ -94,7 +95,8 @@ var util = {
    * @returns {number} - Degree along the unit circle where the project lies
    */
   getAngle(originX, originY, projectionX, projectionY) {
-    var angle = Math.atan2(projectionY - originY, projectionX - originX) * ((HALF_CIRCLE_DEGREES) / Math.PI);
+    var angle = Math.atan2(projectionY - originY, projectionX - originX) *
+      ((HALF_CIRCLE_DEGREES) / Math.PI);
     return CIRCLE_DEGREES - ((angle < 0) ? (CIRCLE_DEGREES + angle) : angle);
   },
   /**

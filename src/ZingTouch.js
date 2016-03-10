@@ -68,7 +68,8 @@ var ZingTouch = {
   /*bind*/
 
   /**
-   * Bind an element and sets up actions to remove the binding once it has been emitted for the first time.
+   * Bind an element and sets up actions to remove the binding once it has been emitted
+   * for the first time.
    * @memberof ZingTouch
    * 1. bind(element) - chainable
    * 2. bind(element, gesture, handler, [capture])
@@ -97,11 +98,13 @@ var ZingTouch = {
     while (i > -1) {
       if (gesture) {
         if (bindings[i].element === element) {
-          element.removeEventListener(bindings[i].gesture.getId(), bindings[i].handler, bindings[i].capture);
+          element.removeEventListener(bindings[i].gesture.getId(),
+            bindings[i].handler, bindings[i].capture);
           unbound.push(bindings.splice(i, 1));
         }
       } else {
-        element.removeEventListener(bindings[i].gesture.getId(), bindings[i].handler, bindings[i].capture);
+        element.removeEventListener(bindings[i].gesture.getId(),
+          bindings[i].handler, bindings[i].capture);
         unbound.push(bindings.splice(i, 1));
       }
 
@@ -129,8 +132,8 @@ var ZingTouch = {
   }, /*register*/
 
   /**
-   * Un-registers a gesture from ZingTouch's state such that it is no longer emittable. Unbinds all events that were registered
-   * with the type.
+   * Un-registers a gesture from ZingTouch's state such that it is no longer emittable.
+   * Unbinds all events that were registered with the type.
    * @param {String|Object} key - Gesture key that was used to register the object
    * @returns {Object} - The Gesture object that was unregistered or null if it could not be found.
    */
@@ -138,7 +141,8 @@ var ZingTouch = {
     for (var i = 0; i < state.bindings.length; i++) {
       var binding = state.bindings[i];
       if (binding.gesture.getType() === key) {
-        binding.element.removeEventListener(binding.gesture.getId(), binding.handler, binding.capture);
+        binding.element.removeEventListener(binding.gesture.getId(),
+          binding.handler, binding.capture);
       }
     }
 
@@ -157,7 +161,8 @@ var ZingTouch = {
  * @returns {boolean} - true if a valid gesture
  */
 function isValidGesture(gesture) {
-  return (typeof gesture === 'string' && (Object.keys(state.registeredGestures)).indexOf(gesture) > -1)
+  return (typeof gesture === 'string'
+    && (Object.keys(state.registeredGestures)).indexOf(gesture) > -1)
     || (gesture instanceof Gesture);
 }
 /*isValidGesture*/

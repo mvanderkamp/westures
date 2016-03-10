@@ -15,7 +15,8 @@ class Input {
   /**
    * Constructor function for the Input class.
    * @param {Event} event - The Event object from the window
-   * @param {Number} [index=0] - The identifier for each input event (taken from event.changedTouches)
+   * @param {Number} [index=0] - The identifier for each input event
+   * (taken from event.changedTouches)
    */
   constructor(event, index) {
     var currentEvent = new ZingEvent(event, index);
@@ -28,8 +29,8 @@ class Input {
 
     /**
      * Holds the most current event for this Input, disregarding any other past, current, and
-     * future events that other Inputs participate in. e.g. This event ended in an 'end' event, but another Input
-     * is still participating in events -- this will not be updated in such cases.
+     * future events that other Inputs participate in. e.g. This event ended in an 'end' event,
+     * but another Input is still participating in events -- this will not be updated in such cases.
      * @type {ZingEvent}
      */
     this.current = currentEvent;
@@ -70,7 +71,8 @@ class Input {
   /**
    * Returns the progress of the specified gesture.
    * @param {String} id - The identifier for each unique Gesture's progress.
-   * @returns {Object} - The progress of the gesture. Creates an empty object if no progress has begun.
+   * @returns {Object} - The progress of the gesture. Creates an empty object if no progress
+   * has begun.
    */
   getGestureProgress(id) {
     if (!this.progress[id]) {
