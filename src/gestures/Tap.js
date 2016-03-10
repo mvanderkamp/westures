@@ -17,12 +17,13 @@ const DEFAULT_MOVE_PX_TOLERANCE = 10;
 class Tap extends Gesture {
   /**
    * Constructor function for the Tap class.
-   * @param {Number} [maxDelay=300] - The maximum delay between a touchstart and
+   * @param {Object} options - The options object.
+   * @param {Number} [options.maxDelay=300] - The maximum delay between a touchstart and
    * touchend can be configured in milliseconds.
-   * @param {Number} [numInputs=1] - Number of inputs for the Tap gesture.
-   * @param {Number} [moveTolerance=10] - The tolerance in pixels a user can move.
+   * @param {Number} [options.numInputs=1] - Number of inputs for the Tap gesture.
+   * @param {Number} [options.moveTolerance=10] - The tolerance in pixels a user can move.
    */
-  constructor(maxDelay, numInputs, moveTolerance) {
+  constructor(options) {
     super();
 
     /**
@@ -37,14 +38,14 @@ class Tap extends Gesture {
      * the screen, and ends when ALL inputs are off the screen.
      * @type {Number}
      */
-    this.maxDelay = (maxDelay) ? maxDelay : DEFAULT_DELAY_MS;
+    this.maxDelay = (options && options.maxDelay) ? options.maxDelay : DEFAULT_DELAY_MS;
 
     /**
      * The number of inputs to trigger a Tap can be variable, and the maximum number being
      * a factor of the browser.
      * @type {Number}
      */
-    this.numInputs = (numInputs) ? numInputs : DEFAULT_INPUTS;
+    this.numInputs = (options && options.numInputs) ? options.numInputs : DEFAULT_INPUTS;
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end events. This
@@ -52,7 +53,7 @@ class Tap extends Gesture {
      * gesture to be triggered more easily.
      * @type {number}
      */
-    this.moveTolerance = (moveTolerance) ? moveTolerance : DEFAULT_MOVE_PX_TOLERANCE;
+    this.moveTolerance = (options && options.moveTolerance) ? options.moveTolerance : DEFAULT_MOVE_PX_TOLERANCE;
   }
   /*constructor*/
 

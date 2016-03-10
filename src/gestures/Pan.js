@@ -17,9 +17,10 @@ const DEFAULT_INPUTS = 1;
 class Pan extends Gesture {
   /**
    * Constructor function for the Pan class.
-   * @param {Number} [numInputs=1] - Number of inputs for the Pan gesture.
+   * @param {Object} options - The options object.
+   * @param {Number} [options.numInputs=1] - Number of inputs for the Pan gesture.
    */
-  constructor(numInputs) {
+  constructor(options) {
     super();
 
     /**
@@ -33,7 +34,7 @@ class Pan extends Gesture {
      * being a factor of the browser.
      * @type {Number}
      */
-    this.numInputs = (numInputs) ? numInputs : DEFAULT_INPUTS;
+    this.numInputs = (options && options.numInputs) ? options.numInputs : DEFAULT_INPUTS;
   }
   /*constructor*/
 

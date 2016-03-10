@@ -22,16 +22,17 @@ class Swipe extends Gesture {
 
   /**
    * Constructor function for the Swipe class.
-   * @param {Number} numInputs - The number of inputs to trigger a Swipe can be variable,
+   * @param {Object} options - The options object.
+   * @param {Number} [options.numInputs] - The number of inputs to trigger a Swipe can be variable,
    *  and the maximum number being a factor of the browser.
-   * @param {Number} maxRestTime - The maximum resting time a point has between it's last
+   * @param {Number} [options.maxRestTime] - The maximum resting time a point has between it's last
    *  move and current move events.
-   * @param {Number} escapeVelocity - The minimum velocity the input has to be at to emit a swipe.
-   * @param {Number} timeDistortion - A value of time in milliseconds to distort between events.
-   * @param {Number} maxProgressStack -The maximum amount of move events to keep
+   * @param {Number} [options.escapeVelocity] - The minimum velocity the input has to be at to emit a swipe.
+   * @param {Number} [options.timeDistortion] - A value of time in milliseconds to distort between events.
+   * @param {Number} [options.maxProgressStack]-The maximum amount of move events to keep
    * track of for a swipe.
    */
-  constructor(numInputs, maxRestTime, escapeVelocity, timeDistortion, maxProgressStack) {
+  constructor(options) {
     super();
     /**
      * The type of the Gesture
@@ -44,13 +45,13 @@ class Swipe extends Gesture {
      * a factor of the browser.
      * @type {Number}
      */
-    this.numInputs = (numInputs) ? numInputs : DEFAULT_INPUTS;
+    this.numInputs = (options && options.numInputs) ? options.numInputs : DEFAULT_INPUTS;
 
     /**
      * The maximum resting time a point has between it's last move and current move events.
      * @type {Number}
      */
-    this.maxRestTime = (maxRestTime) ? maxRestTime : DEFAULT_MAX_REST_TIME;
+    this.maxRestTime = (options && options.maxRestTime) ? options.maxRestTime : DEFAULT_MAX_REST_TIME;
 
     /**
      * The minimum velocity the input has to be at to emit a swipe. This is useful for determining
@@ -58,7 +59,7 @@ class Swipe extends Gesture {
      * a swipe and a pan gesture.
      * @type {number}
      */
-    this.escapeVelocity = (escapeVelocity) ? escapeVelocity : DEFAULT_ESCAPE_VELOCITY;
+    this.escapeVelocity = (options && options.escapeVelocity) ? options.escapeVelocity : DEFAULT_ESCAPE_VELOCITY;
 
     /**
      * A value of time in milliseconds to distort between events. Browsers do not accurately
@@ -67,14 +68,14 @@ class Swipe extends Gesture {
      * in such cases by the timeDistortion's value.
      * @type {number}
      */
-    this.timeDistortion = (timeDistortion) ? timeDistortion : DEFAULT_TIME_DISTORTION;
+    this.timeDistortion = (options && options.timeDistortion) ? options.timeDistortion : DEFAULT_TIME_DISTORTION;
 
     /**
      * The maximum amount of move events to keep track of for a swipe. This helps give a more
      * accurate estimate of the user's velocity.
      * @type {number}
      */
-    this.maxProgressStack = (maxProgressStack) ? maxProgressStack : DEFAULT_MAX_PROGRESS_STACK;
+    this.maxProgressStack = (options && options.maxProgressStack) ? options.maxProgressStack : DEFAULT_MAX_PROGRESS_STACK;
   }
 
   /**

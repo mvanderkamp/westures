@@ -16,7 +16,10 @@ describe('Tap', function () {
   });
 
   it('should return accept delay and number of inputs as parameters', function () {
-    let _tap = new Tap(2000, 2);
+    let _tap = new Tap({
+      maxDelay:  2000,
+      numInputs: 2
+    });
     expect(_tap.maxDelay).to.equal(2000);
     expect(_tap.numInputs).to.equal(2);
   });
