@@ -37,10 +37,10 @@ var ZingTouch = {
    * bind(element) - chainable
    * @example
    * bind(element, gesture, handler, [capture])
-   * @param {Object} element - The element object.
-   * @param {String|Object} gesture - Gesture key, or a Gesture object.
-   * @param {Function} handler - The function to execute when an event is emitted.
-   * @param {Boolean} capture - capture/bubble
+   * @param {Element} element - The element object.
+   * @param {String|Object} [gesture] - Gesture key, or a Gesture object.
+   * @param {Function} [handler] - The function to execute when an event is emitted.
+   * @param {Boolean} [capture] - capture/bubble
    * @returns {Object} - a chainable object that has the same function as bind.
    */
   bind(element, gesture, handler, capture) {
@@ -84,9 +84,22 @@ var ZingTouch = {
    * @memberof ZingTouch
    * @param {Element|String} element - Either the element to remove or a string key
    * @param {String} gesture - A String representing the gesture
-   * @returns {Array} - An array of Gestures that were unbound to the element;
+   * @returns {Array} - An array of Bindings that were unbound to the element;
    */
   unbind(element, gesture) {
+    var bindings = state.retrieveBindings(element);
+    var unbound = [];
+    for (var i = 0; i < bindings.length; i++) {
+      if (gesture) {
+        if (bindings[i].element === element) {
+          element.removeEventListener(bindings[i].gesture.getId(), bindings[i].handler, bindings[i].capture);
+          unbound.push(bindings[i]);
+        }
+      } else {
+        element.removeEventListener(bindings[i].gesture.getId(), bindings[i].handler, bindings[i].capture);
+        unbound.push(bindings[i]);
+      }
+    }
   },
   /*unbind*/
 
@@ -96,14 +109,35 @@ var ZingTouch = {
    * @param {Object} gesture - A gesture object
    */
   register(key, gesture) {
+    if (typeof key !== 'string') {
+      throw new Error('Parameter key is an invalid string');
+    }
+
+    if (!gesture instanceof Gesture) {
+      throw new Error('Parameter gesture is an invalid Gesture object');
+    }
+
+    gesture.setType(key);
+    state.registeredGestures[key] = gesture;
   }, /*register*/
 
   /**
-   * Un-registers a gesture from ZingTouch's state such that it is no longer emittable.
-   * @param {String|Object} gesture - Gesture key, or a Gesture object.
+   * Un-registers a gesture from ZingTouch's state such that it is no longer emittable. Unbinds all events that were registered
+   * with the type.
+   * @param {String|Object} key - Gesture key that was used to register the object
    * @returns {Object} - The Gesture object that was unregistered or null if it could not be found.
    */
-  unregister(gesture) {
+  unregister(key) {
+    for (var i = 0; i < state.bindings.length; i++) {
+      var binding = state.bindings[i];
+      if (binding.gesture.getType() === key) {
+        binding.element.removeEventListener(binding.gesture.getId(), binding.handler, binding.capture);
+      }
+    }
+
+    var registeredGesture = state.registeredGestures[key];
+    delete state.registeredGestures[key];
+    return registeredGesture;
   }
   /*unregister*/
 

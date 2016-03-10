@@ -12,10 +12,10 @@ class Gesture {
    * Constructor function for the Gesture class.
    * @class Gesture
    */
-  constructor() {
+  constructor(type) {
     /**
-     * The generic string type of gesture.
-     * @type {('expand'|'pan'|'pinch'|'rotate'|'swipe'|'tap')}
+     * The generic string type of gesture ('expand'|'pan'|'pinch'|'rotate'|'swipe'|'tap').
+     * @type {String}
      */
     this.type = null;
 
@@ -26,6 +26,15 @@ class Gesture {
      */
     this.id = null;
   }
+
+  /**
+   * Set the type of the gesture to be called during an event
+   * @param {String} type - The unique identifier of the gesture being created.
+   */
+  setType(type) {
+    this.type = type;
+  }
+  /*setId*/
 
   /**
    * getType() - Returns the generic type of the gesture

@@ -5,9 +5,11 @@
 
 import Binding from './classes/Binding.js';
 import Input from './classes/Input.js';
+import Expand from './../gestures/Expand.js';
 import Pan from './../gestures/Pan.js';
 import Pinch from './../gestures/Pinch.js';
-import Expand from './../gestures/Expand.js';
+import Rotate from './../gestures/Rotate.js';
+import Swipe from './../gestures/Swipe.js';
 import Tap from './../gestures/Tap.js';
 import Gesture from './../gestures/Gesture.js';
 import util from './util.js';
@@ -24,8 +26,12 @@ var state = {
 
   //Functions with keys to be iterated and used in the interpreter.
   registeredGestures: {
-    tap: new Tap(),
-    pan: new Pan()
+    expand: new Expand(),
+    pan: new Pan(),
+    pinch: new Pinch(),
+    rotate: new Rotate(),
+    swipe: new Swipe(),
+    tap: new Tap()
   },
 
   /**

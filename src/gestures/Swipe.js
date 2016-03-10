@@ -114,7 +114,7 @@ class Swipe extends Gesture {
     var input = util.getRightMostInput(inputs);
     var progress = input.getGestureProgress(this.getId());
 
-    if (progress.moves.length > 2) {
+    if (progress.moves && progress.moves.length > 2) {
 
       //Return if the input has not moved in maxRestTime ms.
       var currentMove = progress.moves.pop();
