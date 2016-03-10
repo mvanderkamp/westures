@@ -17,7 +17,7 @@ function dispatcher(binding, data) {
   var newEvent = new CustomEvent(binding.gesture.getId(), {
     detail: data
   });
-  emitEvent(binding.element, newEvent);
+  emitEvent(binding.element, newEvent, binding);
 }
 /*dispatcher*/
 
@@ -26,10 +26,15 @@ function dispatcher(binding, data) {
  * @param {Element} target - Element object to emit the event to.
  * @param {Event} event - The CustomEvent to emit.
  */
-function emitEvent(target, event) {
+function emitEvent(target, event, binding) {
   target.dispatchEvent(event);
   if (target.parentNode && target.parentNode !== document) {
-    emitEvent(target.parentNode, event);
+    emitEvent(target.parentNode, event, binding);
+  } else {
+    if (binding.bindOnce) {
+      ZingTouch.unbind(binding.element, binding.gesture.getType());
+    }
+
   }
 }
 /*emitEvent*/

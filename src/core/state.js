@@ -37,13 +37,14 @@ var state = {
   /**
    * Creates a new binding with the given element and gesture object. If the gesture object provided is
    * unregistered, it's reference will be saved in as a binding to be later referenced
-   * @param  {Object} element - The element the gesture is bound to.
+   * @param  {Element} element - The element the gesture is bound to.
    * @param {String|Object} gesture  - Either a name of a registered gesture, or an unregistered Gesture object.
    * @param {Function} handler - The function handler to be called when the event is emitted. Used to bind/unbind.
    * @param {Boolean} capture - Whether the gesture is to be detected in the capture of bubble phase. Used to bind/unbind.
+   * @param {Boolean} bindOnce - Option to bind once and only emit the event once.
    * @returns {null|Binding} - null if the gesture could not be found, the new Binding otherwise
    */
-  addBinding: function (element, gesture, handler, capture) {
+  addBinding: function (element, gesture, handler, capture, bindOnce) {
     if (typeof gesture === 'string') {
       gesture = this.registeredGestures[gesture];
       if (typeof gesture === 'undefined') {
@@ -56,7 +57,7 @@ var state = {
     }
 
     if (gesture instanceof Gesture) {
-      var binding = new Binding(element, gesture, handler, capture);
+      var binding = new Binding(element, gesture, handler, capture, bindOnce);
       this.bindings.push(binding);
       element.addEventListener(gesture.getId(), handler, capture);
       return binding;

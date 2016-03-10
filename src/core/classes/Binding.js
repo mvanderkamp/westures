@@ -15,8 +15,9 @@ class Binding {
    * @param {Gesture} gesture - A instance of the Gesture type.
    * @param {Function} handler - The function handler to execute when a gesture is recognized on the associated element.
    * @param {Boolean} [capture=false] - A boolean signifying if the event is to be emitted during the capture or bubble phase.
+   * @param {Boolean} [bindOnce=false] - A boolean flag used for the bindOnce syntax.
    */
-  constructor(element, gesture, handler, capture) {
+  constructor(element, gesture, handler, capture, bindOnce) {
     /**
      * The element to associate the gesture to.
      * @type {Element}
@@ -39,6 +40,14 @@ class Binding {
      * @type {Boolean}
      */
     this.capture = (capture) ? capture : false;
+
+    //noinspection JSUnusedGlobalSymbols
+    /**
+     * A boolean flag used for the bindOnce syntax.
+     * @type {Boolean}
+     */
+    this.bindOnce = (bindOnce) ? bindOnce : false;
+
   }
   /*constructor*/
 }

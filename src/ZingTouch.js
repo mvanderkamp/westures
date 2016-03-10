@@ -41,15 +41,18 @@ var ZingTouch = {
    * @param {String|Object} [gesture] - Gesture key, or a Gesture object.
    * @param {Function} [handler] - The function to execute when an event is emitted.
    * @param {Boolean} [capture] - capture/bubble
+   * @param {Boolean} [bindOnce = false] - Option to bind once and only emit the event once.
    * @returns {Object} - a chainable object that has the same function as bind.
    */
-  bind(element, gesture, handler, capture) {
+  bind(element, gesture, handler, capture, bindOnce) {
+    bindOnce = (bindOnce) ? bindOnce : false;
+
     if (element && typeof element.tagName === 'undefined') {
       throw new Error('Parameter element is an invalid object.');
     }
 
     if (!gesture) {
-      return new Binder(element);
+      return new Binder(element, bindOnce);
     } else {
       if (!isValidGesture(gesture)) {
         throw new Error('Parameter gesture is invalid.');
@@ -59,7 +62,7 @@ var ZingTouch = {
         throw new Error('Parameter handler is invalid.');
       }
 
-      state.addBinding(element, gesture, handler, capture);
+      state.addBinding(element, gesture, handler, capture, bindOnce);
     }
   },
   /*bind*/
@@ -76,6 +79,7 @@ var ZingTouch = {
    * @returns {Object} - a chainable object that has the same function as bind.
    */
   bindOnce(element, gesture, handler, capture) {
+    this.bind(element, gesture, handler, capture, true);
   },
   /*bindOnce*/
 
@@ -89,16 +93,19 @@ var ZingTouch = {
   unbind(element, gesture) {
     var bindings = state.retrieveBindings(element);
     var unbound = [];
-    for (var i = 0; i < bindings.length; i++) {
+    var i = bindings.length - 1;
+    while (i > -1) {
       if (gesture) {
         if (bindings[i].element === element) {
           element.removeEventListener(bindings[i].gesture.getId(), bindings[i].handler, bindings[i].capture);
-          unbound.push(bindings[i]);
+          unbound.push(bindings.splice(i, 1));
         }
       } else {
         element.removeEventListener(bindings[i].gesture.getId(), bindings[i].handler, bindings[i].capture);
-        unbound.push(bindings[i]);
+        unbound.push(bindings.splice(i, 1));
       }
+
+      i--;
     }
   },
   /*unbind*/

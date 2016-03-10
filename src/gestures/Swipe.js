@@ -76,8 +76,8 @@ class Swipe extends Gesture {
   /**
    * Event hook for the move of a gesture. Captures an input's x/y coordinates and the time of it's event on
    * a stack.
-   * @param inputs
-   * @returns {null}
+   * @param {Array} inputs - The array of Inputs on the screen.
+   * @returns {null} - Swipe does not emit from a move.
    */
   move(inputs) {
     if (this.numInputs === inputs.length) {
