@@ -23,15 +23,12 @@ var util = {
       case 'mousedown' :
       case 'touchstart' :
         return 'start';
-        break;
       case 'mousemove' :
       case 'touchmove' :
         return 'move';
-        break;
       case 'mouseup' :
       case 'touchend' :
         return 'end';
-        break;
       default :
         return null;
     }

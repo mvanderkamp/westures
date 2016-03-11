@@ -321,6 +321,17 @@ new Rotate()
 
 # Contributing
 
+Build dependencies : 
+
+* Build Tool: [Webpack](https://webpack.github.io/)
+	* `npm install -g webpack` 
+* Documentation Generator: [ESDoc](https://esdoc.org/)
+ 	* `npm install -g esdoc` 
+
+### npm scripts
+* `npm run build:dev` - Builds the unminified library with webpack
+* `npm run build:prod` - Builds the minified library with webpack
+* `npm run docs` - Builds the docs with esdocs
 
 # License
 

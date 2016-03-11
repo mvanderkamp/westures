@@ -1,5 +1,15 @@
-var webpackConfig = require('./webpack.config.js');
+var webpack = require('webpack');
 var path = require('path');
+var plugins = [];
+var minimize = process.argv.indexOf('--minimize') !== -1;
+
+if (minimize) {
+  plugins.push(new webpack.optimize.UglifyJsPlugin({
+    sourceMap: true,
+    mangle: true
+  }));
+}
+
 module.exports = {
   entry: './src/core/main.js',
   output: {
@@ -16,5 +26,6 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: plugins
 };

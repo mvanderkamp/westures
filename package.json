@@ -7,7 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "build:dev": "webpack",
+    "build:prod": "webpack --minimize",
+    "docs":"esdoc -c esdoc.json"
   },
   "author": "ZingChart",
   "jscsConfig": {
