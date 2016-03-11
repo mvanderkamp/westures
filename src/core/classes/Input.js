@@ -15,11 +15,11 @@ class Input {
   /**
    * Constructor function for the Input class.
    * @param {Event} event - The Event object from the window
-   * @param {Number} [index=0] - The identifier for each input event
+   * @param {Number} [identifier=0] - The identifier for each input event
    * (taken from event.changedTouches)
    */
-  constructor(event, index) {
-    var currentEvent = new ZingEvent(event, index);
+  constructor(event, identifier) {
+    var currentEvent = new ZingEvent(event, identifier);
 
     /**
      * Holds the initial event object. A touchstart/mousedown event.
@@ -46,7 +46,7 @@ class Input {
      * Refers to the event.touches index, or 0 if a simple mouse event occurred.
      * @type {Number}
      */
-    this.index = (index) ? index : 0;
+    this.identifier = (identifier) ? identifier : 0;
 
     /**
      * Stores internal state between events for each gesture based off of the gesture's id.
@@ -59,12 +59,12 @@ class Input {
   /**
    * Receives an input, updates the internal state of what the input has done next.
    * @param {Event} event - The event object to wrap with a ZingEvent.
-   * @param {Number} touchIndex - The index of inputs (usually from event.touches)
+   * @param {Number} touchIdentifier - The index of inputs (usually from event.touches)
    */
-  update(event, touchIndex) {
+  update(event, touchIdentifier) {
     //noinspection JSUnusedGlobalSymbols
     this.previous = this.current;
-    this.current = new ZingEvent(event, touchIndex);
+    this.current = new ZingEvent(event, touchIdentifier);
   }
   /*update*/
 

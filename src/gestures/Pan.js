@@ -57,6 +57,7 @@ class Pan extends Gesture {
       }
     }
 
+    console.log(data);
     return data;
   }
   /*move*/

@@ -139,6 +139,10 @@ var util = {
     }
 
     return input;
+  },
+
+  isInteger(value) {
+    return (typeof value === 'number') && (value % 1 === 0);
   }
 };
 export default util;

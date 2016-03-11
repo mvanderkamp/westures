@@ -19,7 +19,7 @@ function interpreter(bindings, event) {
   var evType = util.normalizeEvent(event.type);
   var candidates = [];
   bindings.forEach(function (binding) {
-    let result = binding.gesture[evType](state.inputs);
+    let result = binding.gesture[evType](state.inputs, state);
     if (result) {
       candidates.push({
         binding: binding,
@@ -30,11 +30,12 @@ function interpreter(bindings, event) {
 
   //TODO : Determine which gesture to emit, or all. For now, we return the bindings
   // in order which they were bound.
-  if (candidates.length > 0) {
-    return candidates[0];
-  } else {
-    return null;
-  }
+  //if (candidates.length > 0) {
+  //  return candidates[0];
+  //} else {
+  //  return null;
+  //}
+  return candidates;
 
 }
 

@@ -19,10 +19,9 @@ import ZingTouch from './../ZingTouch.js';
  * @param {Event} event - The event emitted from the window object.
  */
 function arbiter(event) {
-
   /*
-    Return if a gesture is not in progress and won't be. Also catches the case where a previous
-    event is in a partial state (2 finger pan, waits for both inputs to reach touchend)
+   Return if a gesture is not in progress and won't be. Also catches the case where a previous
+   event is in a partial state (2 finger pan, waits for both inputs to reach touchend)
    */
   if (state.inputs.length === 0 && util.normalizeEvent(event.type) !== 'start') {
     return;
@@ -37,9 +36,9 @@ function arbiter(event) {
   var bindings = state.retrieveBindings(event.target);
   if (bindings.length > 0) {
     event.preventDefault();
-    var gesture = interpreter(bindings, event);
-    if (gesture) {
-      dispatcher(gesture.binding, gesture.data);
+    var gestures = interpreter(bindings, event);
+    for (var i = 0; i < gestures.length; i++) {
+      dispatcher(gestures[i].binding, gestures[i].data);
     }
   }
 

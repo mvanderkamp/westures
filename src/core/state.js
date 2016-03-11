@@ -108,19 +108,20 @@ var state = {
 
     if (event.touches) {
       for (var index in event.changedTouches) {
-        if (event.changedTouches.hasOwnProperty(index) && Number.isInteger(parseInt(index))) {
-          var id = event.changedTouches[index].identifier;
+        if (event.changedTouches.hasOwnProperty(index) && util.isInteger((parseInt(index)))) {
+          var identifier = event.changedTouches[index].identifier;
           if (util.normalizeEvent(event.type) === 'start') {
-            if (this.inputs[id]) {
+            if (findInputById(this.inputs, identifier)) {
               //This should restart the inputs and cancel out any gesture.
               this.resetInputs();
               return false;
             } else {
-              this.inputs.push(new Input(event, id));
+              this.inputs.push(new Input(event, identifier));
             }
           } else {
-            if (this.inputs[id]) {
-              this.inputs[id].update(event, id);
+            var input = findInputById(this.inputs, identifier);
+            if (input) {
+              input.update(event, identifier);
             }
           }
         }
@@ -179,5 +180,13 @@ function getGestureType(gesture) {
   }
 }
 /*getGestureType*/
+
+function findInputById(inputs, identifier) {
+  for (var i = 0; i < inputs.length; i++) {
+    if (inputs[i].identifier === identifier) {
+      return inputs[i];
+    }
+  }
+}
 
 export {state as default, state, getGestureType};
