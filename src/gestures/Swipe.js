@@ -116,7 +116,6 @@ class Swipe extends Gesture {
    * @returns {null} - null if the gesture is not to be emitted, Object with information otherwise.
    */
   end(inputs) {
-
     var input = util.getRightMostInput(inputs);
     var progress = input.getGestureProgress(this.getId());
 

@@ -39,6 +39,18 @@ class Pan extends Gesture {
   /*constructor*/
 
   /**
+   * start() - Event hook for the start of a gesture. Marks each input as active, so it can invalidate any end
+   * events.
+   * @param inputs
+   */
+  start(inputs) {
+    for (var i = 0; i < inputs.length; i++) {
+      var progress = inputs[i].getGestureProgress(this.getId());
+      progress.active = true;
+    }
+  }
+
+  /**
    * move() - Event hook for the move of a gesture. Fired whenever the input length is met,
    * and keeps a boolean flag that the gesture has fired at least once.
    * @param {Array} inputs - The array of Inputs on the screen
@@ -49,7 +61,10 @@ class Pan extends Gesture {
       var data = {};
       for (var i = 0; i < inputs.length; i++) {
         var progress = inputs[i].getGestureProgress(this.getId());
-        progress.active = true;
+        if (!progress.active) {
+          return null;
+        }
+
         data[i] = {
           distanceFromOrigin: util.distanceBetweenTwoPoints(inputs[i].initial.x, inputs[i].current.x,
             inputs[i].initial.y, inputs[i].current.y)
@@ -57,7 +72,6 @@ class Pan extends Gesture {
       }
     }
 
-    console.log(data);
     return data;
   }
   /*move*/
@@ -74,7 +88,7 @@ class Pan extends Gesture {
     for (var i = 0; i < inputs.length; i++) {
       var progress = inputs[i].getGestureProgress(this.getId());
       if (progress.active) {
-        state.resetInputs();
+        progress.active = false;
         break;
       }
     }

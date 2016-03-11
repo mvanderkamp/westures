@@ -59,7 +59,7 @@ var util = {
    * @returns {number} The numerical value between two points
    */
   distanceBetweenTwoPoints(x0, x1, y0, y1) {
-    return Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0)));
+    return (Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0)))).toFixed(3);
   },
 
   /**
