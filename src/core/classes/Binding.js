@@ -2,8 +2,6 @@
  * @file Binding.js
  */
 
-import state from './../state.js';
-
 /**
  * Responsible for creating a binding between an element and a gesture.
  * @class Binding

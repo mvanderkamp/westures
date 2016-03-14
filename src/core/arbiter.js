@@ -6,9 +6,7 @@
 import dispatcher from './dispatcher.js';
 import Input from './classes/Input.js';
 import interpreter from './interpreter.js';
-import state from './state.js';
 import util from './util.js';
-import ZingTouch from './../ZingTouch.js';
 
 /**
  * Function that handles event flow, negotiating with the interpreter, and dispatcher.
@@ -17,8 +15,9 @@ import ZingTouch from './../ZingTouch.js';
  * 3. Negotiating with the Interpreter what event should occur.
  * 4. Sending events to the dispatcher to emit events to the target.
  * @param {Event} event - The event emitted from the window object.
+ * @param {Object} state - The state object of the current listener.
  */
-function arbiter(event) {
+function arbiter(event, state) {
   /*
    Return if a gesture is not in progress and won't be. Also catches the case where a previous
    event is in a partial state (2 finger pan, waits for both inputs to reach touchend)
@@ -36,7 +35,7 @@ function arbiter(event) {
   var bindings = state.retrieveBindings(event.target);
   if (bindings.length > 0) {
     event.preventDefault();
-    var gestures = interpreter(bindings, event);
+    var gestures = interpreter(bindings, event, state);
     for (var i = 0; i < gestures.length; i++) {
       dispatcher(gestures[i].binding, gestures[i].data);
     }

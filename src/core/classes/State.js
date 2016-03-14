@@ -1,38 +1,61 @@
 /**
- * @file state.js
- * Contains information about state in ZingTouch and is responsible for updates based of events
+ * @file State.js
  */
 
-import Binding from './classes/Binding.js';
-import Input from './classes/Input.js';
-import Expand from './../gestures/Expand.js';
-import Pan from './../gestures/Pan.js';
-import Pinch from './../gestures/Pinch.js';
-import Rotate from './../gestures/Rotate.js';
-import Swipe from './../gestures/Swipe.js';
-import Tap from './../gestures/Tap.js';
-import Gesture from './../gestures/Gesture.js';
-import util from './util.js';
+import Gesture from './../../gestures/Gesture.js';
+import Expand from './../../gestures/Expand.js';
+import Pan from './../../gestures/Pan.js';
+import Pinch from './../../gestures/Pinch.js';
+import Rotate from './../../gestures/Rotate.js';
+import Swipe from './../../gestures/Swipe.js';
+import Tap from './../../gestures/Tap.js';
+
+import Binding from './Binding.js';
+import Input from './Input.js';
+import util from './../util.js';
 
 /**
- *  Contains the state of each Input, bound elements, and a list of registered gestures
- * @type {Object}
- * @namespace state
+ * Creates an object related to a Listener's state, and contains helper methods to update and clean up different
+ * states.
  */
-var state = {
-  inputs: [],
-  bindings: [],
-  numGestures: 0,
+class State {
 
-  //Functions with keys to be iterated and used in the interpreter.
-  registeredGestures: {
-    expand: new Expand(),
-    pan: new Pan(),
-    pinch: new Pinch(),
-    rotate: new Rotate(),
-    swipe: new Swipe(),
-    tap: new Tap()
-  },
+  /**
+   * Constructor for the State class.
+   */
+  constructor() {
+
+    /**
+     * An array of current and recently inactive Input objects related to a gesture.
+     * @type {Input}
+     */
+    this.inputs = [];
+
+    /**
+     * An array of Binding objects; relations between elements, their gestures, and the handlers.
+     * @type {Binding}
+     */
+    this.bindings = [];
+
+    /**
+     * The number of gestures registered to this Listener
+     * @type {Number}
+     */
+    this.numRegisteredGestures = 0;
+
+    /**
+     * A key/value map all the registered gestures for the listener. Note: Can only have one gesture registered to one key.
+     * @type {Object}
+     */
+    this.registeredGestures = {
+      expand: new Expand(),
+      pan: new Pan(),
+      pinch: new Pinch(),
+      rotate: new Rotate(),
+      swipe: new Swipe(),
+      tap: new Tap()
+    };
+  }
 
   /**
    * Creates a new binding with the given element and gesture object.
@@ -48,7 +71,7 @@ var state = {
    * @param {Boolean} bindOnce - Option to bind once and only emit the event once.
    * @returns {null|Binding} - null if the gesture could not be found, the new Binding otherwise
    */
-  addBinding: function (element, gesture, handler, capture, bindOnce) {
+  addBinding(element, gesture, handler, capture, bindOnce) {
     if (typeof gesture === 'string') {
       gesture = this.registeredGestures[gesture];
       if (typeof gesture === 'undefined') {
@@ -57,7 +80,7 @@ var state = {
     } else if (!(gesture instanceof Gesture)) {
       return null;
     } else {
-      gesture.setId(this.numGestures++);
+      gesture.setId(this.numRegisteredGestures++);
     }
 
     if (gesture instanceof Gesture) {
@@ -66,8 +89,7 @@ var state = {
       element.addEventListener(gesture.getId(), handler, capture);
       return binding;
     }
-
-  },
+  }
   /*addBinding*/
 
   /**
@@ -75,7 +97,7 @@ var state = {
    * @param {Element} element - The element to find bindings to.
    * @returns {Array} - An array of Bindings to which that element is bound
    */
-  retrieveBindings: function (element) {
+  retrieveBindings(element) {
     var matches = [];
     for (var i = 0; i < this.bindings.length; i++) {
       if (this.bindings[i].element === element) {
@@ -84,22 +106,15 @@ var state = {
     }
 
     return matches;
-  },
+  }
   /*retrieveBindings*/
 
   /**
-   * Updates the inputs based on the current event.
-   * Creates new Inputs if none exist, or more inputs were received.
-   * @param {Event} event -The event object
-   * @param {Object} event.touches - The TouchList representing the list of  all contact points
-   * @param {Object} event.targetTouches - The TouchList representing the list of points whose
-   * touchstart occurred in the same target element as the same event.
-   * @param {Object} event.changedTouches - The TouchList representing points that participated
-   * in the event
-   * @returns {boolean} - Returns true if the update was successful, false if the event cancelled
-   * the current gesture
+   * Updates the inputs with new information based upon a new event being fired.
+   * @param {Event} event - The event being captured
+   * @returns {boolean} - returns true for a successful update, false if the event is invalid.
    */
-  updateInputs: function (event) {
+  updateInputs(event) {
     //Return if all gestures did not originate from the same target
     if (event.touches && event.touches.length !== event.targetTouches.length) {
       state.resetInputs();
@@ -135,22 +150,22 @@ var state = {
     }
 
     return true;
-  },
+  }
   /*updateInputs*/
 
   /**
    * Removes all inputs from the state, allowing for a new gesture.
    */
-  resetInputs: function () {
+  resetInputs() {
     this.inputs = [];
-  },
+  }
   /*resetInputs*/
 
   /**
    * Counts the number of active inputs at any given time.
    * @returns {Number} - The number of active inputs.
    */
-  numActiveInputs: function () {
+  numActiveInputs() {
     var count = 0;
     for (var i = 0; i < this.inputs.length; i++) {
       if (this.inputs[i].current.type !== 'end') {
@@ -161,32 +176,24 @@ var state = {
     return count;
   }
   /*numActiveInputs*/
-};
 
-/**
- * Returns the key value of the gesture provided.
- * @private
- * @param {Object} gesture - A Gesture object
- * @returns {null|String} - returns the key value of the valid gesture, null otherwise.
- */
-function getGestureType(gesture) {
-  if (typeof gesture === 'string' &&
-    (Object.keys(state.registeredGestures)).indexOf(gesture) > -1) {
-    return gesture;
-  } else if (gesture instanceof Gesture) {
-    return gesture.getType();
-  } else {
-    return null;
-  }
 }
-/*getGestureType*/
-
+/**
+ * Searches through each input, comparing the browser's identifier key for touches, to the stored one
+ * in each input
+ * @param {Array} inputs - The array of inputs in state.
+ * @param {String} identifier - The identifier the browser has assigned.
+ * @returns {Input} - The input object with the corresponding identifier, null if it did not find any.
+ */
 function findInputById(inputs, identifier) {
   for (var i = 0; i < inputs.length; i++) {
     if (inputs[i].identifier === identifier) {
       return inputs[i];
     }
   }
-}
 
-export {state as default, state, getGestureType};
+  return null;
+}
+/*findInputById*/
+
+export default State;

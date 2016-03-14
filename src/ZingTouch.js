@@ -13,7 +13,8 @@ import Swipe from './gestures/Swipe.js';
 import Tap from './gestures/Tap.js';
 
 /**
- * The global API interface for ZingTouch
+ * The global API interface for ZingTouch. Contains a constructor for the Listener Object,
+ * and constructors for each predefined Gesture.
  * @type {Object}
  * @namespace ZingTouch
  */

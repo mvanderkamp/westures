@@ -3,8 +3,6 @@
  * Contains logic for the dispatcher
  */
 
-import state from './state.js';
-
 /**
  * Emits data at the target element if available, and bubbles up from the target to the parent
  * until the document has been reached. Called from the arbiter.

@@ -4,7 +4,6 @@
  */
 
 import Gesture from './Gesture.js';
-import state from './../core/state.js';
 import util from './../core/util.js';
 
 const DEFAULT_INPUTS = 2;

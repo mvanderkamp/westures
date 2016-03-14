@@ -1,7 +1,6 @@
 /**
  * @file Binder.js
  */
-import state from './../state.js';
 
 /**
  * A chainable object that contains a single element to be bound upon.
@@ -13,9 +12,10 @@ class Binder {
    * Constructor function for the Binder class.
    * @param {Element} element - The element to bind gestures to.
    * @param {Boolean} bindOnce - Option to bind once and only emit the event once.
+   * @param {Object} state - The state of the Listener that is being bound to.
    * @returns {Object} - Returns 'this' to be chained over and over again.
    */
-  constructor(element, bindOnce) {
+  constructor(element, bindOnce, state) {
     /**
      * The element to bind gestures to.
      * @type {Element}

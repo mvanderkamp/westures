@@ -3,7 +3,6 @@
  * Contains logic for the interpreter
  */
 
-import state from './state.js';
 import util from './util.js';
 
 /**
@@ -12,10 +11,11 @@ import util from './util.js';
  * @param {Array} bindings - An array containing Binding objects that associate the
  * element to an event handler.
  * @param {Object} event - The event emitted from the window.
+ * @param {Object} state - The state object of the current listener.
  * @returns {Object | null} - Returns an object containing a binding and metadata,
  * or null if a gesture will not be emitted.
  */
-function interpreter(bindings, event) {
+function interpreter(bindings, event, state) {
   var evType = util.normalizeEvent(event.type);
   var candidates = [];
   bindings.forEach(function (binding) {

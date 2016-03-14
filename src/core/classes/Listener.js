@@ -1,12 +1,12 @@
 /**
- * @file ZingTouch.js
- * Main object containing API methods and Gesture constructors
+ * @file Listener.js
  */
 
 import Binder from './Binder.js';
 import Binding from './Binding.js';
+import Gesture from './../../gestures/Gesture.js';
 import arbiter from './../arbiter.js';
-import state from './../state.js';
+import State from './State.js';
 import util from './../util.js';
 
 /**
@@ -23,10 +23,16 @@ class Listener {
    * @param {Element} element - The element to capture all window events in that region to feed into ZingTouch.
    */
   constructor(element) {
+    /**
+     * The internal state object for a Listener. Keeps track of registered gestures, inputs, and events.
+     * @type {State}
+     */
+    this.state = new State();
     var eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
     for (var i = 0; i < eventNames.length; i++) {
+      let state = this.state;
       element.addEventListener(eventNames[i], function (e) {
-        arbiter(e);
+        arbiter(e, state);
       });
     }
   }
@@ -52,9 +58,14 @@ class Listener {
     }
 
     if (!gesture) {
-      return new Binder(element, bindOnce);
+      return new Binder(element, bindOnce, this.state);
     } else {
-      if (!isValidGesture(gesture)) {
+
+      if (
+        (typeof gesture === 'string' && Object.keys(this.state.registeredGestures).indexOf(gesture) === -1)
+      ||
+        (typeof gesture === 'object' && !(gesture instanceof Gesture))
+      ) {
         throw new Error('Parameter gesture is invalid.');
       }
 
@@ -62,7 +73,7 @@ class Listener {
         throw new Error('Parameter handler is invalid.');
       }
 
-      state.addBinding(element, gesture, handler, capture, bindOnce);
+      this.state.addBinding(element, gesture, handler, capture, bindOnce);
     }
   }
 
@@ -131,44 +142,30 @@ class Listener {
     }
 
     gesture.setType(key);
-    state.registeredGestures[key] = gesture;
+    this.state.registeredGestures[key] = gesture;
   }
 
   /*register*/
 
   /**
-   * Un-registers a gesture from ZingTouch's state such that it is no longer emittable.
+   * Un-registers a gesture from the Listener's state such that it is no longer emittable.
    * Unbinds all events that were registered with the type.
    * @param {String|Object} key - Gesture key that was used to register the object
    * @returns {Object} - The Gesture object that was unregistered or null if it could not be found.
    */
   unregister(key) {
-    for (var i = 0; i < state.bindings.length; i++) {
-      var binding = state.bindings[i];
+    for (var i = 0; i < this.state.bindings.length; i++) {
+      var binding = this.state.bindings[i];
       if (binding.gesture.getType() === key) {
         binding.element.removeEventListener(binding.gesture.getId(),
           binding.handler, binding.capture);
       }
     }
 
-    var registeredGesture = state.registeredGestures[key];
-    delete state.registeredGestures[key];
+    var registeredGesture = this.state.registeredGestures[key];
+    delete this.state.registeredGestures[key];
     return registeredGesture;
   }
 }
 
-/**
- * Determines whether the string is a registered gesture or the object is of type Gesture.
- * @private
- * @param {string|Object} gesture - Either the gesture or gesture's key
- * @returns {boolean} - true if a valid gesture
- */
-function isValidGesture(gesture) {
-  return (typeof gesture === 'string'
-    && (Object.keys(state.registeredGestures)).indexOf(gesture) > -1)
-    || (gesture instanceof Gesture);
-}
-/*isValidGesture*/
-
-//export {ZingTouch as default, ZingTouch, isValidGesture};
 export default Listener;

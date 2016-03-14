@@ -4,7 +4,6 @@
  */
 
 import Gesture from './Gesture.js';
-import state from './../core/state.js';
 import util from './../core/util.js';
 
 const DEFAULT_INPUTS = 2;
@@ -34,6 +33,7 @@ class Rotate extends Gesture {
    * and is compared to the initial angle to output the distance from the initial angle to the
    * current angle.
    * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current listener.
    * @returns {null} - null if this event did not occur
    * @returns {Object} obj.angle - The current angle along the unit circle
    * @returns {Object} obj.distance - The angular distance travelled from the initial right
@@ -41,7 +41,7 @@ class Rotate extends Gesture {
    * @returns {Object} obj.change - The change of angle between the last position and
    * the current position.
    */
-  move(inputs) {
+  move(inputs, state) {
     if (state.numActiveInputs() === DEFAULT_INPUTS) {
 
       var referencePivot = util.getMidpoint(inputs[0].initial.x, inputs[1].initial.x,
