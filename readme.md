@@ -115,7 +115,7 @@ myRegion.bind(touchArea, 'swipe', function(e){
 
 The shaded area in blue shows the area where ZingTouch will now listen for events such as touchstart, touchmove, touchend, etc.
 
-![Region](./region.png)
+![Region](http://demos.zingchart.com/assets/zingtouch-docs/region.png)
 
 
 But humans aren't perfect. Suppose the element #toucharea were to listen for the `Swipe` gesture. The tracking of the window events will stop when the user reaches the edges of #toucharea. But what if the user didn't finish until 10-50px *outside* the element? Regions are here to help.
@@ -182,7 +182,7 @@ new ZingTouch.Tap({
 
 ### Swipe
 
-![Swipe Gesture](./swipe.gif)
+![Swipe Gesture](http://demos.zingchart.com/assets/zingtouch-docs/swipe.gif)
 
 A swipe is detected when the user touches the screen and moves in a relatively increasing velocity, leaving the screen at some point before it drops below a certain velocity.
 
