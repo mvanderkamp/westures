@@ -1,5 +1,5 @@
 /**
- * @file Listener.js
+ * @file Region.js
  */
 
 import Binder from './Binder.js';
@@ -14,17 +14,17 @@ import util from './../util.js';
  * the element itself, or as big as the document itself. The more specific an area, the better performant the
  * overall application will perform. Contains API methods to bind/unbind specific elements
  * to corresponding gestures. Also contains the ability to register/unregister new gestures.
- * @class Listener
+ * @class Region
  */
-class Listener {
+class Region {
 
   /**
-   * Constructor function for the Listener class.
+   * Constructor function for the Region class.
    * @param {Element} element - The element to capture all window events in that region to feed into ZingTouch.
    */
   constructor(element) {
     /**
-     * The internal state object for a Listener. Keeps track of registered gestures, inputs, and events.
+     * The internal state object for a Region. Keeps track of registered gestures, inputs, and events.
      * @type {State}
      */
     this.state = new State();
@@ -148,7 +148,7 @@ class Listener {
   /*register*/
 
   /**
-   * Un-registers a gesture from the Listener's state such that it is no longer emittable.
+   * Un-registers a gesture from the Region's state such that it is no longer emittable.
    * Unbinds all events that were registered with the type.
    * @param {String|Object} key - Gesture key that was used to register the object
    * @returns {Object} - The Gesture object that was unregistered or null if it could not be found.
@@ -168,4 +168,4 @@ class Listener {
   }
 }
 
-export default Listener;
+export default Region;

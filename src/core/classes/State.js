@@ -15,7 +15,7 @@ import Input from './Input.js';
 import util from './../util.js';
 
 /**
- * Creates an object related to a Listener's state, and contains helper methods to update and clean up different
+ * Creates an object related to a Region's state, and contains helper methods to update and clean up different
  * states.
  */
 class State {
@@ -38,7 +38,7 @@ class State {
     this.bindings = [];
 
     /**
-     * The number of gestures registered to this Listener
+     * The number of gestures registered to this Region
      * @type {Number}
      */
     this.numRegisteredGestures = 0;

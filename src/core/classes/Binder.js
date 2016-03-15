@@ -12,7 +12,7 @@ class Binder {
    * Constructor function for the Binder class.
    * @param {Element} element - The element to bind gestures to.
    * @param {Boolean} bindOnce - Option to bind once and only emit the event once.
-   * @param {Object} state - The state of the Listener that is being bound to.
+   * @param {Object} state - The state of the Region that is being bound to.
    * @returns {Object} - Returns 'this' to be chained over and over again.
    */
   constructor(element, bindOnce, state) {

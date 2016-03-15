@@ -3,7 +3,7 @@
  * Main object containing API methods and Gesture constructors
  */
 
-import Listener from './core/classes/Listener.js';
+import Listener from './core/classes/Region.js';
 import Gesture from './gestures/Gesture.js';
 import Expand from './gestures/Expand.js';
 import Pan from './gestures/Pan.js';
@@ -13,7 +13,7 @@ import Swipe from './gestures/Swipe.js';
 import Tap from './gestures/Tap.js';
 
 /**
- * The global API interface for ZingTouch. Contains a constructor for the Listener Object,
+ * The global API interface for ZingTouch. Contains a constructor for the Region Object,
  * and constructors for each predefined Gesture.
  * @type {Object}
  * @namespace ZingTouch
