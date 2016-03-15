@@ -4,7 +4,7 @@ A modern JavaScript touch gesture library. Allows developers to configure pre-ex
 
 ### Quick Links
 * Demos
-* Codebase Documentation
+* [Codebase Documentation](http://zingchart.github.io/zingtouch/docs/index.html)
 * CDN
 
 ### Table of Contents
