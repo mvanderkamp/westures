@@ -533,7 +533,7 @@ We use the [Airbnb](https://github.com/airbnb/javascript) code style guide for o
 
 **Comments and Documentation**
 
-* We follow [JSDoc](http://usejsdoc.org/) guidelines but utilize [ESDoc](https://esdoc.org/) to output documentation. we find ESDoc to be friendlier with ES6/class structured codebases.
+* We follow [JSDoc](http://usejsdoc.org/) guidelines but utilize [ESDoc](https://esdoc.org/) to output documentation. We find ESDoc to be friendlier with ES6/class structured codebases.
 
 **Testing**
 
