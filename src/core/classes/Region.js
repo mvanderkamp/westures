@@ -61,12 +61,12 @@ class Region {
       return new Binder(element, bindOnce, this.state);
     } else {
 
-      if (
-        (typeof gesture === 'string' && Object.keys(this.state.registeredGestures).indexOf(gesture) === -1)
-      ||
-        (typeof gesture === 'object' && !(gesture instanceof Gesture))
-      ) {
-        throw new Error('Parameter gesture is invalid.');
+      if (typeof gesture === 'string' && Object.keys(this.state.registeredGestures).indexOf(gesture) === -1) {
+        throw new Error('Parameter ', gesture, ' is not a registered gesture');
+      }
+
+      if (typeof gesture === 'object' && !(gesture instanceof Gesture)) {
+        throw new Error('Parameter ', gesture, 'is not of a Gesture type');
       }
 
       if (typeof handler !== 'function') {
@@ -107,15 +107,9 @@ class Region {
     var unbound = [];
     var i = bindings.length - 1;
     while (i > -1) {
-      if (gesture) {
-        if (bindings[i].element === element) {
-          element.removeEventListener(bindings[i].gesture.getId(),
-            bindings[i].handler, bindings[i].capture);
-          unbound.push(bindings.splice(i, 1));
-        }
-      } else {
-        element.removeEventListener(bindings[i].gesture.getId(),
-          bindings[i].handler, bindings[i].capture);
+
+      if ((gesture && (bindings[i].element === element)) && !gesture) {
+        element.removeEventListener(bindings[i].gesture.getId(), bindings[i].handler, bindings[i].capture);
         unbound.push(bindings.splice(i, 1));
       }
 
