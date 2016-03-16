@@ -3,7 +3,7 @@
  * Main object containing API methods and Gesture constructors
 */
 
-import Listener from './core/classes/Region.js';
+import Region from './core/classes/Region.js';
 import Gesture from './gestures/Gesture.js';
 import Expand from './gestures/Expand.js';
 import Pan from './gestures/Pan.js';
@@ -20,7 +20,7 @@ import Tap from './gestures/Tap.js';
  */
 var ZingTouch = {
   //Constructors
-  Listener: Listener,
+  Region: Region,
   Gesture: Gesture,
   Expand: Expand,
   Pan: Pan,
