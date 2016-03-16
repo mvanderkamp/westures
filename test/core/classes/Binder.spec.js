@@ -3,7 +3,7 @@
  * Tests Binder class
  */
 import Binder from './../../../src/core/classes/Binder.js';
-import state from './../../../src/core/state.js';
+import State from './../../../src/core/classes/State.js';
 
 /** @test {Binder} */
 describe('Binder', function () {
@@ -12,14 +12,16 @@ describe('Binder', function () {
   });
 
   it('should return a new object with a valid element parameter', function () {
-    var myBinder = new Binder(document.body);
+    var myState = new State();
+    var myBinder = new Binder(document.body, false, myState);
     expect(myBinder).to.not.equal.null;
     expect(myBinder.element).to.equal(document.body);
   });
 
   it('should return a chainable object with all of the current registered gestures', function () {
-    var myBinder = new Binder(document.body);
-    var gestures = Object.keys(state.registeredGestures);
+    var myState = new State();
+    var myBinder = new Binder(document.body, false, myState);
+    var gestures = Object.keys(myState.registeredGestures);
 
     for (var key in myBinder) {
       if (key !== 'element') {

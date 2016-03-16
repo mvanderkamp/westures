@@ -1,7 +1,7 @@
 /**
  * @file ZingTouch.js
  * Main object containing API methods and Gesture constructors
- */
+*/
 
 import Listener from './core/classes/Region.js';
 import Gesture from './gestures/Gesture.js';

@@ -12,7 +12,7 @@ describe('Gesture', function () {
 });
 
 /** @test {Gesture.getType} */
-describe('Gesture.getType()', function () {
+describe('Gesture.getType', function () {
   it('should return null for a generic gesture', function () {
     var _gesture = new Gesture();
     expect(_gesture.getType()).to.equal(null);
