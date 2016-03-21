@@ -102,6 +102,12 @@ zt.bind(myElement, 'tap', function(e){
 
 ### Region
 
+```
+new Region(element, [capture])
+```
+ * element - The element to set the listener upon
+ * capture - Whether the region listens for captures or bubbles.
+
 Regions specify an area to listen for all window events. ZingTouch needs to listen to all window events in order to determine if a gesture is recognized. You can reuse regions for multiple elements and gesture bindings. They simply specify an area where to listen for gestures.
 
 Suppose you had an element that you wanted to track gestures on, and we set the region on that element along with binding it to a gesture.
