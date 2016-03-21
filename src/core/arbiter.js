@@ -32,7 +32,7 @@ function arbiter(event, state) {
   }
 
   //Retrieve the initial target from any one of the inputs
-  var bindings = state.retrieveBindings(event.target);
+  var bindings = state.retrieveBindings(event.currentTarget);
   if (bindings.length > 0) {
     event.preventDefault();
     var gestures = interpreter(bindings, event, state);
