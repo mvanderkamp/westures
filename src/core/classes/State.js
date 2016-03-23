@@ -9,6 +9,7 @@ import Pinch from './../../gestures/Pinch.js';
 import Rotate from './../../gestures/Rotate.js';
 import Swipe from './../../gestures/Swipe.js';
 import Tap from './../../gestures/Tap.js';
+import Press from './../../gestures/Press.js';
 
 import Binding from './Binding.js';
 import Input from './Input.js';
@@ -53,7 +54,8 @@ class State {
       pinch: new Pinch(),
       rotate: new Rotate(),
       swipe: new Swipe(),
-      tap: new Tap()
+      tap: new Tap(),
+      press: new Press()
     };
   }
 
@@ -86,7 +88,6 @@ class State {
     if (gesture instanceof Gesture) {
       var binding = new Binding(element, gesture, handler, capture, bindOnce);
       this.bindings.push(binding);
-      console.log(gesture.getId());
       element.addEventListener(gesture.getId(), handler, capture);
       return binding;
     }
