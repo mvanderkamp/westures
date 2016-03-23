@@ -21,9 +21,16 @@ function interpreter(bindings, event, state) {
   bindings.forEach(function (binding) {
     let result = binding.gesture[evType](state.inputs, state);
     if (result) {
+
+      var events = [];
+      for (var i = 0; i < state.inputs.length; i++) {
+        events.push(state.inputs[i].current);
+      }
+
       candidates.push({
         binding: binding,
-        data: result
+        data: result,
+        events: events
       });
     }
   });

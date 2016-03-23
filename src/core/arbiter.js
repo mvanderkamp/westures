@@ -36,8 +36,24 @@ function arbiter(event, state) {
   if (bindings.length > 0) {
     event.preventDefault();
     var gestures = interpreter(bindings, event, state);
+    var fired = [];
     for (var i = 0; i < gestures.length; i++) {
-      dispatcher(gestures[i].binding, gestures[i].data);
+
+      //Check if the type gesture signature has yet to be fired.
+      var hasNotFired = true;
+      for (var k = 0; k < fired.length; k++) {
+        if (fired[k].id === gestures[i].binding.gesture.id &&
+          fired[k].type === gestures[i].binding.gesture.type
+        ) {
+          hasNotFired = false;
+          break;
+        }
+      }
+
+      if (hasNotFired) {
+        dispatcher(gestures[i].binding, gestures[i].data, gestures[i].events);
+        fired.push(gestures[i].binding.gesture);
+      }
     }
   }
 
