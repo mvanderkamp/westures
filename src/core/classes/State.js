@@ -80,12 +80,13 @@ class State {
     } else if (!(gesture instanceof Gesture)) {
       return null;
     } else {
-      gesture.setId(this.numRegisteredGestures++);
+      gesture.setId(gesture.getType() + '-' + this.numRegisteredGestures++);
     }
 
     if (gesture instanceof Gesture) {
       var binding = new Binding(element, gesture, handler, capture, bindOnce);
       this.bindings.push(binding);
+      console.log(gesture.getId());
       element.addEventListener(gesture.getId(), handler, capture);
       return binding;
     }

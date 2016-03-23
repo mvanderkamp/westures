@@ -59,7 +59,7 @@ class Gesture {
    * @return {String}
    */
   getId() {
-    return (this.id) ? this.id : this.type;
+    return (this.id !== null) ? this.id : this.type;
   }
   /*getId*/
 
