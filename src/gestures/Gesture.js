@@ -63,6 +63,19 @@ class Gesture {
   }
   /*getId*/
 
+  /**
+   * Updates internal properties with new ones, only if the properties exist.
+   * @param object
+   */
+  update(object) {
+
+    for (var key in object) {
+      if (this[key]) {
+        this[key] = object[key];
+      }
+    }
+  }
+
   //noinspection JSUnusedLocalSymbols
   /**
    * start() - Event hook for the start of a gesture
