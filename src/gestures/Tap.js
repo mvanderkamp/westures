@@ -6,7 +6,8 @@
 import Gesture from './Gesture.js';
 import util from './../core/util.js';
 
-const DEFAULT_DELAY_MS = 300;
+const DEFAULT_MIN_DELAY_MS = 0;
+const DEFAULT_MAX_DELAY_MS = 300;
 const DEFAULT_INPUTS = 1;
 const DEFAULT_MOVE_PX_TOLERANCE = 10;
 
@@ -18,6 +19,8 @@ class Tap extends Gesture {
   /**
    * Constructor function for the Tap class.
    * @param {Object} options - The options object.
+   * @param {Number} [options.minDelay=0] - The minimum delay between a touchstart and
+   * touchend can be configured in milliseconds.
    * @param {Number} [options.maxDelay=300] - The maximum delay between a touchstart and
    * touchend can be configured in milliseconds.
    * @param {Number} [options.numInputs=1] - Number of inputs for the Tap gesture.
@@ -33,12 +36,20 @@ class Tap extends Gesture {
     this.type = 'tap';
 
     /**
+     * The minimum amount between a touchstart and a touchend can be configured in milliseconds.
+     * The minimum delay starts to count down when the expected number of inputs are on
+     * the screen, and ends when ALL inputs are off the screen.
+     * @type {Number}
+     */
+    this.minDelay = (options && options.minDelay) ? options.minDelay : DEFAULT_MIN_DELAY_MS;
+
+    /**
      * The maximum delay between a touchstart and touchend can be configured in milliseconds.
      * The maximum delay starts to count down when the expected number of inputs are on
      * the screen, and ends when ALL inputs are off the screen.
      * @type {Number}
      */
-    this.maxDelay = (options && options.maxDelay) ? options.maxDelay : DEFAULT_DELAY_MS;
+    this.maxDelay = (options && options.maxDelay) ? options.maxDelay : DEFAULT_MAX_DELAY_MS;
 
     /**
      * The number of inputs to trigger a Tap can be variable, and the maximum number being
@@ -55,6 +66,7 @@ class Tap extends Gesture {
      */
     this.moveTolerance = (options && options.moveTolerance) ? options.moveTolerance : DEFAULT_MOVE_PX_TOLERANCE;
   }
+
   /*constructor*/
 
   /**
@@ -73,6 +85,7 @@ class Tap extends Gesture {
 
     return null;
   }
+
   /*start*/
 
   /**
@@ -98,6 +111,7 @@ class Tap extends Gesture {
 
     return null;
   }
+
   /*move*/
 
   /**
@@ -131,7 +145,7 @@ class Tap extends Gesture {
     }
 
     var interval = new Date().getTime() - startTime;
-    if (this.maxDelay >= interval) {
+    if ((this.minDelay <= interval) && (this.maxDelay >= interval)) {
       return {
         interval: interval
       };
@@ -144,6 +158,7 @@ class Tap extends Gesture {
       return null;
     }
   }
+
   /*end*/
 }
 
