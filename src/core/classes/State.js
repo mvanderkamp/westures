@@ -119,7 +119,7 @@ class State {
   updateInputs(event) {
     //Return if all gestures did not originate from the same target
     if (event.touches && event.touches.length !== event.targetTouches.length) {
-      state.resetInputs();
+      this.resetInputs();
       return false;
     }
 
