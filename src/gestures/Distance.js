@@ -7,7 +7,7 @@ import Gesture from './Gesture.js';
 import util from './../core/util.js';
 
 const DEFAULT_INPUTS = 2;
-const DEFAULT_MIN_THRESHOLD = 10;
+const DEFAULT_MIN_THRESHOLD = 1;
 const DEFAULT_DIRECTION = 'apart';
 
 /**

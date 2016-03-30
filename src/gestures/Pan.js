@@ -7,6 +7,8 @@ import Gesture from './Gesture.js';
 import util from './../core/util.js';
 
 const DEFAULT_INPUTS = 1;
+const DEFAULT_MIN_THRESHOLD = 1;
+const DEFAULT_THRESHOLD_DIR = null;
 
 /**
  * A Pan is defined as a normal movement in any direction on a screen. Pan gestures do not
@@ -34,7 +36,19 @@ class Pan extends Gesture {
      * @type {Number}
      */
     this.numInputs = (options && options.numInputs) ? options.numInputs : DEFAULT_INPUTS;
+
+    /**
+     * The minimum amount in pixels the pan must move until it is fired.
+     * @type {Number}
+     */
+    this.threshold = (options && options.threshold) ? options.threshold : DEFAULT_MIN_THRESHOLD;
+
+    /**
+     * The threshold direction. Can be 'x', 'y' or null (any direction).
+     */
+    this.thresholdDirection = (options && options.thresholdDirection) ? options.thresholdDirection : DEFAULT_THRESHOLD_DIR;
   }
+
   /*constructor*/
 
   /**
@@ -46,6 +60,10 @@ class Pan extends Gesture {
     for (var i = 0; i < inputs.length; i++) {
       var progress = inputs[i].getGestureProgress(this.getId());
       progress.active = true;
+      progress.lastEmitted = {
+        x: inputs[i].current.x,
+        y: inputs[i].current.y
+      };
     }
   }
 
@@ -60,19 +78,68 @@ class Pan extends Gesture {
       var data = {};
       for (var i = 0; i < inputs.length; i++) {
         var progress = inputs[i].getGestureProgress(this.getId());
-        if (!progress.active) {
+
+        var reachedThreshold = false;
+        var currentDirection = null;
+
+        //Check threshold distance and direction
+        switch (this.thresholdDirection) {
+          case 'x':
+
+            //Right movement
+            if (inputs[i].current.x  > progress.lastEmitted.x) {
+              reachedThreshold = (inputs[i].current.x - progress.lastEmitted.x > this.threshold);
+              currentDirection = 'right';
+
+              //Left movement
+            } else {
+              reachedThreshold = (progress.lastEmitted.x - inputs[i].current.x  > this.threshold);
+              currentDirection = 'left';
+            }
+
+            break;
+          case 'y':
+
+            //Up movement
+            if (inputs[i].current.y  < progress.lastEmitted.y) {
+              reachedThreshold = (progress.lastEmitted.y - inputs[i].current.y  > this.threshold);
+              currentDirection = 'up';
+
+              //Down movement
+            } else {
+              reachedThreshold = (inputs[i].current.x - progress.lastEmitted.x  > this.threshold);
+              currentDirection = 'down';
+            }
+
+            break;
+          case null :
+            reachedThreshold = true;
+            break;
+        }
+
+        //var currentDistance = util.distanceBetweenTwoPoints(progress.lastEmitted.x, inputs[i].current.x,
+        //  progress.lastEmitted.y, inputs[i].current.y);
+
+        if (progress.active && reachedThreshold) {
+          progress.lastEmitted.x = inputs[i].current.x;
+          progress.lastEmitted.y = inputs[i].current.y;
+
+          data[i] = {
+            distanceFromOrigin: util.distanceBetweenTwoPoints(inputs[i].initial.x, inputs[i].current.x,
+              inputs[i].initial.y, inputs[i].current.y),
+            currentDirection: currentDirection
+          };
+
+        } else {
           return null;
         }
 
-        data[i] = {
-          distanceFromOrigin: util.distanceBetweenTwoPoints(inputs[i].initial.x, inputs[i].current.x,
-            inputs[i].initial.y, inputs[i].current.y)
-        };
       }
     }
 
     return data;
   }
+
   /*move*/
 
   /**
@@ -94,6 +161,7 @@ class Pan extends Gesture {
 
     return null;
   }
+
   /*end*/
 }
 
