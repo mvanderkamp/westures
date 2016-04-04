@@ -15,7 +15,9 @@ function dispatcher(binding, data, events) {
 
   //noinspection JSCheckFunctionSignatures
   var newEvent = new CustomEvent(binding.gesture.getId(), {
-    detail: data
+    detail: data,
+    bubbles: true,
+    cancelable: true
   });
   emitEvent(binding.element, newEvent, binding);
 }
@@ -28,13 +30,8 @@ function dispatcher(binding, data, events) {
  */
 function emitEvent(target, event, binding) {
   target.dispatchEvent(event);
-  if (target.parentNode && target.parentNode !== document) {
-    emitEvent(target.parentNode, event, binding);
-  } else {
-    if (binding.bindOnce) {
-      ZingTouch.unbind(binding.element, binding.gesture.getType());
-    }
-
+  if (binding.bindOnce) {
+    ZingTouch.unbind(binding.element, binding.gesture.getType());
   }
 }
 /*emitEvent*/

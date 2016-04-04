@@ -107,7 +107,7 @@ class Pan extends Gesture {
 
               //Down movement
             } else {
-              reachedThreshold = (inputs[i].current.x - progress.lastEmitted.x  > this.threshold);
+              reachedThreshold = (inputs[i].current.y - progress.lastEmitted.y  > this.threshold);
               currentDirection = 'down';
             }
 

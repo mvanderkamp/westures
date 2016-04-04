@@ -57,14 +57,18 @@ class Distance extends Gesture {
       var progress = inputs[0].getGestureProgress(this.type);
 
       if (this.direction === 'apart') {
-        if (currentDistance > lastDistance && (currentDistance - progress.lastEmittedDistance >= this.threshold)) {
+        if (currentDistance < lastDistance) {
+          progress.lastEmittedDistance = currentDistance;
+        } else if ((currentDistance - progress.lastEmittedDistance >= this.threshold)) {
           progress.lastEmittedDistance = currentDistance;
           return {
             distance: currentDistance
           };
         }
       } else {
-        if (currentDistance < lastDistance && (progress.lastEmittedDistance - currentDistance >= this.threshold)) {
+        if (currentDistance > lastDistance) {
+          progress.lastEmittedDistance = currentDistance;
+        } else if (currentDistance < lastDistance && (progress.lastEmittedDistance - currentDistance >= this.threshold)) {
           progress.lastEmittedDistance = currentDistance;
           return {
             distance: currentDistance
