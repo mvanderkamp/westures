@@ -33,8 +33,9 @@ class Region {
     var eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
     for (var i = 0; i < eventNames.length; i++) {
       let state = this.state;
+      let regionElement = element;
       element.addEventListener(eventNames[i], function (e) {
-        arbiter(e, state);
+        arbiter(e, state, regionElement);
       }, capture);
     }
   }

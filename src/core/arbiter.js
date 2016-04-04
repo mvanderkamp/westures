@@ -17,7 +17,8 @@ import util from './util.js';
  * @param {Event} event - The event emitted from the window object.
  * @param {Object} state - The state object of the current listener.
  */
-function arbiter(event, state) {
+function arbiter(event, state, regionElement) {
+
   /*
    Return if a gesture is not in progress and won't be. Also catches the case where a previous
    event is in a partial state (2 finger pan, waits for both inputs to reach touchend)
@@ -27,7 +28,7 @@ function arbiter(event, state) {
   }
 
   //Update the state with the new events. If the event is stopped, return;
-  if (!state.updateInputs(event)) {
+  if (!state.updateInputs(event, regionElement)) {
     return;
   }
 

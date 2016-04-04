@@ -59,7 +59,7 @@ var util = {
    * @returns {number} The numerical value between two points
    */
   distanceBetweenTwoPoints(x0, x1, y0, y1) {
-    var dist =  (Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0))));
+    var dist = (Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0))));
     return Math.round(dist * 100) / 100;
   },
 
@@ -144,6 +144,17 @@ var util = {
 
   isInteger(value) {
     return (typeof value === 'number') && (value % 1 === 0);
+  },
+  /**
+   * Determines if the x,y position of the input is within then target.
+   * @param x -clientX
+   * @param y -clientY
+   * @param target
+   */
+  isInside(x, y, target) {
+    var rect = target.getBoundingClientRect();
+    return ((x > rect.left && x < rect.left + rect.width) && (y > rect.top && y < rect.top + rect.height));
+
   }
 };
 export default util;

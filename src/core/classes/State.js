@@ -92,6 +92,7 @@ class State {
       return binding;
     }
   }
+
   /*addBinding*/
 
   /**
@@ -109,6 +110,7 @@ class State {
 
     return matches;
   }
+
   /*retrieveBindings*/
 
   /**
@@ -116,7 +118,7 @@ class State {
    * @param {Event} event - The event being captured
    * @returns {boolean} - returns true for a successful update, false if the event is invalid.
    */
-  updateInputs(event) {
+  updateInputs(event, regionElement) {
     //Return if all gestures did not originate from the same target
     if (event.touches && event.touches.length !== event.targetTouches.length) {
       this.resetInputs();
@@ -138,7 +140,13 @@ class State {
           } else {
             var input = findInputById(this.inputs, identifier);
             if (input) {
-              input.update(event, identifier);
+              //An input has moved outside the region.
+              if (!util.isInside(input.current.x, input.current.y, regionElement)) {
+                this.resetInputs();
+                return false;
+              } else {
+                input.update(event, identifier);
+              }
             }
           }
         }
@@ -153,6 +161,7 @@ class State {
 
     return true;
   }
+
   /*updateInputs*/
 
   /**
@@ -161,6 +170,7 @@ class State {
   resetInputs() {
     this.inputs = [];
   }
+
   /*resetInputs*/
 
   /**
@@ -177,6 +187,7 @@ class State {
 
     return count;
   }
+
   /*numActiveInputs*/
 
 }
