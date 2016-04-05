@@ -51,7 +51,6 @@ function arbiter(event, region) {
 
     var toBeDispatched = {};
     var gestures = interpreter(bindings, event, state);
-    console.log(gestures);
     for (var i = 0; i < gestures.length; i++) {
       var id = (gestures[i].binding.gesture.id) ? gestures[i].binding.gesture.id : gestures[i].binding.gesture.type;
       if (toBeDispatched[id]) {

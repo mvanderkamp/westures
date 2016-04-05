@@ -24,15 +24,16 @@ class Region {
    * @param {boolean} [capture=false] - Whether the region listens for captures or bubbles.
    * @param {boolean} [preventDefault=true] - Whether the default browser functionality should be disabled;
    */
-  constructor(element, capture, preventDefault) {
+  constructor(element, capture, preventDefault, id) {
     /**
      * The internal state object for a Region. Keeps track of registered gestures, inputs, and events.
      * @type {State}
      */
-    this.state = new State();
-    capture = (capture) ? capture : false;
+    this.id = id;
+    this.state = new State(id);
     this.preventDefault = (preventDefault) ? preventDefault : true;
     this.element = element;
+    capture = (capture) ? capture : false;
     var eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
     for (var i = 0; i < eventNames.length; i++) {
       let _this = this;
@@ -141,7 +142,7 @@ class Region {
     }
 
     gesture.setType(key);
-    this.state.registeredGestures[key] = gesture;
+    this.state.registerGesture(gesture, key);
   }
 
   /*register*/

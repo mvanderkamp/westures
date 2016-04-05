@@ -24,7 +24,9 @@ class State {
   /**
    * Constructor for the State class.
    */
-  constructor() {
+  constructor(regionId) {
+
+    this.regionId = regionId;
 
     /**
      * An array of current and recently inactive Input objects related to a gesture.
@@ -39,24 +41,24 @@ class State {
     this.bindings = [];
 
     /**
-     * The number of gestures registered to this Region
+     * The number of gestures that are used with this state
      * @type {Number}
      */
-    this.numRegisteredGestures = 0;
+    this.numGestures = 0;
 
     /**
      * A key/value map all the registered gestures for the listener. Note: Can only have one gesture registered to one key.
      * @type {Object}
      */
-    this.registeredGestures = {
-      expand: new Expand(),
-      pan: new Pan(),
-      pinch: new Pinch(),
-      rotate: new Rotate(),
-      swipe: new Swipe(),
-      tap: new Tap(),
-      press: new Press()
-    };
+    this.registeredGestures = {};
+
+    this.registerGesture(new Expand(), 'expand');
+    this.registerGesture(new Pan(), 'pan');
+    this.registerGesture(new Rotate(), 'rotate');
+    this.registerGesture(new Pinch(), 'pinch');
+    this.registerGesture(new Swipe(), 'swipe');
+    this.registerGesture(new Tap(), 'tap');
+    this.registerGesture(new Press(), 'press');
   }
 
   /**
@@ -82,7 +84,7 @@ class State {
     } else if (!(gesture instanceof Gesture)) {
       return null;
     } else {
-      gesture.setId(gesture.getType() + '-' + this.numRegisteredGestures++);
+      this.trackGesture(gesture);
     }
 
     if (gesture instanceof Gesture) {
@@ -215,6 +217,24 @@ class State {
   }
 
   /*numActiveInputs*/
+
+  /**
+   * Register the gesture to the current region.
+   * @param gesture
+   */
+  registerGesture(gesture, key) {
+    this.trackGesture(gesture);
+    this.registeredGestures[key] = gesture;
+  }
+
+  /**
+   * Tracks the gesture with the state.
+   */
+  trackGesture(gesture) {
+    gesture.setId(this.regionId + '-' + this.numGestures++);
+  }
+
+  /*registerGesture*/
 
 }
 /**

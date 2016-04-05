@@ -1,7 +1,7 @@
 /**
  * @file ZingTouch.js
  * Main object containing API methods and Gesture constructors
-*/
+ */
 
 import Region from './core/classes/Region.js';
 import Gesture from './gestures/Gesture.js';
@@ -20,8 +20,9 @@ import Tap from './gestures/Tap.js';
  * @namespace ZingTouch
  */
 var ZingTouch = {
+  _regions: [],
+
   //Constructors
-  Region: Region,
   Gesture: Gesture,
   Expand: Expand,
   Pan: Pan,
@@ -29,7 +30,13 @@ var ZingTouch = {
   Press: Press,
   Rotate: Rotate,
   Swipe: Swipe,
-  Tap: Tap
+  Tap: Tap,
+  Region: function (element, capture, preventDefault) {
+    var id = ZingTouch._regions.length;
+    var region = new Region(element, capture, preventDefault, id);
+    ZingTouch._regions.push(region);
+    return region;
+  }
 };
 
 export default ZingTouch;
