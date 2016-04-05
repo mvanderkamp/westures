@@ -7,7 +7,7 @@
  * Emits data at the target element if available, and bubbles up from the target to the parent
  * until the document has been reached. Called from the arbiter.
  * @param {Binding} binding - An object of type Binding
- * @param {Object|null} data - The metadata computed by the gesture being emitted.
+ * @param {Object} data - The metadata computed by the gesture being emitted.
  * @param {Array} events - An array of ZingEvents, corresponding to the inputs on the screen.
  */
 function dispatcher(binding, data, events) {
@@ -27,6 +27,7 @@ function dispatcher(binding, data, events) {
  * Emits the new event recursively until the document is reached.
  * @param {Element} target - Element object to emit the event to.
  * @param {Event} event - The CustomEvent to emit.
+ * @param {Binding} binding - An object of type Binding
  */
 function emitEvent(target, event, binding) {
   target.dispatchEvent(event);

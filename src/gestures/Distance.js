@@ -26,10 +26,25 @@ class Distance extends Gesture {
      * @type {String}
      */
     this.type = 'distance';
+
+    /**
+     * The minimum amount in pixels the inputs must move until it is fired.
+     * @type {Number}
+     */
     this.threshold = (options && options.threshold) ? options.threshold : DEFAULT_MIN_THRESHOLD;
+
+    /**
+     * The trend in direction of both inputs. Either 'apart' or 'together'
+     * @type {string}
+     */
     this.direction = (options && options.direction) ? options.direction : DEFAULT_DIRECTION;
   }
 
+  /**
+   * start() - Event hook for the start of a gesture. Initialized the lastEmitted gesture and stores it in the first input for reference.
+   * events.
+   * @param inputs
+   */
   start(inputs) {
 
     if (inputs.length === DEFAULT_INPUTS) {
@@ -44,6 +59,7 @@ class Distance extends Gesture {
    * Event hook for the move of a gesture. Determines if the two points are moved in the expected
    * direction relative to the current distance and the last distance.
    * @param {Array} inputs - The array of Inputs on the screen.
+   * @param {Object} state - The state object of the current region.
    * @returns {Object | null} - Returns the distance in pixels between the two inputs.
    */
   move(inputs, state) {

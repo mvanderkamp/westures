@@ -24,6 +24,10 @@ class State {
    */
   constructor(regionId) {
 
+    /**
+     * The id for the region this state is bound to.
+     * @type {String}
+     */
     this.regionId = regionId;
 
     /**
@@ -141,6 +145,7 @@ class State {
   /**
    * Updates the inputs with new information based upon a new event being fired.
    * @param {Event} event - The event being captured
+   * @param {Element} regionElement - The element where this current Region is bound to.
    * @returns {boolean} - returns true for a successful update, false if the event is invalid.
    */
   updateInputs(event, regionElement) {
@@ -217,7 +222,8 @@ class State {
 
   /**
    * Register the gesture to the current region.
-   * @param gesture
+   * @param {Gesture} gesture - The gesture to register
+   * @param {String} key - The key to define the new gesture as.
    */
   registerGesture(gesture, key) {
     this.trackGesture(gesture);
@@ -225,7 +231,9 @@ class State {
   }
 
   /**
-   * Tracks the gesture with the state.
+   * Tracks the gesture to this state object to become uniquely identifiable.
+   * Useful for nested Regions.
+   * @param {Gesture} gesture - The gesture to track
    */
   trackGesture(gesture) {
     gesture.setId(this.regionId + '-' + this.numGestures++);

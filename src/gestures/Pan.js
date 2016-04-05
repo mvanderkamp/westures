@@ -20,6 +20,9 @@ class Pan extends Gesture {
    * Constructor function for the Pan class.
    * @param {Object} options - The options object.
    * @param {Number} [options.numInputs=1] - Number of inputs for the Pan gesture.
+   * @param {Number} [options.threshold=1] - The minimum number of pixels the input
+   * has to move to trigger this gesture.
+   * @param {String|null} [options.thresholdDirection] - The direction of the Pan event
    */
   constructor(options) {
     super();
@@ -71,9 +74,10 @@ class Pan extends Gesture {
    * move() - Event hook for the move of a gesture. Fired whenever the input length is met,
    * and keeps a boolean flag that the gesture has fired at least once.
    * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current region.
    * @returns {Object} - Returns the distance in pixels between the two inputs.
    */
-  move(inputs) {
+  move(inputs, state) {
     if (this.numInputs === inputs.length) {
       var data = {};
       for (var i = 0; i < inputs.length; i++) {

@@ -81,9 +81,10 @@ class Swipe extends Gesture {
    * Event hook for the move of a gesture. Captures an input's x/y coordinates and the time of
    * it's event on a stack.
    * @param {Array} inputs - The array of Inputs on the screen.
+   * @param {Object} state - The state object of the current region.
    * @returns {null} - Swipe does not emit from a move.
    */
-  move(inputs) {
+  move(inputs, state) {
     if (this.numInputs === inputs.length) {
       var input = util.getRightMostInput(inputs);
       var progress = input.getGestureProgress(this.getId());
@@ -112,7 +113,7 @@ class Swipe extends Gesture {
    * a complete stop (maxRestTime), and if it had enough of a velocity to be considered
    * (ESCAPE_VELOCITY).
    * @param {Array} inputs - The array of Inputs on the screen
-   * @returns {null} - null if the gesture is not to be emitted, Object with information otherwise.
+   * @returns {null|Object} - null if the gesture is not to be emitted, Object with information otherwise.
    */
   end(inputs) {
     var input = util.getRightMostInput(inputs);

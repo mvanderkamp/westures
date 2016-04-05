@@ -23,15 +23,33 @@ class Region {
    * @param {Element} element - The element to capture all window events in that region to feed into ZingTouch.
    * @param {boolean} [capture=false] - Whether the region listens for captures or bubbles.
    * @param {boolean} [preventDefault=true] - Whether the default browser functionality should be disabled;
+   * @param {String} id - The id of the region, assigned by the ZingTouch object.
    */
   constructor(element, capture, preventDefault, id) {
+
+    /**
+     * The identifier for the Region. This is assigned by the ZingTouch object and is used to hash gesture ids
+     * for uniqueness.
+     * @type {String}
+     */
+    this.id = id;
+
     /**
      * The internal state object for a Region. Keeps track of registered gestures, inputs, and events.
      * @type {State}
      */
-    this.id = id;
     this.state = new State(id);
+
+    /**
+     * Boolean to disable browser functionality such as scrolling and zooming over the region
+     * @type {boolean}
+     */
     this.preventDefault = (preventDefault) ? preventDefault : true;
+
+    /**
+     * The element being bound to.
+     * @type {Element}
+     */
     this.element = element;
     capture = (capture) ? capture : false;
     var eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
@@ -90,7 +108,7 @@ class Region {
    * for the first time.
    * 1. bind(element) - chainable
    * 2. bind(element, gesture, handler, [capture])
-   * @param {Object} element - The element object.
+   * @param {Element} element - The element object.
    * @param {String|Object} gesture - Gesture key, or a Gesture object.
    * @param {Function} handler - The function to execute when an event is emitted.
    * @param {Boolean} capture - capture/bubble
@@ -102,6 +120,7 @@ class Region {
 
   /*bindOnce*/
 
+  //noinspection JSMethodCanBeStatic
   /**
    * Unbinds an element from either the specified gesture or all if no element is specified.
    * @param {Element|String} element - Either the element to remove or a string key
@@ -130,7 +149,7 @@ class Region {
   /**
    * Registers a new gesture with an assigned key
    * @param {String} key - The key used to register an element to that gesture
-   * @param {Object} gesture - A gesture object
+   * @param {Gesture} gesture - A gesture object
    */
   register(key, gesture) {
     if (typeof key !== 'string') {

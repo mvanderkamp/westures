@@ -47,7 +47,7 @@ class Gesture {
 
   /**
    * Set the id of the gesture to be called during an event
-   * @param {Number} id - The unique identifier of the gesture being created.
+   * @param {String} id - The unique identifier of the gesture being created.
    */
   setId(id) {
     this.id = id;
@@ -91,9 +91,10 @@ class Gesture {
   /**
    * move() - Event hook for the move of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current region.
    * @returns {null|Object} - Default of null
    */
-  move(inputs) {
+  move(inputs, state) {
     return null;
   }
   /*move*/

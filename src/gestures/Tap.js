@@ -93,9 +93,10 @@ class Tap extends Gesture {
    * starts to move their input
    * before an 'end' event is reached.
    * @param {Array} inputs - The array of Inputs on the screen.
+   * @param {Object} state - The state object of the current region.
    * @returns {null} - Tap does not trigger on a move event.
    */
-  move(inputs) {
+  move(inputs, state) {
     for (var i = 0; i < inputs.length; i++) {
       if (inputs[i].getCurrentEventType() === 'move') {
         var current = inputs[i].current;

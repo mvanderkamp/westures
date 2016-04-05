@@ -69,7 +69,7 @@ var util = {
    * @param x1
    * @param y0
    * @param y1
-   * @returns {Array} The coordinates of the midpoint.
+   * @returns {Object} The coordinates of the midpoint.
    */
   getMidpoint(x0, x1, y0, y1) {
     return {
@@ -127,7 +127,7 @@ var util = {
     return (distance / (endTime - startTime));
   },
   /**
-   * Returns the input of the farthest right.
+   * Returns the farthest right input
    * @param inputs
    */
   getRightMostInput(inputs) {
@@ -142,6 +142,11 @@ var util = {
     return input;
   },
 
+  /**
+   * Determines is the value is an integer and not a floating point
+   * @param value
+   * @returns {boolean}
+   */
   isInteger(value) {
     return (typeof value === 'number') && (value % 1 === 0);
   },
@@ -178,7 +183,7 @@ var util = {
    * Retrieve the index inside the path array
    * @param path
    * @param element
-   * @returns {*}
+   * @returns {element}
    */
   getPathIndex(path, element) {
     var index = path.length;

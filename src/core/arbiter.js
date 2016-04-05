@@ -15,7 +15,7 @@ import util from './util.js';
  * 3. Negotiating with the Interpreter what event should occur.
  * 4. Sending events to the dispatcher to emit events to the target.
  * @param {Event} event - The event emitted from the window object.
- * @param {Object} state - The state object of the current listener.
+ * @param {Object} region - The region object of the current listener.
  */
 function arbiter(event, region) {
   var state = region.state;
@@ -51,6 +51,8 @@ function arbiter(event, region) {
 
     var toBeDispatched = {};
     var gestures = interpreter(bindings, event, state);
+
+    //noinspection JSDuplicatedDeclaration
     for (var i = 0; i < gestures.length; i++) {
       var id = (gestures[i].binding.gesture.id) ? gestures[i].binding.gesture.id : gestures[i].binding.gesture.type;
       if (toBeDispatched[id]) {
@@ -71,6 +73,8 @@ function arbiter(event, region) {
   }
 
   var endCount = 0;
+
+  //noinspection JSDuplicatedDeclaration
   for (var i = 0; i < state.inputs.length; i++) {
     if (state.inputs[i].getCurrentEventType() === 'end') {
       endCount++;

@@ -35,13 +35,6 @@ function interpreter(bindings, event, state) {
     }
   });
 
-  //TODO : Determine which gesture to emit, or all. For now, we return the bindings
-  // in order which they were bound.
-  //if (candidates.length > 0) {
-  //  return candidates[0];
-  //} else {
-  //  return null;
-  //}
   return candidates;
 
 }
