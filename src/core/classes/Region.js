@@ -22,20 +22,22 @@ class Region {
    * Constructor function for the Region class.
    * @param {Element} element - The element to capture all window events in that region to feed into ZingTouch.
    * @param {boolean} [capture=false] - Whether the region listens for captures or bubbles.
+   * @param {boolean} [preventDefault=true] - Whether the default browser functionality should be disabled;
    */
-  constructor(element, capture) {
+  constructor(element, capture, preventDefault) {
     /**
      * The internal state object for a Region. Keeps track of registered gestures, inputs, and events.
      * @type {State}
      */
     this.state = new State();
     capture = (capture) ? capture : false;
+    this.preventDefault = (preventDefault) ? preventDefault : true;
+    this.element = element;
     var eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
     for (var i = 0; i < eventNames.length; i++) {
-      let state = this.state;
-      let regionElement = element;
+      let _this = this;
       element.addEventListener(eventNames[i], function (e) {
-        arbiter(e, state, regionElement);
+        arbiter(e, _this);
       }, capture);
     }
   }
@@ -106,7 +108,7 @@ class Region {
    * @returns {Array} - An array of Bindings that were unbound to the element;
    */
   unbind(element, gesture) {
-    var bindings = state.retrieveBindings(element);
+    var bindings = state.retrieveBindingsByElement(element);
     var unbound = [];
     var i = bindings.length - 1;
     while (i > -1) {

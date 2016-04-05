@@ -23,7 +23,7 @@ class Pinch extends Distance {
      * The type of the Gesture.
      * @type {String}
      */
-    this.type = 'expand';
+    this.type = 'pinch';
 
     /**
      * The expected direction of the two points.

@@ -100,7 +100,7 @@ class State {
    * @param {Element} element - The element to find bindings to.
    * @returns {Array} - An array of Bindings to which that element is bound
    */
-  retrieveBindings(element) {
+  retrieveBindingsByElement(element) {
     var matches = [];
     for (var i = 0; i < this.bindings.length; i++) {
       if (this.bindings[i].element === element) {
@@ -111,7 +111,31 @@ class State {
     return matches;
   }
 
-  /*retrieveBindings*/
+  /*retrieveBindingsByElement*/
+
+  /**
+   * Retrieves all bindings based upon an X/Y position of the current inputs.
+   * @returns {Array} - An array of Bindings to which that element is bound
+   */
+  retrieveBindingsByCoord() {
+
+    var matches = [];
+    for (var i = 0; i < this.bindings.length; i++) {
+
+      //Determine if at least one input is in the target element. They should all be in
+      //the region based upon a prior check
+      var insideCount = 0;
+      for (var k = 0; k < this.inputs.length; k++) {
+        insideCount = (util.isInside(this.inputs[k].current.x, this.inputs[k].current.y, this.bindings[i].element)) ? (insideCount + 1) : (insideCount - 1);
+      }
+
+      if (insideCount > 0) {
+        matches.push(this.bindings[i]);
+      }
+    }
+
+    return matches;
+  }
 
   /**
    * Updates the inputs with new information based upon a new event being fired.

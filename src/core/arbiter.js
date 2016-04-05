@@ -17,7 +17,8 @@ import util from './util.js';
  * @param {Event} event - The event emitted from the window object.
  * @param {Object} state - The state object of the current listener.
  */
-function arbiter(event, state, regionElement) {
+function arbiter(event, region) {
+  var state = region.state;
 
   /*
    Return if a gesture is not in progress and won't be. Also catches the case where a previous
@@ -28,17 +29,37 @@ function arbiter(event, state, regionElement) {
   }
 
   //Update the state with the new events. If the event is stopped, return;
-  if (!state.updateInputs(event, regionElement)) {
+  if (!state.updateInputs(event, region.element)) {
     return;
   }
 
   //Retrieve the initial target from any one of the inputs
-  var bindings = state.retrieveBindings(event.target);
+  var bindings = state.retrieveBindingsByCoord();
+
   if (bindings.length > 0) {
-    event.preventDefault();
+    if (region.preventDefault) {
+      event.preventDefault();
+    }
+
     var gestures = interpreter(bindings, event, state);
+    var fired = [];
     for (var i = 0; i < gestures.length; i++) {
-      dispatcher(gestures[i].binding, gestures[i].data, gestures[i].events);
+
+      //Check if the type gesture signature has yet to be fired.
+      var hasNotFired = true;
+      for (var k = 0; k < fired.length; k++) {
+        if (fired[k].id === gestures[i].binding.gesture.id &&
+          fired[k].type === gestures[i].binding.gesture.type
+        ) {
+          hasNotFired = false;
+          break;
+        }
+      }
+
+      if (hasNotFired) {
+        dispatcher(gestures[i].binding, gestures[i].data, gestures[i].events);
+        fired.push(gestures[i].binding.gesture);
+      }
     }
   }
 
