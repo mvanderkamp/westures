@@ -9,8 +9,6 @@ import Pinch from './../../gestures/Pinch.js';
 import Rotate from './../../gestures/Rotate.js';
 import Swipe from './../../gestures/Swipe.js';
 import Tap from './../../gestures/Tap.js';
-import Press from './../../gestures/Press.js';
-
 import Binding from './Binding.js';
 import Input from './Input.js';
 import util from './../util.js';
@@ -58,7 +56,6 @@ class State {
     this.registerGesture(new Pinch(), 'pinch');
     this.registerGesture(new Swipe(), 'swipe');
     this.registerGesture(new Tap(), 'tap');
-    this.registerGesture(new Press(), 'press');
   }
 
   /**

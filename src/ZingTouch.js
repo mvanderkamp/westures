@@ -8,7 +8,6 @@ import Gesture from './gestures/Gesture.js';
 import Expand from './gestures/Expand.js';
 import Pan from './gestures/Pan.js';
 import Pinch from './gestures/Pinch.js';
-import Press from './gestures/Press.js';
 import Rotate from './gestures/Rotate.js';
 import Swipe from './gestures/Swipe.js';
 import Tap from './gestures/Tap.js';
@@ -27,7 +26,6 @@ var ZingTouch = {
   Expand: Expand,
   Pan: Pan,
   Pinch: Pinch,
-  Press: Press,
   Rotate: Rotate,
   Swipe: Swipe,
   Tap: Tap,
