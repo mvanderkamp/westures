@@ -44,31 +44,30 @@ function arbiter(event, region) {
 
   //Retrieve the initial target from any one of the inputs
   var bindings = state.retrieveBindingsByCoord();
-
   if (bindings.length > 0) {
     if (region.preventDefault) {
       event.preventDefault();
     }
 
+    var toBeDispatched = {};
     var gestures = interpreter(bindings, event, state);
-    var fired = [];
+    console.log(gestures);
     for (var i = 0; i < gestures.length; i++) {
-
-      //Check if the type gesture signature has yet to be fired.
-      var hasNotFired = true;
-      for (var k = 0; k < fired.length; k++) {
-        if (fired[k].id === gestures[i].binding.gesture.id &&
-          fired[k].type === gestures[i].binding.gesture.type
-        ) {
-          hasNotFired = false;
-          break;
+      var id = (gestures[i].binding.gesture.id) ? gestures[i].binding.gesture.id : gestures[i].binding.gesture.type;
+      if (toBeDispatched[id]) {
+        var path = util.getPropagationPath(event);
+        if (util.getPathIndex(path, gestures[i].binding.element) < util.getPathIndex(path, toBeDispatched[id].binding.element)) {
+          toBeDispatched[id] = gestures[i];
         }
+      } else {
+        toBeDispatched[id] = gestures[i];
       }
+    }
 
-      if (hasNotFired) {
-        dispatcher(gestures[i].binding, gestures[i].data, gestures[i].events);
-        fired.push(gestures[i].binding.gesture);
-      }
+    for (var index in toBeDispatched) {
+      var gesture = toBeDispatched[index];
+      dispatcher(gesture.binding, gesture.data, gesture.events);
+
     }
   }
 

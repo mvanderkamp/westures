@@ -114,7 +114,9 @@ class State {
   /*retrieveBindingsByElement*/
 
   /**
-   * Retrieves all bindings based upon an X/Y position of the current inputs.
+   * Retrieves all bindings based upon the initial X/Y position of the inputs.
+   * e.g. if gesture started on the correct target element, but diverted away into the correct region,
+   * this would still be valid.
    * @returns {Array} - An array of Bindings to which that element is bound
    */
   retrieveBindingsByCoord() {
@@ -126,7 +128,7 @@ class State {
       //the region based upon a prior check
       var insideCount = 0;
       for (var k = 0; k < this.inputs.length; k++) {
-        insideCount = (util.isInside(this.inputs[k].current.x, this.inputs[k].current.y, this.bindings[i].element)) ? (insideCount + 1) : (insideCount - 1);
+        insideCount = (util.isInside(this.inputs[k].initial.x, this.inputs[k].initial.y, this.bindings[i].element)) ? (insideCount + 1) : (insideCount - 1);
       }
 
       if (insideCount > 0) {

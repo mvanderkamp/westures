@@ -154,7 +154,41 @@ var util = {
   isInside(x, y, target) {
     var rect = target.getBoundingClientRect();
     return ((x > rect.left && x < rect.left + rect.width) && (y > rect.top && y < rect.top + rect.height));
+  },
+  /**
+   * Polyfill for event.propagationPath
+   * @param event
+   */
+  getPropagationPath(event) {
+    if (event.path) {
+      return event.path;
+    } else {
+      var path = [];
+      var node = event.target;
+      while (node != document) {
+        path.push(node);
+        node = node.parentNode;
+      }
 
+      return path;
+    }
+  },
+
+  /**
+   * Retrieve the index inside the path array
+   * @param path
+   * @param element
+   * @returns {*}
+   */
+  getPathIndex(path, element) {
+    var index = path.length;
+    for (var i = 0; i < path.length; i++) {
+      if (path[i] === element) {
+        index = i;
+      }
+    }
+
+    return index;
   }
 };
 export default util;
