@@ -117,7 +117,8 @@ class Pan extends Gesture {
 
             break;
           case null :
-            reachedThreshold = true;
+            reachedThreshold =  (Math.abs(inputs[i].current.y - progress.lastEmitted.y) > this.threshold ||
+              Math.abs(inputs[i].current.x - progress.lastEmitted.x) > this.threshold);
             break;
         }
 

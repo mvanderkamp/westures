@@ -149,76 +149,58 @@ class State {
    * @returns {boolean} - returns true for a successful update, false if the event is invalid.
    */
   updateInputs(event, regionElement) {
-    //Touch Events (Chrome+ Safari)
-    if (event.touches) {
+    var identifier = 0;
+    var eventType = (event.touches) ? 'TouchEvent' : (event.pointerType) ? 'PointerEvent' : 'MouseEvent';
 
-      //Return if all gestures did not originate from the same target
-      if (event.touches.length !== event.targetTouches.length) {
-        this.resetInputs();
-        return false;
-      }
+    switch (eventType) {
+      case 'TouchEvent':
 
-      for (var index in event.changedTouches) {
-        if (event.changedTouches.hasOwnProperty(index) && util.isInteger((parseInt(index)))) {
-          var identifier = event.changedTouches[index].identifier;
-          if (util.normalizeEvent(event.type) === 'start') {
-            if (findInputById(this.inputs, identifier)) {
-              //This should restart the inputs and cancel out any gesture: Tracks inputs that should be active, but lost focus
-              this.resetInputs();
-              return false;
-            } else {
-              this.inputs.push(new Input(event, identifier));
-            }
-          } else {
-            var input = findInputById(this.inputs, identifier);
-            if (input) {
-              //An input has moved outside the region.
-              if (!util.isInside(input.current.x, input.current.y, regionElement)) {
-                this.resetInputs();
-                return false;
-              } else {
-                input.update(event, identifier);
-              }
-            }
-          }
-        }
-      }
-
-      //Pointer Events (Microsoft)
-    } else if (event.pointerType) {
-      var pointerId = event.pointerId;
-
-      if (util.normalizeEvent(event.type) === 'start') {
-
-        //This should restart the inputs and cancel out any gesture: Tracks inputs that should be active, but lost focus
-        if (findInputById(this.inputs, pointerId)) {
+        //Return if all gestures did not originate from the same target
+        if (event.touches.length !== event.targetTouches.length) {
           this.resetInputs();
           return false;
+        }
+
+        for (var index in event.changedTouches) {
+          if (event.changedTouches.hasOwnProperty(index) && util.isInteger((parseInt(index)))) {
+            identifier = event.changedTouches[index].identifier;
+            update(event, this, identifier, regionElement);
+          }
+        }
+
+        break;
+
+      case 'PointerEvent':
+        identifier = event.pointerId;
+        update(event, this, identifier, regionElement);
+        break;
+
+      case 'MouseEvent':
+      default:
+        update(event, this, 0, regionElement);
+        break;
+    }
+
+    function update(event, state, identifier, regionElement) {
+      if (util.normalizeEvent(event.type) === 'start') {
+        if (findInputById(state.inputs, identifier)) {
+          //This should restart the inputs and cancel out any gesture: Tracks inputs that should be active, but lost focus
+          state.resetInputs();
+          return false;
         } else {
-          this.inputs.push(new Input(event, pointerId));
+          state.inputs.push(new Input(event, identifier));
         }
       } else {
-        var input = findInputById(this.inputs, pointerId);
+        var input = findInputById(state.inputs, identifier);
         if (input) {
           //An input has moved outside the region.
           if (!util.isInside(input.current.x, input.current.y, regionElement)) {
-            this.resetInputs();
+            state.resetInputs();
             return false;
           } else {
-            input.update(event, pointerId);
+            input.update(event, identifier);
           }
         }
-      }
-
-      //TODO: need to do this check after we build inputs, since pointer events are not packaged.
-      //Return if all gestures did not originate from the same target
-
-      //Mouse Events
-    } else {
-      if (util.normalizeEvent(event.type) === 'start') {
-        this.inputs.push(new Input(event));
-      } else {
-        this.inputs[0].update(event);
       }
     }
 

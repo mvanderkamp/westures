@@ -6,7 +6,7 @@ var minimize = process.argv.indexOf('--minimize') !== -1;
 if (minimize) {
   plugins.push(new webpack.optimize.UglifyJsPlugin({
     sourceMap: true,
-    mangle: false,
+    mangle: true,
     outputs: {
       comments: false
     }
