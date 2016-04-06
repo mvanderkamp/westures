@@ -149,19 +149,21 @@ class State {
    * @returns {boolean} - returns true for a successful update, false if the event is invalid.
    */
   updateInputs(event, regionElement) {
-    //Return if all gestures did not originate from the same target
-    if (event.touches && event.touches.length !== event.targetTouches.length) {
-      this.resetInputs();
-      return false;
-    }
-
+    //Touch Events (Chrome+ Safari)
     if (event.touches) {
+
+      //Return if all gestures did not originate from the same target
+      if (event.touches.length !== event.targetTouches.length) {
+        this.resetInputs();
+        return false;
+      }
+
       for (var index in event.changedTouches) {
         if (event.changedTouches.hasOwnProperty(index) && util.isInteger((parseInt(index)))) {
           var identifier = event.changedTouches[index].identifier;
           if (util.normalizeEvent(event.type) === 'start') {
             if (findInputById(this.inputs, identifier)) {
-              //This should restart the inputs and cancel out any gesture.
+              //This should restart the inputs and cancel out any gesture: Tracks inputs that should be active, but lost focus
               this.resetInputs();
               return false;
             } else {
@@ -181,6 +183,37 @@ class State {
           }
         }
       }
+
+      //Pointer Events (Microsoft)
+    } else if (event.pointerType) {
+      var pointerId = event.pointerId;
+
+      if (util.normalizeEvent(event.type) === 'start') {
+
+        //This should restart the inputs and cancel out any gesture: Tracks inputs that should be active, but lost focus
+        if (findInputById(this.inputs, pointerId)) {
+          this.resetInputs();
+          return false;
+        } else {
+          this.inputs.push(new Input(event, pointerId));
+        }
+      } else {
+        var input = findInputById(this.inputs, pointerId);
+        if (input) {
+          //An input has moved outside the region.
+          if (!util.isInside(input.current.x, input.current.y, regionElement)) {
+            this.resetInputs();
+            return false;
+          } else {
+            input.update(event, pointerId);
+          }
+        }
+      }
+
+      //TODO: need to do this check after we build inputs, since pointer events are not packaged.
+      //Return if all gestures did not originate from the same target
+
+      //Mouse Events
     } else {
       if (util.normalizeEvent(event.type) === 'start') {
         this.inputs.push(new Input(event));

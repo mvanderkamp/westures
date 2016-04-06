@@ -52,7 +52,13 @@ class Region {
      */
     this.element = element;
     capture = (capture) ? capture : false;
-    var eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
+    var eventNames = [];
+    if (window.PointerEvent) {
+      eventNames = ['pointerdown', 'pointermove', 'pointerup'];
+    } else {
+      eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
+    }
+
     for (var i = 0; i < eventNames.length; i++) {
       let _this = this;
       element.addEventListener(eventNames[i], function (e) {

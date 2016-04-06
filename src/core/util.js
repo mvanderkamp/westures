@@ -22,12 +22,15 @@ var util = {
     switch (type) {
       case 'mousedown' :
       case 'touchstart' :
+      case 'pointerdown' :
         return 'start';
       case 'mousemove' :
       case 'touchmove' :
+      case 'pointermove' :
         return 'move';
       case 'mouseup' :
       case 'touchend' :
+      case 'pointerup' :
         return 'end';
       default :
         return null;
