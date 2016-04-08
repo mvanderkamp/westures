@@ -84,7 +84,6 @@ class Pan extends Gesture {
         var progress = inputs[i].getGestureProgress(this.getId());
 
         var reachedThreshold = false;
-        var currentDirection = null;
 
         //Check threshold distance and direction
         switch (this.thresholdDirection) {
@@ -93,12 +92,10 @@ class Pan extends Gesture {
             //Right movement
             if (inputs[i].current.x  > progress.lastEmitted.x) {
               reachedThreshold = (inputs[i].current.x - progress.lastEmitted.x > this.threshold);
-              currentDirection = 'right';
 
               //Left movement
             } else {
               reachedThreshold = (progress.lastEmitted.x - inputs[i].current.x  > this.threshold);
-              currentDirection = 'left';
             }
 
             break;
@@ -107,12 +104,10 @@ class Pan extends Gesture {
             //Up movement
             if (inputs[i].current.y  < progress.lastEmitted.y) {
               reachedThreshold = (progress.lastEmitted.y - inputs[i].current.y  > this.threshold);
-              currentDirection = 'up';
 
               //Down movement
             } else {
               reachedThreshold = (inputs[i].current.y - progress.lastEmitted.y  > this.threshold);
-              currentDirection = 'down';
             }
 
             break;
@@ -122,18 +117,16 @@ class Pan extends Gesture {
             break;
         }
 
-        //var currentDistance = util.distanceBetweenTwoPoints(progress.lastEmitted.x, inputs[i].current.x,
-        //  progress.lastEmitted.y, inputs[i].current.y);
-
         if (progress.active && reachedThreshold) {
-          progress.lastEmitted.x = inputs[i].current.x;
-          progress.lastEmitted.y = inputs[i].current.y;
 
           data[i] = {
             distanceFromOrigin: util.distanceBetweenTwoPoints(inputs[i].initial.x, inputs[i].current.x,
               inputs[i].initial.y, inputs[i].current.y),
-            currentDirection: currentDirection
+            directionFromOrigin: util.getAngle(inputs[i].initial.x, inputs[i].initial.y, inputs[i].current.x, inputs[i].current.y),
+            currentDirection: util.getAngle(progress.lastEmitted.x, progress.lastEmitted.y, inputs[i].current.x, inputs[i].current.y)
           };
+          progress.lastEmitted.x = inputs[i].current.x;
+          progress.lastEmitted.y = inputs[i].current.y;
 
         } else {
           return null;

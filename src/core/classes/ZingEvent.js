@@ -49,7 +49,7 @@ class ZingEvent {
       if (event.changedTouches) {
         for (var i = 0; i < event.changedTouches.length; i++) {
           if (event.changedTouches[i].identifier === touchIdentifier) {
-            this.x = event.changedTouches[i].pageX;
+            this.x = this.pageX = event.changedTouches[i].pageX;
             this.y = event.changedTouches[i].pageY;
           }
         }

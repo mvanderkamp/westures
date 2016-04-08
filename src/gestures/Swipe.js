@@ -152,7 +152,8 @@ class Swipe extends Gesture {
 
       if (velocity > this.escapeVelocity) {
         return {
-          velocity: velocity
+          velocity: velocity,
+          currentDirection: util.getAngle(lastMove.x, lastMove.y, currentMove.x, currentMove.y)
         };
       }
     }
