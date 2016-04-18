@@ -25,11 +25,6 @@ class Pinch extends Distance {
      */
     this.type = 'pinch';
 
-    /**
-     * The expected direction of the two points.
-     * @type {String}
-     */
-    this.direction =  'together';
   }
 
 }

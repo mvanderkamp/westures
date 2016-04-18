@@ -169,7 +169,7 @@ A tap is detected when the user touches the screen and releases in quick success
 	* default: 300
 * `options.numInputs` *optional* - The number of inputs to trigger the tap event.
 	* default: 1
-* `options.moveTolerance` *optional* - A tolerance value which allows the user to move their finger about a radius measured in pixels. This allows the Tap gesture to be triggered more easily since a User might move their finger slightly during a tap event.
+* `options.tolerance` *optional* - A tolerance value which allows the user to move their finger about a radius measured in pixels. This allows the Tap gesture to be triggered more easily since a User might move their finger slightly during a tap event.
 	* default: 10
 
 #### Example
@@ -178,7 +178,7 @@ A tap is detected when the user touches the screen and releases in quick success
 new ZingTouch.Tap({
 	maxDelay: 200,
 	numInputs: 2,
-	moveTolerance: 125
+	tolerance: 125
 })
 ```
 

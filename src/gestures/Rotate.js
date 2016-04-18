@@ -36,9 +36,9 @@ class Rotate extends Gesture {
    * @param {Object} state - The state object of the current listener.
    * @returns {null} - null if this event did not occur
    * @returns {Object} obj.angle - The current angle along the unit circle
-   * @returns {Object} obj.distance - The angular distance travelled from the initial right
+   * @returns {Object} obj.distanceFromOrigin - The angular distance travelled from the initial right
    * most point.
-   * @returns {Object} obj.change - The change of angle between the last position and
+   * @returns {Object} obj.distanceFromLast - The change of angle between the last position and
    * the current position.
    */
   move(inputs, state) {
@@ -69,8 +69,8 @@ class Rotate extends Gesture {
 
       return {
         angle: currentAngle,
-        distance: progress.distance,
-        change: progress.change
+        distanceFromOrigin: progress.distance,
+        distanceFromLast: progress.change
       };
     }
 

@@ -8,7 +8,7 @@ import util from './../core/util.js';
 
 const DEFAULT_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
-const DEFAULT_THRESHOLD_DIR = null;
+const DEFAULT_DIRECTION = null;
 
 /**
  * A Pan is defined as a normal movement in any direction on a screen. Pan gestures do not
@@ -22,7 +22,7 @@ class Pan extends Gesture {
    * @param {Number} [options.numInputs=1] - Number of inputs for the Pan gesture.
    * @param {Number} [options.threshold=1] - The minimum number of pixels the input
    * has to move to trigger this gesture.
-   * @param {String|null} [options.thresholdDirection] - The direction of the Pan event
+   * @param {String|null} [options.direction] - The direction of the Pan event
    */
   constructor(options) {
     super();
@@ -47,9 +47,9 @@ class Pan extends Gesture {
     this.threshold = (options && options.threshold) ? options.threshold : DEFAULT_MIN_THRESHOLD;
 
     /**
-     * The threshold direction. Can be 'x', 'y' or null (any direction).
+     * The expected direction. Can be 'x', 'y' or null (any direction).
      */
-    this.thresholdDirection = (options && options.thresholdDirection) ? options.thresholdDirection : DEFAULT_THRESHOLD_DIR;
+    this.direction = (options && options.direction) ? options.direction : DEFAULT_DIRECTION;
   }
 
   /*constructor*/
@@ -79,14 +79,16 @@ class Pan extends Gesture {
    */
   move(inputs, state) {
     if (this.numInputs === inputs.length) {
-      var data = {};
+      var output = {
+        data: []
+      };
       for (var i = 0; i < inputs.length; i++) {
         var progress = inputs[i].getGestureProgress(this.getId());
 
         var reachedThreshold = false;
 
         //Check threshold distance and direction
-        switch (this.thresholdDirection) {
+        switch (this.direction) {
           case 'x':
 
             //Right movement
@@ -119,7 +121,7 @@ class Pan extends Gesture {
 
         if (progress.active && reachedThreshold) {
 
-          data[i] = {
+          output.data[i] = {
             distanceFromOrigin: util.distanceBetweenTwoPoints(inputs[i].initial.x, inputs[i].current.x,
               inputs[i].initial.y, inputs[i].current.y),
             directionFromOrigin: util.getAngle(inputs[i].initial.x, inputs[i].initial.y, inputs[i].current.x, inputs[i].current.y),
@@ -135,7 +137,7 @@ class Pan extends Gesture {
       }
     }
 
-    return data;
+    return output;
   }
 
   /*move*/

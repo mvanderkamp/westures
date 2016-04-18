@@ -25,11 +25,6 @@ class Expand extends Distance {
      */
     this.type = 'expand';
 
-    /**
-     * The expected direction of the two points.
-     * @type {String}
-     */
-    this.direction =  'apart';
   }
 
 }

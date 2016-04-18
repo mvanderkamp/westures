@@ -8,7 +8,6 @@ import util from './../core/util.js';
 
 const DEFAULT_INPUTS = 2;
 const DEFAULT_MIN_THRESHOLD = 1;
-const DEFAULT_DIRECTION = 'apart';
 
 /**
  * A Distance is defined as two inputs moving either together or apart.
@@ -32,12 +31,6 @@ class Distance extends Gesture {
      * @type {Number}
      */
     this.threshold = (options && options.threshold) ? options.threshold : DEFAULT_MIN_THRESHOLD;
-
-    /**
-     * The trend in direction of both inputs. Either 'apart' or 'together'
-     * @type {string}
-     */
-    this.direction = (options && options.direction) ? options.direction : DEFAULT_DIRECTION;
   }
 
   /**
@@ -72,7 +65,7 @@ class Distance extends Gesture {
       //Retrieve the first input's progress.
       var progress = inputs[0].getGestureProgress(this.type);
 
-      if (this.direction === 'apart') {
+      if (this.type === 'expand') {
         if (currentDistance < lastDistance) {
           progress.lastEmittedDistance = currentDistance;
         } else if ((currentDistance - progress.lastEmittedDistance >= this.threshold)) {

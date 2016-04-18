@@ -24,7 +24,7 @@ class Tap extends Gesture {
    * @param {Number} [options.maxDelay=300] - The maximum delay between a touchstart and
    * touchend can be configured in milliseconds.
    * @param {Number} [options.numInputs=1] - Number of inputs for the Tap gesture.
-   * @param {Number} [options.moveTolerance=10] - The tolerance in pixels a user can move.
+   * @param {Number} [options.tolerance=10] - The tolerance in pixels a user can move.
    */
   constructor(options) {
     super();
@@ -60,11 +60,10 @@ class Tap extends Gesture {
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end events. This
-     * allows the Tap
-     * gesture to be triggered more easily.
+     * allows the Tap gesture to be triggered more easily.
      * @type {number}
      */
-    this.moveTolerance = (options && options.moveTolerance) ? options.moveTolerance : DEFAULT_MOVE_PX_TOLERANCE;
+    this.tolerance = (options && options.tolerance) ? options.tolerance : DEFAULT_MOVE_PX_TOLERANCE;
   }
 
   /*constructor*/
@@ -101,7 +100,7 @@ class Tap extends Gesture {
       if (inputs[i].getCurrentEventType() === 'move') {
         var current = inputs[i].current;
         var previous = inputs[i].previous;
-        if (!util.isWithin(current.x, current.y, previous.x, previous.y, this.moveTolerance)) {
+        if (!util.isWithin(current.x, current.y, previous.x, previous.y, this.tolerance)) {
           var type = this.type;
           inputs.forEach(function (input) {
             input.resetProgress(type);
@@ -117,7 +116,7 @@ class Tap extends Gesture {
 
   /**
    * Event hook for the end of a gesture.
-   * Determines if this the tap event can be fired if the delay and moveTolerance
+   * Determines if this the tap event can be fired if the delay and tolerance
    * constraints are met. Also waits for all of the inputs to be off the screen before determining
    * if the gesture is triggered.
    * @param {Array} inputs - The array of Inputs on the screen.
@@ -140,6 +139,7 @@ class Tap extends Gesture {
         return null;
       }
 
+      //Find the most recent input's startTime
       if (progress.start < startTime) {
         startTime = progress.start;
       }

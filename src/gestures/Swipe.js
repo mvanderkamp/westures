@@ -24,10 +24,10 @@ class Swipe extends Gesture {
    * @param {Object} options - The options object.
    * @param {Number} [options.numInputs] - The number of inputs to trigger a Swipe can be variable,
    *  and the maximum number being a factor of the browser.
-   * @param {Number} [options.maxRestTime] - The maximum resting time a point has between it's last
    *  move and current move events.
    * @param {Number} [options.escapeVelocity] - The minimum velocity the input has to be at to emit a swipe.
    * @param {Number} [options.timeDistortion] - (EXPERIMENTAL) A value of time in milliseconds to distort between events.
+   * @param {Number} [options.maxRestTime] - (EXPERIMENTAL) The maximum resting time a point has between it's last
    * @param {Number} [options.maxProgressStack] - (EXPERIMENTAL)The maximum amount of move events to keep
    * track of for a swipe.
    */
@@ -86,26 +86,28 @@ class Swipe extends Gesture {
    */
   move(inputs, state) {
     if (this.numInputs === inputs.length) {
-      var input = util.getRightMostInput(inputs);
-      var progress = input.getGestureProgress(this.getId());
+      for (var i = 0; i < inputs.length; i++) {
+        var progress = inputs[i].getGestureProgress(this.getId());
+        if (!progress.moves) {
+          progress.moves = [];
+        }
 
-      if (!progress.moves) {
-        progress.moves = [];
+        progress.moves.push({
+          time: new Date().getTime(),
+          x: inputs[i].current.x,
+          y: inputs[i].current.y
+        });
+
+        if (progress.length > this.maxProgressStack) {
+          progress.moves.shift();
+        }
       }
 
-      progress.moves.push({
-        time: new Date().getTime(),
-        x: input.current.x,
-        y: input.current.y
-      });
-
-      if (progress.length > this.maxProgressStack) {
-        progress.moves.shift();
-      }
     }
 
     return null;
   }
+
   /*move*/
 
   /**
@@ -116,50 +118,71 @@ class Swipe extends Gesture {
    * @returns {null|Object} - null if the gesture is not to be emitted, Object with information otherwise.
    */
   end(inputs) {
-    var input = util.getRightMostInput(inputs);
-    var progress = input.getGestureProgress(this.getId());
 
-    if (progress.moves && progress.moves.length > 2) {
+    if (this.numInputs === inputs.length) {
 
-      //Return if the input has not moved in maxRestTime ms.
-      var currentMove = progress.moves.pop();
+      var output = {
+        data: []
+      };
 
-      if ((new Date().getTime()) - currentMove.time > this.maxRestTime) {
-        return null;
-      }
- 
-      var lastMove;
-      var index = progress.moves.length - 1;
+      for (var i = 0; i < inputs.length; i++) {
 
-      //Date is unreliable, so we retrieve the last move event where the time is not the same. .
-      while (index !== -1) {
-        if (progress.moves[index].time !== currentMove.time) {
-          lastMove = progress.moves[index];
-          break;
+        //Determine if all input events are on the 'end' event.
+        if (inputs[i].current.type !== 'end') {
+          return;
         }
 
-        index--;
+        var progress = inputs[i].getGestureProgress(this.getId());
+        if (progress.moves && progress.moves.length > 2) {
+          //CHECK : Return if the input has not moved in maxRestTime ms.
+
+          var currentMove = progress.moves.pop();
+          if ((new Date().getTime()) - currentMove.time > this.maxRestTime) {
+            return null;
+          }
+
+          var lastMove;
+          var index = progress.moves.length - 1;
+
+          //CHECK : Date is unreliable, so we retrieve the last move event where the time is not the same.
+          while (index !== -1) {
+            if (progress.moves[index].time !== currentMove.time) {
+              lastMove = progress.moves[index];
+              break;
+            }
+
+            index--;
+          }
+
+          //If the date is REALLY unreliable, we apply a time distortion to the last event.
+          if (!lastMove) {
+            lastMove = progress.moves.pop();
+            lastMove.time += this.timeDistortion;
+          }
+
+          var velocity = util.getVelocity(lastMove.x, lastMove.y, lastMove.time,
+            currentMove.x, currentMove.y, currentMove.time);
+
+          output.data[i] = {
+            velocity: velocity,
+            currentDirection: util.getAngle(lastMove.x, lastMove.y, currentMove.x, currentMove.y)
+          };
+        }
       }
 
-      //If the date is REALLY unreliable, we apply a time distortion to the last event.
-      if (!lastMove) {
-        lastMove = progress.moves.pop();
-        lastMove.time += this.timeDistortion;
+      for (var i = 0; i < output.data.length; i++) {
+        if (velocity < this.escapeVelocity) {
+          return null;
+        }
       }
 
-      var velocity = util.getVelocity(lastMove.x, lastMove.y, lastMove.time,
-        currentMove.x, currentMove.y, currentMove.time);
-
-      if (velocity > this.escapeVelocity) {
-        return {
-          velocity: velocity,
-          currentDirection: util.getAngle(lastMove.x, lastMove.y, currentMove.x, currentMove.y)
-        };
-      }
+      return output;
     }
 
     return null;
+
   }
+
   /*end*/
 }
 
