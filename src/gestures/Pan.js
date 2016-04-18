@@ -8,7 +8,6 @@ import util from './../core/util.js';
 
 const DEFAULT_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
-const DEFAULT_DIRECTION = null;
 
 /**
  * A Pan is defined as a normal movement in any direction on a screen. Pan gestures do not
@@ -22,7 +21,6 @@ class Pan extends Gesture {
    * @param {Number} [options.numInputs=1] - Number of inputs for the Pan gesture.
    * @param {Number} [options.threshold=1] - The minimum number of pixels the input
    * has to move to trigger this gesture.
-   * @param {String|null} [options.direction] - The direction of the Pan event
    */
   constructor(options) {
     super();
@@ -45,11 +43,7 @@ class Pan extends Gesture {
      * @type {Number}
      */
     this.threshold = (options && options.threshold) ? options.threshold : DEFAULT_MIN_THRESHOLD;
-
-    /**
-     * The expected direction. Can be 'x', 'y' or null (any direction).
-     */
-    this.direction = (options && options.direction) ? options.direction : DEFAULT_DIRECTION;
+    
   }
 
   /*constructor*/
@@ -87,37 +81,9 @@ class Pan extends Gesture {
 
         var reachedThreshold = false;
 
-        //Check threshold distance and direction
-        switch (this.direction) {
-          case 'x':
-
-            //Right movement
-            if (inputs[i].current.x  > progress.lastEmitted.x) {
-              reachedThreshold = (inputs[i].current.x - progress.lastEmitted.x > this.threshold);
-
-              //Left movement
-            } else {
-              reachedThreshold = (progress.lastEmitted.x - inputs[i].current.x  > this.threshold);
-            }
-
-            break;
-          case 'y':
-
-            //Up movement
-            if (inputs[i].current.y  < progress.lastEmitted.y) {
-              reachedThreshold = (progress.lastEmitted.y - inputs[i].current.y  > this.threshold);
-
-              //Down movement
-            } else {
-              reachedThreshold = (inputs[i].current.y - progress.lastEmitted.y  > this.threshold);
-            }
-
-            break;
-          case null :
-            reachedThreshold =  (Math.abs(inputs[i].current.y - progress.lastEmitted.y) > this.threshold ||
-              Math.abs(inputs[i].current.x - progress.lastEmitted.x) > this.threshold);
-            break;
-        }
+        //Check threshold distance
+        reachedThreshold =  (Math.abs(inputs[i].current.y - progress.lastEmitted.y) > this.threshold ||
+        Math.abs(inputs[i].current.x - progress.lastEmitted.x) > this.threshold);
 
         if (progress.active && reachedThreshold) {
 
