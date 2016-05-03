@@ -197,6 +197,16 @@ var util = {
     }
 
     return index;
+  },
+
+  setMSPreventDefault(element) {
+    element.style['-ms-content-zooming'] = 'none';
+    element.style['touch-action'] = 'none';
+  },
+
+  removeMSPreventDefault(element) {
+    element.style['-ms-content-zooming'] = '';
+    element.style['touch-action'] = '';
   }
 };
 export default util;

@@ -176,7 +176,10 @@ class Swipe extends Gesture {
         }
       }
 
-      return output;
+      if (output.data.length > 0) {
+        return output;
+      }
+
     }
 
     return null;

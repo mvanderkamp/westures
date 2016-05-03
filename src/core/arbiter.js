@@ -46,7 +46,10 @@ function arbiter(event, region) {
   var bindings = state.retrieveBindingsByCoord();
   if (bindings.length > 0) {
     if (region.preventDefault) {
+      util.setMSPreventDefault(region.element);
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    } else {
+      util.removeMSPreventDefault(region.element);
     }
 
     var toBeDispatched = {};
