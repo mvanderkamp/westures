@@ -125,8 +125,7 @@ class Region {
     var bindings = this.state.retrieveBindingsByElement(element);
     var unbound = [];
 
-    for (var i = 0; i < bindings.length; i++) {
-      var binding = bindings[i];
+    bindings.forEach((binding) => {
       if (gesture) {
         if (typeof gesture === 'string' && this.state.registeredGestures[gesture]) {
           var registeredGesture = this.state.registeredGestures[gesture];
@@ -139,7 +138,7 @@ class Region {
         element.removeEventListener(binding.gesture.getId(), binding.handler, binding.capture);
         unbound.push(binding);
       }
-    }
+    });
 
     return unbound;
   }
@@ -173,13 +172,12 @@ class Region {
    * @returns {Object} - The Gesture object that was unregistered or null if it could not be found.
    */
   unregister(key) {
-    for (var i = 0; i < this.state.bindings.length; i++) {
-      var binding = this.state.bindings[i];
+    this.state.bindings.forEach((binding) => {
       if (binding.gesture.getType() === key) {
         binding.element.removeEventListener(binding.gesture.getId(),
           binding.handler, binding.capture);
       }
-    }
+    });
 
     var registeredGesture = this.state.registeredGestures[key];
     delete this.state.registeredGestures[key];

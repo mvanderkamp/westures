@@ -43,7 +43,7 @@ function arbiter(event, region) {
   }
 
   //Retrieve the initial target from any one of the inputs
-  var bindings = state.retrieveBindingsByCoord();
+  var bindings = state.retrieveBindingsByInitialPos();
   if (bindings.length > 0) {
     if (region.preventDefault) {
       util.setMSPreventDefault(region.element);
@@ -55,34 +55,32 @@ function arbiter(event, region) {
     var toBeDispatched = {};
     var gestures = interpreter(bindings, event, state);
 
-    //noinspection JSDuplicatedDeclaration
-    for (var i = 0; i < gestures.length; i++) {
-      var id = (gestures[i].binding.gesture.id) ? gestures[i].binding.gesture.id : gestures[i].binding.gesture.type;
+    //Determine the deepest path index to emit the event from, to avoid duplicate events being fired.
+    gestures.forEach(gesture => {
+      //var id = (gesture.binding.gesture.id) ? gesture.binding.gesture.id : gesture.binding.gesture.type;
+      var id = gesture.binding.gesture.id;
       if (toBeDispatched[id]) {
         var path = util.getPropagationPath(event);
-        if (util.getPathIndex(path, gestures[i].binding.element) < util.getPathIndex(path, toBeDispatched[id].binding.element)) {
-          toBeDispatched[id] = gestures[i];
+        if (util.getPathIndex(path, gesture.binding.element) < util.getPathIndex(path, toBeDispatched[id].binding.element)) {
+          toBeDispatched[id] = gesture;
         }
       } else {
-        toBeDispatched[id] = gestures[i];
+        toBeDispatched[id] = gesture;
       }
-    }
+    });
 
-    for (var index in toBeDispatched) {
+    Object.keys(toBeDispatched).forEach(index => {
       var gesture = toBeDispatched[index];
       dispatcher(gesture.binding, gesture.data, gesture.events);
-
-    }
+    });
   }
 
   var endCount = 0;
-
-  //noinspection JSDuplicatedDeclaration
-  for (var i = 0; i < state.inputs.length; i++) {
-    if (state.inputs[i].getCurrentEventType() === 'end') {
+  state.inputs.forEach(input => {
+    if (input.getCurrentEventType() === 'end') {
       endCount++;
     }
-  }
+  });
 
   if (endCount === state.inputs.length) {
     state.resetInputs();

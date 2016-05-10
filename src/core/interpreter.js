@@ -18,14 +18,14 @@ import util from './util.js';
 function interpreter(bindings, event, state) {
   var evType = util.normalizeEvent(event.type);
   var candidates = [];
-  bindings.forEach(function (binding) {
+  bindings.forEach(binding => {
     let result = binding.gesture[evType](state.inputs, state);
     if (result) {
 
       var events = [];
-      for (var i = 0; i < state.inputs.length; i++) {
-        events.push(state.inputs[i].current);
-      }
+      state.inputs.forEach(input => {
+        events.push(input.current);
+      });
 
       candidates.push({
         binding: binding,

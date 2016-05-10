@@ -37,7 +37,7 @@ class State {
     this.inputs = [];
 
     /**
-     * An array of Binding objects; relations between elements, their gestures, and the handlers.
+     * An array of Binding objects; The list of relations between elements, their gestures, and the handlers.
      * @type {Binding}
      */
     this.bindings = [];
@@ -89,7 +89,7 @@ class State {
 
     if (typeof gesture === 'string' && Object.keys(this.registeredGestures).indexOf(gesture) === -1) {
       throw new Error('Parameter ', gesture, ' is not a registered gesture');
-    } else if (typeof gesture === 'object'  && !(gesture instanceof Gesture)) {
+    } else if (typeof gesture === 'object' && !(gesture instanceof Gesture)) {
       throw new Error('Parameter ', gesture, 'is not of a Gesture type');
     }
 
@@ -113,7 +113,7 @@ class State {
    */
   retrieveBindingsByElement(element) {
     var matches = [];
-    this.bindings.map((binding) => {
+    this.bindings.map(binding => {
       if (binding.element === element) {
         matches.push(binding);
       }
@@ -129,25 +129,23 @@ class State {
    * this would still be valid.
    * @returns {Array} - An array of Bindings to which that element is bound
    */
-  retrieveBindingsByCoord() {
-
+  retrieveBindingsByInitialPos() {
     var matches = [];
-    for (var i = 0; i < this.bindings.length; i++) {
-
-      //Determine if at least one input is in the target element. They should all be in
-      //the region based upon a prior check
+    this.bindings.forEach(binding => {
+      // Determine if at least one input is in the target element. They should all be in the region based upon a prior check
       var insideCount = 0;
-      for (var k = 0; k < this.inputs.length; k++) {
-        insideCount = (util.isInside(this.inputs[k].initial.x, this.inputs[k].initial.y, this.bindings[i].element)) ? (insideCount + 1) : (insideCount - 1);
-      }
+      this.inputs.forEach(input => {
+        insideCount = (util.isInside(input.initial.x, input.initial.y, binding.element)) ? (insideCount + 1) : (insideCount - 1);
+      });
 
       if (insideCount > 0) {
-        matches.push(this.bindings[i]);
+        matches.push(binding);
       }
-    }
-
+    });
     return matches;
   }
+
+  /* retrieveBindingsByInitialPos */
 
   /**
    * Updates the inputs with new information based upon a new event being fired.
@@ -164,7 +162,6 @@ class State {
 
         //Return if all gestures did not originate from the same target
         if (event.touches.length !== event.targetTouches.length) {
-          this.resetInputs();
           return false;
         }
 
@@ -187,34 +184,38 @@ class State {
         update(event, this, 0, regionElement);
         break;
     }
+    return true;
 
     function update(event, state, identifier, regionElement) {
-      if (util.normalizeEvent(event.type) === 'start') {
-        if (findInputById(state.inputs, identifier)) {
-          //This should restart the inputs and cancel out any gesture: Tracks inputs that should be active, but lost focus
-          state.resetInputs();
-          return false;
-        } else {
-          state.inputs.push(new Input(event, identifier));
-        }
+      var eventType = util.normalizeEvent(event.type);
+      var input = findInputById(state.inputs, identifier);
+
+      //A starting input was not cleaned up properly and still exists.
+      if (eventType === 'start' && input) {
+        state.resetInputs();
+        return;
+      }
+
+      //An input has moved outside the region.
+      if (eventType !== 'start' && input && !util.isInside(input.current.x, input.current.y, regionElement)) {
+        state.resetInputs();
+        return;
+      }
+
+      if (eventType !== 'start' && !input) {
+        state.resetInputs();
+        return;
+      }
+
+      if (eventType === 'start') {
+        state.inputs.push(new Input(event, identifier));
       } else {
-        var input = findInputById(state.inputs, identifier);
-        if (input) {
-          //An input has moved outside the region.
-          if (!util.isInside(input.current.x, input.current.y, regionElement)) {
-            state.resetInputs();
-            return false;
-          } else {
-            input.update(event, identifier);
-          }
-        }
+        input.update(event, identifier);
       }
     }
-
-    return true;
   }
 
-  /*updateInputs*/
+  /* updateInputs */
 
   /**
    * Removes all inputs from the state, allowing for a new gesture.
@@ -223,7 +224,7 @@ class State {
     this.inputs = [];
   }
 
-  /*resetInputs*/
+  /* resetInputs */
 
   /**
    * Counts the number of active inputs at any given time.
@@ -231,20 +232,19 @@ class State {
    */
   numActiveInputs() {
     var count = 0;
-    for (var i = 0; i < this.inputs.length; i++) {
-      if (this.inputs[i].current.type !== 'end') {
+    this.inputs.forEach(input => {
+      if (input.current.type !== 'end') {
         count++;
       }
-    }
-
+    });
     return count;
   }
 
-  /*numActiveInputs*/
+  /* numActiveInputs */
 
   /**
    * Register the gesture to the current region.
-   * @param {Gesture} gesture - The gesture to register
+   * @param {Object} gesture - The gesture to register
    * @param {String} key - The key to define the new gesture as.
    */
   registerGesture(gesture, key) {
@@ -282,6 +282,6 @@ function findInputById(inputs, identifier) {
 
   return null;
 }
-/*findInputById*/
+/* findInputById */
 
 export default State;

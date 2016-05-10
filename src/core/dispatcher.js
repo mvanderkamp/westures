@@ -24,7 +24,7 @@ function dispatcher(binding, data, events) {
 /*dispatcher*/
 
 /**
- * Emits the new event recursively until the document is reached.
+ * Emits the new event. Unbinds the event if the event was registered at bindOnce.
  * @param {Element} target - Element object to emit the event to.
  * @param {Event} event - The CustomEvent to emit.
  * @param {Binding} binding - An object of type Binding

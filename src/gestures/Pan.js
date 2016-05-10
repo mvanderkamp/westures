@@ -17,7 +17,7 @@ const DEFAULT_MIN_THRESHOLD = 1;
 class Pan extends Gesture {
   /**
    * Constructor function for the Pan class.
-   * @param {Object} options - The options object.
+   * @param {Object} [options] - The options object.
    * @param {Number} [options.numInputs=1] - Number of inputs for the Pan gesture.
    * @param {Number} [options.threshold=1] - The minimum number of pixels the input
    * has to move to trigger this gesture.
@@ -54,14 +54,15 @@ class Pan extends Gesture {
    * @param inputs
    */
   start(inputs) {
-    for (var i = 0; i < inputs.length; i++) {
-      var progress = inputs[i].getGestureProgress(this.getId());
+
+    inputs.forEach(input => {
+      var progress = input.getGestureProgress(this.getId());
       progress.active = true;
       progress.lastEmitted = {
-        x: inputs[i].current.x,
-        y: inputs[i].current.y
+        x: input.current.x,
+        y: input.current.y
       };
-    }
+    });
   }
 
   /**
@@ -99,7 +100,6 @@ class Pan extends Gesture {
         } else {
           return null;
         }
-
       }
     }
 
@@ -117,14 +117,10 @@ class Pan extends Gesture {
    * @returns {null} - null if the gesture is not to be emitted, Object with information otherwise.
    */
   end(inputs) {
-    for (var i = 0; i < inputs.length; i++) {
-      var progress = inputs[i].getGestureProgress(this.getId());
-      if (progress.active) {
-        progress.active = false;
-        break;
-      }
-    }
-
+    inputs.forEach(input => {
+      var progress = input.getGestureProgress(this.getId());
+      progress.active = false;
+    });
     return null;
   }
 

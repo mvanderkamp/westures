@@ -21,16 +21,14 @@ class Binder {
      * @type {Element}
      */
     this.element = element;
-    for (var key in state.registeredGestures) {
-      if (state.registeredGestures.hasOwnProperty(key)) {
-        (function (key, self) {
-          self[key] = function (handler, capture) {
-            state.addBinding(self.element, key, handler, capture, bindOnce);
-            return self;
-          };
-        })(key, this);
-      }
-    }
+
+    Object.keys(state.registeredGestures).forEach((key) => {
+      this[key] = (handler, capture) => {
+        state.addBinding(this.element, key, handler, capture, bindOnce);
+        return this;
+      };
+    });
+
   }
   /*constructor*/
 }

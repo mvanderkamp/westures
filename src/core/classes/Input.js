@@ -41,12 +41,11 @@ class Input {
      */
     this.previous = currentEvent;
 
-    //noinspection JSUnusedGlobalSymbols
     /**
      * Refers to the event.touches index, or 0 if a simple mouse event occurred.
      * @type {Number}
      */
-    this.identifier = (identifier) ? identifier : 0;
+    this.identifier = (typeof identifier !== 'undefined') ? identifier : 0;
 
     /**
      * Stores internal state between events for each gesture based off of the gesture's id.
@@ -62,7 +61,6 @@ class Input {
    * @param {Number} touchIdentifier - The index of inputs (usually from event.touches)
    */
   update(event, touchIdentifier) {
-    //noinspection JSUnusedGlobalSymbols
     this.previous = this.current;
     this.current = new ZingEvent(event, touchIdentifier);
   }

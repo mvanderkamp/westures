@@ -34,14 +34,12 @@ class Binding {
      */
     this.handler = handler;
 
-    //noinspection JSUnusedGlobalSymbols
     /**
      *  A boolean signifying if the event is to be emitted during the capture or bubble phase.
      * @type {Boolean}
      */
     this.capture = (typeof capture !== 'undefined') ? capture : false;
 
-    //noinspection JSUnusedGlobalSymbols
     /**
      * A boolean flag used for the bindOnce syntax.
      * @type {Boolean}

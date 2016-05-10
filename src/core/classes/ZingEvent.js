@@ -20,7 +20,6 @@ class ZingEvent {
    * @param {Number} touchIdentifier - The index of touch if applicable
    */
   constructor(event, touchIdentifier) {
-    //noinspection JSUnusedGlobalSymbols
     /**
      * The original event object.
      * @type {Event}
@@ -45,19 +44,29 @@ class ZingEvent {
      * @type {number}
      */
     this.y = INITIAL_COORDINATE;
+
+    var eventObj;
     if (event.touches) {
       if (event.changedTouches) {
         for (var i = 0; i < event.changedTouches.length; i++) {
           if (event.changedTouches[i].identifier === touchIdentifier) {
-            this.x = this.pageX = event.changedTouches[i].pageX;
-            this.y = event.changedTouches[i].pageY;
+            eventObj = event.changedTouches[i];
+            break;
           }
         }
       }
     } else {
-      this.x = event.clientX;
-      this.y = event.clientY;
+      eventObj = event;
     }
+
+    this.x = this.clientX = eventObj.clientX;
+    this.y = this.clientY = eventObj.clientY;
+
+    this.pageX = eventObj.pageX;
+    this.pageY = eventObj.pageY;
+
+    this.screenX = eventObj.screenX;
+    this.screenY = eventObj.screenY;
   }
 
   /*constructor*/

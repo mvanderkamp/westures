@@ -134,15 +134,14 @@ var util = {
    * @param inputs
    */
   getRightMostInput(inputs) {
-    var input = null;
+    var rightMost = null;
     var distance = Number.MIN_VALUE;
-    for (var i = 0; i < inputs.length; i++) {
-      if (inputs[0].initial.x > distance) {
-        input = inputs[0];
+    inputs.forEach(input => {
+      if (input.initial.x > distance) {
+        rightMost = input;
       }
-    }
-
-    return input;
+    });
+    return rightMost;
   },
 
   /**
@@ -190,11 +189,12 @@ var util = {
    */
   getPathIndex(path, element) {
     var index = path.length;
-    for (var i = 0; i < path.length; i++) {
-      if (path[i] === element) {
+
+    path.forEach(obj => {
+      if (obj === element) {
         index = i;
       }
-    }
+    });
 
     return index;
   },

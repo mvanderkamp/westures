@@ -21,7 +21,7 @@ class Swipe extends Gesture {
 
   /**
    * Constructor function for the Swipe class.
-   * @param {Object} options - The options object.
+   * @param {Object} [options] - The options object.
    * @param {Number} [options.numInputs] - The number of inputs to trigger a Swipe can be variable,
    *  and the maximum number being a factor of the browser.
    *  move and current move events.

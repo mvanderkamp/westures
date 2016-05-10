@@ -18,7 +18,7 @@ const DEFAULT_MOVE_PX_TOLERANCE = 10;
 class Tap extends Gesture {
   /**
    * Constructor function for the Tap class.
-   * @param {Object} options - The options object.
+   * @param {Object} [options] - The options object.
    * @param {Number} [options.minDelay=0] - The minimum delay between a touchstart and
    * touchend can be configured in milliseconds.
    * @param {Number} [options.maxDelay=300] - The maximum delay between a touchstart and
@@ -74,12 +74,11 @@ class Tap extends Gesture {
    * @returns {null} - Tap does not trigger on a start event.
    */
   start(inputs) {
-
     if (inputs.length === this.numInputs) {
-      for (var i = 0; i < inputs.length; i++) {
-        var progress = inputs[i].getGestureProgress(this.type);
+      inputs.forEach(input => {
+        var progress = input.getGestureProgress(this.type);
         progress.start = new Date().getTime();
-      }
+      });
     }
 
     return null;
@@ -105,6 +104,8 @@ class Tap extends Gesture {
           inputs.forEach(function (input) {
             input.resetProgress(type);
           });
+
+          return null;
         }
       }
     }
