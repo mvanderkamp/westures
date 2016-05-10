@@ -43,7 +43,7 @@ class State {
     this.bindings = [];
 
     /**
-     * The number of gestures that are used with this state
+     * The number of gestures that have been registered with this state
      * @type {Number}
      */
     this.numGestures = 0;
@@ -74,26 +74,34 @@ class State {
    * @param {Boolean} capture - Whether the gesture is to be detected in the capture of bubble
    * phase. Used to bind/unbind.
    * @param {Boolean} bindOnce - Option to bind once and only emit the event once.
-   * @returns {null|Binding} - null if the gesture could not be found, the new Binding otherwise
    */
   addBinding(element, gesture, handler, capture, bindOnce) {
-    if (typeof gesture === 'string') {
-      gesture = this.registeredGestures[gesture];
-      if (typeof gesture === 'undefined') {
-        return null;
-      }
-    } else if (!(gesture instanceof Gesture)) {
-      return null;
-    } else {
-      this.trackGesture(gesture);
+    var boundGesture;
+
+    //Error type checking.
+    if (element && typeof element.tagName === 'undefined') {
+      throw new Error('Parameter element is an invalid object.');
     }
 
-    if (gesture instanceof Gesture) {
-      var binding = new Binding(element, gesture, handler, capture, bindOnce);
-      this.bindings.push(binding);
-      element.addEventListener(gesture.getId(), handler, capture);
-      return binding;
+    if (typeof handler !== 'function') {
+      throw new Error('Parameter handler is invalid.');
     }
+
+    if (typeof gesture === 'string' && Object.keys(this.registeredGestures).indexOf(gesture) === -1) {
+      throw new Error('Parameter ', gesture, ' is not a registered gesture');
+    } else if (typeof gesture === 'object'  && !(gesture instanceof Gesture)) {
+      throw new Error('Parameter ', gesture, 'is not of a Gesture type');
+    }
+
+    if (typeof gesture === 'string') {
+      boundGesture = this.registeredGestures[gesture];
+    } else {
+      boundGesture = gesture;
+      this.assignGestureId(boundGesture);
+    }
+
+    this.bindings.push(new Binding(element, boundGesture, handler, capture, bindOnce));
+    element.addEventListener(boundGesture.getId(), handler, capture);
   }
 
   /*addBinding*/
@@ -105,12 +113,11 @@ class State {
    */
   retrieveBindingsByElement(element) {
     var matches = [];
-    for (var i = 0; i < this.bindings.length; i++) {
-      if (this.bindings[i].element === element) {
-        matches.push(this.bindings[i]);
+    this.bindings.map((binding) => {
+      if (binding.element === element) {
+        matches.push(binding);
       }
-    }
-
+    });
     return matches;
   }
 
@@ -241,20 +248,22 @@ class State {
    * @param {String} key - The key to define the new gesture as.
    */
   registerGesture(gesture, key) {
-    this.trackGesture(gesture);
+    this.assignGestureId(gesture);
     this.registeredGestures[key] = gesture;
   }
+
+  /* registerGesture */
 
   /**
    * Tracks the gesture to this state object to become uniquely identifiable.
    * Useful for nested Regions.
    * @param {Gesture} gesture - The gesture to track
    */
-  trackGesture(gesture) {
+  assignGestureId(gesture) {
     gesture.setId(this.regionId + '-' + this.numGestures++);
   }
 
-  /*registerGesture*/
+  /* assignGestureId */
 
 }
 /**

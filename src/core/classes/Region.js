@@ -35,23 +35,29 @@ class Region {
     this.id = id;
 
     /**
-     * The internal state object for a Region. Keeps track of registered gestures, inputs, and events.
-     * @type {State}
+     * The element being bound to.
+     * @type {Element}
      */
-    this.state = new State(id);
+    this.element = element;
+
+    /**
+     * Whether the region listens for captures or bubbles.
+     * @type {boolean}
+     */
+    this.capture = (typeof capture !== 'undefined') ? capture : false;
 
     /**
      * Boolean to disable browser functionality such as scrolling and zooming over the region
      * @type {boolean}
      */
-    this.preventDefault = (preventDefault) ? preventDefault : true;
+    this.preventDefault = (typeof preventDefault !== 'undefined') ? preventDefault : true;
 
     /**
-     * The element being bound to.
-     * @type {Element}
+     * The internal state object for a Region. Keeps track of registered gestures, inputs, and events.
+     * @type {State}
      */
-    this.element = element;
-    capture = (capture) ? capture : false;
+    this.state = new State(id);
+
     var eventNames = [];
     if (window.PointerEvent) {
       eventNames = ['pointerdown', 'pointermove', 'pointerup'];
@@ -59,12 +65,12 @@ class Region {
       eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
     }
 
-    for (var i = 0; i < eventNames.length; i++) {
-      let _this = this;
-      element.addEventListener(eventNames[i], function (e) {
-        arbiter(e, _this);
-      }, capture);
-    }
+    //Bind detected browser events to the region element.
+    eventNames.map((name) => {
+      element.addEventListener(name, (e) => {
+        arbiter(e, this);
+      }, this.capture);
+    });
   }
 
   /**
@@ -81,28 +87,10 @@ class Region {
    * @returns {Object} - a chainable object that has the same function as bind.
    */
   bind(element, gesture, handler, capture, bindOnce) {
-    bindOnce = (bindOnce) ? bindOnce : false;
-
-    if (element && typeof element.tagName === 'undefined') {
-      throw new Error('Parameter element is an invalid object.');
-    }
-
+    bindOnce = (typeof bindOnce !== 'undefined') ? bindOnce : false;
     if (!gesture) {
       return new Binder(element, bindOnce, this.state);
     } else {
-
-      if (typeof gesture === 'string' && Object.keys(this.state.registeredGestures).indexOf(gesture) === -1) {
-        throw new Error('Parameter ', gesture, ' is not a registered gesture');
-      }
-
-      if (typeof gesture === 'object' && !(gesture instanceof Gesture)) {
-        throw new Error('Parameter ', gesture, 'is not of a Gesture type');
-      }
-
-      if (typeof handler !== 'function') {
-        throw new Error('Parameter handler is invalid.');
-      }
-
       this.state.addBinding(element, gesture, handler, capture, bindOnce);
     }
   }
@@ -129,22 +117,28 @@ class Region {
   //noinspection JSMethodCanBeStatic
   /**
    * Unbinds an element from either the specified gesture or all if no element is specified.
-   * @param {Element|String} element - Either the element to remove or a string key
-   * @param {String} gesture - A String representing the gesture
+   * @param {Element} element -The element to remove.
+   * @param {String | Object} gesture - A String representing the gesture, or the actual object being used.
    * @returns {Array} - An array of Bindings that were unbound to the element;
    */
   unbind(element, gesture) {
-    var bindings = state.retrieveBindingsByElement(element);
+    var bindings = this.state.retrieveBindingsByElement(element);
     var unbound = [];
-    var i = bindings.length - 1;
-    while (i > -1) {
 
-      if ((gesture && (bindings[i].element === element)) && !gesture) {
-        element.removeEventListener(bindings[i].gesture.getId(), bindings[i].handler, bindings[i].capture);
-        unbound.push(bindings.splice(i, 1));
+    for (var i = 0; i < bindings.length; i++) {
+      var binding = bindings[i];
+      if (gesture) {
+        if (typeof gesture === 'string' && this.state.registeredGestures[gesture]) {
+          var registeredGesture = this.state.registeredGestures[gesture];
+          if (registeredGesture.id === binding.gesture.id) {
+            element.removeEventListener(binding.gesture.getId(), binding.handler, binding.capture);
+            unbound.push(binding);
+          }
+        }
+      } else {
+        element.removeEventListener(binding.gesture.getId(), binding.handler, binding.capture);
+        unbound.push(binding);
       }
-
-      i--;
     }
 
     return unbound;

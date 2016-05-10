@@ -39,14 +39,14 @@ class Binding {
      *  A boolean signifying if the event is to be emitted during the capture or bubble phase.
      * @type {Boolean}
      */
-    this.capture = (capture) ? capture : false;
+    this.capture = (typeof capture !== 'undefined') ? capture : false;
 
     //noinspection JSUnusedGlobalSymbols
     /**
      * A boolean flag used for the bindOnce syntax.
      * @type {Boolean}
      */
-    this.bindOnce = (bindOnce) ? bindOnce : false;
+    this.bindOnce = (typeof bindOnce !== 'undefined') ? bindOnce : false;
 
   }
   /*constructor*/
