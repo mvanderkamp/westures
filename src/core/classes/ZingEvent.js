@@ -46,13 +46,11 @@ class ZingEvent {
     this.y = INITIAL_COORDINATE;
 
     var eventObj;
-    if (event.touches) {
-      if (event.changedTouches) {
-        for (var i = 0; i < event.changedTouches.length; i++) {
-          if (event.changedTouches[i].identifier === touchIdentifier) {
-            eventObj = event.changedTouches[i];
-            break;
-          }
+    if (event.touches && event.changedTouches) {
+      for (var i = 0; i < event.changedTouches.length; i++) {
+        if (event.changedTouches[i].identifier === touchIdentifier) {
+          eventObj = event.changedTouches[i];
+          break;
         }
       }
     } else {

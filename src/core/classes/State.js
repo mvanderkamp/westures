@@ -13,6 +13,8 @@ import Binding from './Binding.js';
 import Input from './Input.js';
 import util from './../util.js';
 
+const DEFAULT_MOUSE_ID = 0;
+
 /**
  * Creates an object related to a Region's state, and contains helper methods to update and clean up different
  * states.
@@ -133,12 +135,10 @@ class State {
     var matches = [];
     this.bindings.forEach(binding => {
       // Determine if at least one input is in the target element. They should all be in the region based upon a prior check
-      var insideCount = 0;
-      this.inputs.forEach(input => {
-        insideCount = (util.isInside(input.initial.x, input.initial.y, binding.element)) ? (insideCount + 1) : (insideCount - 1);
+      var inputsInside = this.inputs.filter(input => {
+        return util.isInside(input.initial.x, input.initial.y, binding.element);
       });
-
-      if (insideCount > 0) {
+      if (inputsInside.length > 0) {
         matches.push(binding);
       }
     });
@@ -154,7 +154,7 @@ class State {
    * @returns {boolean} - returns true for a successful update, false if the event is invalid.
    */
   updateInputs(event, regionElement) {
-    var identifier = 0;
+    var identifier = DEFAULT_MOUSE_ID;
     var eventType = (event.touches) ? 'TouchEvent' : (event.pointerType) ? 'PointerEvent' : 'MouseEvent';
 
     switch (eventType) {
@@ -181,7 +181,7 @@ class State {
 
       case 'MouseEvent':
       default:
-        update(event, this, 0, regionElement);
+        update(event, this, DEFAULT_MOUSE_ID, regionElement);
         break;
     }
     return true;
@@ -231,13 +231,10 @@ class State {
    * @returns {Number} - The number of active inputs.
    */
   numActiveInputs() {
-    var count = 0;
-    this.inputs.forEach(input => {
-      if (input.current.type !== 'end') {
-        count++;
-      }
+    var endType = this.inputs.filter(input => {
+      return input.current.type !== 'end';
     });
-    return count;
+    return endType.length;
   }
 
   /* numActiveInputs */
