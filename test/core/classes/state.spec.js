@@ -16,10 +16,6 @@ describe('State', function () {
     expect(state.bindings).to.be.empty;
   });
 
-  it('should have no registered gestures', function () {
-    expect(state.numRegisteredGestures).to.equal(0);
-  });
-
   it('should have instances of the 6 default gestures', function () {
     var gestures = ['expand', 'pan', 'pinch', 'rotate', 'swipe', 'tap'];
     for (var i = 0; i < state.registeredGestures.length; i++) {
@@ -46,14 +42,24 @@ describe('State.addBinding', function () {
   });
 
   it('should not add a binding to a non-registered gesture', function () {
-    var state = new State();
-    expect(state.addBinding(document.body, 'foobar', function () {}, false, false)).to.be.null;
+    expect(function () {
+      var state = new State();
+      state.addBinding(document.body, 'foobar', function () {}, false, false);
+    }).to.throw('Parameter foobar is not a registered gesture');
   });
 
   it('should not add a binding to an object not of the Gesture type', function () {
-    var state = new State();
-    expect(state.addBinding(document.body, {}, function () {}, false, false)).to.be.null;
+    expect(function () {
+      var state = new State();
+      state.addBinding(document.body, {}, function () {}, false, false);
+    }).to.throw('Parameter for the gesture is not of a Gesture type');
   });
+
+  //it('should not add a binding to an object not of the Gesture type', function () {
+  //  var state = new State();
+  //  expect(state.addBinding(document.body, {}, function () {}, false, false)).to.be.null;
+  //});
+
 });
 
 /** @test {State.retrieveBindings} */
@@ -62,10 +68,10 @@ describe('State.retrieveBindings', function () {
   state.addBinding(document.body, 'tap', function () {}, false, false);
 
   it('should retrieve no bindings for elements without any', function () {
-    expect(state.retrieveBindings(document)).to.be.empty;
+    expect(state.retrieveBindingsByElement(document)).to.be.empty;
   });
 
   it('should retrieve bindings for elements that are bound', function () {
-    expect(state.retrieveBindings(document.body)).to.not.be.empty;
+    expect(state.retrieveBindingsByElement(document.body)).to.not.be.empty;
   });
 });

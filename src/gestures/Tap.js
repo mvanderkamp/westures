@@ -122,7 +122,7 @@ class Tap extends Gesture {
    * if the gesture is triggered.
    * @param {Array} inputs - The array of Inputs on the screen.
    * @returns {null|Object} - null if the gesture is not to be emitted, Object with information
-   * otherwise.
+   * otherwise. Returns the interval time between start and end events.
    */
   end(inputs) {
     if (inputs.length !== this.numInputs) {

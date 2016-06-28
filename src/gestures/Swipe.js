@@ -25,9 +25,9 @@ class Swipe extends Gesture {
    * @param {Number} [options.numInputs] - The number of inputs to trigger a Swipe can be variable,
    *  and the maximum number being a factor of the browser.
    *  move and current move events.
+   * @param {Number} [options.maxRestTime] - The maximum resting time a point has between it's last
    * @param {Number} [options.escapeVelocity] - The minimum velocity the input has to be at to emit a swipe.
    * @param {Number} [options.timeDistortion] - (EXPERIMENTAL) A value of time in milliseconds to distort between events.
-   * @param {Number} [options.maxRestTime] - (EXPERIMENTAL) The maximum resting time a point has between it's last
    * @param {Number} [options.maxProgressStack] - (EXPERIMENTAL)The maximum amount of move events to keep
    * track of for a swipe.
    */

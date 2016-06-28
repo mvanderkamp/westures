@@ -23,14 +23,14 @@ class Region {
    * @param {Element} element - The element to capture all window events in that region to feed into ZingTouch.
    * @param {boolean} [capture=false] - Whether the region listens for captures or bubbles.
    * @param {boolean} [preventDefault=true] - Whether the default browser functionality should be disabled;
-   * @param {String} id - The id of the region, assigned by the ZingTouch object.
+   * @param {Number} id - The id of the region, assigned by the ZingTouch object.
    */
   constructor(element, capture, preventDefault, id) {
 
     /**
      * The identifier for the Region. This is assigned by the ZingTouch object and is used to hash gesture ids
      * for uniqueness.
-     * @type {String}
+     * @type {Number}
      */
     this.id = id;
 
@@ -87,6 +87,10 @@ class Region {
    * @returns {Object} - a chainable object that has the same function as bind.
    */
   bind(element, gesture, handler, capture, bindOnce) {
+    if (!element || (element && !element.tagName)) {
+      throw 'Bind must contain an element';
+    }
+
     bindOnce = (typeof bindOnce !== 'undefined') ? bindOnce : false;
     if (!gesture) {
       return new Binder(element, bindOnce, this.state);
@@ -118,7 +122,7 @@ class Region {
   /**
    * Unbinds an element from either the specified gesture or all if no element is specified.
    * @param {Element} element -The element to remove.
-   * @param {String | Object} gesture - A String representing the gesture, or the actual object being used.
+   * @param {String | Object} [gesture] - A String representing the gesture, or the actual object being used.
    * @returns {Array} - An array of Bindings that were unbound to the element;
    */
   unbind(element, gesture) {

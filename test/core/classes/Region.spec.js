@@ -22,8 +22,7 @@ describe('Region.bind(element)', function () {
   it('should throw an error if the element parameter is invalid', function () {
     expect(function () {
       region.bind({});
-
-    }).to.throw(Error);
+    }).to.throw('Bind must contain an element');
   });
 
   it('should return a chainable Binder object if only an element parameter is provided', function () {
@@ -39,16 +38,5 @@ describe('Region.bind(element)', function () {
         expect(registeredGestures).to.include(gesture);
       }
     }
-  });
-
-  it('should properly create a Binding after a chained function', function () {
-    var handler = function (event) {};
-
-    expect(region.state.retrieveBindings(document.body).length).to.equal(0);
-    region.bind(document.body)
-      .tap(handler, false);
-
-    expect(region.state.retrieveBindings(document.body).length).to.equal(1);
-
   });
 });

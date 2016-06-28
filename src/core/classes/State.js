@@ -90,9 +90,9 @@ class State {
     }
 
     if (typeof gesture === 'string' && Object.keys(this.registeredGestures).indexOf(gesture) === -1) {
-      throw new Error('Parameter ', gesture, ' is not a registered gesture');
+      throw new Error('Parameter ' + gesture + ' is not a registered gesture');
     } else if (typeof gesture === 'object' && !(gesture instanceof Gesture)) {
-      throw new Error('Parameter ', gesture, 'is not of a Gesture type');
+      throw new Error('Parameter for the gesture is not of a Gesture type');
     }
 
     if (typeof gesture === 'string') {
