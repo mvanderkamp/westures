@@ -1,11 +1,11 @@
-# ZingTouch
+# [ZingTouch] (https://zingchart.github.io/)
 
 A modern JavaScript touch gesture library. Allows developers to configure pre-existing gestures and even create their own using ZingTouch's life cycle.
 
-[![Code Climate](https://codeclimate.com/repos/56e9ac9ca5b7c15822004922/badges/245bb5c6c267cd409724/gpa.svg)](https://codeclimate.com/repos/56e9ac9ca5b7c15822004922/feed) [![Documentation](http://zingchart.github.io/zingtouch/docs/badge.svg)](http://zingchart.github.io/zingtouch/docs/index.html)
+[![Code Climate](https://codeclimate.com/github/zingchart/zingtouch/badges/gpa.svg)](https://codeclimate.com/github/zingchart/zingtouch) [![Documentation](http://zingchart.github.io/zingtouch/docs/badge.svg)](http://zingchart.github.io/zingtouch/docs/index.html)
 
 ### Quick Links
-* Demos
+* [Demos](https://zingchart.github.io/)
 * [Codebase Documentation](https://zingchart.github.io/zingtouch/docs/index.html)
 * CDN
 
@@ -19,16 +19,16 @@ A modern JavaScript touch gesture library. Allows developers to configure pre-ex
 
 # Overview
 
-ZingTouch is built to make implementing gestures for the browser as easy or complex as you need it to be. ZingTouch comes with 6 main gestures : 
+ZingTouch is built to make implementing gestures for the browser as easy or complex as you need it to be. ZingTouch comes with 6 main gestures :
 
 * Tap
 * Swipe
 * Pinch
 * Expand
-* Pan 
+* Pan
 * Rotate
 
-These gestures can be customized including the number of inputs it accepts, or how sensitive the gesture is to be recognized. 
+These gestures can be customized including the number of inputs it accepts, or how sensitive the gesture is to be recognized.
 
 ZingTouch is also has lifecycle events that you can hook into to create new Gestures or to act upon certain touch events. We know supporting touch events across multiple browsers can be a pain; ZingTouch makes it easy by defining 3 hooks to pass callbacks to :
 
@@ -48,7 +48,7 @@ ZingTouch is also has lifecycle events that you can hook into to create new Gest
 var ZingTouch = require('ZingTouch');
 ```
 
-or 
+or
 
 ***Include the file***
 
@@ -143,7 +143,7 @@ myRegion.bind(touchArea, 'swipe', function(e){
 
 ![Parent Region](http://demos.zingchart.com/assets/zingtouch-docs/parent-region.png)
 
-ZingTouch now tracks the swipe gesture inside the `#toucharea` element AND the #parent-toucharea. This allows some forgiveness when the user tries to swipe on the `#toucharea`, but lifts their finger somewhere in the `#parent-toucharea`. 
+ZingTouch now tracks the swipe gesture inside the `#toucharea` element AND the #parent-toucharea. This allows some forgiveness when the user tries to swipe on the `#toucharea`, but lifts their finger somewhere in the `#parent-toucharea`.
 
 **Note:** The swipe gesture can only be initiated on the area it is bound to. This means the user has to being touching the `#toucharea` element first, but can move out and end within `#parent-toucharea` and including `#toucharea`.
 
@@ -413,7 +413,7 @@ chainableObject
 ---
 
 ### Region.bindOnce()
-Identical to both method signatures of bind, but is "bound once" meaning the event will only be captured once before it is destroyed. 
+Identical to both method signatures of bind, but is "bound once" meaning the event will only be captured once before it is destroyed.
 
 See [Region.bind](#bind)
 
@@ -514,7 +514,7 @@ myRegion.unregister('shortTap');
 
 # ZingTouch Life Cycle
 
-Utilizing ZingTouch's life cycle (start, move, end) allows you to create new gestures and to interface with the mobile event cycle in a much finer detail. It will allow you to hook into events and to apply external functions during events. 
+Utilizing ZingTouch's life cycle (start, move, end) allows you to create new gestures and to interface with the mobile event cycle in a much finer detail. It will allow you to hook into events and to apply external functions during events.
 Imagine the `Pan` gesture allowing in-between events to be triggered:
 
 * Pan - start
@@ -531,7 +531,7 @@ The syntax for utilizing the life cycle is still to be determined, but will be r
 **Build dependencies**
 
 * Build Tool: [Webpack](https://webpack.github.io/)
-	* `npm install -g webpack` 
+	* `npm install -g webpack`
 * ES6 translator : [Babel](https://babeljs.io/)
 
 **Comments and Documentation**
@@ -551,6 +551,6 @@ The syntax for utilizing the life cycle is still to be determined, but will be r
 ---
 # License
 
-MIT License 
+MIT License
 
-&copy; 2016 ZingChart, Inc. 
+&copy; 2016 ZingChart, Inc.
