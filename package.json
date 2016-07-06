@@ -2,7 +2,7 @@
   "name": "zingtouch",
   "version": "1.0.0",
   "description": "A modern JavaScript touch gesture library",
-  "main": "dist/zingtouch.min.js",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },

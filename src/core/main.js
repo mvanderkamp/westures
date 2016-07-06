@@ -5,5 +5,3 @@
 
 import ZingTouch from './../ZingTouch.js';
 window.ZingTouch = ZingTouch;
-export {ZingTouch};
-

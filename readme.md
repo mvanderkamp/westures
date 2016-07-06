@@ -42,10 +42,10 @@ ZingTouch is also has lifecycle events that you can hook into to create new Gest
 ### Include the library
 
 
-***ES6 / CommonJS***
+***Node / CommonJS***
 
 ```
-var ZingTouch = require('ZingTouch');
+var ZingTouch = require('zingtouch');
 ```
 
 or
@@ -53,7 +53,15 @@ or
 ***Include the file***
 
 ```
-<script src='./path/to/zingtouch.js'></script>
+<script src='./path/to/zingtouch.min.js'></script>
+```
+
+or
+
+***ES6***
+
+```
+<script src='./path/to/ZingTouch.js'></script>
 ```
 
 

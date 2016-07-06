@@ -3,6 +3,5 @@ node_modules/
 ._*
 bower_components/
 .idea/
-dist/
 playground/
 docs/
