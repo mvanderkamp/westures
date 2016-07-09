@@ -561,17 +561,17 @@ The syntax for utilizing the life cycle is still to be determined, but will be r
 
 Below is a list of confirmed browser and device compatibility that I have confirmed either though the physical device or by way of a Virtual Machine. If you have any issues or would like to contribute to this list, please pull request onto this readme file.
 
-Confirmed browser compatibility with:
-Chrome 22+
-Firefox 18+
-Safari 7+ 
-Edge 13+ 
+**Confirmed browser compatibility with:**
+* Chrome 22+
+* Firefox 18+
+* Safari 7+ 
+* Edge 13+ 
 
-Tested/ Developed on :
-iPhone 4, 5, 6, 6+
-iPad Pro
-Samsung Galaxy s6
-Microsoft Surface Book
+**Tested/ Developed on :**
+* iPhone 4, 5, 6, 6+
+* iPad Pro
+* Samsung Galaxy s6
+* Microsoft Surface Book
 
 ---
 # License
