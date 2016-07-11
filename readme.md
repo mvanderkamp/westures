@@ -5,7 +5,7 @@ A modern JavaScript touch gesture library. Allows developers to configure pre-ex
 [![Code Climate](https://codeclimate.com/github/zingchart/zingtouch/badges/gpa.svg)](https://codeclimate.com/github/zingchart/zingtouch) [![Documentation](http://zingchart.github.io/zingtouch/docs/badge.svg)](http://zingchart.github.io/zingtouch/docs/index.html)
 
 ### Quick Links
-* [Demos](https://zingchart.github.io/)
+* [Demos](http://codepen.io/collection/XqNzER/)
 * [Codebase Documentation](https://zingchart.github.io/zingtouch/docs/index.html)
 * CDN
 
