@@ -60,8 +60,8 @@ or
 
 ***ES6***
 
-```html
-<script src='./path/to/ZingTouch.js'></script>
+```js
+import ZingTouch from 'zingtouch';
 ```
 
 
