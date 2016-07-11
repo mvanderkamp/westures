@@ -44,7 +44,7 @@ ZingTouch is also has lifecycle events that you can hook into to create new Gest
 
 ***Node / CommonJS***
 
-```
+```js
 var ZingTouch = require('zingtouch');
 ```
 
@@ -52,7 +52,7 @@ or
 
 ***Include the file***
 
-```
+```html
 <script src='./path/to/zingtouch.min.js'></script>
 ```
 
@@ -60,20 +60,20 @@ or
 
 ***ES6***
 
-```
+```html
 <script src='./path/to/ZingTouch.js'></script>
 ```
 
 
 ### Create a Region
 
-```
+```js
 var zt = new ZingTouch.Region(document.body);
 ```
 
 ### Bind an element to a gesture
 
-```
+```js
 var myElement = document.getElementById('my-div');
 
 zt.bind(myElement, 'tap', function(e){
@@ -110,7 +110,7 @@ zt.bind(myElement, 'tap', function(e){
 
 ### Region
 
-```
+```js
 new Region(element, [capture], [preventDefault])
 ```
  * element - The element to set the listener upon
@@ -121,7 +121,7 @@ Regions specify an area to listen for all window events. ZingTouch needs to list
 
 Suppose you had an element that you wanted to track gestures on. We set the region on that element along with binding it to a gesture.
 
-```
+```js
 var touchArea = document.getElementById('toucharea');
 var myRegion = new ZingTouch.Region(touchArea);
 
@@ -139,7 +139,7 @@ But humans aren't perfect. Suppose the element #toucharea were to listen for the
 
 Suppose you set the Region to the parent of the #toucharea element instead.
 
-```
+```js
 var parentTouchArea = document.getElementById('parent-toucharea')
 var touchArea = document.getElementById('toucharea')
 var myRegion = new ZingTouch.Region(parentTouchArea);
@@ -183,7 +183,7 @@ A tap is detected when the user touches the screen and releases in quick success
 
 #### Example
 
-```
+```js
 new ZingTouch.Tap({
 	maxDelay: 200,
 	numInputs: 2,
@@ -214,7 +214,7 @@ A swipe is detected when the user touches the screen and moves in a relatively i
 
 
 #### Example
-```
+```js
 new ZingTouch.Swipe({
 	numInputs: 2,
 	maxRestTime: 100,
@@ -238,7 +238,7 @@ Each index represents an input that participated in the event.
 A pinch is detected when the user has two inputs on the screen and moves one or both closer towards the other input.
 
 #### Example
-```
+```js
 new ZingTouch.Pinch()
 ```
 
@@ -255,7 +255,7 @@ new ZingTouch.Pinch()
 An expand is detected when the user has two inputs on the screen and moves one or both away from the other input.
 
 #### Example
-```
+```js
 new ZingTouch.Expand()
 ```
 
@@ -278,7 +278,7 @@ A pan is detected when the user touches the screen and moves about the area.
    * Default: 1
 
 #### Example
-```
+```js
 new ZingTouch.Pan({
 	numInputs: 2
 })
@@ -304,7 +304,7 @@ Each index represents an input that participated in the event.
 A Rotate is detected when the use has two inputs moving about a circle on the edges of a diameter.
 
 #### Example
-```
+```js
 new ZingTouch.Rotate()
 ```
 
@@ -321,7 +321,7 @@ new ZingTouch.Rotate()
 A generic gesture. By default, this gesture does not emit but is useful for hooking into ZingTouch's life cycle. See [ZingTouch Life Cycle](#zingtouch-life-cycle) for more information.
 
 #### Example
-```
+```js
 new ZingTouch.Gesture()
 ```
 
@@ -341,7 +341,7 @@ Binds a single element to a gesture, executing the handler when the gesture is e
 
 **Example #1**
 
-```
+```js
 var myRegion = new ZingTouch.Region(document.body);
 var myElement = document.getElementById('some-div');
 
@@ -352,7 +352,7 @@ myRegion.bind(myElement, 'tap', function(e) {
 
 **Example #2**
 
-```
+```js
 var myElement = document.getElementById('some-div');
 var myTapGesture = new ZingTouch.Tap({ maxDelay : 100 });
 var myRegion = new ZingTouch.Region(document.body);
@@ -366,7 +366,7 @@ myRegion.bind(myElement, myTapGesture, function(e) {
 
 1. Instance Gestures that are passed to bind will be stored and maintained in memory, therefore it is reccomended to reuse gestures object where possible, or to use the `Region.register` syntax -- they essentially do the same thing. Either works fine, but try to avoid using the following pattern where an instance variable is created at every bind :
 
-```
+```js
 //Poor performance
 var delay = 100;
 for (var i = 0; i < 100; i++){
@@ -375,7 +375,7 @@ for (var i = 0; i < 100; i++){
 
 ```
 
-```
+```js
 //Better performance
 var delay = 100;
 var customTap = new ZingTouch.Tap({maxDelay : delay});
@@ -405,7 +405,7 @@ Passing a qualified DOM element to the bind function will return an object that 
 
 **Example**
 
-```
+```js
 var myElement = document.getElementById('mydiv');
 var myRegion = new ZingTouch.Region(myElement);
 var chainableObject = myRegion.bind(myElement);
@@ -444,21 +444,21 @@ Unbinds an element from a specific gesture, or all gestures if none is specified
 
 Unbind from a specific gesture
 
-```
+```js
 var myElement = document.getElementById('mydiv');
 myRegion.unbind(myElement, 'tap');
 ```
 
 Unbind from all gestures
 
-```
+```js
 var myElement = document.getElementById('mydiv');
 myRegion.unbind(myElement);
 ```
 
 Unbind from a gesture instance.
 
-```
+```js
 var myElement = document.getElementById('mydiv');
 var myRegion = new ZingTouch.Region(document.body);
 var myTapGesture = new ZingTouch.Tap({ maxDelay : 100 });
@@ -484,7 +484,7 @@ Register a gesture of the Gesture class to each Region. Allows the newly registe
 
 **Examples**
 
-```
+```js
 var myTapGesture = new ZingTouch.Tap({ maxDelay : 60 });
 
 var myRegion = new ZingTouch.Region(document.body);
@@ -492,11 +492,11 @@ myRegion.register('shortTap', myTapGesture);
 ```
 And the usages :
 
-```
+```js
 myRegion.bind(myElement, 'shortTap', function(e){});
 ```
 
-```
+```js
 myRegion.bind(myElement).shortTap(function(e){});
 ```
 ---
@@ -514,7 +514,7 @@ Unregisters a gesture that was previously registered. Unregistering a gesture wi
 
 **Example**
 
-```
+```js
 myRegion.unregister('shortTap');
 ```
 
