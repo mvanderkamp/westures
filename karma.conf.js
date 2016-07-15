@@ -16,6 +16,7 @@ module.exports = function (config) {
     },
     browsers: ['PhantomJS'],
     webpack: webpackConfig,
-    webpackMiddleware:{ noInfo:true }
+    webpackMiddleware:{ noInfo:true },
+    singleRun: true
   });
 };
