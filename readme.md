@@ -2,6 +2,7 @@
 
 A modern JavaScript touch gesture library. Allows developers to configure pre-existing gestures and even create their own using ZingTouch's life cycle.
 
+[![Build Status](https://travis-ci.org/zingchart/zingtouch.svg?branch=master)](https://travis-ci.org/zingchart/zingtouch)
 [![Code Climate](https://codeclimate.com/github/zingchart/zingtouch/badges/gpa.svg)](https://codeclimate.com/github/zingchart/zingtouch) [![Documentation](http://zingchart.github.io/zingtouch/docs/badge.svg)](http://zingchart.github.io/zingtouch/docs/index.html)
 
 ### Quick Links
