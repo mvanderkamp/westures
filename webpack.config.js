@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var plugins = [];
 var minimize = process.argv.indexOf('--minimize') !== -1;
+var filename = 'zingtouch.js';
 
 if (minimize) {
   plugins.push(new webpack.optimize.UglifyJsPlugin({
@@ -11,12 +12,13 @@ if (minimize) {
       comments: false
     }
   }));
+  filename = 'zingtouch.min.js';
 }
 
 module.exports = {
   entry: './src/core/main.js',
   output: {
-    filename: __dirname + '/dist/zingtouch.min.js',
+    filename: __dirname + '/dist/' + filename
   },
   module: {
     loaders: [
