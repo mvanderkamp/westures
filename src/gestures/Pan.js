@@ -70,9 +70,10 @@ class Pan extends Gesture {
    * and keeps a boolean flag that the gesture has fired at least once.
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
    * @returns {Object} - Returns the distance in pixels between the two inputs.
    */
-  move(inputs, state) {
+  move(inputs, state, element) {
     if (this.numInputs === inputs.length) {
       var output = {
         data: []

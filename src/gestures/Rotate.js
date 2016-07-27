@@ -34,6 +34,7 @@ class Rotate extends Gesture {
    * current angle.
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current listener.
+   * @param {Element} element - The element associated to the binding.
    * @returns {null} - null if this event did not occur
    * @returns {Object} obj.angle - The current angle along the unit circle
    * @returns {Object} obj.distanceFromOrigin - The angular distance travelled from the initial right
@@ -41,16 +42,31 @@ class Rotate extends Gesture {
    * @returns {Object} obj.distanceFromLast - The change of angle between the last position and
    * the current position.
    */
-  move(inputs, state) {
-    if (state.numActiveInputs() === DEFAULT_INPUTS) {
+  move(inputs, state, element) {
+    var inputType = inputs[0].type;
 
-      var referencePivot = util.getMidpoint(inputs[0].initial.x, inputs[1].initial.x,
-        inputs[0].initial.y, inputs[1].initial.y);
-      var currentPivot = util.getMidpoint(inputs[0].current.x, inputs[1].current.x,
-        inputs[0].current.y, inputs[1].current.y);
-      var diffX = referencePivot.x - currentPivot.x;
-      var diffY = referencePivot.y - currentPivot.y;
-      var input = util.getRightMostInput(inputs);
+    if (state.numActiveInputs() === DEFAULT_INPUTS ||
+      (state.numActiveInputs() === 1 && inputType === 'mouse')) {
+
+      var referencePivot, diffX, diffY, input;
+
+      if (inputType === 'mouse') {
+        var bRect = element.getBoundingClientRect();
+        referencePivot = {
+          x: bRect.left + bRect.width / 2,
+          y: bRect.top + bRect.height / 2
+        };
+        input = inputs[0];
+        diffX = diffY = 0;
+      } else {
+        referencePivot = util.getMidpoint(inputs[0].initial.x, inputs[1].initial.x,
+          inputs[0].initial.y, inputs[1].initial.y);
+        var currentPivot = util.getMidpoint(inputs[0].current.x, inputs[1].current.x,
+          inputs[0].current.y, inputs[1].current.y);
+        diffX = referencePivot.x - currentPivot.x;
+        diffY = referencePivot.y - currentPivot.y;
+        input = util.getRightMostInput(inputs);
+      }
 
       //Translate the current pivot point.
       var currentAngle = util.getAngle(referencePivot.x, referencePivot.y,
@@ -76,6 +92,7 @@ class Rotate extends Gesture {
 
     return null;
   }
+
   /*move*/
 }
 

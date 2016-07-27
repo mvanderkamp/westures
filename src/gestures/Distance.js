@@ -53,9 +53,10 @@ class Distance extends Gesture {
    * direction relative to the current distance and the last distance.
    * @param {Array} inputs - The array of Inputs on the screen.
    * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
    * @returns {Object | null} - Returns the distance in pixels between the two inputs.
    */
-  move(inputs, state) {
+  move(inputs, state, element) {
     if (state.numActiveInputs() === DEFAULT_INPUTS) {
       var currentDistance = util.distanceBetweenTwoPoints(inputs[0].current.x, inputs[1].current.x,
         inputs[0].current.y, inputs[1].current.y);

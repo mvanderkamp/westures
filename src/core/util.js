@@ -39,6 +39,32 @@ var util = {
   /*normalizeEvent*/
 
   /**
+   * Obtain the type of input detected.
+   * @param {String} type - The event type emitted by the browser
+   * @returns {null|String} - The normalized input name, or null if it is an input not predetermined.
+   */
+  getInputType(type) {
+    switch (type) {
+      case 'mouseup' :
+      case 'mousedown' :
+      case 'mousemove' :
+        return 'mouse';
+      case 'touchstart' :
+      case 'touchmove' :
+      case 'touchend' :
+        return 'touch';
+      case 'pointerdown' :
+      case 'pointermove' :
+      case 'pointerup' :
+        return 'pointer';
+      default :
+        return null;
+    }
+  },
+  /*getInputType*/
+
+
+  /**
    * Determines if the current and previous coordinates are within or up to a certain tolerance.
    * @param {Number} currentX - Current event's x coordinate
    * @param {Number} currentY - Current event's y coordinate

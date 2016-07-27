@@ -19,7 +19,7 @@ function interpreter(bindings, event, state) {
   var evType = util.normalizeEvent(event.type);
   var candidates = [];
   bindings.forEach(binding => {
-    let result = binding.gesture[evType](state.inputs, state);
+    let result = binding.gesture[evType](state.inputs, state, binding.element);
     if (result) {
 
       var events = [];

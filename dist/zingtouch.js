@@ -628,12 +628,13 @@
 	     * move() - Event hook for the move of a gesture
 	     * @param {Array} inputs - The array of Inputs on the screen
 	     * @param {Object} state - The state object of the current region.
+	     * @param {Element} element - The element associated to the binding.
 	     * @returns {null|Object} - Default of null
 	     */
 
 	  }, {
 	    key: "move",
-	    value: function move(inputs, state) {
+	    value: function move(inputs, state, element) {
 	      return null;
 	    }
 	    /*move*/
@@ -862,11 +863,18 @@
 	   * @param {Event} event - The Event object from the window
 	   * @param {Number} [identifier=0] - The identifier for each input event
 	   * (taken from event.changedTouches)
+	   * @param {String} type - The type of input detected.
 	   */
-	  function Input(event, identifier) {
+	  function Input(event, identifier, type) {
 	    _classCallCheck(this, Input);
 
 	    var currentEvent = new _ZingEvent2.default(event, identifier);
+
+	    /**
+	     * The type of input detected. Either a mouse, pointer, or touch.
+	     * @type {String}
+	     */
+	    this.type = type;
 
 	    /**
 	     * Holds the initial event object. A touchstart/mousedown event.
@@ -1108,6 +1116,32 @@
 	  /*normalizeEvent*/
 
 	  /**
+	   * Obtain the type of input detected.
+	   * @param {String} type - The event type emitted by the browser
+	   * @returns {null|String} - The normalized input name, or null if it is an input not predetermined.
+	   */
+	  getInputType: function getInputType(type) {
+	    switch (type) {
+	      case 'mouseup':
+	      case 'mousedown':
+	      case 'mousemove':
+	        return 'mouse';
+	      case 'touchstart':
+	      case 'touchmove':
+	      case 'touchend':
+	        return 'touch';
+	      case 'pointerdown':
+	      case 'pointermove':
+	      case 'pointerup':
+	        return 'pointer';
+	      default:
+	        return null;
+	    }
+	  },
+
+	  /*getInputType*/
+
+	  /**
 	   * Determines if the current and previous coordinates are within or up to a certain tolerance.
 	   * @param {Number} currentX - Current event's x coordinate
 	   * @param {Number} currentY - Current event's y coordinate
@@ -1316,7 +1350,7 @@
 	  var evType = _util2.default.normalizeEvent(event.type);
 	  var candidates = [];
 	  bindings.forEach(function (binding) {
-	    var result = binding.gesture[evType](state.inputs, state);
+	    var result = binding.gesture[evType](state.inputs, state, binding.element);
 	    if (result) {
 
 	      var events = [];
@@ -1592,6 +1626,7 @@
 
 	      function update(event, state, identifier, regionElement) {
 	        var eventType = _util2.default.normalizeEvent(event.type);
+	        var inputType = _util2.default.getInputType(event.type);
 	        var input = findInputById(state.inputs, identifier);
 
 	        //A starting input was not cleaned up properly and still exists.
@@ -1612,7 +1647,7 @@
 	        }
 
 	        if (eventType === 'start') {
-	          state.inputs.push(new _Input2.default(event, identifier));
+	          state.inputs.push(new _Input2.default(event, identifier, inputType));
 	        } else {
 	          input.update(event, identifier);
 	        }
@@ -1851,12 +1886,13 @@
 	     * direction relative to the current distance and the last distance.
 	     * @param {Array} inputs - The array of Inputs on the screen.
 	     * @param {Object} state - The state object of the current region.
+	     * @param {Element} element - The element associated to the binding.
 	     * @returns {Object | null} - Returns the distance in pixels between the two inputs.
 	     */
 
 	  }, {
 	    key: 'move',
-	    value: function move(inputs, state) {
+	    value: function move(inputs, state, element) {
 	      if (state.numActiveInputs() === DEFAULT_INPUTS) {
 	        var currentDistance = _util2.default.distanceBetweenTwoPoints(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
 	        var lastDistance = _util2.default.distanceBetweenTwoPoints(inputs[0].previous.x, inputs[1].previous.x, inputs[0].previous.y, inputs[1].previous.y);
@@ -2000,12 +2036,13 @@
 	     * and keeps a boolean flag that the gesture has fired at least once.
 	     * @param {Array} inputs - The array of Inputs on the screen
 	     * @param {Object} state - The state object of the current region.
+	     * @param {Element} element - The element associated to the binding.
 	     * @returns {Object} - Returns the distance in pixels between the two inputs.
 	     */
 
 	  }, {
 	    key: 'move',
-	    value: function move(inputs, state) {
+	    value: function move(inputs, state, element) {
 	      if (this.numInputs === inputs.length) {
 	        var output = {
 	          data: []
@@ -2193,6 +2230,7 @@
 	   * current angle.
 	   * @param {Array} inputs - The array of Inputs on the screen
 	   * @param {Object} state - The state object of the current listener.
+	   * @param {Element} element - The element associated to the binding.
 	   * @returns {null} - null if this event did not occur
 	   * @returns {Object} obj.angle - The current angle along the unit circle
 	   * @returns {Object} obj.distanceFromOrigin - The angular distance travelled from the initial right
@@ -2204,14 +2242,28 @@
 
 	  _createClass(Rotate, [{
 	    key: 'move',
-	    value: function move(inputs, state) {
-	      if (state.numActiveInputs() === DEFAULT_INPUTS) {
+	    value: function move(inputs, state, element) {
+	      var inputType = inputs[0].type;
 
-	        var referencePivot = _util2.default.getMidpoint(inputs[0].initial.x, inputs[1].initial.x, inputs[0].initial.y, inputs[1].initial.y);
-	        var currentPivot = _util2.default.getMidpoint(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
-	        var diffX = referencePivot.x - currentPivot.x;
-	        var diffY = referencePivot.y - currentPivot.y;
-	        var input = _util2.default.getRightMostInput(inputs);
+	      if (state.numActiveInputs() === DEFAULT_INPUTS || state.numActiveInputs() === 1 && inputType === 'mouse') {
+
+	        var referencePivot, diffX, diffY, input;
+
+	        if (inputType === 'mouse') {
+	          var bRect = element.getBoundingClientRect();
+	          referencePivot = {
+	            x: bRect.left + bRect.width / 2,
+	            y: bRect.top + bRect.height / 2
+	          };
+	          input = inputs[0];
+	          diffX = diffY = 0;
+	        } else {
+	          referencePivot = _util2.default.getMidpoint(inputs[0].initial.x, inputs[1].initial.x, inputs[0].initial.y, inputs[1].initial.y);
+	          var currentPivot = _util2.default.getMidpoint(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
+	          diffX = referencePivot.x - currentPivot.x;
+	          diffY = referencePivot.y - currentPivot.y;
+	          input = _util2.default.getRightMostInput(inputs);
+	        }
 
 	        //Translate the current pivot point.
 	        var currentAngle = _util2.default.getAngle(referencePivot.x, referencePivot.y, input.current.x + diffX, input.current.y + diffY);
@@ -2236,6 +2288,7 @@
 
 	      return null;
 	    }
+
 	    /*move*/
 
 	  }]);
@@ -2358,13 +2411,14 @@
 	   * it's event on a stack.
 	   * @param {Array} inputs - The array of Inputs on the screen.
 	   * @param {Object} state - The state object of the current region.
+	   * @param {Element} element - The element associated to the binding.
 	   * @returns {null} - Swipe does not emit from a move.
 	   */
 
 
 	  _createClass(Swipe, [{
 	    key: 'move',
-	    value: function move(inputs, state) {
+	    value: function move(inputs, state, element) {
 	      if (this.numInputs === inputs.length) {
 	        for (var i = 0; i < inputs.length; i++) {
 	          var progress = inputs[i].getGestureProgress(this.getId());
@@ -2605,12 +2659,13 @@
 	     * before an 'end' event is reached.
 	     * @param {Array} inputs - The array of Inputs on the screen.
 	     * @param {Object} state - The state object of the current region.
+	     * @param {Element} element - The element associated to the binding.
 	     * @returns {null} - Tap does not trigger on a move event.
 	     */
 
 	  }, {
 	    key: 'move',
-	    value: function move(inputs, state) {
+	    value: function move(inputs, state, element) {
 	      for (var i = 0; i < inputs.length; i++) {
 	        if (inputs[i].getCurrentEventType() === 'move') {
 	          var current = inputs[i].current;

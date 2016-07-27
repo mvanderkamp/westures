@@ -92,9 +92,10 @@ class Gesture {
    * move() - Event hook for the move of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
    * @returns {null|Object} - Default of null
    */
-  move(inputs, state) {
+  move(inputs, state, element) {
     return null;
   }
   /*move*/

@@ -82,9 +82,10 @@ class Swipe extends Gesture {
    * it's event on a stack.
    * @param {Array} inputs - The array of Inputs on the screen.
    * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
    * @returns {null} - Swipe does not emit from a move.
    */
-  move(inputs, state) {
+  move(inputs, state, element) {
     if (this.numInputs === inputs.length) {
       for (var i = 0; i < inputs.length; i++) {
         var progress = inputs[i].getGestureProgress(this.getId());
