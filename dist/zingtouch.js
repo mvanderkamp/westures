@@ -863,18 +863,11 @@
 	   * @param {Event} event - The Event object from the window
 	   * @param {Number} [identifier=0] - The identifier for each input event
 	   * (taken from event.changedTouches)
-	   * @param {String} type - The type of input detected.
 	   */
-	  function Input(event, identifier, type) {
+	  function Input(event, identifier) {
 	    _classCallCheck(this, Input);
 
 	    var currentEvent = new _ZingEvent2.default(event, identifier);
-
-	    /**
-	     * The type of input detected. Either a mouse, pointer, or touch.
-	     * @type {String}
-	     */
-	    this.type = type;
 
 	    /**
 	     * Holds the initial event object. A touchstart/mousedown event.
@@ -1114,32 +1107,6 @@
 	  },
 
 	  /*normalizeEvent*/
-
-	  /**
-	   * Obtain the type of input detected.
-	   * @param {String} type - The event type emitted by the browser
-	   * @returns {null|String} - The normalized input name, or null if it is an input not predetermined.
-	   */
-	  getInputType: function getInputType(type) {
-	    switch (type) {
-	      case 'mouseup':
-	      case 'mousedown':
-	      case 'mousemove':
-	        return 'mouse';
-	      case 'touchstart':
-	      case 'touchmove':
-	      case 'touchend':
-	        return 'touch';
-	      case 'pointerdown':
-	      case 'pointermove':
-	      case 'pointerup':
-	        return 'pointer';
-	      default:
-	        return null;
-	    }
-	  },
-
-	  /*getInputType*/
 
 	  /**
 	   * Determines if the current and previous coordinates are within or up to a certain tolerance.
@@ -1626,7 +1593,6 @@
 
 	      function update(event, state, identifier, regionElement) {
 	        var eventType = _util2.default.normalizeEvent(event.type);
-	        var inputType = _util2.default.getInputType(event.type);
 	        var input = findInputById(state.inputs, identifier);
 
 	        //A starting input was not cleaned up properly and still exists.
@@ -1647,7 +1613,7 @@
 	        }
 
 	        if (eventType === 'start') {
-	          state.inputs.push(new _Input2.default(event, identifier, inputType));
+	          state.inputs.push(new _Input2.default(event, identifier));
 	        } else {
 	          input.update(event, identifier);
 	        }
@@ -2196,7 +2162,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Contains the Rotate class
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-	var DEFAULT_INPUTS = 2;
+	var MAX_INPUTS = 2;
 
 	/**
 	 * A Rotate is defined as two inputs moving about a circle, maintaining a relatively equal radius.
@@ -2243,13 +2209,9 @@
 	  _createClass(Rotate, [{
 	    key: 'move',
 	    value: function move(inputs, state, element) {
-	      var inputType = inputs[0].type;
-
-	      if (state.numActiveInputs() === DEFAULT_INPUTS || state.numActiveInputs() === 1 && inputType === 'mouse') {
-
+	      if (state.numActiveInputs() <= MAX_INPUTS) {
 	        var referencePivot, diffX, diffY, input;
-
-	        if (inputType === 'mouse') {
+	        if (state.numActiveInputs() === 1) {
 	          var bRect = element.getBoundingClientRect();
 	          referencePivot = {
 	            x: bRect.left + bRect.width / 2,

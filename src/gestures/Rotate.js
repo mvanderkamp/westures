@@ -6,7 +6,7 @@
 import Gesture from './Gesture.js';
 import util from './../core/util.js';
 
-const DEFAULT_INPUTS = 2;
+const MAX_INPUTS = 2;
 
 /**
  * A Rotate is defined as two inputs moving about a circle, maintaining a relatively equal radius.
@@ -43,14 +43,9 @@ class Rotate extends Gesture {
    * the current position.
    */
   move(inputs, state, element) {
-    var inputType = inputs[0].type;
-
-    if (state.numActiveInputs() === DEFAULT_INPUTS ||
-      (state.numActiveInputs() === 1 && inputType === 'mouse')) {
-
+    if (state.numActiveInputs() <= MAX_INPUTS ) {
       var referencePivot, diffX, diffY, input;
-
-      if (inputType === 'mouse') {
+      if (state.numActiveInputs() === 1) {
         var bRect = element.getBoundingClientRect();
         referencePivot = {
           x: bRect.left + bRect.width / 2,

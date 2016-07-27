@@ -17,16 +17,9 @@ class Input {
    * @param {Event} event - The Event object from the window
    * @param {Number} [identifier=0] - The identifier for each input event
    * (taken from event.changedTouches)
-   * @param {String} type - The type of input detected.
    */
-  constructor(event, identifier, type) {
+  constructor(event, identifier) {
     var currentEvent = new ZingEvent(event, identifier);
-
-    /**
-     * The type of input detected. Either a mouse, pointer, or touch.
-     * @type {String}
-     */
-    this.type = type;
 
     /**
      * Holds the initial event object. A touchstart/mousedown event.

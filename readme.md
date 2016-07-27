@@ -301,8 +301,9 @@ Each index represents an input that participated in the event.
 
 ![Rotate Gesture](http://demos.zingchart.com/assets/zingtouch-docs/rotate.gif)
 
-
-A Rotate is detected when the use has two inputs moving about a circle on the edges of a diameter.
+A Rotate is detected when:
+ * the user has two inputs moving about a circle on the edges of a diameter.
+ * the user has one input moving in a circular motion around the center point of the bound target element.
 
 #### Example
 ```js
@@ -312,7 +313,7 @@ new ZingTouch.Rotate()
 #### Emits
 
 * `angle` - The angle of the initial right most input, in relation to the unit circle.
-* `distanceFromOrigin` - The angular distance travelled by the initial right most post.
+* `distanceFromOrigin` - The angular distance travelled by the initial right most input.
 * `distanceFromLast` - The change of angle between the last position and the current position. Positive denotes a counter-clockwise motion, while negative denotes a clockwise motion.
 
 ---

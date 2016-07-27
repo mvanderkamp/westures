@@ -188,7 +188,6 @@ class State {
 
     function update(event, state, identifier, regionElement) {
       var eventType = util.normalizeEvent(event.type);
-      var inputType = util.getInputType(event.type);
       var input = findInputById(state.inputs, identifier);
 
       //A starting input was not cleaned up properly and still exists.
@@ -209,7 +208,7 @@ class State {
       }
 
       if (eventType === 'start') {
-        state.inputs.push(new Input(event, identifier, inputType));
+        state.inputs.push(new Input(event, identifier));
       } else {
         input.update(event, identifier);
       }
