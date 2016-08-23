@@ -1,3 +1,8 @@
+/*!
+ * ZingTouch v1.0.2
+ * Author: ZingChart http://zingchart.com
+ * License: MIT
+ */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};

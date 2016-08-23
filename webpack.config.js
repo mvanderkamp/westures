@@ -15,6 +15,9 @@ if (minimize) {
   filename = 'zingtouch.min.js';
 }
 
+plugins.push(new webpack.BannerPlugin(`ZingTouch v1.0.2
+Author: ZingChart http://zingchart.com
+License: MIT`));
 module.exports = {
   entry: './src/core/main.js',
   output: {
