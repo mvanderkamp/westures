@@ -99,7 +99,9 @@ class State {
       boundGesture = this.registeredGestures[gesture];
     } else {
       boundGesture = gesture;
-      this.assignGestureId(boundGesture);
+      if (boundGesture.id === '') {
+        this.assignGestureId(boundGesture);
+      }
     }
 
     this.bindings.push(new Binding(element, boundGesture, handler, capture, bindOnce));

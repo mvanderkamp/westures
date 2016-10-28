@@ -1498,7 +1498,9 @@
 	        boundGesture = this.registeredGestures[gesture];
 	      } else {
 	        boundGesture = gesture;
-	        this.assignGestureId(boundGesture);
+	        if (boundGesture.id === '') {
+	          this.assignGestureId(boundGesture);
+	        }
 	      }
 
 	      this.bindings.push(new _Binding2.default(element, boundGesture, handler, capture, bindOnce));
