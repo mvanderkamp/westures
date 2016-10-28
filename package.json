@@ -1,6 +1,6 @@
 {
   "name": "zingtouch",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A modern JavaScript touch gesture library",
   "main": "index.js",
   "directories": {
