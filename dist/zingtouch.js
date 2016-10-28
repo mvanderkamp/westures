@@ -1,5 +1,5 @@
 /*!
- * ZingTouch v1.0.2
+ * ZingTouch v1.0.3
  * Author: ZingChart http://zingchart.com
  * License: MIT
  */
