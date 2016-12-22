@@ -16,6 +16,7 @@ const DEFAULT_MIN_THRESHOLD = 1;
 class Distance extends Gesture {
   /**
    * Constructor function for the Distance class.
+   * @param {Object} options
    */
   constructor(options) {
     super();
@@ -30,58 +31,70 @@ class Distance extends Gesture {
      * The minimum amount in pixels the inputs must move until it is fired.
      * @type {Number}
      */
-    this.threshold = (options && options.threshold) ? options.threshold : DEFAULT_MIN_THRESHOLD;
+    this.threshold = (options && options.threshold) ?
+      options.threshold : DEFAULT_MIN_THRESHOLD;
   }
 
   /**
-   * start() - Event hook for the start of a gesture. Initialized the lastEmitted gesture and stores it in the first input for reference.
-   * events.
-   * @param inputs
+   * Event hook for the start of a gesture. Initialized the lastEmitted
+   * gesture and stores it in the first input for reference events.
+   * @param {Array} inputs
    */
   start(inputs) {
-
     if (inputs.length === DEFAULT_INPUTS) {
-      //Store the progress in the first input.
-      var progress = inputs[0].getGestureProgress(this.type);
-      progress.lastEmittedDistance = util.distanceBetweenTwoPoints(inputs[0].current.x, inputs[1].current.x,
-        inputs[0].current.y, inputs[1].current.y);
+      // Store the progress in the first input.
+      let progress = inputs[0].getGestureProgress(this.type);
+      progress.lastEmittedDistance = util.distanceBetweenTwoPoints(
+        inputs[0].current.x,
+        inputs[1].current.x,
+        inputs[0].current.y,
+        inputs[1].current.y);
     }
   }
 
   /**
-   * Event hook for the move of a gesture. Determines if the two points are moved in the expected
-   * direction relative to the current distance and the last distance.
+   * Event hook for the move of a gesture.
+   *  Determines if the two points are moved in the expected direction relative
+   *  to the current distance and the last distance.
    * @param {Array} inputs - The array of Inputs on the screen.
    * @param {Object} state - The state object of the current region.
    * @param {Element} element - The element associated to the binding.
-   * @returns {Object | null} - Returns the distance in pixels between the two inputs.
+   * @return {Object | null} - Returns the distance in pixels between two inputs
    */
   move(inputs, state, element) {
     if (state.numActiveInputs() === DEFAULT_INPUTS) {
-      var currentDistance = util.distanceBetweenTwoPoints(inputs[0].current.x, inputs[1].current.x,
-        inputs[0].current.y, inputs[1].current.y);
-      var lastDistance = util.distanceBetweenTwoPoints(inputs[0].previous.x, inputs[1].previous.x,
-        inputs[0].previous.y, inputs[1].previous.y);
+      let currentDistance = util.distanceBetweenTwoPoints(
+        inputs[0].current.x,
+        inputs[1].current.x,
+        inputs[0].current.y,
+        inputs[1].current.y);
+      let lastDistance = util.distanceBetweenTwoPoints(
+        inputs[0].previous.x,
+        inputs[1].previous.x,
+        inputs[0].previous.y,
+        inputs[1].previous.y);
 
-      //Retrieve the first input's progress.
-      var progress = inputs[0].getGestureProgress(this.type);
+      // Retrieve the first input's progress.
+      let progress = inputs[0].getGestureProgress(this.type);
 
       if (this.type === 'expand') {
         if (currentDistance < lastDistance) {
           progress.lastEmittedDistance = currentDistance;
-        } else if ((currentDistance - progress.lastEmittedDistance >= this.threshold)) {
+        } else if ((currentDistance - progress.lastEmittedDistance >=
+          this.threshold)) {
           progress.lastEmittedDistance = currentDistance;
           return {
-            distance: currentDistance
+            distance: currentDistance,
           };
         }
       } else {
         if (currentDistance > lastDistance) {
           progress.lastEmittedDistance = currentDistance;
-        } else if (currentDistance < lastDistance && (progress.lastEmittedDistance - currentDistance >= this.threshold)) {
+        } else if (currentDistance < lastDistance &&
+          (progress.lastEmittedDistance - currentDistance >= this.threshold)) {
           progress.lastEmittedDistance = currentDistance;
           return {
-            distance: currentDistance
+            distance: currentDistance,
           };
         }
       }

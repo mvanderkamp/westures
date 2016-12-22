@@ -1,110 +1,110 @@
-/*!
+/* !
  * ZingTouch v1.0.3
  * Author: ZingChart http://zingchart.com
  * License: MIT
  */
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
+/** ****/ (function(modules) { // webpackBootstrap
+/** ****/ 	// The module cache
+/** ****/ 	let installedModules = {};
 
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/** ****/ 	// The require function
+/** ****/ 	function __webpack_require__(moduleId) {
+/** ****/ 		// Check if module is in cache
+/** ****/ 		if(installedModules[moduleId])
+/** ****/ 			return installedModules[moduleId].exports;
 
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
-/******/ 			return installedModules[moduleId].exports;
+/** ****/ 		// Create a new module (and put it into the cache)
+/** ****/ 		let module = installedModules[moduleId] = {
+/** ****/ 			exports: {},
+/** ****/ 			id: moduleId,
+/** ****/ 			loaded: false,
+/** ****/ 		};
 
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
-/******/ 		};
+/** ****/ 		// Execute the module function
+/** ****/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/** ****/ 		// Flag the module as loaded
+/** ****/ 		module.loaded = true;
 
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/** ****/ 		// Return the exports of the module
+/** ****/ 		return module.exports;
+/** ****/ 	}
 
 
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
+/** ****/ 	// expose the modules object (__webpack_modules__)
+/** ****/ 	__webpack_require__.m = modules;
 
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
+/** ****/ 	// expose the module cache
+/** ****/ 	__webpack_require__.c = installedModules;
 
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/** ****/ 	// __webpack_public_path__
+/** ****/ 	__webpack_require__.p = '';
 
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
+/** ****/ 	// Load entry module and return exports
+/** ****/ 	return __webpack_require__(0);
+/** ****/ })([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	var _ZingTouch = __webpack_require__(1);
+	let _ZingTouch = __webpack_require__(1);
 
-	var _ZingTouch2 = _interopRequireDefault(_ZingTouch);
+	let _ZingTouch2 = _interopRequireDefault(_ZingTouch);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
 	window.ZingTouch = _ZingTouch2.default; /**
 	                                         * @file main.js
 	                                         * Main file to setup event listeners on the document, and to expose the ZingTouch object
 	                                         */
 
-/***/ },
+/** *
+/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _Region2 = __webpack_require__(2);
+	let _Region2 = __webpack_require__(2);
 
-	var _Region3 = _interopRequireDefault(_Region2);
+	let _Region3 = _interopRequireDefault(_Region2);
 
-	var _Gesture = __webpack_require__(5);
+	let _Gesture = __webpack_require__(5);
 
-	var _Gesture2 = _interopRequireDefault(_Gesture);
+	let _Gesture2 = _interopRequireDefault(_Gesture);
 
-	var _Expand = __webpack_require__(13);
+	let _Expand = __webpack_require__(13);
 
-	var _Expand2 = _interopRequireDefault(_Expand);
+	let _Expand2 = _interopRequireDefault(_Expand);
 
-	var _Pan = __webpack_require__(15);
+	let _Pan = __webpack_require__(15);
 
-	var _Pan2 = _interopRequireDefault(_Pan);
+	let _Pan2 = _interopRequireDefault(_Pan);
 
-	var _Pinch = __webpack_require__(16);
+	let _Pinch = __webpack_require__(16);
 
-	var _Pinch2 = _interopRequireDefault(_Pinch);
+	let _Pinch2 = _interopRequireDefault(_Pinch);
 
-	var _Rotate = __webpack_require__(17);
+	let _Rotate = __webpack_require__(17);
 
-	var _Rotate2 = _interopRequireDefault(_Rotate);
+	let _Rotate2 = _interopRequireDefault(_Rotate);
 
-	var _Swipe = __webpack_require__(18);
+	let _Swipe = __webpack_require__(18);
 
-	var _Swipe2 = _interopRequireDefault(_Swipe);
+	let _Swipe2 = _interopRequireDefault(_Swipe);
 
-	var _Tap = __webpack_require__(19);
+	let _Tap = __webpack_require__(19);
 
-	var _Tap2 = _interopRequireDefault(_Tap);
+	let _Tap2 = _interopRequireDefault(_Tap);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
 	/**
 	 * The global API interface for ZingTouch. Contains a constructor for the Region Object,
@@ -117,10 +117,10 @@
 	 * Main object containing API methods and Gesture constructors
 	 */
 
-	var ZingTouch = {
+	let ZingTouch = {
 	  _regions: [],
 
-	  //Constructors
+	  // Constructors
 	  Gesture: _Gesture2.default,
 	  Expand: _Expand2.default,
 	  Pan: _Pan2.default,
@@ -129,56 +129,70 @@
 	  Swipe: _Swipe2.default,
 	  Tap: _Tap2.default,
 	  Region: function Region(element, capture, preventDefault) {
-	    var id = ZingTouch._regions.length;
-	    var region = new _Region3.default(element, capture, preventDefault, id);
+	    let id = ZingTouch._regions.length;
+	    let region = new _Region3.default(element, capture, preventDefault, id);
 	    ZingTouch._regions.push(region);
 	    return region;
-	  }
+	  },
 	};
 
 	exports.default = ZingTouch;
 
-/***/ },
+/** *
+/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}(); /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @file Region.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
-	var _Binder = __webpack_require__(3);
+	let _Binder = __webpack_require__(3);
 
-	var _Binder2 = _interopRequireDefault(_Binder);
+	let _Binder2 = _interopRequireDefault(_Binder);
 
-	var _Binding = __webpack_require__(4);
+	let _Binding = __webpack_require__(4);
 
-	var _Binding2 = _interopRequireDefault(_Binding);
+	let _Binding2 = _interopRequireDefault(_Binding);
 
-	var _Gesture = __webpack_require__(5);
+	let _Gesture = __webpack_require__(5);
 
-	var _Gesture2 = _interopRequireDefault(_Gesture);
+	let _Gesture2 = _interopRequireDefault(_Gesture);
 
-	var _arbiter = __webpack_require__(6);
+	let _arbiter = __webpack_require__(6);
 
-	var _arbiter2 = _interopRequireDefault(_arbiter);
+	let _arbiter2 = _interopRequireDefault(_arbiter);
 
-	var _State = __webpack_require__(12);
+	let _State = __webpack_require__(12);
 
-	var _State2 = _interopRequireDefault(_State);
+	let _State2 = _interopRequireDefault(_State);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
 	/**
 	 * Allows the user to specify a region to capture all events to feed ZingTouch into. This can be as narrow as
@@ -187,8 +201,7 @@
 	 * to corresponding gestures. Also contains the ability to register/unregister new gestures.
 	 * @class Region
 	 */
-	var Region = function () {
-
+	let Region = function() {
 	  /**
 	   * Constructor function for the Region class.
 	   * @param {Element} element - The element to capture all window events in that region to feed into ZingTouch.
@@ -197,7 +210,7 @@
 	   * @param {Number} id - The id of the region, assigned by the ZingTouch object.
 	   */
 	  function Region(element, capture, preventDefault, id) {
-	    var _this = this;
+	    let _this = this;
 
 	    _classCallCheck(this, Region);
 
@@ -232,16 +245,16 @@
 	     */
 	    this.state = new _State2.default(id);
 
-	    var eventNames = [];
+	    let eventNames = [];
 	    if (window.PointerEvent) {
 	      eventNames = ['pointerdown', 'pointermove', 'pointerup'];
 	    } else {
 	      eventNames = ['mousedown', 'mousemove', 'mouseup', 'touchstart', 'touchmove', 'touchend'];
 	    }
 
-	    //Bind detected browser events to the region element.
-	    eventNames.map(function (name) {
-	      element.addEventListener(name, function (e) {
+	    // Bind detected browser events to the region element.
+	    eventNames.map(function(name) {
+	      element.addEventListener(name, function(e) {
 	        (0, _arbiter2.default)(e, _this);
 	      }, _this.capture);
 	    });
@@ -275,9 +288,9 @@
 	      } else {
 	        this.state.addBinding(element, gesture, handler, capture, bindOnce);
 	      }
-	    }
+	    },
 
-	    /*bind*/
+	    /* bind*/
 
 	    /**
 	     * Bind an element and sets up actions to remove the binding once it has been emitted
@@ -295,11 +308,11 @@
 	    key: 'bindOnce',
 	    value: function bindOnce(element, gesture, handler, capture) {
 	      this.bind(element, gesture, handler, capture, true);
-	    }
+	    },
 
-	    /*bindOnce*/
+	    /* bindOnce*/
 
-	    //noinspection JSMethodCanBeStatic
+	    // noinspection JSMethodCanBeStatic
 	    /**
 	     * Unbinds an element from either the specified gesture or all if no element is specified.
 	     * @param {Element} element -The element to remove.
@@ -310,15 +323,15 @@
 	  }, {
 	    key: 'unbind',
 	    value: function unbind(element, gesture) {
-	      var _this2 = this;
+	      let _this2 = this;
 
-	      var bindings = this.state.retrieveBindingsByElement(element);
-	      var unbound = [];
+	      let bindings = this.state.retrieveBindingsByElement(element);
+	      let unbound = [];
 
-	      bindings.forEach(function (binding) {
+	      bindings.forEach(function(binding) {
 	        if (gesture) {
 	          if (typeof gesture === 'string' && _this2.state.registeredGestures[gesture]) {
-	            var registeredGesture = _this2.state.registeredGestures[gesture];
+	            let registeredGesture = _this2.state.registeredGestures[gesture];
 	            if (registeredGesture.id === binding.gesture.id) {
 	              element.removeEventListener(binding.gesture.getId(), binding.handler, binding.capture);
 	              unbound.push(binding);
@@ -331,9 +344,9 @@
 	      });
 
 	      return unbound;
-	    }
+	    },
 
-	    /*unbind*/
+	    /* unbind*/
 
 	    /**
 	     * Registers a new gesture with an assigned key
@@ -354,9 +367,9 @@
 
 	      gesture.setType(key);
 	      this.state.registerGesture(gesture, key);
-	    }
+	    },
 
-	    /*register*/
+	    /* register*/
 
 	    /**
 	     * Un-registers a gesture from the Region's state such that it is no longer emittable.
@@ -368,16 +381,16 @@
 	  }, {
 	    key: 'unregister',
 	    value: function unregister(key) {
-	      this.state.bindings.forEach(function (binding) {
+	      this.state.bindings.forEach(function(binding) {
 	        if (binding.gesture.getType() === key) {
 	          binding.element.removeEventListener(binding.gesture.getId(), binding.handler, binding.capture);
 	        }
 	      });
 
-	      var registeredGesture = this.state.registeredGestures[key];
+	      let registeredGesture = this.state.registeredGestures[key];
 	      delete this.state.registeredGestures[key];
 	      return registeredGesture;
-	    }
+	    },
 	  }]);
 
 	  return Region;
@@ -385,17 +398,21 @@
 
 	exports.default = Region;
 
-/***/ },
+/** *
+/ },
 /* 3 */
-/***/ function(module, exports) {
+/** */ function(module, exports) {
+	'use strict';
 
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
 	/**
 	 * @file Binder.js
@@ -406,7 +423,7 @@
 	 * Called from ZingTouch.bind(), and is used to chain over gesture callbacks.
 	 * @class
 	 */
-	var Binder =
+	let Binder =
 	/**
 	 * Constructor function for the Binder class.
 	 * @param {Element} element - The element to bind gestures to.
@@ -415,7 +432,7 @@
 	 * @returns {Object} - Returns 'this' to be chained over and over again.
 	 */
 	function Binder(element, bindOnce, state) {
-	  var _this = this;
+	  let _this = this;
 
 	  _classCallCheck(this, Binder);
 
@@ -425,29 +442,33 @@
 	   */
 	  this.element = element;
 
-	  Object.keys(state.registeredGestures).forEach(function (key) {
-	    _this[key] = function (handler, capture) {
+	  Object.keys(state.registeredGestures).forEach(function(key) {
+	    _this[key] = function(handler, capture) {
 	      state.addBinding(_this.element, key, handler, capture, bindOnce);
 	      return _this;
 	    };
 	  });
 	}
-	/*constructor*/
+	/* constructor*/
 	;
 
 	exports.default = Binder;
 
-/***/ },
+/** *
+/ },
 /* 4 */
-/***/ function(module, exports) {
-
+/** */ function(module, exports) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
 	/**
 	 * @file Binding.js
@@ -457,7 +478,7 @@
 	 * Responsible for creating a binding between an element and a gesture.
 	 * @class Binding
 	 */
-	var Binding =
+	let Binding =
 	/**
 	 * Constructor function for the Binding class.
 	 * @param {Element} element - The element to associate the gesture to.
@@ -499,24 +520,36 @@
 	   */
 	  this.bindOnce = typeof bindOnce !== 'undefined' ? bindOnce : false;
 	}
-	/*constructor*/
+	/* constructor*/
 	;
 
 	exports.default = Binding;
 
-/***/ },
+/** *
+/ },
 /* 5 */
-/***/ function(module, exports) {
+/** */ function(module, exports) {
+	'use strict';
 
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}();
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
 	/**
 	 * @file Gesture.js
@@ -526,7 +559,7 @@
 	/**
 	 * The Gesture class that all gestures inherit from.
 	 */
-	var Gesture = function () {
+	let Gesture = function() {
 	  /**
 	   * Constructor function for the Gesture class.
 	   * @class Gesture
@@ -556,11 +589,11 @@
 
 
 	  _createClass(Gesture, [{
-	    key: "setType",
+	    key: 'setType',
 	    value: function setType(type) {
 	      this.type = type;
-	    }
-	    /*setId*/
+	    },
+	    /* setId*/
 
 	    /**
 	     * getType() - Returns the generic type of the gesture
@@ -568,11 +601,11 @@
 	     */
 
 	  }, {
-	    key: "getType",
+	    key: 'getType',
 	    value: function getType() {
 	      return this.type;
-	    }
-	    /*getType*/
+	    },
+	    /* getType*/
 
 	    /**
 	     * Set the id of the gesture to be called during an event
@@ -580,11 +613,11 @@
 	     */
 
 	  }, {
-	    key: "setId",
+	    key: 'setId',
 	    value: function setId(id) {
 	      this.id = id;
-	    }
-	    /*setId*/
+	    },
+	    /* setId*/
 
 	    /**
 	     * Return the id of the event. If the id does not exist, return the type.
@@ -592,11 +625,11 @@
 	     */
 
 	  }, {
-	    key: "getId",
+	    key: 'getId',
 	    value: function getId() {
 	      return this.id !== null ? this.id : this.type;
-	    }
-	    /*getId*/
+	    },
+	    /* getId*/
 
 	    /**
 	     * Updates internal properties with new ones, only if the properties exist.
@@ -604,17 +637,16 @@
 	     */
 
 	  }, {
-	    key: "update",
+	    key: 'update',
 	    value: function update(object) {
-
-	      for (var key in object) {
+	      for (let key in object) {
 	        if (this[key]) {
 	          this[key] = object[key];
 	        }
 	      }
-	    }
+	    },
 
-	    //noinspection JSUnusedLocalSymbols
+	    // noinspection JSUnusedLocalSymbols
 	    /**
 	     * start() - Event hook for the start of a gesture
 	     * @param {Array} inputs - The array of Inputs on the screen
@@ -622,13 +654,13 @@
 	     */
 
 	  }, {
-	    key: "start",
+	    key: 'start',
 	    value: function start(inputs) {
 	      return null;
-	    }
-	    /*start*/
+	    },
+	    /* start*/
 
-	    //noinspection JSUnusedLocalSymbols
+	    // noinspection JSUnusedLocalSymbols
 	    /**
 	     * move() - Event hook for the move of a gesture
 	     * @param {Array} inputs - The array of Inputs on the screen
@@ -638,13 +670,13 @@
 	     */
 
 	  }, {
-	    key: "move",
+	    key: 'move',
 	    value: function move(inputs, state, element) {
 	      return null;
-	    }
-	    /*move*/
+	    },
+	    /* move*/
 
-	    //noinspection JSUnusedLocalSymbols
+	    // noinspection JSUnusedLocalSymbols
 	    /**
 	     * end() - Event hook for the move of a gesture
 	     * @param {Array} inputs - The array of Inputs on the screen
@@ -652,11 +684,11 @@
 	     */
 
 	  }, {
-	    key: "end",
+	    key: 'end',
 	    value: function end(inputs) {
 	      return null;
-	    }
-	    /*end*/
+	    },
+	    /* end*/
 
 	  }]);
 
@@ -665,33 +697,35 @@
 
 	exports.default = Gesture;
 
-/***/ },
+/** *
+/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _dispatcher = __webpack_require__(7);
+	let _dispatcher = __webpack_require__(7);
 
-	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	let _dispatcher2 = _interopRequireDefault(_dispatcher);
 
-	var _Input = __webpack_require__(8);
+	let _Input = __webpack_require__(8);
 
-	var _Input2 = _interopRequireDefault(_Input);
+	let _Input2 = _interopRequireDefault(_Input);
 
-	var _interpreter = __webpack_require__(11);
+	let _interpreter = __webpack_require__(11);
 
-	var _interpreter2 = _interopRequireDefault(_interpreter);
+	let _interpreter2 = _interopRequireDefault(_interpreter);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
 	/**
 	 * Function that handles event flow, negotiating with the interpreter, and dispatcher.
@@ -708,7 +742,7 @@
 	 */
 
 	function arbiter(event, region) {
-	  var state = region.state;
+	  let state = region.state;
 
 	  /*
 	   Return if a gesture is not in progress and won't be. Also catches the case where a previous
@@ -727,13 +761,13 @@
 	    return;
 	  }
 
-	  //Update the state with the new events. If the event is stopped, return;
+	  // Update the state with the new events. If the event is stopped, return;
 	  if (!state.updateInputs(event, region.element)) {
 	    return;
 	  }
 
-	  //Retrieve the initial target from any one of the inputs
-	  var bindings = state.retrieveBindingsByInitialPos();
+	  // Retrieve the initial target from any one of the inputs
+	  let bindings = state.retrieveBindingsByInitialPos();
 	  if (bindings.length > 0) {
 	    if (region.preventDefault) {
 	      _util2.default.setMSPreventDefault(region.element);
@@ -742,15 +776,15 @@
 	      _util2.default.removeMSPreventDefault(region.element);
 	    }
 
-	    var toBeDispatched = {};
-	    var gestures = (0, _interpreter2.default)(bindings, event, state);
+	    let toBeDispatched = {};
+	    let gestures = (0, _interpreter2.default)(bindings, event, state);
 
-	    //Determine the deepest path index to emit the event from, to avoid duplicate events being fired.
-	    gestures.forEach(function (gesture) {
-	      //var id = (gesture.binding.gesture.id) ? gesture.binding.gesture.id : gesture.binding.gesture.type;
-	      var id = gesture.binding.gesture.id;
+	    // Determine the deepest path index to emit the event from, to avoid duplicate events being fired.
+	    gestures.forEach(function(gesture) {
+	      // var id = (gesture.binding.gesture.id) ? gesture.binding.gesture.id : gesture.binding.gesture.type;
+	      let id = gesture.binding.gesture.id;
 	      if (toBeDispatched[id]) {
-	        var path = _util2.default.getPropagationPath(event);
+	        let path = _util2.default.getPropagationPath(event);
 	        if (_util2.default.getPathIndex(path, gesture.binding.element) < _util2.default.getPathIndex(path, toBeDispatched[id].binding.element)) {
 	          toBeDispatched[id] = gesture;
 	        }
@@ -759,14 +793,14 @@
 	      }
 	    });
 
-	    Object.keys(toBeDispatched).forEach(function (index) {
-	      var gesture = toBeDispatched[index];
+	    Object.keys(toBeDispatched).forEach(function(index) {
+	      let gesture = toBeDispatched[index];
 	      (0, _dispatcher2.default)(gesture.binding, gesture.data, gesture.events);
 	    });
 	  }
 
-	  var endCount = 0;
-	  state.inputs.forEach(function (input) {
+	  let endCount = 0;
+	  state.inputs.forEach(function(input) {
 	    if (input.getCurrentEventType() === 'end') {
 	      endCount++;
 	    }
@@ -776,18 +810,18 @@
 	    state.resetInputs();
 	  }
 	}
-	/*arbiter*/
+	/* arbiter*/
 
 	exports.default = arbiter;
 
-/***/ },
+/** *
+/ },
 /* 7 */
-/***/ function(module, exports) {
+/** */ function(module, exports) {
+	'use strict';
 
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 	/**
 	 * @file dispatcher.js
@@ -804,15 +838,15 @@
 	function dispatcher(binding, data, events) {
 	  data.events = events;
 
-	  //noinspection JSCheckFunctionSignatures
-	  var newEvent = new CustomEvent(binding.gesture.getId(), {
+	  // noinspection JSCheckFunctionSignatures
+	  let newEvent = new CustomEvent(binding.gesture.getId(), {
 	    detail: data,
 	    bubbles: true,
-	    cancelable: true
+	    cancelable: true,
 	  });
 	  emitEvent(binding.element, newEvent, binding);
 	}
-	/*dispatcher*/
+	/* dispatcher*/
 
 	/**
 	 * Emits the new event. Unbinds the event if the event was registered at bindOnce.
@@ -826,43 +860,56 @@
 	    ZingTouch.unbind(binding.element, binding.gesture.getType());
 	  }
 	}
-	/*emitEvent*/
+	/* emitEvent*/
 
 	exports.default = dispatcher;
 
-/***/ },
+/** *
+/ },
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}(); /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @file Input.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
-	var _ZingEvent = __webpack_require__(9);
+	let _ZingEvent = __webpack_require__(9);
 
-	var _ZingEvent2 = _interopRequireDefault(_ZingEvent);
+	let _ZingEvent2 = _interopRequireDefault(_ZingEvent);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
 	/**
 	 * Tracks a single input and contains information about the current, previous, and initial events.
 	 * Contains the progress of each Input and it's associated gestures.
 	 * @class Input
 	 */
-	var Input = function () {
-
+	let Input = function() {
 	  /**
 	   * Constructor function for the Input class.
 	   * @param {Event} event - The Event object from the window
@@ -872,7 +919,7 @@
 	  function Input(event, identifier) {
 	    _classCallCheck(this, Input);
 
-	    var currentEvent = new _ZingEvent2.default(event, identifier);
+	    let currentEvent = new _ZingEvent2.default(event, identifier);
 
 	    /**
 	     * Holds the initial event object. A touchstart/mousedown event.
@@ -906,7 +953,7 @@
 	     */
 	    this.progress = {};
 	  }
-	  /*constructor*/
+	  /* constructor*/
 
 	  /**
 	   * Receives an input, updates the internal state of what the input has done next.
@@ -920,8 +967,8 @@
 	    value: function update(event, touchIdentifier) {
 	      this.previous = this.current;
 	      this.current = new _ZingEvent2.default(event, touchIdentifier);
-	    }
-	    /*update*/
+	    },
+	    /* update*/
 
 	    /**
 	     * Returns the progress of the specified gesture.
@@ -938,8 +985,8 @@
 	      }
 
 	      return this.progress[id];
-	    }
-	    /*getGestureProgress*/
+	    },
+	    /* getGestureProgress*/
 
 	    /**
 	     * Returns the normalized current Event's type.
@@ -950,8 +997,8 @@
 	    key: 'getCurrentEventType',
 	    value: function getCurrentEventType() {
 	      return this.current.type;
-	    }
-	    /*getCurrentEventType*/
+	    },
+	    /* getCurrentEventType*/
 
 	    /**
 	     * Resets a progress/state object of the specified gesture.
@@ -962,8 +1009,8 @@
 	    key: 'resetProgress',
 	    value: function resetProgress(id) {
 	      this.progress[id] = {};
-	    }
-	    /*resetProgress*/
+	    },
+	    /* resetProgress*/
 
 	  }]);
 
@@ -972,34 +1019,40 @@
 
 	exports.default = Input;
 
-/***/ },
+/** *
+/ },
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } /**
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+} /**
 	                                                                                                                                                           * @file ZingEvent.js
 	                                                                                                                                                           * Contains logic for ZingEvents
 	                                                                                                                                                           */
 
-	var INITIAL_COORDINATE = 0;
+	let INITIAL_COORDINATE = 0;
 	/**
 	 * An event wrapper that normalizes events across browsers and input devices
 	 * @class ZingEvent
 	 */
 
-	var ZingEvent =
+	let ZingEvent =
 	/**
 	 * @constructor
 	 * @param {Event} event - The event object being wrapped.
@@ -1036,9 +1089,9 @@
 	   */
 	  this.y = INITIAL_COORDINATE;
 
-	  var eventObj;
+	  let eventObj;
 	  if (event.touches && event.changedTouches) {
-	    for (var i = 0; i < event.changedTouches.length; i++) {
+	    for (let i = 0; i < event.changedTouches.length; i++) {
 	      if (event.changedTouches[i].identifier === touchIdentifier) {
 	        eventObj = event.changedTouches[i];
 	        break;
@@ -1058,34 +1111,34 @@
 	  this.screenY = eventObj.screenY;
 	}
 
-	/*constructor*/
+	/* constructor*/
 	;
 
 	exports.default = ZingEvent;
 
-/***/ },
+/** *
+/ },
 /* 10 */
-/***/ function(module, exports) {
-
+/** */ function(module, exports) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 	/**
 	 * @file util.js
 	 * Various accessor and mutator functions to handle state and validation.
 	 */
 
-	var CIRCLE_DEGREES = 360;
-	var HALF_CIRCLE_DEGREES = 180;
+	let CIRCLE_DEGREES = 360;
+	let HALF_CIRCLE_DEGREES = 180;
 
 	/**
 	 *  Contains generic helper functions
 	 * @type {Object}
 	 * @namespace util
 	 */
-	var util = {
+	let util = {
 
 	  /**
 	   * Normalizes window events to be either of type start, move, or end.
@@ -1111,7 +1164,7 @@
 	    }
 	  },
 
-	  /*normalizeEvent*/
+	  /* normalizeEvent*/
 
 	  /**
 	   * Determines if the current and previous coordinates are within or up to a certain tolerance.
@@ -1126,7 +1179,7 @@
 	    return Math.abs(currentY - previousY) <= tolerance && Math.abs(currentX - previousX) <= tolerance;
 	  },
 
-	  /*isWithin*/
+	  /* isWithin*/
 
 	  /**
 	   * Calculates the distance between two points.
@@ -1137,7 +1190,7 @@
 	   * @returns {number} The numerical value between two points
 	   */
 	  distanceBetweenTwoPoints: function distanceBetweenTwoPoints(x0, x1, y0, y1) {
-	    var dist = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+	    let dist = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 	    return Math.round(dist * 100) / 100;
 	  },
 
@@ -1153,7 +1206,7 @@
 	  getMidpoint: function getMidpoint(x0, x1, y0, y1) {
 	    return {
 	      x: (x0 + x1) / 2,
-	      y: (y0 + y1) / 2
+	      y: (y0 + y1) / 2,
 	    };
 	  },
 
@@ -1173,7 +1226,7 @@
 	   * @returns {number} - Degree along the unit circle where the project lies
 	   */
 	  getAngle: function getAngle(originX, originY, projectionX, projectionY) {
-	    var angle = Math.atan2(projectionY - originY, projectionX - originX) * (HALF_CIRCLE_DEGREES / Math.PI);
+	    let angle = Math.atan2(projectionY - originY, projectionX - originX) * (HALF_CIRCLE_DEGREES / Math.PI);
 	    return CIRCLE_DEGREES - (angle < 0 ? CIRCLE_DEGREES + angle : angle);
 	  },
 
@@ -1185,8 +1238,8 @@
 	   * degrees denote a clockwise direction, and positive a counter-clockwise direction.
 	   */
 	  getAngularDistance: function getAngularDistance(start, end) {
-	    var angle = (end - start) % CIRCLE_DEGREES;
-	    var sign = angle < 0 ? 1 : -1;
+	    let angle = (end - start) % CIRCLE_DEGREES;
+	    let sign = angle < 0 ? 1 : -1;
 	    angle = Math.abs(angle);
 	    return angle > HALF_CIRCLE_DEGREES ? sign * (CIRCLE_DEGREES - angle) : sign * angle;
 	  },
@@ -1203,8 +1256,7 @@
 	   * @returns {Number} velocity of px/time
 	   */
 	  getVelocity: function getVelocity(startX, startY, startTime, endX, endY, endTime) {
-
-	    var distance = this.distanceBetweenTwoPoints(startX, endX, startY, endY);
+	    let distance = this.distanceBetweenTwoPoints(startX, endX, startY, endY);
 	    return distance / (endTime - startTime);
 	  },
 
@@ -1213,9 +1265,9 @@
 	   * @param inputs
 	   */
 	  getRightMostInput: function getRightMostInput(inputs) {
-	    var rightMost = null;
-	    var distance = Number.MIN_VALUE;
-	    inputs.forEach(function (input) {
+	    let rightMost = null;
+	    let distance = Number.MIN_VALUE;
+	    inputs.forEach(function(input) {
 	      if (input.initial.x > distance) {
 	        rightMost = input;
 	      }
@@ -1240,7 +1292,7 @@
 	   * @param target
 	   */
 	  isInside: function isInside(x, y, target) {
-	    var rect = target.getBoundingClientRect();
+	    let rect = target.getBoundingClientRect();
 	    return x > rect.left && x < rect.left + rect.width && y > rect.top && y < rect.top + rect.height;
 	  },
 
@@ -1252,8 +1304,8 @@
 	    if (event.path) {
 	      return event.path;
 	    } else {
-	      var path = [];
-	      var node = event.target;
+	      let path = [];
+	      let node = event.target;
 	      while (node != document) {
 	        path.push(node);
 	        node = node.parentNode;
@@ -1271,9 +1323,9 @@
 	   * @returns {element}
 	   */
 	  getPathIndex: function getPathIndex(path, element) {
-	    var index = path.length;
+	    let index = path.length;
 
-	    path.forEach(function (obj) {
+	    path.forEach(function(obj) {
 	      if (obj === element) {
 	        index = i;
 	      }
@@ -1288,25 +1340,27 @@
 	  removeMSPreventDefault: function removeMSPreventDefault(element) {
 	    element.style['-ms-content-zooming'] = '';
 	    element.style['touch-action'] = '';
-	  }
+	  },
 	};
 	exports.default = util;
 
-/***/ },
+/** *
+/ },
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
 	/**
 	 * Receives an event and an array of Bindings (element -> gesture handler) to determine
@@ -1319,21 +1373,20 @@
 	 * or null if a gesture will not be emitted.
 	 */
 	function interpreter(bindings, event, state) {
-	  var evType = _util2.default.normalizeEvent(event.type);
-	  var candidates = [];
-	  bindings.forEach(function (binding) {
-	    var result = binding.gesture[evType](state.inputs, state, binding.element);
+	  let evType = _util2.default.normalizeEvent(event.type);
+	  let candidates = [];
+	  bindings.forEach(function(binding) {
+	    let result = binding.gesture[evType](state.inputs, state, binding.element);
 	    if (result) {
-
-	      var events = [];
-	      state.inputs.forEach(function (input) {
+	      let events = [];
+	      state.inputs.forEach(function(input) {
 	        events.push(input.current);
 	      });
 
 	      candidates.push({
 	        binding: binding,
 	        data: result,
-	        events: events
+	        events: events,
 	      });
 	    }
 	  });
@@ -1346,75 +1399,92 @@
 
 	exports.default = interpreter;
 
-/***/ },
+/** *
+/ },
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	let _typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? function(obj) {
+ return typeof obj; 
+} : function(obj) {
+ return obj && typeof Symbol === 'function' && obj.constructor === Symbol ? 'symbol' : typeof obj; 
+};
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}(); /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @file State.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
-	var _Gesture = __webpack_require__(5);
+	let _Gesture = __webpack_require__(5);
 
-	var _Gesture2 = _interopRequireDefault(_Gesture);
+	let _Gesture2 = _interopRequireDefault(_Gesture);
 
-	var _Expand = __webpack_require__(13);
+	let _Expand = __webpack_require__(13);
 
-	var _Expand2 = _interopRequireDefault(_Expand);
+	let _Expand2 = _interopRequireDefault(_Expand);
 
-	var _Pan = __webpack_require__(15);
+	let _Pan = __webpack_require__(15);
 
-	var _Pan2 = _interopRequireDefault(_Pan);
+	let _Pan2 = _interopRequireDefault(_Pan);
 
-	var _Pinch = __webpack_require__(16);
+	let _Pinch = __webpack_require__(16);
 
-	var _Pinch2 = _interopRequireDefault(_Pinch);
+	let _Pinch2 = _interopRequireDefault(_Pinch);
 
-	var _Rotate = __webpack_require__(17);
+	let _Rotate = __webpack_require__(17);
 
-	var _Rotate2 = _interopRequireDefault(_Rotate);
+	let _Rotate2 = _interopRequireDefault(_Rotate);
 
-	var _Swipe = __webpack_require__(18);
+	let _Swipe = __webpack_require__(18);
 
-	var _Swipe2 = _interopRequireDefault(_Swipe);
+	let _Swipe2 = _interopRequireDefault(_Swipe);
 
-	var _Tap = __webpack_require__(19);
+	let _Tap = __webpack_require__(19);
 
-	var _Tap2 = _interopRequireDefault(_Tap);
+	let _Tap2 = _interopRequireDefault(_Tap);
 
-	var _Binding = __webpack_require__(4);
+	let _Binding = __webpack_require__(4);
 
-	var _Binding2 = _interopRequireDefault(_Binding);
+	let _Binding2 = _interopRequireDefault(_Binding);
 
-	var _Input = __webpack_require__(8);
+	let _Input = __webpack_require__(8);
 
-	var _Input2 = _interopRequireDefault(_Input);
+	let _Input2 = _interopRequireDefault(_Input);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
-	var DEFAULT_MOUSE_ID = 0;
+	let DEFAULT_MOUSE_ID = 0;
 
 	/**
 	 * Creates an object related to a Region's state, and contains helper methods to update and clean up different
 	 * states.
 	 */
 
-	var State = function () {
-
+	let State = function() {
 	  /**
 	   * Constructor for the State class.
 	   */
@@ -1477,9 +1547,9 @@
 	  _createClass(State, [{
 	    key: 'addBinding',
 	    value: function addBinding(element, gesture, handler, capture, bindOnce) {
-	      var boundGesture;
+	      let boundGesture;
 
-	      //Error type checking.
+	      // Error type checking.
 	      if (element && typeof element.tagName === 'undefined') {
 	        throw new Error('Parameter element is an invalid object.');
 	      }
@@ -1505,9 +1575,9 @@
 
 	      this.bindings.push(new _Binding2.default(element, boundGesture, handler, capture, bindOnce));
 	      element.addEventListener(boundGesture.getId(), handler, capture);
-	    }
+	    },
 
-	    /*addBinding*/
+	    /* addBinding*/
 
 	    /**
 	     * Retrieves the Binding by which an element is associated to.
@@ -1518,16 +1588,16 @@
 	  }, {
 	    key: 'retrieveBindingsByElement',
 	    value: function retrieveBindingsByElement(element) {
-	      var matches = [];
-	      this.bindings.map(function (binding) {
+	      let matches = [];
+	      this.bindings.map(function(binding) {
 	        if (binding.element === element) {
 	          matches.push(binding);
 	        }
 	      });
 	      return matches;
-	    }
+	    },
 
-	    /*retrieveBindingsByElement*/
+	    /* retrieveBindingsByElement*/
 
 	    /**
 	     * Retrieves all bindings based upon the initial X/Y position of the inputs.
@@ -1539,12 +1609,12 @@
 	  }, {
 	    key: 'retrieveBindingsByInitialPos',
 	    value: function retrieveBindingsByInitialPos() {
-	      var _this = this;
+	      let _this = this;
 
-	      var matches = [];
-	      this.bindings.forEach(function (binding) {
+	      let matches = [];
+	      this.bindings.forEach(function(binding) {
 	        // Determine if at least one input is in the target element. They should all be in the region based upon a prior check
-	        var inputsInside = _this.inputs.filter(function (input) {
+	        let inputsInside = _this.inputs.filter(function(input) {
 	          return _util2.default.isInside(input.initial.x, input.initial.y, binding.element);
 	        });
 	        if (inputsInside.length > 0) {
@@ -1552,7 +1622,7 @@
 	        }
 	      });
 	      return matches;
-	    }
+	    },
 
 	    /* retrieveBindingsByInitialPos */
 
@@ -1566,18 +1636,18 @@
 	  }, {
 	    key: 'updateInputs',
 	    value: function updateInputs(event, regionElement) {
-	      var identifier = DEFAULT_MOUSE_ID;
-	      var eventType = event.touches ? 'TouchEvent' : event.pointerType ? 'PointerEvent' : 'MouseEvent';
+	      let identifier = DEFAULT_MOUSE_ID;
+	      let eventType = event.touches ? 'TouchEvent' : event.pointerType ? 'PointerEvent' : 'MouseEvent';
 
 	      switch (eventType) {
 	        case 'TouchEvent':
 
-	          //Return if all gestures did not originate from the same target
+	          // Return if all gestures did not originate from the same target
 	          if (event.touches.length !== event.targetTouches.length) {
 	            return false;
 	          }
 
-	          for (var index in event.changedTouches) {
+	          for (let index in event.changedTouches) {
 	            if (event.changedTouches.hasOwnProperty(index) && _util2.default.isInteger(parseInt(index))) {
 	              identifier = event.changedTouches[index].identifier;
 	              update(event, this, identifier, regionElement);
@@ -1599,16 +1669,16 @@
 	      return true;
 
 	      function update(event, state, identifier, regionElement) {
-	        var eventType = _util2.default.normalizeEvent(event.type);
-	        var input = findInputById(state.inputs, identifier);
+	        let eventType = _util2.default.normalizeEvent(event.type);
+	        let input = findInputById(state.inputs, identifier);
 
-	        //A starting input was not cleaned up properly and still exists.
+	        // A starting input was not cleaned up properly and still exists.
 	        if (eventType === 'start' && input) {
 	          state.resetInputs();
 	          return;
 	        }
 
-	        //An input has moved outside the region.
+	        // An input has moved outside the region.
 	        if (eventType !== 'start' && input && !_util2.default.isInside(input.current.x, input.current.y, regionElement)) {
 	          state.resetInputs();
 	          return;
@@ -1625,7 +1695,7 @@
 	          input.update(event, identifier);
 	        }
 	      }
-	    }
+	    },
 
 	    /* updateInputs */
 
@@ -1637,7 +1707,7 @@
 	    key: 'resetInputs',
 	    value: function resetInputs() {
 	      this.inputs = [];
-	    }
+	    },
 
 	    /* resetInputs */
 
@@ -1649,11 +1719,11 @@
 	  }, {
 	    key: 'numActiveInputs',
 	    value: function numActiveInputs() {
-	      var endType = this.inputs.filter(function (input) {
+	      let endType = this.inputs.filter(function(input) {
 	        return input.current.type !== 'end';
 	      });
 	      return endType.length;
-	    }
+	    },
 
 	    /* numActiveInputs */
 
@@ -1668,7 +1738,7 @@
 	    value: function registerGesture(gesture, key) {
 	      this.assignGestureId(gesture);
 	      this.registeredGestures[key] = gesture;
-	    }
+	    },
 
 	    /* registerGesture */
 
@@ -1682,7 +1752,7 @@
 	    key: 'assignGestureId',
 	    value: function assignGestureId(gesture) {
 	      gesture.setId(this.regionId + '-' + this.numGestures++);
-	    }
+	    },
 
 	    /* assignGestureId */
 
@@ -1700,7 +1770,7 @@
 
 
 	function findInputById(inputs, identifier) {
-	  for (var i = 0; i < inputs.length; i++) {
+	  for (let i = 0; i < inputs.length; i++) {
 	    if (inputs[i].identifier === identifier) {
 	      return inputs[i];
 	    }
@@ -1712,31 +1782,45 @@
 
 	exports.default = State;
 
-/***/ },
+/** *
+/ },
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _Distance2 = __webpack_require__(14);
+	let _Distance2 = __webpack_require__(14);
 
-	var _Distance3 = _interopRequireDefault(_Distance2);
+	let _Distance3 = _interopRequireDefault(_Distance2);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _possibleConstructorReturn(self, call) {
+ if (!self) {
+ throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called'); 
+} return call && (typeof call === 'object' || typeof call === 'function') ? call : self; 
+}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	function _inherits(subClass, superClass) {
+ if (typeof superClass !== 'function' && superClass !== null) {
+ throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); 
+} subClass.prototype = Object.create(superClass && superClass.prototype, {constructor: {value: subClass, enumerable: false, writable: true, configurable: true}}); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+} /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file Expand.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Contains the Expand class
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
@@ -1747,7 +1831,7 @@
 	 * events.
 	 * @class Expand
 	 */
-	var Expand = function (_Distance) {
+	let Expand = function(_Distance) {
 	  _inherits(Expand, _Distance);
 
 	  /**
@@ -1760,7 +1844,7 @@
 	     * The type of the Gesture.
 	     * @type {String}
 	     */
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Expand).call(this, options));
+	    let _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Expand).call(this, options));
 
 	    _this.type = 'expand';
 
@@ -1772,46 +1856,68 @@
 
 	exports.default = Expand;
 
-/***/ },
+/** *
+/ },
 /* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}();
 
-	var _Gesture2 = __webpack_require__(5);
+	let _Gesture2 = __webpack_require__(5);
 
-	var _Gesture3 = _interopRequireDefault(_Gesture2);
+	let _Gesture3 = _interopRequireDefault(_Gesture2);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _possibleConstructorReturn(self, call) {
+ if (!self) {
+ throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called'); 
+} return call && (typeof call === 'object' || typeof call === 'function') ? call : self; 
+}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	function _inherits(subClass, superClass) {
+ if (typeof superClass !== 'function' && superClass !== null) {
+ throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); 
+} subClass.prototype = Object.create(superClass && superClass.prototype, {constructor: {value: subClass, enumerable: false, writable: true, configurable: true}}); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+} /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file Distance.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Contains the abstract Distance class
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-	var DEFAULT_INPUTS = 2;
-	var DEFAULT_MIN_THRESHOLD = 1;
+	let DEFAULT_INPUTS = 2;
+	let DEFAULT_MIN_THRESHOLD = 1;
 
 	/**
 	 * A Distance is defined as two inputs moving either together or apart.
 	 * @class Distance
 	 */
 
-	var Distance = function (_Gesture) {
+	let Distance = function(_Gesture) {
 	  _inherits(Distance, _Gesture);
 
 	  /**
@@ -1824,7 +1930,7 @@
 	     * The type of the Gesture.
 	     * @type {String}
 	     */
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Distance).call(this));
+	    let _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Distance).call(this));
 
 	    _this.type = 'distance';
 
@@ -1846,13 +1952,12 @@
 	  _createClass(Distance, [{
 	    key: 'start',
 	    value: function start(inputs) {
-
 	      if (inputs.length === DEFAULT_INPUTS) {
-	        //Store the progress in the first input.
-	        var progress = inputs[0].getGestureProgress(this.type);
+	        // Store the progress in the first input.
+	        let progress = inputs[0].getGestureProgress(this.type);
 	        progress.lastEmittedDistance = _util2.default.distanceBetweenTwoPoints(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
 	      }
-	    }
+	    },
 
 	    /**
 	     * Event hook for the move of a gesture. Determines if the two points are moved in the expected
@@ -1867,11 +1972,11 @@
 	    key: 'move',
 	    value: function move(inputs, state, element) {
 	      if (state.numActiveInputs() === DEFAULT_INPUTS) {
-	        var currentDistance = _util2.default.distanceBetweenTwoPoints(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
-	        var lastDistance = _util2.default.distanceBetweenTwoPoints(inputs[0].previous.x, inputs[1].previous.x, inputs[0].previous.y, inputs[1].previous.y);
+	        let currentDistance = _util2.default.distanceBetweenTwoPoints(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
+	        let lastDistance = _util2.default.distanceBetweenTwoPoints(inputs[0].previous.x, inputs[1].previous.x, inputs[0].previous.y, inputs[1].previous.y);
 
-	        //Retrieve the first input's progress.
-	        var progress = inputs[0].getGestureProgress(this.type);
+	        // Retrieve the first input's progress.
+	        let progress = inputs[0].getGestureProgress(this.type);
 
 	        if (this.type === 'expand') {
 	          if (currentDistance < lastDistance) {
@@ -1879,7 +1984,7 @@
 	          } else if (currentDistance - progress.lastEmittedDistance >= this.threshold) {
 	            progress.lastEmittedDistance = currentDistance;
 	            return {
-	              distance: currentDistance
+	              distance: currentDistance,
 	            };
 	          }
 	        } else {
@@ -1888,14 +1993,14 @@
 	          } else if (currentDistance < lastDistance && progress.lastEmittedDistance - currentDistance >= this.threshold) {
 	            progress.lastEmittedDistance = currentDistance;
 	            return {
-	              distance: currentDistance
+	              distance: currentDistance,
 	            };
 	          }
 	        }
 
 	        return null;
 	      }
-	    }
+	    },
 	  }]);
 
 	  return Distance;
@@ -1903,39 +2008,61 @@
 
 	exports.default = Distance;
 
-/***/ },
+/** *
+/ },
 /* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}();
 
-	var _Gesture2 = __webpack_require__(5);
+	let _Gesture2 = __webpack_require__(5);
 
-	var _Gesture3 = _interopRequireDefault(_Gesture2);
+	let _Gesture3 = _interopRequireDefault(_Gesture2);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _possibleConstructorReturn(self, call) {
+ if (!self) {
+ throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called'); 
+} return call && (typeof call === 'object' || typeof call === 'function') ? call : self; 
+}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	function _inherits(subClass, superClass) {
+ if (typeof superClass !== 'function' && superClass !== null) {
+ throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); 
+} subClass.prototype = Object.create(superClass && superClass.prototype, {constructor: {value: subClass, enumerable: false, writable: true, configurable: true}}); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+} /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file Pan.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Contains the Pan class
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-	var DEFAULT_INPUTS = 1;
-	var DEFAULT_MIN_THRESHOLD = 1;
+	let DEFAULT_INPUTS = 1;
+	let DEFAULT_MIN_THRESHOLD = 1;
 
 	/**
 	 * A Pan is defined as a normal movement in any direction on a screen. Pan gestures do not
@@ -1943,7 +2070,7 @@
 	 * @class Pan
 	 */
 
-	var Pan = function (_Gesture) {
+	let Pan = function(_Gesture) {
 	  _inherits(Pan, _Gesture);
 
 	  /**
@@ -1960,7 +2087,7 @@
 	     * The type of the Gesture.
 	     * @type {String}
 	     */
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Pan).call(this));
+	    let _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Pan).call(this));
 
 	    _this.type = 'pan';
 
@@ -1980,7 +2107,7 @@
 	    return _this;
 	  }
 
-	  /*constructor*/
+	  /* constructor*/
 
 	  /**
 	   * start() - Event hook for the start of a gesture. Marks each input as active, so it can invalidate any end
@@ -1992,17 +2119,17 @@
 	  _createClass(Pan, [{
 	    key: 'start',
 	    value: function start(inputs) {
-	      var _this2 = this;
+	      let _this2 = this;
 
-	      inputs.forEach(function (input) {
-	        var progress = input.getGestureProgress(_this2.getId());
+	      inputs.forEach(function(input) {
+	        let progress = input.getGestureProgress(_this2.getId());
 	        progress.active = true;
 	        progress.lastEmitted = {
 	          x: input.current.x,
-	          y: input.current.y
+	          y: input.current.y,
 	        };
 	      });
-	    }
+	    },
 
 	    /**
 	     * move() - Event hook for the move of a gesture. Fired whenever the input length is met,
@@ -2018,22 +2145,21 @@
 	    value: function move(inputs, state, element) {
 	      if (this.numInputs === inputs.length) {
 	        var output = {
-	          data: []
+	          data: [],
 	        };
-	        for (var i = 0; i < inputs.length; i++) {
-	          var progress = inputs[i].getGestureProgress(this.getId());
+	        for (let i = 0; i < inputs.length; i++) {
+	          let progress = inputs[i].getGestureProgress(this.getId());
 
-	          var reachedThreshold = false;
+	          let reachedThreshold = false;
 
-	          //Check threshold distance
+	          // Check threshold distance
 	          reachedThreshold = Math.abs(inputs[i].current.y - progress.lastEmitted.y) > this.threshold || Math.abs(inputs[i].current.x - progress.lastEmitted.x) > this.threshold;
 
 	          if (progress.active && reachedThreshold) {
-
 	            output.data[i] = {
 	              distanceFromOrigin: _util2.default.distanceBetweenTwoPoints(inputs[i].initial.x, inputs[i].current.x, inputs[i].initial.y, inputs[i].current.y),
 	              directionFromOrigin: _util2.default.getAngle(inputs[i].initial.x, inputs[i].initial.y, inputs[i].current.x, inputs[i].current.y),
-	              currentDirection: _util2.default.getAngle(progress.lastEmitted.x, progress.lastEmitted.y, inputs[i].current.x, inputs[i].current.y)
+	              currentDirection: _util2.default.getAngle(progress.lastEmitted.x, progress.lastEmitted.y, inputs[i].current.x, inputs[i].current.y),
 	            };
 	            progress.lastEmitted.x = inputs[i].current.x;
 	            progress.lastEmitted.y = inputs[i].current.y;
@@ -2044,9 +2170,9 @@
 	      }
 
 	      return output;
-	    }
+	    },
 
-	    /*move*/
+	    /* move*/
 
 	    /**
 	     * end() - Event hook for the end of a gesture. If the gesture has at least fired once, then it
@@ -2060,16 +2186,16 @@
 	  }, {
 	    key: 'end',
 	    value: function end(inputs) {
-	      var _this3 = this;
+	      let _this3 = this;
 
-	      inputs.forEach(function (input) {
-	        var progress = input.getGestureProgress(_this3.getId());
+	      inputs.forEach(function(input) {
+	        let progress = input.getGestureProgress(_this3.getId());
 	        progress.active = false;
 	      });
 	      return null;
-	    }
+	    },
 
-	    /*end*/
+	    /* end*/
 
 	  }]);
 
@@ -2078,31 +2204,45 @@
 
 	exports.default = Pan;
 
-/***/ },
+/** *
+/ },
 /* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _Distance2 = __webpack_require__(14);
+	let _Distance2 = __webpack_require__(14);
 
-	var _Distance3 = _interopRequireDefault(_Distance2);
+	let _Distance3 = _interopRequireDefault(_Distance2);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _possibleConstructorReturn(self, call) {
+ if (!self) {
+ throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called'); 
+} return call && (typeof call === 'object' || typeof call === 'function') ? call : self; 
+}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	function _inherits(subClass, superClass) {
+ if (typeof superClass !== 'function' && superClass !== null) {
+ throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); 
+} subClass.prototype = Object.create(superClass && superClass.prototype, {constructor: {value: subClass, enumerable: false, writable: true, configurable: true}}); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+} /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file Pinch.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Contains the Pinch class
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
@@ -2113,7 +2253,7 @@
 	 * events.
 	 * @class Pinch
 	 */
-	var Pinch = function (_Distance) {
+	let Pinch = function(_Distance) {
 	  _inherits(Pinch, _Distance);
 
 	  /**
@@ -2126,7 +2266,7 @@
 	     * The type of the Gesture.
 	     * @type {String}
 	     */
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Pinch).call(this, options));
+	    let _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Pinch).call(this, options));
 
 	    _this.type = 'pinch';
 
@@ -2138,45 +2278,67 @@
 
 	exports.default = Pinch;
 
-/***/ },
+/** *
+/ },
 /* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}();
 
-	var _Gesture2 = __webpack_require__(5);
+	let _Gesture2 = __webpack_require__(5);
 
-	var _Gesture3 = _interopRequireDefault(_Gesture2);
+	let _Gesture3 = _interopRequireDefault(_Gesture2);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _possibleConstructorReturn(self, call) {
+ if (!self) {
+ throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called'); 
+} return call && (typeof call === 'object' || typeof call === 'function') ? call : self; 
+}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	function _inherits(subClass, superClass) {
+ if (typeof superClass !== 'function' && superClass !== null) {
+ throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); 
+} subClass.prototype = Object.create(superClass && superClass.prototype, {constructor: {value: subClass, enumerable: false, writable: true, configurable: true}}); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+} /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file Rotate.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Contains the Rotate class
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-	var MAX_INPUTS = 2;
+	let MAX_INPUTS = 2;
 
 	/**
 	 * A Rotate is defined as two inputs moving about a circle, maintaining a relatively equal radius.
 	 * @class Rotate
 	 */
 
-	var Rotate = function (_Gesture) {
+	let Rotate = function(_Gesture) {
 	  _inherits(Rotate, _Gesture);
 
 	  /**
@@ -2189,7 +2351,7 @@
 	     * The type of the Gesture.
 	     * @type {String}
 	     */
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Rotate).call(this));
+	    let _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Rotate).call(this));
 
 	    _this.type = 'rotate';
 	    return _this;
@@ -2217,27 +2379,27 @@
 	    key: 'move',
 	    value: function move(inputs, state, element) {
 	      if (state.numActiveInputs() <= MAX_INPUTS) {
-	        var referencePivot, diffX, diffY, input;
+	        let referencePivot, diffX, diffY, input;
 	        if (state.numActiveInputs() === 1) {
-	          var bRect = element.getBoundingClientRect();
+	          let bRect = element.getBoundingClientRect();
 	          referencePivot = {
 	            x: bRect.left + bRect.width / 2,
-	            y: bRect.top + bRect.height / 2
+	            y: bRect.top + bRect.height / 2,
 	          };
 	          input = inputs[0];
 	          diffX = diffY = 0;
 	        } else {
 	          referencePivot = _util2.default.getMidpoint(inputs[0].initial.x, inputs[1].initial.x, inputs[0].initial.y, inputs[1].initial.y);
-	          var currentPivot = _util2.default.getMidpoint(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
+	          let currentPivot = _util2.default.getMidpoint(inputs[0].current.x, inputs[1].current.x, inputs[0].current.y, inputs[1].current.y);
 	          diffX = referencePivot.x - currentPivot.x;
 	          diffY = referencePivot.y - currentPivot.y;
 	          input = _util2.default.getRightMostInput(inputs);
 	        }
 
-	        //Translate the current pivot point.
-	        var currentAngle = _util2.default.getAngle(referencePivot.x, referencePivot.y, input.current.x + diffX, input.current.y + diffY);
+	        // Translate the current pivot point.
+	        let currentAngle = _util2.default.getAngle(referencePivot.x, referencePivot.y, input.current.x + diffX, input.current.y + diffY);
 
-	        var progress = input.getGestureProgress(this.getId());
+	        let progress = input.getGestureProgress(this.getId());
 	        if (!progress.initialAngle) {
 	          progress.initialAngle = progress.previousAngle = currentAngle;
 	          progress.distance = progress.change = 0;
@@ -2251,14 +2413,14 @@
 	        return {
 	          angle: currentAngle,
 	          distanceFromOrigin: progress.distance,
-	          distanceFromLast: progress.change
+	          distanceFromLast: progress.change,
 	        };
 	      }
 
 	      return null;
-	    }
+	    },
 
-	    /*move*/
+	    /* move*/
 
 	  }]);
 
@@ -2267,42 +2429,64 @@
 
 	exports.default = Rotate;
 
-/***/ },
+/** *
+/ },
 /* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}();
 
-	var _Gesture2 = __webpack_require__(5);
+	let _Gesture2 = __webpack_require__(5);
 
-	var _Gesture3 = _interopRequireDefault(_Gesture2);
+	let _Gesture3 = _interopRequireDefault(_Gesture2);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _possibleConstructorReturn(self, call) {
+ if (!self) {
+ throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called'); 
+} return call && (typeof call === 'object' || typeof call === 'function') ? call : self; 
+}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	function _inherits(subClass, superClass) {
+ if (typeof superClass !== 'function' && superClass !== null) {
+ throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); 
+} subClass.prototype = Object.create(superClass && superClass.prototype, {constructor: {value: subClass, enumerable: false, writable: true, configurable: true}}); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+} /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file Swipe.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Contains the Swipe class
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-	var DEFAULT_INPUTS = 1;
-	var DEFAULT_MAX_REST_TIME = 100;
-	var DEFAULT_ESCAPE_VELOCITY = 0.2;
-	var DEFAULT_TIME_DISTORTION = 100;
-	var DEFAULT_MAX_PROGRESS_STACK = 10;
+	let DEFAULT_INPUTS = 1;
+	let DEFAULT_MAX_REST_TIME = 100;
+	let DEFAULT_ESCAPE_VELOCITY = 0.2;
+	let DEFAULT_TIME_DISTORTION = 100;
+	let DEFAULT_MAX_PROGRESS_STACK = 10;
 
 	/**
 	 * A swipe is defined as input(s) moving in the same direction in an relatively increasing velocity
@@ -2310,7 +2494,7 @@
 	 * @class Swipe
 	 */
 
-	var Swipe = function (_Gesture) {
+	let Swipe = function(_Gesture) {
 	  _inherits(Swipe, _Gesture);
 
 	  /**
@@ -2332,7 +2516,7 @@
 	     * The type of the Gesture
 	     * @type {String}
 	     */
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Swipe).call(this));
+	    let _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Swipe).call(this));
 
 	    _this.type = 'swipe';
 
@@ -2389,8 +2573,8 @@
 	    key: 'move',
 	    value: function move(inputs, state, element) {
 	      if (this.numInputs === inputs.length) {
-	        for (var i = 0; i < inputs.length; i++) {
-	          var progress = inputs[i].getGestureProgress(this.getId());
+	        for (let i = 0; i < inputs.length; i++) {
+	          let progress = inputs[i].getGestureProgress(this.getId());
 	          if (!progress.moves) {
 	            progress.moves = [];
 	          }
@@ -2398,7 +2582,7 @@
 	          progress.moves.push({
 	            time: new Date().getTime(),
 	            x: inputs[i].current.x,
-	            y: inputs[i].current.y
+	            y: inputs[i].current.y,
 	          });
 
 	          if (progress.length > this.maxProgressStack) {
@@ -2408,9 +2592,9 @@
 	      }
 
 	      return null;
-	    }
+	    },
 
-	    /*move*/
+	    /* move*/
 
 	    /**
 	     * Determines if the input's history validates a swipe motion. Determines if it did not come to
@@ -2423,33 +2607,30 @@
 	  }, {
 	    key: 'end',
 	    value: function end(inputs) {
-
 	      if (this.numInputs === inputs.length) {
-
-	        var output = {
-	          data: []
+	        let output = {
+	          data: [],
 	        };
 
 	        for (var i = 0; i < inputs.length; i++) {
-
-	          //Determine if all input events are on the 'end' event.
+	          // Determine if all input events are on the 'end' event.
 	          if (inputs[i].current.type !== 'end') {
 	            return;
 	          }
 
-	          var progress = inputs[i].getGestureProgress(this.getId());
+	          let progress = inputs[i].getGestureProgress(this.getId());
 	          if (progress.moves && progress.moves.length > 2) {
-	            //CHECK : Return if the input has not moved in maxRestTime ms.
+	            // CHECK : Return if the input has not moved in maxRestTime ms.
 
-	            var currentMove = progress.moves.pop();
+	            let currentMove = progress.moves.pop();
 	            if (new Date().getTime() - currentMove.time > this.maxRestTime) {
 	              return null;
 	            }
 
-	            var lastMove;
-	            var index = progress.moves.length - 1;
+	            let lastMove;
+	            let index = progress.moves.length - 1;
 
-	            //CHECK : Date is unreliable, so we retrieve the last move event where the time is not the same.
+	            // CHECK : Date is unreliable, so we retrieve the last move event where the time is not the same.
 	            while (index !== -1) {
 	              if (progress.moves[index].time !== currentMove.time) {
 	                lastMove = progress.moves[index];
@@ -2459,7 +2640,7 @@
 	              index--;
 	            }
 
-	            //If the date is REALLY unreliable, we apply a time distortion to the last event.
+	            // If the date is REALLY unreliable, we apply a time distortion to the last event.
 	            if (!lastMove) {
 	              lastMove = progress.moves.pop();
 	              lastMove.time += this.timeDistortion;
@@ -2469,7 +2650,7 @@
 
 	            output.data[i] = {
 	              velocity: velocity,
-	              currentDirection: _util2.default.getAngle(lastMove.x, lastMove.y, currentMove.x, currentMove.y)
+	              currentDirection: _util2.default.getAngle(lastMove.x, lastMove.y, currentMove.x, currentMove.y),
 	            };
 	          }
 	        }
@@ -2486,9 +2667,9 @@
 	      }
 
 	      return null;
-	    }
+	    },
 
-	    /*end*/
+	    /* end*/
 
 	  }]);
 
@@ -2497,50 +2678,76 @@
 
 	exports.default = Swipe;
 
-/***/ },
+/** *
+/ },
 /* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
+/** */ function(module, exports, __webpack_require__) {
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	Object.defineProperty(exports, '__esModule', {
+	  value: true,
 	});
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	let _typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? function(obj) {
+ return typeof obj; 
+} : function(obj) {
+ return obj && typeof Symbol === 'function' && obj.constructor === Symbol ? 'symbol' : typeof obj; 
+};
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	let _createClass = function() {
+ function defineProperties(target, props) {
+ for (let i = 0; i < props.length; i++) {
+ let descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+} 
+} return function(Constructor, protoProps, staticProps) {
+ if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+}; 
+}();
 
-	var _Gesture2 = __webpack_require__(5);
+	let _Gesture2 = __webpack_require__(5);
 
-	var _Gesture3 = _interopRequireDefault(_Gesture2);
+	let _Gesture3 = _interopRequireDefault(_Gesture2);
 
-	var _util = __webpack_require__(10);
+	let _util = __webpack_require__(10);
 
-	var _util2 = _interopRequireDefault(_util);
+	let _util2 = _interopRequireDefault(_util);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+ return obj && obj.__esModule ? obj : {default: obj}; 
+}
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) {
+ if (!(instance instanceof Constructor)) {
+ throw new TypeError('Cannot call a class as a function'); 
+} 
+}
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	function _possibleConstructorReturn(self, call) {
+ if (!self) {
+ throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called'); 
+} return call && (typeof call === 'object' || typeof call === 'function') ? call : self; 
+}
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	function _inherits(subClass, superClass) {
+ if (typeof superClass !== 'function' && superClass !== null) {
+ throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); 
+} subClass.prototype = Object.create(superClass && superClass.prototype, {constructor: {value: subClass, enumerable: false, writable: true, configurable: true}}); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+} /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file Tap.js
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Contains the Tap class
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-	var DEFAULT_MIN_DELAY_MS = 0;
-	var DEFAULT_MAX_DELAY_MS = 300;
-	var DEFAULT_INPUTS = 1;
-	var DEFAULT_MOVE_PX_TOLERANCE = 10;
+	let DEFAULT_MIN_DELAY_MS = 0;
+	let DEFAULT_MAX_DELAY_MS = 300;
+	let DEFAULT_INPUTS = 1;
+	let DEFAULT_MOVE_PX_TOLERANCE = 10;
 
 	/**
 	 * A Tap is defined as a touchstart to touchend event in quick succession.
 	 * @class Tap
 	 */
 
-	var Tap = function (_Gesture) {
+	let Tap = function(_Gesture) {
 	  _inherits(Tap, _Gesture);
 
 	  /**
@@ -2560,7 +2767,7 @@
 	     * The type of the Gesture.
 	     * @type {String}
 	     */
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tap).call(this));
+	    let _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tap).call(this));
 
 	    _this.type = 'tap';
 
@@ -2596,7 +2803,7 @@
 	    return _this;
 	  }
 
-	  /*constructor*/
+	  /* constructor*/
 
 	  /**
 	   * Event hook for the start of a gesture. Keeps track of when the inputs trigger the start event.
@@ -2608,19 +2815,19 @@
 	  _createClass(Tap, [{
 	    key: 'start',
 	    value: function start(inputs) {
-	      var _this2 = this;
+	      let _this2 = this;
 
 	      if (inputs.length === this.numInputs) {
-	        inputs.forEach(function (input) {
-	          var progress = input.getGestureProgress(_this2.type);
+	        inputs.forEach(function(input) {
+	          let progress = input.getGestureProgress(_this2.type);
 	          progress.start = new Date().getTime();
 	        });
 	      }
 
 	      return null;
-	    }
+	    },
 
-	    /*start*/
+	    /* start*/
 
 	    /**
 	     * Event hook for the move of a gesture. The Tap event reaches here if the user
@@ -2635,13 +2842,13 @@
 	  }, {
 	    key: 'move',
 	    value: function move(inputs, state, element) {
-	      for (var i = 0; i < inputs.length; i++) {
+	      for (let i = 0; i < inputs.length; i++) {
 	        if (inputs[i].getCurrentEventType() === 'move') {
-	          var current = inputs[i].current;
-	          var previous = inputs[i].previous;
+	          let current = inputs[i].current;
+	          let previous = inputs[i].previous;
 	          if (!_util2.default.isWithin(current.x, current.y, previous.x, previous.y, this.tolerance)) {
-	            var type = this.type;
-	            inputs.forEach(function (input) {
+	            let type = this.type;
+	            inputs.forEach(function(input) {
 	              input.resetProgress(type);
 	            });
 
@@ -2651,9 +2858,9 @@
 	      }
 
 	      return null;
-	    }
+	    },
 
-	    /*move*/
+	    /* move*/
 
 	    /**
 	     * Event hook for the end of a gesture.
@@ -2668,51 +2875,51 @@
 	  }, {
 	    key: 'end',
 	    value: function end(inputs) {
-	      var _this3 = this;
+	      let _this3 = this;
 
 	      if (inputs.length !== this.numInputs) {
 	        return null;
 	      }
 
-	      var startTime = Number.MAX_VALUE;
-	      for (var i = 0; i < inputs.length; i++) {
+	      let startTime = Number.MAX_VALUE;
+	      for (let i = 0; i < inputs.length; i++) {
 	        if (inputs[i].getCurrentEventType() !== 'end') {
 	          return null;
 	        }
 
-	        var progress = inputs[i].getGestureProgress(this.type);
+	        let progress = inputs[i].getGestureProgress(this.type);
 	        if (!progress.start) {
 	          return null;
 	        }
 
-	        //Find the most recent input's startTime
+	        // Find the most recent input's startTime
 	        if (progress.start < startTime) {
 	          startTime = progress.start;
 	        }
 	      }
 
-	      var interval = new Date().getTime() - startTime;
+	      let interval = new Date().getTime() - startTime;
 	      if (this.minDelay <= interval && this.maxDelay >= interval) {
 	        return {
-	          interval: interval
+	          interval: interval,
 	        };
 	      } else {
-	        var _ret = function () {
-	          var type = _this3.type;
-	          inputs.forEach(function (input) {
+	        let _ret = function() {
+	          let type = _this3.type;
+	          inputs.forEach(function(input) {
 	            input.resetProgress(type);
 	          });
 
 	          return {
-	            v: null
+	            v: null,
 	          };
 	        }();
 
-	        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object') return _ret.v;
 	      }
-	    }
+	    },
 
-	    /*end*/
+	    /* end*/
 
 	  }]);
 
@@ -2721,5 +2928,6 @@
 
 	exports.default = Tap;
 
-/***/ }
-/******/ ]);
+/** *
+/ },
+/** ****/ ]);

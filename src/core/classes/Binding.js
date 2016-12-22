@@ -11,11 +11,14 @@ class Binding {
    * Constructor function for the Binding class.
    * @param {Element} element - The element to associate the gesture to.
    * @param {Gesture} gesture - A instance of the Gesture type.
-   * @param {Function} handler - The function handler to execute when a gesture is recognized
+   * @param {Function} handler - The function handler to execute when a
+   * gesture is recognized
    * on the associated element.
-   * @param {Boolean} [capture=false] - A boolean signifying if the event is to be emitted during
+   * @param {Boolean} [capture=false] - A boolean signifying if the event is
+   * to be emitted during
    * the capture or bubble phase.
-   * @param {Boolean} [bindOnce=false] - A boolean flag used for the bindOnce syntax.
+   * @param {Boolean} [bindOnce=false] - A boolean flag
+   * used for the bindOnce syntax.
    */
   constructor(element, gesture, handler, capture, bindOnce) {
     /**
@@ -29,13 +32,15 @@ class Binding {
      */
     this.gesture = gesture;
     /**
-     *  The function handler to execute when a gesture is recognized on the associated element.
+     * The function handler to execute when a gesture is
+     * recognized on the associated element.
      * @type {Function}
      */
     this.handler = handler;
 
     /**
-     *  A boolean signifying if the event is to be emitted during the capture or bubble phase.
+     * A boolean signifying if the event is to be
+     * emitted during the capture or bubble phase.
      * @type {Boolean}
      */
     this.capture = (typeof capture !== 'undefined') ? capture : false;
@@ -45,9 +50,8 @@ class Binding {
      * @type {Boolean}
      */
     this.bindOnce = (typeof bindOnce !== 'undefined') ? bindOnce : false;
-
   }
-  /*constructor*/
+
 }
 
 export default Binding;

@@ -14,9 +14,10 @@ class ZingEvent {
   /**
    * @constructor
    * @param {Event} event - The event object being wrapped.
-   * @param {Array} event.touches - The number of touches on a screen (mobile only).
-   * @param {Object} event.changedTouches - The TouchList representing points that
-   * participated in the event.
+   * @param {Array} event.touches - The number of touches on
+   *  a screen (mobile only).
+   * @param {Object} event.changedTouches - The TouchList representing
+   * points that participated in the event.
    * @param {Number} touchIdentifier - The index of touch if applicable
    */
   constructor(event, touchIdentifier) {
@@ -45,9 +46,9 @@ class ZingEvent {
      */
     this.y = INITIAL_COORDINATE;
 
-    var eventObj;
+    let eventObj;
     if (event.touches && event.changedTouches) {
-      for (var i = 0; i < event.changedTouches.length; i++) {
+      for (let i = 0; i < event.changedTouches.length; i++) {
         if (event.changedTouches[i].identifier === touchIdentifier) {
           eventObj = event.changedTouches[i];
           break;
@@ -66,8 +67,6 @@ class ZingEvent {
     this.screenX = eventObj.screenX;
     this.screenY = eventObj.screenY;
   }
-
-  /*constructor*/
 }
 
 export default ZingEvent;

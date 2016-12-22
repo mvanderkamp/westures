@@ -4,12 +4,12 @@
  */
 
 import dispatcher from './dispatcher.js';
-import Input from './classes/Input.js';
 import interpreter from './interpreter.js';
 import util from './util.js';
 
 /**
- * Function that handles event flow, negotiating with the interpreter, and dispatcher.
+ * Function that handles event flow, negotiating with the interpreter,
+ * and dispatcher.
  * 1. Receiving all touch events in the window.
  * 2. Determining which gestures are linked to the target element.
  * 3. Negotiating with the Interpreter what event should occur.
@@ -18,50 +18,57 @@ import util from './util.js';
  * @param {Object} region - The region object of the current listener.
  */
 function arbiter(event, region) {
-  var state = region.state;
+  const state = region.state;
 
   /*
-   Return if a gesture is not in progress and won't be. Also catches the case where a previous
-   event is in a partial state (2 finger pan, waits for both inputs to reach touchend)
+   Return if a gesture is not in progress and won't be. Also catches the case
+   where a previous event is in a partial state (2 finger pan, waits for both
+   inputs to reach touchend)
    */
-  if (state.inputs.length === 0 && util.normalizeEvent(event.type) !== 'start') {
+  if (state.inputs.length === 0 && util.normalizeEvent(event.type) !==
+    'start') {
     return;
   }
 
   /*
-   Check for 'stale' or events that lost focus (e.g. a pan goes off screen/off region.
+   Check for 'stale' or events that lost focus
+   (e.g. a pan goes off screen/off region.)
    Does not affect mobile devices.
    */
-  if (typeof event.buttons !== 'undefined' && util.normalizeEvent(event.type) !== 'end' && event.buttons === 0) {
+  if (typeof event.buttons !== 'undefined' &&
+    util.normalizeEvent(event.type) !== 'end' &&
+    event.buttons === 0) {
     state.resetInputs();
     return;
   }
 
-  //Update the state with the new events. If the event is stopped, return;
+  // Update the state with the new events. If the event is stopped, return;
   if (!state.updateInputs(event, region.element)) {
     return;
   }
 
-  //Retrieve the initial target from any one of the inputs
-  var bindings = state.retrieveBindingsByInitialPos();
+  // Retrieve the initial target from any one of the inputs
+  const bindings = state.retrieveBindingsByInitialPos();
   if (bindings.length > 0) {
     if (region.preventDefault) {
       util.setMSPreventDefault(region.element);
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      event.preventDefault ? event.preventDefault():(event.returnValue = false);
     } else {
       util.removeMSPreventDefault(region.element);
     }
 
-    var toBeDispatched = {};
-    var gestures = interpreter(bindings, event, state);
+    const toBeDispatched = {};
+    const gestures = interpreter(bindings, event, state);
 
-    //Determine the deepest path index to emit the event from, to avoid duplicate events being fired.
-    gestures.forEach(gesture => {
-      //var id = (gesture.binding.gesture.id) ? gesture.binding.gesture.id : gesture.binding.gesture.type;
-      var id = gesture.binding.gesture.id;
+    /* Determine the deepest path index to emit the event
+     from, to avoid duplicate events being fired. */
+
+    gestures.forEach((gesture) => {
+      const id = gesture.binding.gesture.id;
       if (toBeDispatched[id]) {
-        var path = util.getPropagationPath(event);
-        if (util.getPathIndex(path, gesture.binding.element) < util.getPathIndex(path, toBeDispatched[id].binding.element)) {
+        const path = util.getPropagationPath(event);
+        if (util.getPathIndex(path, gesture.binding.element) <
+          util.getPathIndex(path, toBeDispatched[id].binding.element)) {
           toBeDispatched[id] = gesture;
         }
       } else {
@@ -69,14 +76,14 @@ function arbiter(event, region) {
       }
     });
 
-    Object.keys(toBeDispatched).forEach(index => {
-      var gesture = toBeDispatched[index];
+    Object.keys(toBeDispatched).forEach((index) => {
+      const gesture = toBeDispatched[index];
       dispatcher(gesture.binding, gesture.data, gesture.events);
     });
   }
 
-  var endCount = 0;
-  state.inputs.forEach(input => {
+  let endCount = 0;
+  state.inputs.forEach((input) => {
     if (input.getCurrentEventType() === 'end') {
       endCount++;
     }
@@ -85,8 +92,6 @@ function arbiter(event, region) {
   if (endCount === state.inputs.length) {
     state.resetInputs();
   }
-
 }
-/*arbiter*/
 
 export default arbiter;

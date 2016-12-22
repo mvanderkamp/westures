@@ -11,12 +11,13 @@ const HALF_CIRCLE_DEGREES = 180;
  * @type {Object}
  * @namespace util
  */
-var util = {
+let util = {
 
   /**
    * Normalizes window events to be either of type start, move, or end.
    * @param {String} type - The event type emitted by the browser
-   * @returns {null|String} - The normalized event, or null if it is an event not predetermined.
+   * @return {null|String} - The normalized event, or null if it is an
+   * event not predetermined.
    */
   normalizeEvent(type) {
     switch (type) {
@@ -36,48 +37,50 @@ var util = {
         return null;
     }
   },
-  /*normalizeEvent*/
+  /* normalizeEvent*/
 
   /**
-   * Determines if the current and previous coordinates are within or up to a certain tolerance.
+   * Determines if the current and previous coordinates are within or
+   * up to a certain tolerance.
    * @param {Number} currentX - Current event's x coordinate
    * @param {Number} currentY - Current event's y coordinate
    * @param {Number} previousX - Previous event's x coordinate
    * @param {Number} previousY - Previous event's y coordinate
    * @param {Number} tolerance - The tolerance in pixel value.
-   * @returns {boolean} - true if the current coordinates are within the tolerance, false otherwise
+   * @return {boolean} - true if the current coordinates are
+   * within the tolerance, false otherwise
    */
   isWithin(currentX, currentY, previousX, previousY, tolerance) {
     return ((Math.abs(currentY - previousY) <= tolerance) &&
     (Math.abs(currentX - previousX) <= tolerance));
   },
-  /*isWithin*/
+  /* isWithin*/
 
   /**
    * Calculates the distance between two points.
-   * @param x0
-   * @param x1
-   * @param y0
-   * @param y1
-   * @returns {number} The numerical value between two points
+   * @param {Number} x0
+   * @param {Number} x1
+   * @param {Number} y0
+   * @param {Number} y1
+   * @return {number} The numerical value between two points
    */
   distanceBetweenTwoPoints(x0, x1, y0, y1) {
-    var dist = (Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0))));
+    let dist = (Math.sqrt(((x1 - x0) * (x1 - x0)) + ((y1 - y0) * (y1 - y0))));
     return Math.round(dist * 100) / 100;
   },
 
   /**
    * Calculates the midpoint coordinates between two points.
-   * @param x0
-   * @param x1
-   * @param y0
-   * @param y1
-   * @returns {Object} The coordinates of the midpoint.
+   * @param {Number} x0
+   * @param {Number} x1
+   * @param {Number} y0
+   * @param {Number} y1
+   * @return {Object} The coordinates of the midpoint.
    */
   getMidpoint(x0, x1, y0, y1) {
     return {
       x: ((x0 + x1) / 2),
-      y: ((y0 + y1) / 2)
+      y: ((y0 + y1) / 2),
     };
   },
   /**
@@ -93,25 +96,28 @@ var util = {
    * @param {number} originY
    * @param {number} projectionX
    * @param {number} projectionY
-   * @returns {number} - Degree along the unit circle where the project lies
+   * @return {number} - Degree along the unit circle where the project lies
    */
   getAngle(originX, originY, projectionX, projectionY) {
-    var angle = Math.atan2(projectionY - originY, projectionX - originX) *
+    let angle = Math.atan2(projectionY - originY, projectionX - originX) *
       ((HALF_CIRCLE_DEGREES) / Math.PI);
     return CIRCLE_DEGREES - ((angle < 0) ? (CIRCLE_DEGREES + angle) : angle);
   },
   /**
-   * Calculates the angular distance in degrees between two angles along the unit circle
+   * Calculates the angular distance in degrees between two angles
+   *  along the unit circle
    * @param {number} start - The starting point in degrees
    * @param {number} end - The ending point in degrees
-   * @returns {number} The number of degrees between the starting point ant ending point. Negative
-   * degrees denote a clockwise direction, and positive a counter-clockwise direction.
+   * @return {number} The number of degrees between the
+   * starting point and ending point. Negative degrees denote a clockwise
+   * direction, and positive a counter-clockwise direction.
    */
   getAngularDistance(start, end) {
-    var angle = (end - start) % CIRCLE_DEGREES;
-    var sign = (angle < 0) ? 1 : -1;
+    let angle = (end - start) % CIRCLE_DEGREES;
+    let sign = (angle < 0) ? 1 : -1;
     angle = Math.abs(angle);
-    return (angle > HALF_CIRCLE_DEGREES) ? sign * (CIRCLE_DEGREES - angle) : sign * angle;
+    return (angle > HALF_CIRCLE_DEGREES) ?
+    sign * (CIRCLE_DEGREES - angle) : sign * angle;
   },
 
   /**
@@ -122,21 +128,22 @@ var util = {
    * @param {Number} endX
    * @param {Number} endY
    * @param {Number} endTime
-   * @returns {Number} velocity of px/time
+   * @return {Number} velocity of px/time
    */
   getVelocity(startX, startY, startTime, endX, endY, endTime) {
-
-    var distance = this.distanceBetweenTwoPoints(startX, endX, startY, endY);
+    let distance = this.distanceBetweenTwoPoints(startX, endX, startY, endY);
     return (distance / (endTime - startTime));
   },
+
   /**
    * Returns the farthest right input
-   * @param inputs
+   * @param {Array} inputs
+   * @return {Object}
    */
   getRightMostInput(inputs) {
-    var rightMost = null;
-    var distance = Number.MIN_VALUE;
-    inputs.forEach(input => {
+    let rightMost = null;
+    let distance = Number.MIN_VALUE;
+    inputs.forEach((input) => {
       if (input.initial.x > distance) {
         rightMost = input;
       }
@@ -146,32 +153,36 @@ var util = {
 
   /**
    * Determines is the value is an integer and not a floating point
-   * @param value
-   * @returns {boolean}
+   * @param {Mixed} value
+   * @return {boolean}
    */
   isInteger(value) {
     return (typeof value === 'number') && (value % 1 === 0);
   },
+
   /**
    * Determines if the x,y position of the input is within then target.
-   * @param x -clientX
-   * @param y -clientY
-   * @param target
+   * @param {Number} x -clientX
+   * @param {Number} y -clientY
+   * @param {Element} target
+   * @return {Boolean}
    */
   isInside(x, y, target) {
-    var rect = target.getBoundingClientRect();
-    return ((x > rect.left && x < rect.left + rect.width) && (y > rect.top && y < rect.top + rect.height));
+    const rect = target.getBoundingClientRect();
+    return ((x > rect.left && x < rect.left + rect.width) &&
+    (y > rect.top && y < rect.top + rect.height));
   },
   /**
    * Polyfill for event.propagationPath
-   * @param event
+   * @param {Event} event
+   * @return {Array}
    */
   getPropagationPath(event) {
     if (event.path) {
       return event.path;
     } else {
-      var path = [];
-      var node = event.target;
+      let path = [];
+      let node = event.target;
       while (node != document) {
         path.push(node);
         node = node.parentNode;
@@ -183,14 +194,14 @@ var util = {
 
   /**
    * Retrieve the index inside the path array
-   * @param path
-   * @param element
-   * @returns {element}
+   * @param {Array} path
+   * @param {Element} element
+   * @return {Element}
    */
   getPathIndex(path, element) {
-    var index = path.length;
+    let index = path.length;
 
-    path.forEach(obj => {
+    path.forEach((obj) => {
       if (obj === element) {
         index = i;
       }
@@ -207,6 +218,6 @@ var util = {
   removeMSPreventDefault(element) {
     element.style['-ms-content-zooming'] = '';
     element.style['touch-action'] = '';
-  }
+  },
 };
 export default util;

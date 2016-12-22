@@ -14,11 +14,6 @@
     "test": "karma start karma.conf.js"
   },
   "author": "ZingChart",
-  "jscsConfig": {
-    "maxErrors": null,
-    "disallowTrailingWhitespace": false,
-    "requireTrailingComma": false
-  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.5.2",
@@ -35,5 +30,9 @@
     "karma-webpack": "^1.7.0",
     "mocha": "^2.4.5",
     "webpack": "^1.12.13"
+  },
+  "dependencies": {
+    "eslint": "^3.12.2",
+    "eslint-config-google": "^0.7.1"
   }
 }

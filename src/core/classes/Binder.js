@@ -11,9 +11,10 @@ class Binder {
   /**
    * Constructor function for the Binder class.
    * @param {Element} element - The element to bind gestures to.
-   * @param {Boolean} bindOnce - Option to bind once and only emit the event once.
+   * @param {Boolean} bindOnce - Option to bind once and only emit
+   * the event once.
    * @param {Object} state - The state of the Region that is being bound to.
-   * @returns {Object} - Returns 'this' to be chained over and over again.
+   * @return {Object} - Returns 'this' to be chained over and over again.
    */
   constructor(element, bindOnce, state) {
     /**
@@ -28,9 +29,8 @@ class Binder {
         return this;
       };
     });
-
   }
-  /*constructor*/
+
 }
 
 export default Binder;
