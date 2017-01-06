@@ -1,27 +1,17 @@
-let webpack = require('webpack');
-let path = require('path');
-let plugins = [];
-let minimize = process.argv.indexOf('--minimize') !== -1;
-let filename = 'zingtouch.js';
+const webpack = require('webpack');
+const Dashboard = require('webpack-dashboard');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
-if (minimize) {
-  plugins.push(new webpack.optimize.UglifyJsPlugin({
-    sourceMap: true,
-    mangle: true,
-    outputs: {
-      comments: false,
-    },
-  }));
-  filename = 'zingtouch.min.js';
-}
+const minimize = process.argv.indexOf('--minimize') !== -1;
+const dashboard = process.argv.indexOf('--dashboard') !== -1;
 
-plugins.push(new webpack.BannerPlugin(`ZingTouch v1.0.3
-Author: ZingChart http://zingchart.com
-License: MIT`));
-module.exports = {
+const plugins = [];
+const filename = 'zingtouch.js';
+
+const config = {
   entry: './src/core/main.js',
   output: {
-    filename: __dirname + '/dist/' + filename,
+    filename: filename,
   },
   module: {
     loaders: [
@@ -37,3 +27,33 @@ module.exports = {
   },
   plugins: plugins,
 };
+
+if (minimize) {
+  plugins.push(new webpack.optimize.UglifyJsPlugin({
+    sourceMap: true,
+    mangle: true,
+    outputs: {
+      comments: false,
+    },
+  }));
+  filename = `${filename}.min.js`;
+}
+
+if (dashboard) {
+  plugins.push(new DashboardPlugin(new Dashboard().setData));
+  config.devServer = {
+    port: 3000,
+    contentBase: './examples',
+  };
+  config.output.publicPath = '/assets/';
+} else {
+  config.output.filename = __dirname + '/dist/' + filename;
+}
+
+plugins.push(new webpack.BannerPlugin(`
+ZingTouch v1.0.3
+Author: ZingChart http://zingchart.com
+License: MIT`
+));
+
+module.exports = config;
