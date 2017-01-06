@@ -1,3 +1,5 @@
+'use strict';
+
 import State from './../../../src/core/classes/State.js';
 import Gesture from './../../../src/gestures/Gesture.js';
 

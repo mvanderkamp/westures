@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @file Binding.js
  * Tests Binding class

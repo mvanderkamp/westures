@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @file Tap.js
  * Tests Tap class

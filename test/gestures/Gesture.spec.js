@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @file Gesture.js
  * Tests Gesture class
@@ -18,4 +20,3 @@ describe('Gesture.getType', function() {
     expect(_gesture.getType()).to.equal(null);
   });
 });
-

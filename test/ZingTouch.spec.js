@@ -1,4 +1,4 @@
-import {ZingTouch} from './../src/ZingTouch.js';
+import ZingTouch from './../src/ZingTouch.js';
 
 /** @test {ZingTouch} */
 describe('ZingTouch', function() {

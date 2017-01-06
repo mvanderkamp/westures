@@ -13,6 +13,7 @@ const config = {
   output: {
     filename: filename,
   },
+  devtool: 'source-map',
   module: {
     loaders: [
       {

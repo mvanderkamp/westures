@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @file Region.spec..js
  * Tests Region class

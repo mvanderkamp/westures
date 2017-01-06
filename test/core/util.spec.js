@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @file utils.js
  * Tests the user-facing API, ensuring the object functions

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @file Binder.js
  * Tests Binder class
@@ -31,4 +33,3 @@ describe('Binder', function() {
     }
   });
 });
-
