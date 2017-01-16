@@ -74,6 +74,12 @@ class Distance extends Gesture {
         inputs[0].previous.y,
         inputs[1].previous.y);
 
+      const centerPoint = util.getMidpoint(
+        inputs[0].current.x,
+        inputs[1].current.x,
+        inputs[0].current.y,
+        inputs[1].current.y);
+
       // Retrieve the first input's progress.
       let progress = inputs[0].getGestureProgress(this.type);
 
@@ -85,6 +91,7 @@ class Distance extends Gesture {
           progress.lastEmittedDistance = currentDistance;
           return {
             distance: currentDistance,
+            center: centerPoint,
           };
         }
       } else {
@@ -95,6 +102,7 @@ class Distance extends Gesture {
           progress.lastEmittedDistance = currentDistance;
           return {
             distance: currentDistance,
+            center: centerPoint,
           };
         }
       }
