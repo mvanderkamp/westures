@@ -64,7 +64,7 @@ class Region {
     this.state = new State(id);
 
     let eventNames = [];
-    if (window.PointerEvent) {
+    if (window.PointerEvent && !window.TouchEvent) {
       eventNames = [
         'pointerdown',
         'pointermove',
