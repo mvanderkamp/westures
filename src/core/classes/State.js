@@ -162,13 +162,8 @@ class State {
     let identifier = DEFAULT_MOUSE_ID;
     let eventType = (event.touches) ?
       'TouchEvent' : (event.pointerType) ? 'PointerEvent' : 'MouseEvent';
-
     switch (eventType) {
       case 'TouchEvent':
-        // Return if all gestures did not originate from the same target
-        if (event.touches.length !== event.targetTouches.length) {
-          return false;
-        }
 
         for (let index in event.changedTouches) {
           if (event.changedTouches.hasOwnProperty(index) &&

@@ -6,7 +6,8 @@ const minimize = process.argv.indexOf('--minimize') !== -1;
 const dashboard = process.argv.indexOf('--dashboard') !== -1;
 
 const plugins = [];
-const filename = 'zingtouch.js';
+const filename = (minimize) ? 'zingtouch.min.js' : 'zingtouch.js';
+
 
 const config = {
   entry: './src/core/main.js',
@@ -37,8 +38,8 @@ if (minimize) {
       comments: false,
     },
   }));
-  filename = `${filename}.min.js`;
 }
+
 
 if (dashboard) {
   plugins.push(new DashboardPlugin(new Dashboard().setData));
@@ -52,7 +53,7 @@ if (dashboard) {
 }
 
 plugins.push(new webpack.BannerPlugin(`
-ZingTouch v1.0.3
+ZingTouch v1.0.5
 Author: ZingChart http://zingchart.com
 License: MIT`
 ));

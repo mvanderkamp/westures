@@ -40,7 +40,10 @@ class Distance extends Gesture {
    * gesture and stores it in the first input for reference events.
    * @param {Array} inputs
    */
-  start(inputs) {
+  start(inputs, state, element) {
+  if(!this.isValid(inputs, state, element)) {
+    return null;
+  }
     if (inputs.length === DEFAULT_INPUTS) {
       // Store the progress in the first input.
       let progress = inputs[0].getGestureProgress(this.type);

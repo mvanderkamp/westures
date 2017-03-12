@@ -3,6 +3,8 @@
  * Contains the Gesture class
  */
 
+import util from './../core/util.js';
+
 /**
  * The Gesture class that all gestures inherit from.
  */
@@ -75,9 +77,11 @@ class Gesture {
   /**
    * start() - Event hook for the start of a gesture
    * @param {Array} inputs - The array of Inputs on the screen
+	 * @param {Object} state - The state object of the current region.
+	 * @param {Element} element - The element associated to the binding.
    * @return {null|Object}  - Default of null
    */
-  start(inputs) {
+  start(inputs, state, element) {
     return null;
   }
 
@@ -100,6 +104,26 @@ class Gesture {
   end(inputs) {
     return null;
   }
+
+	/**
+	* isValid() - Pre-checks to ensure the invariants of a gesture are satisfied.
+	* @param {Array} inputs - The array of Inputs on the screen
+	* @param {Object} state - The state object of the current region.
+	* @param {Element} element - The element associated to the binding.
+	* @return {boolean} - If the gesture is valid
+	*/
+	isValid(inputs, state, element) {
+    let valid = true;
+    // Checks to see if all touches originated from within the target element.
+    if (inputs.length > 1) {
+      inputs.forEach((input) => {
+        if (!util.isInside(input.initial.x, input.initial.y, element)) {
+          valid = false;
+        }
+      });
+    }
+    return valid;
+    }
 
 }
 
