@@ -53,7 +53,7 @@ if (dashboard) {
 }
 
 plugins.push(new webpack.BannerPlugin(`
-ZingTouch v1.0.5
+ZingTouch v${process.env.npm_package_version}
 Author: ZingChart http://zingchart.com
 License: MIT`
 ));
