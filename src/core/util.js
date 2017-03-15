@@ -201,7 +201,7 @@ let util = {
   getPathIndex(path, element) {
     let index = path.length;
 
-    path.forEach((obj) => {
+    path.forEach((obj, i) => {
       if (obj === element) {
         index = i;
       }

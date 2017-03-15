@@ -839,7 +839,7 @@
 	  getPathIndex: function getPathIndex(path, element) {
 	    var index = path.length;
 	
-	    path.forEach(function (obj) {
+	    path.forEach(function (obj, i) {
 	      if (obj === element) {
 	        index = i;
 	      }
