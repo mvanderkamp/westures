@@ -1,4 +1,5 @@
-# [ZingTouch] (https://zingchart.github.io/zingtouch)
+# ZingTouch 
+https://zingchart.github.io/zingtouch
 
 A modern JavaScript touch gesture library. The library allows developers to configure pre-existing gestures as well as create their own using ZingTouch's life cycle.
 
@@ -15,6 +16,7 @@ A modern JavaScript touch gesture library. The library allows developers to conf
 * [Getting Started](#getting-started)
 * [Usage](#usage)
 * [Browser Compatibility](#browser-compatibility)
+* [Pitfalls](#pitfalls)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -534,6 +536,16 @@ Imagine the `Pan` gesture allowing in-between events to be triggered:
 
 The syntax for utilizing the life cycle is still to be determined, but will be released in the near future.
 
+---
+
+# Pitfalls
+
+**Binding an event and DOM mutation to an element**
+ZingTouch treats a gesture as a non-mutable event, meaning that the element is bound to is not expected to change between the start and end. Binding a transformation of an element's bounding box to the middle of a gesture event could provide unwanted results. 
+
+Example: Binding a pan event directly to an element that you want to move around every time the callback is fired. The initial state of when the gesture was registered changes throughout the event, and the initial reference point is no longer valid. 
+
+Solution: Attach the gesture listener to a non-mutating element such as a parent container, and modify your target element in the callback. This will provide a more predictable state that zingtouch can recognize. 
 ---
 
 # Contributing
