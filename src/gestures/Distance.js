@@ -86,7 +86,7 @@ class Distance extends Gesture {
       // Retrieve the first input's progress.
       let progress = inputs[0].getGestureProgress(this.type);
 
-      if (this.type === 'expand') {
+      if (this.constructor.name === 'Expand') {
         if (currentDistance < lastDistance) {
           progress.lastEmittedDistance = currentDistance;
         } else if ((currentDistance - progress.lastEmittedDistance >=
