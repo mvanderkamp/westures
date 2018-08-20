@@ -118,13 +118,7 @@ class State {
    * @return {Array} - An array of Bindings to which that element is bound
    */
   retrieveBindingsByElement(element) {
-    let matches = [];
-    this.bindings.map((binding) => {
-      if (binding.element === element) {
-        matches.push(binding);
-      }
-    });
-    return matches;
+    return this.bindings.filter( b => b.element === element );
   }
 
   /**
@@ -134,18 +128,11 @@ class State {
    * @return {Array} - An array of Bindings to which that element is bound
    */
   retrieveBindingsByInitialPos() {
-    let matches = [];
-    this.bindings.forEach((binding) => {
-      // Determine if at least one input is in the target element.
-      // They should all be in the region based upon a prior check
-      let inputsInside = this.inputs.filter((input) => {
+    return this.bindings.filter( binding => {
+      return this.inputs.some( input => {
         return util.isInside(input.initial.x, input.initial.y, binding.element);
       });
-      if (inputsInside.length > 0) {
-        matches.push(binding);
-      }
     });
-    return matches;
   }
 
   /**
@@ -157,24 +144,17 @@ class State {
    *  false if the event is invalid.
    */
   updateInputs(event, regionElement) {
-    let identifier = DEFAULT_MOUSE_ID;
     let eventType = (event.touches) ?
-      'TouchEvent' : (event.pointerType) ? 'PointerEvent' : 'MouseEvent';
+      'TouchEvent' : ((event.pointerType) ? 'PointerEvent' : 'MouseEvent');
     switch (eventType) {
       case 'TouchEvent':
-
-        for (let index in event.changedTouches) {
-          if (event.changedTouches.hasOwnProperty(index) &&
-            util.isInteger((parseInt(index)))) {
-            identifier = event.changedTouches[index].identifier;
-            update(event, this, identifier, regionElement);
-          }
-        }
+        Array.from(event.changedTouches).forEach( touch => {
+          update(event, this, touch.identifier, regionElement);
+        });
         break;
 
       case 'PointerEvent':
-        identifier = event.pointerId;
-        update(event, this, identifier, regionElement);
+        update(event, this, event.pointerId, regionElement);
         break;
 
       case 'MouseEvent':
@@ -262,13 +242,7 @@ class State {
  *  null if it did not find any.
  */
 function findInputById(inputs, identifier) {
-  for (let i = 0; i < inputs.length; i++) {
-    if (inputs[i].identifier === identifier) {
-      return inputs[i];
-    }
-  }
-
-  return null;
+  return inputs.find( i => i.identifier === identifier );
 }
 
 export default State;
