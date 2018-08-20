@@ -165,8 +165,8 @@ class State {
     return true;
 
     function update(event, state, identifier, regionElement) {
-      let eventType = util.normalizeEvent[ event.type ];
-      let input = findInputById(state.inputs, identifier);
+      const eventType = util.normalizeEvent[ event.type ];
+      const input = findInputById(state.inputs, identifier);
 
       // A starting input was not cleaned up properly and still exists.
       if (eventType === 'start' && input) {
@@ -207,7 +207,7 @@ class State {
    * @return {Number} - The number of active inputs.
    */
   numActiveInputs() {
-    let endType = this.inputs.filter((input) => {
+    const endType = this.inputs.filter((input) => {
       return input.current.type !== 'end';
     });
     return endType.length;
