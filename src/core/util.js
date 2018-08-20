@@ -214,5 +214,14 @@ let util = {
     element.style['-ms-content-zooming'] = '';
     element.style['touch-action'] = '';
   },
+
+  preventDefault(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    } else {
+      event.returnValue = false;
+    }
+  }
 };
+
 export default util;
