@@ -122,11 +122,16 @@ class Pan extends Gesture {
         input.current.x,
         input.current.y
       );
+      const change = {
+        x: input.current.x - progress.lastEmitted.x,
+        y: input.current.y - progress.lastEmitted.y,
+      };
 
       return {
         distanceFromOrigin,
         directionFromOrigin,
         currentDirection,
+        change,
       };
     }
   }
