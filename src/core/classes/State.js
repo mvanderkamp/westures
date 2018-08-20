@@ -3,7 +3,6 @@
  */
 
 import Gesture from './../../gestures/Gesture.js';
-import Expand from './../../gestures/Expand.js';
 import Pan from './../../gestures/Pan.js';
 import Pinch from './../../gestures/Pinch.js';
 import Rotate from './../../gestures/Rotate.js';
@@ -59,7 +58,6 @@ class State {
      */
     this.registeredGestures = {};
 
-    this.registerGesture(new Expand(), 'expand');
     this.registerGesture(new Pan(), 'pan');
     this.registerGesture(new Rotate(), 'rotate');
     this.registerGesture(new Pinch(), 'pinch');
