@@ -81,24 +81,22 @@ class Pan extends Gesture {
       data: [],
     };
 
-    for (let i = 0; i < inputs.length; i++) {
-      let progress = inputs[i].getGestureProgress(this.getId());
-
-      let reachedThreshold = false;
-
-      // Check threshold distance
-      const yThreshold = Math.abs(inputs[i].current.y -
-        progress.lastEmitted.y) > this.threshold;
-      const xThreshold = Math.abs(inputs[i].current.x -
-        progress.lastEmitted.x) > this.threshold;
-      reachedThreshold = yThreshold || xThreshold;
+    inputs.forEach( (input, index) => {
+      const progress = input.getGestureProgress(this.getId());
+      const distanceFromLastEmit = util.distanceBetweenTwoPoints(
+        progress.lastEmitted.x,
+        progress.lastEmitted.y,
+        input.current.x,
+        input.current.y
+      );
+      const reachedThreshold = distanceFromLastEmit >= this.threshold;
 
       if (progress.active && reachedThreshold) {
-        output.data[i] = packData( inputs[i], progress );
-        progress.lastEmitted.x = inputs[i].current.x;
-        progress.lastEmitted.y = inputs[i].current.y;
+        output.data[index] = packData( input, progress );
+        progress.lastEmitted.x = input.current.x;
+        progress.lastEmitted.y = input.current.y;
       } 
-    }
+    });
 
     return output;
 
