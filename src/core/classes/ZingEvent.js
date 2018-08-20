@@ -48,12 +48,9 @@ class ZingEvent {
 
     let eventObj;
     if (event.touches && event.changedTouches) {
-      for (let i = 0; i < event.changedTouches.length; i++) {
-        if (event.changedTouches[i].identifier === touchIdentifier) {
-          eventObj = event.changedTouches[i];
-          break;
-        }
-      }
+      eventObj = Array.from(event.changedTouches).find( t => {
+        return t.identifier === touchIdentifier;
+      });
     } else {
       eventObj = event;
     }
