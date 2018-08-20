@@ -89,9 +89,9 @@ class Pinch extends Gesture {
           change: change,
         };
       }
-
-      return null;
     }
+
+    return null;
   }
 }
 
