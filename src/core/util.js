@@ -19,24 +19,19 @@ let util = {
    * @return {null|String} - The normalized event, or null if it is an
    * event not predetermined.
    */
-  normalizeEvent(type) {
-    switch (type) {
-      case 'mousedown' :
-      case 'touchstart' :
-      case 'pointerdown' :
-        return 'start';
-      case 'mousemove' :
-      case 'touchmove' :
-      case 'pointermove' :
-        return 'move';
-      case 'mouseup' :
-      case 'touchend' :
-      case 'pointerup' :
-        return 'end';
-      default :
-        return null;
-    }
-  },
+  normalizeEvent: Object.freeze({
+      mousedown:   'start',
+      touchstart:  'start',
+      pointerdown: 'start',
+
+      mousemove:   'move',
+      touchmove:   'move',
+      pointermove: 'move',
+
+      mouseup:   'end',
+      touchend:  'end',
+      pointerup: 'end',
+  }),
   /* normalizeEvent*/
 
   /**

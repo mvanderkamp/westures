@@ -32,7 +32,7 @@ class ZingEvent {
      * @see util.normalizeEvent
      * @type {String | null}
      */
-    this.type = util.normalizeEvent(event.type);
+    this.type = util.normalizeEvent[ event.type ];
 
     /**
      * The X coordinate for the event, based off of the client.

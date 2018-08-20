@@ -25,7 +25,7 @@ function arbiter(event, region) {
    where a previous event is in a partial state (2 finger pan, waits for both
    inputs to reach touchend)
    */
-  if (state.inputs.length === 0 && util.normalizeEvent(event.type) !==
+  if (state.inputs.length === 0 && util.normalizeEvent[ event.type ] !==
     'start') {
     return;
   }
@@ -36,7 +36,7 @@ function arbiter(event, region) {
    Does not affect mobile devices.
    */
   if (typeof event.buttons !== 'undefined' &&
-    util.normalizeEvent(event.type) !== 'end' &&
+    util.normalizeEvent[ event.type ] !== 'end' &&
     event.buttons === 0) {
     state.resetInputs();
     return;

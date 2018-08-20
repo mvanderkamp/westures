@@ -185,7 +185,7 @@ class State {
     return true;
 
     function update(event, state, identifier, regionElement) {
-      let eventType = util.normalizeEvent(event.type);
+      let eventType = util.normalizeEvent[ event.type ];
       let input = findInputById(state.inputs, identifier);
 
       // A starting input was not cleaned up properly and still exists.

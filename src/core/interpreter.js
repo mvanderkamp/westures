@@ -16,7 +16,7 @@ import util from './util.js';
  * metadata, or null if a gesture will not be emitted.
  */
 function interpreter(bindings, event, state) {
-  const evType = util.normalizeEvent(event.type);
+  const evType = util.normalizeEvent[ event.type ];
   const candidates = [];
   bindings.forEach((binding) => {
     let result = binding.gesture[evType](state.inputs, state, binding.element);
