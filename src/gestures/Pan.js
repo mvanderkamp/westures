@@ -92,23 +92,7 @@ class Pan extends Gesture {
         reachedThreshold = yThreshold || xThreshold;
 
         if (progress.active && reachedThreshold) {
-          output.data[i] = {
-            distanceFromOrigin: util.distanceBetweenTwoPoints(
-              inputs[i].initial.x,
-              inputs[i].current.x,
-              inputs[i].initial.y,
-              inputs[i].current.y),
-            directionFromOrigin: util.getAngle(
-              inputs[i].initial.x,
-              inputs[i].initial.y,
-              inputs[i].current.x,
-              inputs[i].current.y),
-            currentDirection: util.getAngle(
-              progress.lastEmitted.x,
-              progress.lastEmitted.y,
-              inputs[i].current.x,
-              inputs[i].current.y),
-          };
+          output.data[i] = packData( inputs[i], progress );
           progress.lastEmitted.x = inputs[i].current.x;
           progress.lastEmitted.y = inputs[i].current.y;
         } else {
@@ -118,6 +102,33 @@ class Pan extends Gesture {
     }
 
     return output;
+
+    function packData( input, progress ) {
+      const distanceFromOrigin = util.distanceBetweenTwoPoints(
+        input.initial.x,
+        input.current.x,
+        input.initial.y,
+        input.current.y
+      );
+      const directionFromOrigin = util.getAngle(
+        input.initial.x,
+        input.initial.y,
+        input.current.x,
+        input.current.y
+      );
+      const currentDirection = util.getAngle(
+        progress.lastEmitted.x,
+        progress.lastEmitted.y,
+        input.current.x,
+        input.current.y
+      );
+
+      return {
+        distanceFromOrigin,
+        directionFromOrigin,
+        currentDirection,
+      };
+    }
   }
 
   /* move*/
