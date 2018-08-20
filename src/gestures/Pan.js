@@ -75,30 +75,29 @@ class Pan extends Gesture {
    * @return {Object} - Returns the distance in pixels between the two inputs.
    */
   move(inputs, state, element) {
-    if (this.numInputs === inputs.length) {
-      var output = {
-        data: [],
-      };
-      for (let i = 0; i < inputs.length; i++) {
-        let progress = inputs[i].getGestureProgress(this.getId());
+    if (this.numInputs !== inputs.length) return null;
 
-        let reachedThreshold = false;
+    const output = {
+      data: [],
+    };
 
-        // Check threshold distance
-        const yThreshold = Math.abs(inputs[i].current.y -
-            progress.lastEmitted.y) > this.threshold;
-        const xThreshold = Math.abs(inputs[i].current.x -
-            progress.lastEmitted.x) > this.threshold;
-        reachedThreshold = yThreshold || xThreshold;
+    for (let i = 0; i < inputs.length; i++) {
+      let progress = inputs[i].getGestureProgress(this.getId());
 
-        if (progress.active && reachedThreshold) {
-          output.data[i] = packData( inputs[i], progress );
-          progress.lastEmitted.x = inputs[i].current.x;
-          progress.lastEmitted.y = inputs[i].current.y;
-        } else {
-          return null;
-        }
-      }
+      let reachedThreshold = false;
+
+      // Check threshold distance
+      const yThreshold = Math.abs(inputs[i].current.y -
+        progress.lastEmitted.y) > this.threshold;
+      const xThreshold = Math.abs(inputs[i].current.x -
+        progress.lastEmitted.x) > this.threshold;
+      reachedThreshold = yThreshold || xThreshold;
+
+      if (progress.active && reachedThreshold) {
+        output.data[i] = packData( inputs[i], progress );
+        progress.lastEmitted.x = inputs[i].current.x;
+        progress.lastEmitted.y = inputs[i].current.y;
+      } 
     }
 
     return output;
