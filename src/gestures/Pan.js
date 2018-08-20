@@ -56,7 +56,7 @@ class Pan extends Gesture {
    */
   start(inputs) {
     inputs.forEach((input) => {
-      let progress = input.getGestureProgress(this.getId());
+      const progress = input.getGestureProgress(this.getId());
       progress.active = true;
       progress.lastEmitted = {
         x: input.current.x,
@@ -147,7 +147,7 @@ class Pan extends Gesture {
    */
   end(inputs) {
     inputs.forEach((input) => {
-      let progress = input.getGestureProgress(this.getId());
+      const progress = input.getGestureProgress(this.getId());
       progress.active = false;
     });
     return null;
