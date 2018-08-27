@@ -96,8 +96,6 @@ let util = {
 
   getAngle(originX, originY, projectionX, projectionY) {
     return Math.atan2(projectionY - originY, projectionX - originX);
-    // const angle = theta * HALF_CIRCLE_DEGREES / Math.PI;
-    // return CIRCLE_DEGREES - ((angle < 0) ? (CIRCLE_DEGREES + angle) : angle);
   },
 
   /**
