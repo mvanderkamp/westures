@@ -19,7 +19,6 @@ const DEFAULT_MAX_PROGRESS_STACK = 10;
  * @class Swipe
  */
 class Swipe extends Gesture {
-
   /**
    * Constructor function for the Swipe class.
    * @param {Object} [options] - The options object.
@@ -36,7 +35,7 @@ class Swipe extends Gesture {
    *  amount of move events to keep
    * track of for a swipe.
    */
-  constructor(options) {
+  constructor(options = {}) {
     super();
     /**
      * The type of the Gesture
@@ -49,16 +48,14 @@ class Swipe extends Gesture {
      * and the maximum number being a factor of the browser.
      * @type {Number}
      */
-    this.numInputs = (options && options.numInputs) ?
-      options.numInputs : DEFAULT_INPUTS;
+    this.numInputs = options.numInputs || DEFAULT_INPUTS;
 
     /**
      * The maximum resting time a point has between it's last move and
      * current move events.
      * @type {Number}
      */
-    this.maxRestTime = (options && options.maxRestTime) ?
-      options.maxRestTime : DEFAULT_MAX_REST_TIME;
+    this.maxRestTime = options.maxRestTime || DEFAULT_MAX_REST_TIME;
 
     /**
      * The minimum velocity the input has to be at to emit a swipe.
@@ -66,8 +63,7 @@ class Swipe extends Gesture {
      * a swipe and a pan gesture.
      * @type {number}
      */
-    this.escapeVelocity = (options && options.escapeVelocity) ?
-      options.escapeVelocity : DEFAULT_ESCAPE_VELOCITY;
+    this.escapeVelocity = options.escapeVelocity || DEFAULT_ESCAPE_VELOCITY;
 
     /**
      * (EXPERIMENTAL) A value of time in milliseconds to distort between events.
@@ -77,16 +73,15 @@ class Swipe extends Gesture {
      * in such cases by the timeDistortion's value.
      * @type {number}
      */
-    this.timeDistortion = (options && options.timeDistortion) ?
-      options.timeDistortion : DEFAULT_TIME_DISTORTION;
+    this.timeDistortion = options.timeDistortion || DEFAULT_TIME_DISTORTION;
 
     /**
      * (EXPERIMENTAL) The maximum amount of move events to keep track of for a
      * swipe. This helps give a more accurate estimate of the user's velocity.
      * @type {number}
      */
-    this.maxProgressStack = (options && options.maxProgressStack) ?
-      options.maxProgressStack : DEFAULT_MAX_PROGRESS_STACK;
+    this.maxProgressStack = options.maxProgressStack || 
+      DEFAULT_MAX_PROGRESS_STACK;
   }
 
   /**

@@ -205,7 +205,7 @@ class Binding {
    * @param {Boolean} [bindOnce=false] - A boolean flag
    * used for the bindOnce syntax.
    */
-  constructor(element, gesture, handler, capture, bindOnce) {
+  constructor(element, gesture, handler, capture = false, bindOnce = false) {
     /**
      * The element to associate the gesture to.
      * @type {Element}
@@ -228,13 +228,13 @@ class Binding {
      * emitted during the capture or bubble phase.
      * @type {Boolean}
      */
-    this.capture = (typeof capture !== 'undefined') ? capture : false;
+    this.capture = capture;
 
     /**
      * A boolean flag used for the bindOnce syntax.
      * @type {Boolean}
      */
-    this.bindOnce = (typeof bindOnce !== 'undefined') ? bindOnce : false;
+    this.bindOnce = bindOnce;
   }
 }
 
@@ -271,22 +271,6 @@ class Gesture {
      * @type {String|null}
      */
     this.id = null;
-  }
-
-  /**
-   * Set the type of the gesture to be called during an event
-   * @param {String} type - The unique identifier of the gesture being created.
-   */
-  setType(type) {
-    this.type = type;
-  }
-
-  /**
-   * getType() - Returns the generic type of the gesture
-   * @return {String} - The type of gesture
-   */
-  getType() {
-    return this.type;
   }
 
   /**
@@ -382,7 +366,7 @@ class Input {
    * @param {Number} [identifier=0] - The identifier for each input event
    * (taken from event.changedTouches)
    */
-  constructor(event, identifier) {
+  constructor(event, identifier = 0) {
     let currentEvent = new ZingEvent(event, identifier);
 
     /**
@@ -410,7 +394,7 @@ class Input {
      * Refers to the event.touches index, or 0 if a simple mouse event occurred.
      * @type {Number}
      */
-    this.identifier = (typeof identifier !== 'undefined') ? identifier : 0;
+    this.identifier = identifier;
 
     /**
      * Stores internal state between events for
@@ -482,7 +466,6 @@ const State   = require('./State.js');
  * @class Region
  */
 class Region {
-
   /**
    * Constructor function for the Region class.
    * @param {Element} element - The element to capture all
@@ -493,7 +476,7 @@ class Region {
    *  functionality should be disabled;
    * @param {Number} id - The id of the region, assigned by the ZingTouch object
    */
-  constructor(element, capture, preventDefault, id) {
+  constructor(element, capture = false, preventDefault = true, id) {
     /**
      * The identifier for the Region. This is assigned by the ZingTouch object
      * and is used to hash gesture id for uniqueness.
@@ -511,15 +494,14 @@ class Region {
      * Whether the region listens for captures or bubbles.
      * @type {boolean}
      */
-    this.capture = (typeof capture !== 'undefined') ? capture : false;
+    this.capture = capture;
 
     /**
      * Boolean to disable browser functionality such as scrolling and zooming
      * over the region
      * @type {boolean}
      */
-    this.preventDefault = (typeof preventDefault !== 'undefined') ?
-      preventDefault : true;
+    this.preventDefault = preventDefault;
 
     /**
      * The internal state object for a Region.
@@ -651,7 +633,7 @@ class Region {
       throw new Error('Parameter gesture is an invalid Gesture object');
     }
 
-    gesture.setType(key);
+    gesture.type = key;
     this.state.registerGesture(gesture, key);
   }
 
@@ -668,7 +650,7 @@ class Region {
    */
   unregister(key) {
     this.state.bindings.forEach((binding) => {
-      if (binding.gesture.getType() === key) {
+      if (binding.gesture.type === key) {
         binding.element.removeEventListener(binding.gesture.getId(),
           binding.handler, binding.capture);
       }
@@ -1038,7 +1020,7 @@ function dispatcher(binding, data, events) {
 function emitEvent(target, event, binding) {
   target.dispatchEvent(event);
   if (binding.bindOnce) {
-    ZingTouch.unbind(binding.element, binding.gesture.getType());
+    ZingTouch.unbind(binding.element, binding.gesture.type);
   }
 }
 
@@ -1092,7 +1074,6 @@ const HALF_CIRCLE_DEGREES = 180;
  * @namespace util
  */
 let util = {
-
   /**
    * Normalizes window events to be either of type start, move, or end.
    * @param {String} type - The event type emitted by the browser
@@ -1333,7 +1314,7 @@ class Pan extends Gesture {
    * @param {Number} [options.threshold=1] - The minimum number of
    * pixels the input has to move to trigger this gesture.
    */
-  constructor(options) {
+  constructor(options = {}) {
     super();
 
     /**
@@ -1347,15 +1328,13 @@ class Pan extends Gesture {
      * and the maximum number being a factor of the browser.
      * @type {Number}
      */
-    this.numInputs = (options && options.numInputs) ?
-      options.numInputs : DEFAULT_INPUTS;
+    this.numInputs = options.numInputs || DEFAULT_INPUTS;
 
     /**
      * The minimum amount in pixels the pan must move until it is fired.
      * @type {Number}
      */
-    this.threshold = (options && options.threshold) ?
-      options.threshold : DEFAULT_MIN_THRESHOLD;
+    this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
   }
 
   /**
@@ -1487,7 +1466,7 @@ class Pinch extends Gesture {
    * Constructor function for the Pinch class.
    * @param {Object} options
    */
-  constructor(options) {
+  constructor(options = {}) {
     super();
 
     /**
@@ -1500,8 +1479,7 @@ class Pinch extends Gesture {
      * The minimum amount in pixels the inputs must move until it is fired.
      * @type {Number}
      */
-    this.threshold = (options && options.threshold) ?
-      options.threshold : DEFAULT_MIN_THRESHOLD;
+    this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
   }
 
   /**
@@ -1696,7 +1674,6 @@ const DEFAULT_MAX_PROGRESS_STACK = 10;
  * @class Swipe
  */
 class Swipe extends Gesture {
-
   /**
    * Constructor function for the Swipe class.
    * @param {Object} [options] - The options object.
@@ -1713,7 +1690,7 @@ class Swipe extends Gesture {
    *  amount of move events to keep
    * track of for a swipe.
    */
-  constructor(options) {
+  constructor(options = {}) {
     super();
     /**
      * The type of the Gesture
@@ -1726,16 +1703,14 @@ class Swipe extends Gesture {
      * and the maximum number being a factor of the browser.
      * @type {Number}
      */
-    this.numInputs = (options && options.numInputs) ?
-      options.numInputs : DEFAULT_INPUTS;
+    this.numInputs = options.numInputs || DEFAULT_INPUTS;
 
     /**
      * The maximum resting time a point has between it's last move and
      * current move events.
      * @type {Number}
      */
-    this.maxRestTime = (options && options.maxRestTime) ?
-      options.maxRestTime : DEFAULT_MAX_REST_TIME;
+    this.maxRestTime = options.maxRestTime || DEFAULT_MAX_REST_TIME;
 
     /**
      * The minimum velocity the input has to be at to emit a swipe.
@@ -1743,8 +1718,7 @@ class Swipe extends Gesture {
      * a swipe and a pan gesture.
      * @type {number}
      */
-    this.escapeVelocity = (options && options.escapeVelocity) ?
-      options.escapeVelocity : DEFAULT_ESCAPE_VELOCITY;
+    this.escapeVelocity = options.escapeVelocity || DEFAULT_ESCAPE_VELOCITY;
 
     /**
      * (EXPERIMENTAL) A value of time in milliseconds to distort between events.
@@ -1754,16 +1728,15 @@ class Swipe extends Gesture {
      * in such cases by the timeDistortion's value.
      * @type {number}
      */
-    this.timeDistortion = (options && options.timeDistortion) ?
-      options.timeDistortion : DEFAULT_TIME_DISTORTION;
+    this.timeDistortion = options.timeDistortion || DEFAULT_TIME_DISTORTION;
 
     /**
      * (EXPERIMENTAL) The maximum amount of move events to keep track of for a
      * swipe. This helps give a more accurate estimate of the user's velocity.
      * @type {number}
      */
-    this.maxProgressStack = (options && options.maxProgressStack) ?
-      options.maxProgressStack : DEFAULT_MAX_PROGRESS_STACK;
+    this.maxProgressStack = options.maxProgressStack || 
+      DEFAULT_MAX_PROGRESS_STACK;
   }
 
   /**
@@ -1915,7 +1888,7 @@ class Tap extends Gesture {
    * @param {Number} [options.tolerance=10] - The tolerance in pixels
    *  a user can move.
    */
-  constructor(options) {
+  constructor(options = {}) {
     super();
 
     /**
@@ -1931,8 +1904,7 @@ class Tap extends Gesture {
      * screen.
      * @type {Number}
      */
-    this.minDelay = (options && options.minDelay) ?
-      options.minDelay : DEFAULT_MIN_DELAY_MS;
+    this.minDelay = options.minDelay || DEFAULT_MIN_DELAY_MS;
 
     /**
      * The maximum delay between a touchstart and touchend can be configured in
@@ -1941,24 +1913,21 @@ class Tap extends Gesture {
      * screen.
      * @type {Number}
      */
-    this.maxDelay = (options && options.maxDelay) ?
-      options.maxDelay : DEFAULT_MAX_DELAY_MS;
+    this.maxDelay = options.maxDelay || DEFAULT_MAX_DELAY_MS;
 
     /**
      * The number of inputs to trigger a Tap can be variable,
      * and the maximum number being a factor of the browser.
      * @type {Number}
      */
-    this.numInputs = (options && options.numInputs) ?
-      options.numInputs : DEFAULT_INPUTS;
+    this.numInputs = options.numInputs || DEFAULT_INPUTS;
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end
      * events. This allows the Tap gesture to be triggered more easily.
      * @type {number}
      */
-    this.tolerance = (options && options.tolerance) ?
-      options.tolerance : DEFAULT_MOVE_PX_TOLERANCE;
+    this.tolerance = options.tolerance || DEFAULT_MOVE_PX_TOLERANCE;
   }
 
   /* constructor*/

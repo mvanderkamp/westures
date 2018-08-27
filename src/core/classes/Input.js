@@ -17,7 +17,7 @@ class Input {
    * @param {Number} [identifier=0] - The identifier for each input event
    * (taken from event.changedTouches)
    */
-  constructor(event, identifier) {
+  constructor(event, identifier = 0) {
     let currentEvent = new ZingEvent(event, identifier);
 
     /**
@@ -45,7 +45,7 @@ class Input {
      * Refers to the event.touches index, or 0 if a simple mouse event occurred.
      * @type {Number}
      */
-    this.identifier = (typeof identifier !== 'undefined') ? identifier : 0;
+    this.identifier = identifier;
 
     /**
      * Stores internal state between events for

@@ -24,7 +24,7 @@ class Pan extends Gesture {
    * @param {Number} [options.threshold=1] - The minimum number of
    * pixels the input has to move to trigger this gesture.
    */
-  constructor(options) {
+  constructor(options = {}) {
     super();
 
     /**
@@ -38,15 +38,13 @@ class Pan extends Gesture {
      * and the maximum number being a factor of the browser.
      * @type {Number}
      */
-    this.numInputs = (options && options.numInputs) ?
-      options.numInputs : DEFAULT_INPUTS;
+    this.numInputs = options.numInputs || DEFAULT_INPUTS;
 
     /**
      * The minimum amount in pixels the pan must move until it is fired.
      * @type {Number}
      */
-    this.threshold = (options && options.threshold) ?
-      options.threshold : DEFAULT_MIN_THRESHOLD;
+    this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
   }
 
   /**

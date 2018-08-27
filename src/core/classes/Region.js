@@ -27,7 +27,7 @@ class Region {
    *  functionality should be disabled;
    * @param {Number} id - The id of the region, assigned by the ZingTouch object
    */
-  constructor(element, capture, preventDefault, id) {
+  constructor(element, capture = false, preventDefault = true, id) {
     /**
      * The identifier for the Region. This is assigned by the ZingTouch object
      * and is used to hash gesture id for uniqueness.
@@ -45,15 +45,14 @@ class Region {
      * Whether the region listens for captures or bubbles.
      * @type {boolean}
      */
-    this.capture = (typeof capture !== 'undefined') ? capture : false;
+    this.capture = capture;
 
     /**
      * Boolean to disable browser functionality such as scrolling and zooming
      * over the region
      * @type {boolean}
      */
-    this.preventDefault = (typeof preventDefault !== 'undefined') ?
-      preventDefault : true;
+    this.preventDefault = preventDefault;
 
     /**
      * The internal state object for a Region.

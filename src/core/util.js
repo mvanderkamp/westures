@@ -12,7 +12,6 @@ const HALF_CIRCLE_DEGREES = 180;
  * @namespace util
  */
 let util = {
-
   /**
    * Normalizes window events to be either of type start, move, or end.
    * @param {String} type - The event type emitted by the browser

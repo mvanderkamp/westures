@@ -18,7 +18,7 @@ class Pinch extends Gesture {
    * Constructor function for the Pinch class.
    * @param {Object} options
    */
-  constructor(options) {
+  constructor(options = {}) {
     super();
 
     /**
@@ -31,8 +31,7 @@ class Pinch extends Gesture {
      * The minimum amount in pixels the inputs must move until it is fired.
      * @type {Number}
      */
-    this.threshold = (options && options.threshold) ?
-      options.threshold : DEFAULT_MIN_THRESHOLD;
+    this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
   }
 
   /**
