@@ -88,15 +88,15 @@ class Gesture {
   }
 
   /**
-  * isValid() - Pre-checks to ensure the invariants of a gesture are satisfied.
-  * @param {Array} inputs - The array of Inputs on the screen
-  * @param {Object} state - The state object of the current region.
-  * @param {Element} element - The element associated to the binding.
-  * @return {boolean} - If the gesture is valid
-  */
+   * isValid() - Pre-checks to ensure the invariants of a gesture are satisfied.
+   * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
+   * @return {boolean} - If the gesture is valid
+   */
   isValid(inputs, state, element) {
     return inputs.every( input => {
-        return util.isInside(input.initial.x, input.initial.y, element);
+      return util.isInside(input.initial.x, input.initial.y, element);
     });
   }
 }
