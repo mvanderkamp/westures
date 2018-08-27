@@ -4,7 +4,7 @@
  */
 
 const Region  = require('./core/classes/Region.js');
-const Gesture = require('./gestures/Gesture.js');
+const Gesture = require('./core/classes/Gesture.js');
 const Pan     = require('./gestures/Pan.js');
 const Pinch   = require('./gestures/Pinch.js');
 const Rotate  = require('./gestures/Rotate.js');

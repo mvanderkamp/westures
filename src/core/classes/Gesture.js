@@ -115,7 +115,6 @@ class Gesture {
         return util.isInside(input.initial.x, input.initial.y, element);
     });
   }
-
 }
 
 module.exports = Gesture;

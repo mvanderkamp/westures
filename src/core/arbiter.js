@@ -3,9 +3,9 @@
  * Contains logic for the dispatcher
  */
 
-const dispatcher = require('./dispatcher.js');
+const dispatcher  = require('./dispatcher.js');
 const interpreter = require('./interpreter.js');
-const util = require('./util.js');
+const util        = require('./util.js');
 
 /**
  * Function that handles event flow, negotiating with the interpreter,

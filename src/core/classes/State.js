@@ -2,15 +2,15 @@
  * @file State.js
  */
 
-const Gesture = require('./../../gestures/Gesture.js');
-const Pan = require('./../../gestures/Pan.js');
-const Pinch = require('./../../gestures/Pinch.js');
-const Rotate = require('./../../gestures/Rotate.js');
-const Swipe = require('./../../gestures/Swipe.js');
-const Tap = require('./../../gestures/Tap.js');
+const Gesture = require('./Gesture.js');
+const Pan     = require('./../../gestures/Pan.js');
+const Pinch   = require('./../../gestures/Pinch.js');
+const Rotate  = require('./../../gestures/Rotate.js');
+const Swipe   = require('./../../gestures/Swipe.js');
+const Tap     = require('./../../gestures/Tap.js');
 const Binding = require('./Binding.js');
-const Input = require('./Input.js');
-const util = require('./../util.js');
+const Input   = require('./Input.js');
+const util    = require('./../util.js');
 
 const DEFAULT_MOUSE_ID = 0;
 
@@ -19,7 +19,6 @@ const DEFAULT_MOUSE_ID = 0;
  * and contains helper methods to update and clean up different states.
  */
 class State {
-
   /**
    * Constructor for the State class.
    * @param {String} regionId - The id the region this state is bound to.
@@ -231,8 +230,8 @@ class State {
   assignGestureId(gesture) {
     gesture.setId(this.regionId + '-' + this.numGestures++);
   }
-
 }
+
 /**
  * Searches through each input, comparing the browser's identifier key
  *  for touches, to the stored one in each input

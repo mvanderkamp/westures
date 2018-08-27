@@ -11,7 +11,6 @@ const ZingEvent = require('./ZingEvent.js');
  * @class Input
  */
 class Input {
-
   /**
    * Constructor function for the Input class.
    * @param {Event} event - The Event object from the window
@@ -94,7 +93,6 @@ class Input {
   resetProgress(id) {
     this.progress[id] = {};
   }
-
 }
 
 module.exports = Input;

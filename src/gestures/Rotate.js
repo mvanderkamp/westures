@@ -3,8 +3,8 @@
  * Contains the Rotate class
  */
 
-const Gesture = require('./Gesture.js');
-const util = require('./../core/util.js');
+const Gesture = require('./../core/classes/Gesture.js');
+const util    = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 2;
 

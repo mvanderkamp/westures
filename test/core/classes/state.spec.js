@@ -1,7 +1,7 @@
 'use strict';
 
-const State = require('./../../../src/core/classes/State.js');
-const Gesture = require('./../../../src/gestures/Gesture.js');
+const State   = require('./../../../src/core/classes/State.js');
+const Gesture = require('./../../../src/core/classes/Gesture.js');
 
 /** @test {State} */
 describe('State', function() {

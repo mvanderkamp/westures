@@ -4,7 +4,7 @@
  * @file Gesture.js
  * Tests Gesture class
  */
-const Gesture = require('./../../src/gestures/Gesture.js');
+const Gesture = require('./../../src/core/classes/Gesture.js');
 
 /** @test {Gesture} */
 describe('Gesture', function() {

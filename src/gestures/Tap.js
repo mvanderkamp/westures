@@ -3,8 +3,8 @@
  * Contains the Tap class
  */
 
-const Gesture = require('./Gesture.js');
-const util = require('./../core/util.js');
+const Gesture = require('./../core/classes/Gesture.js');
+const util    = require('./../core/util.js');
 
 const DEFAULT_MIN_DELAY_MS = 0;
 const DEFAULT_MAX_DELAY_MS = 300;

@@ -2,10 +2,10 @@
  * @file Region.js
  */
 
-const Binder = require('./Binder.js');
-const Gesture = require('./../../gestures/Gesture.js');
+const Binder  = require('./Binder.js');
+const Gesture = require('./Gesture.js');
 const arbiter = require('./../arbiter.js');
-const State = require('./State.js');
+const State   = require('./State.js');
 
 /**
  * Allows the user to specify a region to capture all events to feed ZingTouch

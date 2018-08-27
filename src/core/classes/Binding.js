@@ -51,7 +51,6 @@ class Binding {
      */
     this.bindOnce = (typeof bindOnce !== 'undefined') ? bindOnce : false;
   }
-
 }
 
 module.exports = Binding;

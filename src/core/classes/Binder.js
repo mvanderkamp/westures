@@ -30,7 +30,6 @@ class Binder {
       };
     });
   }
-
 }
 
 module.exports = Binder;
