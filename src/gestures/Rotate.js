@@ -78,16 +78,17 @@ class Rotate extends Gesture {
       currentPivot.x, 
       currentPivot.y,
       input.current.x,
-      input.current.y);
+      input.current.y
+    );
 
     const progress = input.getGestureProgress(this.getId());
     if (!progress.initialAngle) {
-      progress.initialAngle = progress.previousAngle = currentAngle;
-      progress.distance = progress.change = 0;
+      progress.initialAngle = currentAngle;
+      progress.previousAngle = currentAngle;
+      progress.distance = 0;
+      progress.change = 0;
     } else {
-      progress.change = util.getAngularDistance(
-        progress.previousAngle,
-        currentAngle);
+      progress.change = currentAngle - progress.previousAngle;
       progress.distance = progress.distance + progress.change;
     }
 

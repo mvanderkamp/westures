@@ -95,25 +95,9 @@ let util = {
    */
 
   getAngle(originX, originY, projectionX, projectionY) {
-    let angle = Math.atan2(projectionY - originY, projectionX - originX) *
-      ((HALF_CIRCLE_DEGREES) / Math.PI);
-    return CIRCLE_DEGREES - ((angle < 0) ? (CIRCLE_DEGREES + angle) : angle);
-  },
-  /**
-   * Calculates the angular distance in degrees between two angles
-   *  along the unit circle
-   * @param {number} start - The starting point in degrees
-   * @param {number} end - The ending point in degrees
-   * @return {number} The number of degrees between the
-   * starting point and ending point. Negative degrees denote a clockwise
-   * direction, and positive a counter-clockwise direction.
-   */
-  getAngularDistance(start, end) {
-    let angle = (end - start) % CIRCLE_DEGREES;
-    let sign = (angle < 0) ? 1 : -1;
-    angle = Math.abs(angle);
-    return (angle > HALF_CIRCLE_DEGREES) ?
-    sign * (CIRCLE_DEGREES - angle) : sign * angle;
+    return Math.atan2(projectionY - originY, projectionX - originX);
+    // const angle = theta * HALF_CIRCLE_DEGREES / Math.PI;
+    // return CIRCLE_DEGREES - ((angle < 0) ? (CIRCLE_DEGREES + angle) : angle);
   },
 
   /**
