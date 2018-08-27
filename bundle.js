@@ -3,8 +3,7 @@
  * Access point for npm and node environments.
  */
 
-const ZingTouch = require('./src/ZingTouch.js');
-module.exports = ZingTouch;
+module.exports = require('./src/ZingTouch.js');
 
 
 },{"./src/ZingTouch.js":2}],2:[function(require,module,exports){
@@ -21,26 +20,25 @@ const Rotate = require('./gestures/Rotate.js');
 const Swipe = require('./gestures/Swipe.js');
 const Tap = require('./gestures/Tap.js');
 
+const regions = [];
+
 /**
  * The global API interface for ZingTouch. Contains a constructor for the
  * Region Object, and constructors for each predefined Gesture.
  * @type {Object}
  * @namespace ZingTouch
  */
-let ZingTouch = {
-  _regions: [],
-
-  // Constructors
-  Gesture: Gesture,
-  Pan: Pan,
-  Pinch: Pinch,
-  Rotate: Rotate,
-  Swipe: Swipe,
-  Tap: Tap,
+const ZingTouch = {
+  Gesture,
+  Pan,
+  Pinch,
+  Rotate,
+  Swipe,
+  Tap,
   Region: function(element, capture, preventDefault) {
-    let id = ZingTouch._regions.length;
-    let region = new Region(element, capture, preventDefault, id);
-    ZingTouch._regions.push(region);
+    const id = regions.length;
+    const region = new Region(element, capture, preventDefault, id);
+    regions.push(region);
     return region;
   },
 };
