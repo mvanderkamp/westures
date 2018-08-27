@@ -79,7 +79,7 @@ class Tap extends Gesture {
    */
   start(inputs) {
     inputs.forEach( input => {
-      const progress = input.getGestureProgress(this.type);
+      const progress = input.getGestureProgress(this.getId());
       progress.start = Date.now();
     });
   }
@@ -101,28 +101,9 @@ class Tap extends Gesture {
   end(inputs, state, element) {
     const ended = state.getEndedInputs();
     if (ended.length !== this.numInputs) return null;
+    if (!areWithinSpatialTolerance(ended, this.tolerance)) return null;
 
-    const isValid = ended.every( input => {
-      return util.isWithin(
-        input.current.x,
-        input.current.y,
-        input.initial.x,
-        input.initial.y,
-        this.tolerance
-      );
-    });
-
-    if (!isValid) return null;
-
-    const startTime = inputs.reduce( (earliest, input) => {
-      if (input.getCurrentEventType() === 'end') {
-        const progress = input.getGestureProgress(this.type);
-        if (progress.start < earliest) earliest = progress.start;
-      }
-      return earliest;
-    }, Date.now());
-
-    const interval = Date.now() - startTime;
+    const interval = getTemporalInterval(ended, this.getId());
     if (isBetween(interval, this.minDelay, this.maxDelay)) {
       return { interval };
     } else {
@@ -131,6 +112,30 @@ class Tap extends Gesture {
     }
   }
   /* end*/
+}
+
+function areWithinSpatialTolerance(inputs, tolerance) {
+  return inputs.every( input => {
+    return util.isWithin(
+      input.current.x,
+      input.current.y,
+      input.initial.x,
+      input.initial.y,
+      tolerance
+    );
+  });
+}
+
+function getTemporalInterval(endedInputs, gestureId) {
+  const now = Date.now();
+
+  const startTime = endedInputs.reduce( (earliest, input) => {
+    const progress = input.getGestureProgress(gestureId);
+    if (progress.start < earliest) earliest = progress.start;
+    return earliest;
+  }, now);
+
+  return now - startTime;
 }
 
 function isBetween(x, low, high) {
