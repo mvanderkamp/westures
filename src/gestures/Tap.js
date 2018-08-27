@@ -78,100 +78,63 @@ class Tap extends Gesture {
    * @return {null} - Tap does not trigger on a start event.
    */
   start(inputs) {
-    if (inputs.length === this.numInputs) {
-      inputs.forEach((input) => {
-        const progress = input.getGestureProgress(this.type);
-        progress.start = new Date().getTime();
-      });
-    }
-
-    return null;
+    inputs.forEach( input => {
+      const progress = input.getGestureProgress(this.type);
+      progress.start = Date.now();
+    });
   }
-
-  /* start*/
-
-  /**
-   * Event hook for the move of a gesture. The Tap event reaches here if the
-   * user starts to move their input before an 'end' event is reached.
-   * @param {Array} inputs - The array of Inputs on the screen.
-   * @param {Object} state - The state object of the current region.
-   * @param {Element} element - The element associated to the binding.
-   * @return {null} - Tap does not trigger on a move event.
-   */
-  move(inputs, state, element) {
-    for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].getCurrentEventType() === 'move') {
-        const current = inputs[i].current;
-        const previous = inputs[i].previous;
-        if (!util.isWithin(
-            current.x,
-            current.y,
-            previous.x,
-            previous.y,
-            this.tolerance)) {
-          const type = this.type;
-          inputs.forEach(function(input) {
-            input.resetProgress(type);
-          });
-
-          return null;
-        }
-      }
-    }
-
-    return null;
-  }
-
-  /* move*/
 
   /**
    * Event hook for the end of a gesture.
    * Determines if this the tap event can be fired if the delay and tolerance
    * constraints are met. Also waits for all of the inputs to be off the screen
    * before determining if the gesture is triggered.
+   *
    * @param {Array} inputs - The array of Inputs on the screen.
+   * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
+   *
    * @return {null|Object} - null if the gesture is not to be emitted,
    * Object with information otherwise. Returns the interval time between start
    * and end events.
    */
-  end(inputs) {
-    if (inputs.length !== this.numInputs) {
-      return null;
-    }
+  end(inputs, state, element) {
+    const ended = state.getEndedInputs();
+    if (ended.length !== this.numInputs) return null;
 
-    const startTime = Number.MAX_VALUE;
-    for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].getCurrentEventType() !== 'end') {
-        return null;
+    const isValid = ended.every( input => {
+      return util.isWithin(
+        input.current.x,
+        input.current.y,
+        input.initial.x,
+        input.initial.y,
+        this.tolerance
+      );
+    });
+
+    if (!isValid) return null;
+
+    const startTime = inputs.reduce( (earliest, input) => {
+      if (input.getCurrentEventType() === 'end') {
+        const progress = input.getGestureProgress(this.type);
+        if (progress.start < earliest) earliest = progress.start;
       }
+      return earliest;
+    }, Date.now());
 
-      const progress = inputs[i].getGestureProgress(this.type);
-      if (!progress.start) {
-        return null;
-      }
-
-      // Find the most recent input's startTime
-      if (progress.start < startTime) {
-        startTime = progress.start;
-      }
-    }
-
-    const interval = new Date().getTime() - startTime;
-    if ((this.minDelay <= interval) && (this.maxDelay >= interval)) {
-      return {
-        interval: interval,
-      };
+    const interval = Date.now() - startTime;
+    if (isBetween(interval, this.minDelay, this.maxDelay)) {
+      return { interval };
     } else {
-      const type = this.type;
-      inputs.forEach(function(input) {
-        input.resetProgress(type);
-      });
-
+      inputs.forEach( input => input.resetProgress(this.type) );
       return null;
     }
   }
-
   /* end*/
+}
+
+function isBetween(x, low, high) {
+  return (x >= low) && (x <= high)
 }
 
 module.exports = Tap;
