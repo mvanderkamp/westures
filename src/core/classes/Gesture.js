@@ -3,7 +3,7 @@
  * Contains the Gesture class
  */
 
-const util = require('./../core/util.js');
+const util = require('../util.js');
 
 /**
  * The Gesture class that all gestures inherit from.

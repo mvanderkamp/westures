@@ -12,14 +12,15 @@ module.exports = require('./src/ZingTouch.js');
  * Main object containing API methods and Gesture constructors
  */
 
-const Region = require('./core/classes/Region.js');
-const Gesture = require('./gestures/Gesture.js');
-const Pan = require('./gestures/Pan.js');
-const Pinch = require('./gestures/Pinch.js');
-const Rotate = require('./gestures/Rotate.js');
-const Swipe = require('./gestures/Swipe.js');
-const Tap = require('./gestures/Tap.js');
+const Region  = require('./core/classes/Region.js');
+const Gesture = require('./core/classes/Gesture.js');
+const Pan     = require('./gestures/Pan.js');
+const Pinch   = require('./gestures/Pinch.js');
+const Rotate  = require('./gestures/Rotate.js');
+const Swipe   = require('./gestures/Swipe.js');
+const Tap     = require('./gestures/Tap.js');
 
+// Currently keeping track of all regions.
 const regions = [];
 
 /**
@@ -45,15 +46,15 @@ const ZingTouch = {
 
 module.exports = ZingTouch;
 
-},{"./core/classes/Region.js":7,"./gestures/Gesture.js":13,"./gestures/Pan.js":14,"./gestures/Pinch.js":15,"./gestures/Rotate.js":16,"./gestures/Swipe.js":17,"./gestures/Tap.js":18}],3:[function(require,module,exports){
+},{"./core/classes/Gesture.js":6,"./core/classes/Region.js":8,"./gestures/Pan.js":14,"./gestures/Pinch.js":15,"./gestures/Rotate.js":16,"./gestures/Swipe.js":17,"./gestures/Tap.js":18}],3:[function(require,module,exports){
 /**
  * @file arbiter.js
  * Contains logic for the dispatcher
  */
 
-const dispatcher = require('./dispatcher.js');
+const dispatcher  = require('./dispatcher.js');
 const interpreter = require('./interpreter.js');
-const util = require('./util.js');
+const util        = require('./util.js');
 
 /**
  * Function that handles event flow, negotiating with the interpreter,
@@ -144,7 +145,7 @@ function arbiter(event, region) {
 
 module.exports = arbiter;
 
-},{"./dispatcher.js":10,"./interpreter.js":11,"./util.js":12}],4:[function(require,module,exports){
+},{"./dispatcher.js":11,"./interpreter.js":12,"./util.js":13}],4:[function(require,module,exports){
 /**
  * @file Binder.js
  */
@@ -177,7 +178,6 @@ class Binder {
       };
     });
   }
-
 }
 
 module.exports = Binder;
@@ -236,12 +236,133 @@ class Binding {
      */
     this.bindOnce = (typeof bindOnce !== 'undefined') ? bindOnce : false;
   }
-
 }
 
 module.exports = Binding;
 
 },{}],6:[function(require,module,exports){
+/**
+ * @file Gesture.js
+ * Contains the Gesture class
+ */
+
+const util = require('../util.js');
+
+/**
+ * The Gesture class that all gestures inherit from.
+ */
+class Gesture {
+  /**
+   * Constructor function for the Gesture class.
+   * @class Gesture
+   */
+  constructor() {
+    /**
+     * The generic string type of gesture ('expand'|'pan'|'pinch'|
+     *  'rotate'|'swipe'|'tap').
+     * @type {String}
+     */
+    this.type = null;
+
+    /**
+     * The unique identifier for each gesture determined at bind time by the
+     * state object. This allows for distinctions across instance variables of
+     * Gestures that are created on the fly (e.g. Tap-1, Tap-2, etc).
+     * @type {String|null}
+     */
+    this.id = null;
+  }
+
+  /**
+   * Set the type of the gesture to be called during an event
+   * @param {String} type - The unique identifier of the gesture being created.
+   */
+  setType(type) {
+    this.type = type;
+  }
+
+  /**
+   * getType() - Returns the generic type of the gesture
+   * @return {String} - The type of gesture
+   */
+  getType() {
+    return this.type;
+  }
+
+  /**
+   * Set the id of the gesture to be called during an event
+   * @param {String} id - The unique identifier of the gesture being created.
+   */
+  setId(id) {
+    this.id = id;
+  }
+
+  /**
+   * Return the id of the event. If the id does not exist, return the type.
+   * @return {String}
+   */
+  getId() {
+    return (this.id !== null) ? this.id : this.type;
+  }
+
+  /**
+   * Updates internal properties with new ones, only if the properties exist.
+   * @param {Object} object
+   */
+  update(object) {
+    Object.keys(object).forEach( key => {
+      this[key] = object[key];
+    });
+  }
+
+  /**
+   * start() - Event hook for the start of a gesture
+   * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
+   * @return {null|Object}  - Default of null
+   */
+  start(inputs, state, element) {
+    return null;
+  }
+
+  /**
+   * move() - Event hook for the move of a gesture
+   * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
+   * @return {null|Object} - Default of null
+   */
+  move(inputs, state, element) {
+    return null;
+  }
+
+  /**
+   * end() - Event hook for the move of a gesture
+   * @param {Array} inputs - The array of Inputs on the screen
+   * @return {null|Object}  - Default of null
+   */
+  end(inputs) {
+    return null;
+  }
+
+  /**
+  * isValid() - Pre-checks to ensure the invariants of a gesture are satisfied.
+  * @param {Array} inputs - The array of Inputs on the screen
+  * @param {Object} state - The state object of the current region.
+  * @param {Element} element - The element associated to the binding.
+  * @return {boolean} - If the gesture is valid
+  */
+  isValid(inputs, state, element) {
+    return inputs.every( input => {
+        return util.isInside(input.initial.x, input.initial.y, element);
+    });
+  }
+}
+
+module.exports = Gesture;
+
+},{"../util.js":13}],7:[function(require,module,exports){
 /**
  * @file Input.js
  */
@@ -255,7 +376,6 @@ const ZingEvent = require('./ZingEvent.js');
  * @class Input
  */
 class Input {
-
   /**
    * Constructor function for the Input class.
    * @param {Event} event - The Event object from the window
@@ -338,20 +458,19 @@ class Input {
   resetProgress(id) {
     this.progress[id] = {};
   }
-
 }
 
 module.exports = Input;
 
-},{"./ZingEvent.js":9}],7:[function(require,module,exports){
+},{"./ZingEvent.js":10}],8:[function(require,module,exports){
 /**
  * @file Region.js
  */
 
-const Binder = require('./Binder.js');
-const Gesture = require('./../../gestures/Gesture.js');
+const Binder  = require('./Binder.js');
+const Gesture = require('./Gesture.js');
 const arbiter = require('./../arbiter.js');
-const State = require('./State.js');
+const State   = require('./State.js');
 
 /**
  * Allows the user to specify a region to capture all events to feed ZingTouch
@@ -563,20 +682,20 @@ class Region {
 
 module.exports = Region;
 
-},{"./../../gestures/Gesture.js":13,"./../arbiter.js":3,"./Binder.js":4,"./State.js":8}],8:[function(require,module,exports){
+},{"./../arbiter.js":3,"./Binder.js":4,"./Gesture.js":6,"./State.js":9}],9:[function(require,module,exports){
 /**
  * @file State.js
  */
 
-const Gesture = require('./../../gestures/Gesture.js');
-const Pan = require('./../../gestures/Pan.js');
-const Pinch = require('./../../gestures/Pinch.js');
-const Rotate = require('./../../gestures/Rotate.js');
-const Swipe = require('./../../gestures/Swipe.js');
-const Tap = require('./../../gestures/Tap.js');
+const Gesture = require('./Gesture.js');
+const Pan     = require('./../../gestures/Pan.js');
+const Pinch   = require('./../../gestures/Pinch.js');
+const Rotate  = require('./../../gestures/Rotate.js');
+const Swipe   = require('./../../gestures/Swipe.js');
+const Tap     = require('./../../gestures/Tap.js');
 const Binding = require('./Binding.js');
-const Input = require('./Input.js');
-const util = require('./../util.js');
+const Input   = require('./Input.js');
+const util    = require('./../util.js');
 
 const DEFAULT_MOUSE_ID = 0;
 
@@ -585,7 +704,6 @@ const DEFAULT_MOUSE_ID = 0;
  * and contains helper methods to update and clean up different states.
  */
 class State {
-
   /**
    * Constructor for the State class.
    * @param {String} regionId - The id the region this state is bound to.
@@ -797,8 +915,8 @@ class State {
   assignGestureId(gesture) {
     gesture.setId(this.regionId + '-' + this.numGestures++);
   }
-
 }
+
 /**
  * Searches through each input, comparing the browser's identifier key
  *  for touches, to the stored one in each input
@@ -813,7 +931,7 @@ function findInputById(inputs, identifier) {
 
 module.exports = State;
 
-},{"./../../gestures/Gesture.js":13,"./../../gestures/Pan.js":14,"./../../gestures/Pinch.js":15,"./../../gestures/Rotate.js":16,"./../../gestures/Swipe.js":17,"./../../gestures/Tap.js":18,"./../util.js":12,"./Binding.js":5,"./Input.js":6}],9:[function(require,module,exports){
+},{"./../../gestures/Pan.js":14,"./../../gestures/Pinch.js":15,"./../../gestures/Rotate.js":16,"./../../gestures/Swipe.js":17,"./../../gestures/Tap.js":18,"./../util.js":13,"./Binding.js":5,"./Gesture.js":6,"./Input.js":7}],10:[function(require,module,exports){
 /**
  * @file ZingEvent.js
  * Contains logic for ZingEvents
@@ -884,7 +1002,7 @@ class ZingEvent {
 
 module.exports = ZingEvent;
 
-},{"../util.js":12}],10:[function(require,module,exports){
+},{"../util.js":13}],11:[function(require,module,exports){
 /**
  * @file dispatcher.js
  * Contains logic for the dispatcher
@@ -926,7 +1044,7 @@ function emitEvent(target, event, binding) {
 
 module.exports = dispatcher;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * @file interpreter.js
  * Contains logic for the interpreter
@@ -959,7 +1077,7 @@ function interpreter(bindings, event, state) {
 
 module.exports = interpreter;
 
-},{"./util.js":12}],12:[function(require,module,exports){
+},{"./util.js":13}],13:[function(require,module,exports){
 /**
  * @file util.js
  * Various accessor and mutator functions to handle state and validation.
@@ -1188,137 +1306,14 @@ let util = {
 
 module.exports = util;
 
-},{}],13:[function(require,module,exports){
-/**
- * @file Gesture.js
- * Contains the Gesture class
- */
-
-const util = require('./../core/util.js');
-
-/**
- * The Gesture class that all gestures inherit from.
- */
-class Gesture {
-  /**
-   * Constructor function for the Gesture class.
-   * @class Gesture
-   */
-  constructor() {
-    /**
-     * The generic string type of gesture ('expand'|'pan'|'pinch'|
-     *  'rotate'|'swipe'|'tap').
-     * @type {String}
-     */
-    this.type = null;
-
-    /**
-     * The unique identifier for each gesture determined at bind time by the
-     * state object. This allows for distinctions across instance variables of
-     * Gestures that are created on the fly (e.g. Tap-1, Tap-2, etc).
-     * @type {String|null}
-     */
-    this.id = null;
-  }
-
-  /**
-   * Set the type of the gesture to be called during an event
-   * @param {String} type - The unique identifier of the gesture being created.
-   */
-  setType(type) {
-    this.type = type;
-  }
-
-  /**
-   * getType() - Returns the generic type of the gesture
-   * @return {String} - The type of gesture
-   */
-  getType() {
-    return this.type;
-  }
-
-  /**
-   * Set the id of the gesture to be called during an event
-   * @param {String} id - The unique identifier of the gesture being created.
-   */
-  setId(id) {
-    this.id = id;
-  }
-
-  /**
-   * Return the id of the event. If the id does not exist, return the type.
-   * @return {String}
-   */
-  getId() {
-    return (this.id !== null) ? this.id : this.type;
-  }
-
-  /**
-   * Updates internal properties with new ones, only if the properties exist.
-   * @param {Object} object
-   */
-  update(object) {
-    Object.keys(object).forEach( key => {
-      this[key] = object[key];
-    });
-  }
-
-  /**
-   * start() - Event hook for the start of a gesture
-   * @param {Array} inputs - The array of Inputs on the screen
-	 * @param {Object} state - The state object of the current region.
-	 * @param {Element} element - The element associated to the binding.
-   * @return {null|Object}  - Default of null
-   */
-  start(inputs, state, element) {
-    return null;
-  }
-
-  /**
-   * move() - Event hook for the move of a gesture
-   * @param {Array} inputs - The array of Inputs on the screen
-   * @param {Object} state - The state object of the current region.
-   * @param {Element} element - The element associated to the binding.
-   * @return {null|Object} - Default of null
-   */
-  move(inputs, state, element) {
-    return null;
-  }
-
-  /**
-   * end() - Event hook for the move of a gesture
-   * @param {Array} inputs - The array of Inputs on the screen
-   * @return {null|Object}  - Default of null
-   */
-  end(inputs) {
-    return null;
-  }
-
-	/**
-	* isValid() - Pre-checks to ensure the invariants of a gesture are satisfied.
-	* @param {Array} inputs - The array of Inputs on the screen
-	* @param {Object} state - The state object of the current region.
-	* @param {Element} element - The element associated to the binding.
-	* @return {boolean} - If the gesture is valid
-	*/
-	isValid(inputs, state, element) {
-    return inputs.every( input => {
-        return util.isInside(input.initial.x, input.initial.y, element);
-    });
-  }
-
-}
-
-module.exports = Gesture;
-
-},{"./../core/util.js":12}],14:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * @file Pan.js
  * Contains the Pan class
  */
 
-const Gesture = require('./Gesture.js');
-const util = require('./../core/util.js');
+const Gesture = require('./../core/classes/Gesture.js');
+const util    = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
@@ -1378,6 +1373,7 @@ class Pan extends Gesture {
       };
     });
   }
+  /* start */
 
   /**
    * move() - Event hook for the move of a gesture.
@@ -1413,40 +1409,7 @@ class Pan extends Gesture {
     });
 
     return output;
-
-    function packData( input, progress ) {
-      const distanceFromOrigin = util.distanceBetweenTwoPoints(
-        input.initial.x,
-        input.current.x,
-        input.initial.y,
-        input.current.y
-      );
-      const directionFromOrigin = util.getAngle(
-        input.initial.x,
-        input.initial.y,
-        input.current.x,
-        input.current.y
-      );
-      const currentDirection = util.getAngle(
-        progress.lastEmitted.x,
-        progress.lastEmitted.y,
-        input.current.x,
-        input.current.y
-      );
-      const change = {
-        x: input.current.x - progress.lastEmitted.x,
-        y: input.current.y - progress.lastEmitted.y,
-      };
-
-      return {
-        distanceFromOrigin,
-        directionFromOrigin,
-        currentDirection,
-        change,
-      };
-    }
   }
-
   /* move*/
 
   /**
@@ -1466,20 +1429,51 @@ class Pan extends Gesture {
     });
     return null;
   }
-
   /* end*/
+}
+
+function packData( input, progress ) {
+  const distanceFromOrigin = util.distanceBetweenTwoPoints(
+    input.initial.x,
+    input.current.x,
+    input.initial.y,
+    input.current.y
+  );
+  const directionFromOrigin = util.getAngle(
+    input.initial.x,
+    input.initial.y,
+    input.current.x,
+    input.current.y
+  );
+  const currentDirection = util.getAngle(
+    progress.lastEmitted.x,
+    progress.lastEmitted.y,
+    input.current.x,
+    input.current.y
+  );
+  const change = {
+    x: input.current.x - progress.lastEmitted.x,
+    y: input.current.y - progress.lastEmitted.y,
+  };
+
+  return {
+    distanceFromOrigin,
+    directionFromOrigin,
+    currentDirection,
+    change,
+  };
 }
 
 module.exports = Pan;
 
-},{"./../core/util.js":12,"./Gesture.js":13}],15:[function(require,module,exports){
+},{"./../core/classes/Gesture.js":6,"./../core/util.js":13}],15:[function(require,module,exports){
 /**
  * @file Pinch.js
  * Contains the abstract Pinch class
  */
 
-const Gesture = require('./Gesture.js');
-const util = require('./../core/util.js');
+const Gesture = require('./../core/classes/Gesture.js');
+const util    = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 2;
 const DEFAULT_MIN_THRESHOLD = 1;
@@ -1572,14 +1566,14 @@ class Pinch extends Gesture {
 
 module.exports = Pinch;
 
-},{"./../core/util.js":12,"./Gesture.js":13}],16:[function(require,module,exports){
+},{"./../core/classes/Gesture.js":6,"./../core/util.js":13}],16:[function(require,module,exports){
 /**
  * @file Rotate.js
  * Contains the Rotate class
  */
 
-const Gesture = require('./Gesture.js');
-const util = require('./../core/util.js');
+const Gesture = require('./../core/classes/Gesture.js');
+const util    = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 2;
 
@@ -1680,14 +1674,14 @@ class Rotate extends Gesture {
 
 module.exports = Rotate;
 
-},{"./../core/util.js":12,"./Gesture.js":13}],17:[function(require,module,exports){
+},{"./../core/classes/Gesture.js":6,"./../core/util.js":13}],17:[function(require,module,exports){
 /**
  * @file Swipe.js
  * Contains the Swipe class
  */
 
-const Gesture = require('./Gesture.js');
-const util = require('./../core/util.js');
+const Gesture = require('./../core/classes/Gesture.js');
+const util    = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 1;
 const DEFAULT_MAX_REST_TIME = 100;
@@ -1891,14 +1885,14 @@ class Swipe extends Gesture {
 
 module.exports = Swipe;
 
-},{"./../core/util.js":12,"./Gesture.js":13}],18:[function(require,module,exports){
+},{"./../core/classes/Gesture.js":6,"./../core/util.js":13}],18:[function(require,module,exports){
 /**
  * @file Tap.js
  * Contains the Tap class
  */
 
-const Gesture = require('./Gesture.js');
-const util = require('./../core/util.js');
+const Gesture = require('./../core/classes/Gesture.js');
+const util    = require('./../core/util.js');
 
 const DEFAULT_MIN_DELAY_MS = 0;
 const DEFAULT_MAX_DELAY_MS = 300;
@@ -2074,5 +2068,5 @@ class Tap extends Gesture {
 
 module.exports = Tap;
 
-},{"./../core/util.js":12,"./Gesture.js":13}]},{},[1])(1)
+},{"./../core/classes/Gesture.js":6,"./../core/util.js":13}]},{},[1])(1)
 });
