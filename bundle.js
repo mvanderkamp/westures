@@ -70,31 +70,26 @@ function arbiter(event, region) {
   const state = region.state;
   const eventType = util.normalizeEvent[ event.type ];
 
-  /*
-   Return if a gesture is not in progress and won't be. Also catches the case
-   where a previous event is in a partial state (2 finger pan, waits for both
-   inputs to reach touchend)
-   */
+   /*
+    * Return if a gesture is not in progress and won't be. Also catches the case
+    * where a previous event is in a partial state (2 finger pan, waits for both
+    * inputs to reach touchend)
+    */
   if (state.inputs.length === 0 && eventType !== 'start') {
     return;
   }
 
-  /*
-   Check for 'stale' or events that lost focus
-   (e.g. a pan goes off screen/off region.)
-   Does not affect mobile devices.
-   */
-  if (typeof event.buttons !== 'undefined' &&
-    eventType !== 'end' &&
-    event.buttons === 0) {
+   /*
+    * Check for 'stale' or events that lost focus (e.g. a pan goes off screen or
+    * off region).
+    * Does not affect mobile devices.
+    */
+  if (eventType !== 'end' && event.buttons === 0) {
     state.resetInputs();
     return;
   }
 
-  // Update the state with the new events. If the event is stopped, return;
-  if (!state.updateInputs(event, region.element)) {
-    return;
-  }
+  state.updateInputs(event, region.element);
 
   // Retrieve the initial target from any one of the inputs
   const bindings = state.retrieveBindingsByInitialPos();
@@ -106,41 +101,40 @@ function arbiter(event, region) {
       util.removeMSPreventDefault(region.element);
     }
 
-    const toBeDispatched = {};
-    const gestures = interpreter(bindings, event, state);
+    const candidates = interpreter(bindings, event, state);
 
     /* Determine the deepest path index to emit the event
      from, to avoid duplicate events being fired. */
+    const toBeDispatched = getDeepestDispatches(event, candidates);
 
-    const path = util.getPropagationPath(event);
-    gestures.forEach((gesture) => {
-      const id = gesture.binding.gesture.getId();
-      if (toBeDispatched[id]) {
-        if (util.getPathIndex(path, gesture.binding.element) <
-          util.getPathIndex(path, toBeDispatched[id].binding.element)) {
-          toBeDispatched[id] = gesture;
-        }
-      } else {
-        toBeDispatched[id] = gesture;
-      }
-    });
-
-    Object.keys(toBeDispatched).forEach((index) => {
-      const gesture = toBeDispatched[index];
+    Object.values(toBeDispatched).forEach( gesture => {
       dispatcher(gesture.binding, gesture.data, gesture.events);
     });
   }
 
-  let endCount = 0;
-  state.inputs.forEach((input) => {
-    if (input.getCurrentEventType() === 'end') {
-      endCount++;
+  if (state.getEndedInputs().length === state.inputs.length) {
+    state.resetInputs();
+  }
+}
+
+function getDeepestDispatches(event, candidates) {
+  const toBeDispatched = {};
+  const path = util.getPropagationPath(event);
+
+  candidates.forEach( candidate => {
+    const id = candidate.binding.gesture.getId();
+    if (toBeDispatched[id]) {
+      const curr = util.getPathIndex(path, candidate.binding.element);
+      const prev = util.getPathIndex(path, toBeDispatched[id].binding.element);
+      if (curr < prev) {
+        toBeDispatched[id] = candidate;
+      }
+    } else {
+      toBeDispatched[id] = candidate;
     }
   });
 
-  if (endCount === state.inputs.length) {
-    state.resetInputs();
-  }
+  return toBeDispatched;
 }
 
 module.exports = arbiter;
@@ -331,15 +325,15 @@ class Gesture {
   }
 
   /**
-  * isValid() - Pre-checks to ensure the invariants of a gesture are satisfied.
-  * @param {Array} inputs - The array of Inputs on the screen
-  * @param {Object} state - The state object of the current region.
-  * @param {Element} element - The element associated to the binding.
-  * @return {boolean} - If the gesture is valid
-  */
+   * isValid() - Pre-checks to ensure the invariants of a gesture are satisfied.
+   * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
+   * @return {boolean} - If the gesture is valid
+   */
   isValid(inputs, state, element) {
     return inputs.every( input => {
-        return util.isInside(input.initial.x, input.initial.y, element);
+      return util.isInside(input.initial.x, input.initial.y, element);
     });
   }
 }
@@ -778,6 +772,12 @@ class State {
     element.addEventListener(boundGesture.getId(), handler, capture);
   }
 
+  getEndedInputs() {
+    return this.inputs.filter( input => {
+      return input.getCurrentEventType() === 'end';
+    });
+  }
+
   /**
    * Retrieves the Binding by which an element is associated to.
    * @param {Element} element - The element to find bindings to.
@@ -810,54 +810,53 @@ class State {
    *  false if the event is invalid.
    */
   updateInputs(event, regionElement) {
-    let eventType = (event.touches) ?
-      'TouchEvent' : ((event.pointerType) ? 'PointerEvent' : 'MouseEvent');
-    switch (eventType) {
-      case 'TouchEvent':
+    const update_fns = {
+      TouchEvent: (event, regionElement) => {
         Array.from(event.changedTouches).forEach( touch => {
-          update(event, this, touch.identifier, regionElement);
+          this.update(event, touch.identifier, regionElement);
         });
-        break;
+      },
 
-      case 'PointerEvent':
-        update(event, this, event.pointerId, regionElement);
-        break;
+      PointerEvent: (event, regionElement) => {
+        this.update(event, event.pointerId, regionElement);
+      },
 
-      case 'MouseEvent':
-      default:
-        update(event, this, DEFAULT_MOUSE_ID, regionElement);
-        break;
+      MouseEvent: (event, regionElement) => {
+        this.update(event, DEFAULT_MOUSE_ID, regionElement);
+      },
+    };
+
+    let eventType = event.constructor.name;
+    update_fns[eventType].call(this, event, regionElement);
+  }
+
+  update(event, identifier, regionElement) {
+    const eventType = util.normalizeEvent[ event.type ];
+    const input = findInputById(this.inputs, identifier);
+
+    // A starting input was not cleaned up properly and still exists.
+    if (eventType === 'start' && input) {
+      this.resetInputs();
+      return;
     }
-    return true;
 
-    function update(event, state, identifier, regionElement) {
-      const eventType = util.normalizeEvent[ event.type ];
-      const input = findInputById(state.inputs, identifier);
+    // An input has moved outside the region.
+    if (eventType !== 'start' &&
+      input &&
+      !util.isInside(input.current.x, input.current.y, regionElement)) {
+      this.resetInputs();
+      return;
+    }
 
-      // A starting input was not cleaned up properly and still exists.
-      if (eventType === 'start' && input) {
-        state.resetInputs();
-        return;
-      }
+    if (eventType !== 'start' && !input) {
+      this.resetInputs();
+      return;
+    }
 
-      // An input has moved outside the region.
-      if (eventType !== 'start' &&
-        input &&
-        !util.isInside(input.current.x, input.current.y, regionElement)) {
-         state.resetInputs();
-        return;
-      }
-
-      if (eventType !== 'start' && !input) {
-        state.resetInputs();
-        return;
-      }
-
-      if (eventType === 'start') {
-        state.inputs.push(new Input(event, identifier));
-      } else {
-        input.update(event, identifier);
-      }
+    if (eventType === 'start') {
+      this.inputs.push(new Input(event, identifier));
+    } else {
+      input.update(event, identifier);
     }
   }
 
@@ -1139,6 +1138,7 @@ let util = {
       y: ((y0 + y1) / 2),
     };
   },
+
   /**
    * Calculates the angle between the projection and an origin point.
    *   |                (projectionX,projectionY)
@@ -1154,6 +1154,7 @@ let util = {
    * @param {number} projectionY
    * @return {number} - Degree along the unit circle where the project lies
    */
+
   getAngle(originX, originY, projectionX, projectionY) {
     let angle = Math.atan2(projectionY - originY, projectionX - originX) *
       ((HALF_CIRCLE_DEGREES) / Math.PI);
@@ -1228,6 +1229,16 @@ let util = {
     return ((x > rect.left && x < rect.left + rect.width) &&
     (y > rect.top && y < rect.top + rect.height));
   },
+
+  getMouseButtons({ buttons }) {
+    const btns = [];
+    for (let mask = 1; mask < 32; mask << 1) {
+      const btn = buttons & mask;
+      if (btn > 0) btns.push(btn);
+    }
+    return btns;
+  },
+
   /**
    * Polyfill for event.propagationPath
    * @param {Event} event
@@ -1249,21 +1260,16 @@ let util = {
   },
 
   /**
-   * Retrieve the index inside the path array
+   * Retrieve the index of the element inside the path array.
+   *
    * @param {Array} path
    * @param {Element} element
-   * @return {Element}
+   *
+   * @return {Number} The index of the element, or the path length if not found.
    */
   getPathIndex(path, element) {
-    let index = path.length;
-
-    path.forEach((obj, i) => {
-      if (obj === element) {
-        index = i;
-      }
-    });
-
-    return index;
+    const index = path.indexOf(element);
+    return index < 0 ? path.length : index;
   },
 
   setMSPreventDefault(element) {
@@ -1939,100 +1945,63 @@ class Tap extends Gesture {
    * @return {null} - Tap does not trigger on a start event.
    */
   start(inputs) {
-    if (inputs.length === this.numInputs) {
-      inputs.forEach((input) => {
-        let progress = input.getGestureProgress(this.type);
-        progress.start = new Date().getTime();
-      });
-    }
-
-    return null;
+    inputs.forEach( input => {
+      const progress = input.getGestureProgress(this.type);
+      progress.start = Date.now();
+    });
   }
-
-  /* start*/
-
-  /**
-   * Event hook for the move of a gesture. The Tap event reaches here if the
-   * user starts to move their input before an 'end' event is reached.
-   * @param {Array} inputs - The array of Inputs on the screen.
-   * @param {Object} state - The state object of the current region.
-   * @param {Element} element - The element associated to the binding.
-   * @return {null} - Tap does not trigger on a move event.
-   */
-  move(inputs, state, element) {
-    for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].getCurrentEventType() === 'move') {
-        let current = inputs[i].current;
-        let previous = inputs[i].previous;
-        if (!util.isWithin(
-            current.x,
-            current.y,
-            previous.x,
-            previous.y,
-            this.tolerance)) {
-          let type = this.type;
-          inputs.forEach(function(input) {
-            input.resetProgress(type);
-          });
-
-          return null;
-        }
-      }
-    }
-
-    return null;
-  }
-
-  /* move*/
 
   /**
    * Event hook for the end of a gesture.
    * Determines if this the tap event can be fired if the delay and tolerance
    * constraints are met. Also waits for all of the inputs to be off the screen
    * before determining if the gesture is triggered.
+   *
    * @param {Array} inputs - The array of Inputs on the screen.
+   * @param {Object} state - The state object of the current region.
+   * @param {Element} element - The element associated to the binding.
+   *
    * @return {null|Object} - null if the gesture is not to be emitted,
    * Object with information otherwise. Returns the interval time between start
    * and end events.
    */
-  end(inputs) {
-    if (inputs.length !== this.numInputs) {
-      return null;
-    }
+  end(inputs, state, element) {
+    const ended = state.getEndedInputs();
+    if (ended.length !== this.numInputs) return null;
 
-    let startTime = Number.MAX_VALUE;
-    for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].getCurrentEventType() !== 'end') {
-        return null;
+    const isValid = ended.every( input => {
+      return util.isWithin(
+        input.current.x,
+        input.current.y,
+        input.initial.x,
+        input.initial.y,
+        this.tolerance
+      );
+    });
+
+    if (!isValid) return null;
+
+    const startTime = inputs.reduce( (earliest, input) => {
+      if (input.getCurrentEventType() === 'end') {
+        const progress = input.getGestureProgress(this.type);
+        if (progress.start < earliest) earliest = progress.start;
       }
+      return earliest;
+    }, Date.now());
 
-      let progress = inputs[i].getGestureProgress(this.type);
-      if (!progress.start) {
-        return null;
-      }
-
-      // Find the most recent input's startTime
-      if (progress.start < startTime) {
-        startTime = progress.start;
-      }
-    }
-
-    let interval = new Date().getTime() - startTime;
-    if ((this.minDelay <= interval) && (this.maxDelay >= interval)) {
-      return {
-        interval: interval,
-      };
+    const interval = Date.now() - startTime;
+    if (isBetween(interval, this.minDelay, this.maxDelay)) {
+      return { interval };
     } else {
-      let type = this.type;
-      inputs.forEach(function(input) {
-        input.resetProgress(type);
-      });
-
+      inputs.forEach( input => input.resetProgress(this.type) );
       return null;
     }
   }
-
   /* end*/
+}
+
+function isBetween(x, low, high) {
+  return (x >= low) && (x <= high)
 }
 
 module.exports = Tap;
