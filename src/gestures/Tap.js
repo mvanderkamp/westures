@@ -80,7 +80,7 @@ class Tap extends Gesture {
   start(inputs) {
     if (inputs.length === this.numInputs) {
       inputs.forEach((input) => {
-        let progress = input.getGestureProgress(this.type);
+        const progress = input.getGestureProgress(this.type);
         progress.start = new Date().getTime();
       });
     }
@@ -101,15 +101,15 @@ class Tap extends Gesture {
   move(inputs, state, element) {
     for (let i = 0; i < inputs.length; i++) {
       if (inputs[i].getCurrentEventType() === 'move') {
-        let current = inputs[i].current;
-        let previous = inputs[i].previous;
+        const current = inputs[i].current;
+        const previous = inputs[i].previous;
         if (!util.isWithin(
             current.x,
             current.y,
             previous.x,
             previous.y,
             this.tolerance)) {
-          let type = this.type;
+          const type = this.type;
           inputs.forEach(function(input) {
             input.resetProgress(type);
           });
@@ -139,13 +139,13 @@ class Tap extends Gesture {
       return null;
     }
 
-    let startTime = Number.MAX_VALUE;
+    const startTime = Number.MAX_VALUE;
     for (let i = 0; i < inputs.length; i++) {
       if (inputs[i].getCurrentEventType() !== 'end') {
         return null;
       }
 
-      let progress = inputs[i].getGestureProgress(this.type);
+      const progress = inputs[i].getGestureProgress(this.type);
       if (!progress.start) {
         return null;
       }
@@ -156,13 +156,13 @@ class Tap extends Gesture {
       }
     }
 
-    let interval = new Date().getTime() - startTime;
+    const interval = new Date().getTime() - startTime;
     if ((this.minDelay <= interval) && (this.maxDelay >= interval)) {
       return {
         interval: interval,
       };
     } else {
-      let type = this.type;
+      const type = this.type;
       inputs.forEach(function(input) {
         input.resetProgress(type);
       });
