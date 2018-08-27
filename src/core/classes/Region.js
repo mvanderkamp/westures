@@ -2,10 +2,10 @@
  * @file Region.js
  */
 
-import Binder from './Binder.js';
-import Gesture from './../../gestures/Gesture.js';
-import arbiter from './../arbiter.js';
-import State from './State.js';
+const Binder = require('./Binder.js');
+const Gesture = require('./../../gestures/Gesture.js');
+const arbiter = require('./../arbiter.js');
+const State = require('./State.js');
 
 /**
  * Allows the user to specify a region to capture all events to feed ZingTouch
@@ -215,4 +215,4 @@ class Region {
   }
 }
 
-export default Region;
+module.exports = Region;

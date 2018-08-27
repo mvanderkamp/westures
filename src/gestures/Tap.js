@@ -3,8 +3,8 @@
  * Contains the Tap class
  */
 
-import Gesture from './Gesture.js';
-import util from './../core/util.js';
+const Gesture = require('./Gesture.js');
+const util = require('./../core/util.js');
 
 const DEFAULT_MIN_DELAY_MS = 0;
 const DEFAULT_MAX_DELAY_MS = 300;
@@ -178,4 +178,4 @@ class Tap extends Gesture {
   /* end*/
 }
 
-export default Tap;
+module.exports = Tap;

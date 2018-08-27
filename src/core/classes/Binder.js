@@ -33,4 +33,4 @@ class Binder {
 
 }
 
-export default Binder;
+module.exports = Binder;

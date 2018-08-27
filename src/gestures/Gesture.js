@@ -3,7 +3,7 @@
  * Contains the Gesture class
  */
 
-import util from './../core/util.js';
+const util = require('./../core/util.js');
 
 /**
  * The Gesture class that all gestures inherit from.
@@ -118,4 +118,4 @@ class Gesture {
 
 }
 
-export default Gesture;
+module.exports = Gesture;

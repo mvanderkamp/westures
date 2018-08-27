@@ -3,8 +3,8 @@
  * Contains the Pan class
  */
 
-import Gesture from './Gesture.js';
-import util from './../core/util.js';
+const Gesture = require('./Gesture.js');
+const util = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
@@ -156,4 +156,4 @@ class Pan extends Gesture {
   /* end*/
 }
 
-export default Pan;
+module.exports = Pan;

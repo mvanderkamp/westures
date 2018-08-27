@@ -3,7 +3,7 @@
  * Contains logic for the interpreter
  */
 
-import util from './util.js';
+const util = require('./util.js');
 
 /**
  * Receives an event and an array of Bindings (element -> gesture handler)
@@ -28,4 +28,4 @@ function interpreter(bindings, event, state) {
   return candidates;
 }
 
-export default interpreter;
+module.exports = interpreter;

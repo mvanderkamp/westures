@@ -3,8 +3,8 @@
  * Contains the abstract Pinch class
  */
 
-import Gesture from './Gesture.js';
-import util from './../core/util.js';
+const Gesture = require('./Gesture.js');
+const util = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 2;
 const DEFAULT_MIN_THRESHOLD = 1;
@@ -95,4 +95,4 @@ class Pinch extends Gesture {
   }
 }
 
-export default Pinch;
+module.exports = Pinch;

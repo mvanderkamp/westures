@@ -4,7 +4,7 @@
  * @file Gesture.js
  * Tests Gesture class
  */
-import Gesture from './../../src/gestures/Gesture.js';
+const Gesture = require('./../../src/gestures/Gesture.js');
 
 /** @test {Gesture} */
 describe('Gesture', function() {

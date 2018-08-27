@@ -3,7 +3,7 @@
  * Contains logic for ZingEvents
  */
 
-import util from '../util.js';
+const util = require('../util.js');
 
 const INITIAL_COORDINATE = 0;
 /**
@@ -66,4 +66,4 @@ class ZingEvent {
   }
 }
 
-export default ZingEvent;
+module.exports = ZingEvent;

@@ -1,7 +1,7 @@
 'use strict';
 
-import State from './../../../src/core/classes/State.js';
-import Gesture from './../../../src/gestures/Gesture.js';
+const State = require('./../../../src/core/classes/State.js');
+const Gesture = require('./../../../src/gestures/Gesture.js');
 
 /** @test {State} */
 describe('State', function() {

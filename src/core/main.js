@@ -4,5 +4,5 @@
  * and to expose the ZingTouch object
  */
 
-import ZingTouch from './../ZingTouch.js';
+const ZingTouch = require('./../ZingTouch.js');
 window.ZingTouch = ZingTouch;

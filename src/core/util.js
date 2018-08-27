@@ -224,4 +224,4 @@ let util = {
   }
 };
 
-export default util;
+module.exports = util;

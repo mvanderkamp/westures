@@ -3,9 +3,9 @@
  * Contains logic for the dispatcher
  */
 
-import dispatcher from './dispatcher.js';
-import interpreter from './interpreter.js';
-import util from './util.js';
+const dispatcher = require('./dispatcher.js');
+const interpreter = require('./interpreter.js');
+const util = require('./util.js');
 
 /**
  * Function that handles event flow, negotiating with the interpreter,
@@ -94,4 +94,4 @@ function arbiter(event, region) {
   }
 }
 
-export default arbiter;
+module.exports = arbiter;

@@ -2,15 +2,15 @@
  * @file State.js
  */
 
-import Gesture from './../../gestures/Gesture.js';
-import Pan from './../../gestures/Pan.js';
-import Pinch from './../../gestures/Pinch.js';
-import Rotate from './../../gestures/Rotate.js';
-import Swipe from './../../gestures/Swipe.js';
-import Tap from './../../gestures/Tap.js';
-import Binding from './Binding.js';
-import Input from './Input.js';
-import util from './../util.js';
+const Gesture = require('./../../gestures/Gesture.js');
+const Pan = require('./../../gestures/Pan.js');
+const Pinch = require('./../../gestures/Pinch.js');
+const Rotate = require('./../../gestures/Rotate.js');
+const Swipe = require('./../../gestures/Swipe.js');
+const Tap = require('./../../gestures/Tap.js');
+const Binding = require('./Binding.js');
+const Input = require('./Input.js');
+const util = require('./../util.js');
 
 const DEFAULT_MOUSE_ID = 0;
 
@@ -245,4 +245,4 @@ function findInputById(inputs, identifier) {
   return inputs.find( i => i.identifier === identifier );
 }
 
-export default State;
+module.exports = State;

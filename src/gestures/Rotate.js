@@ -3,8 +3,8 @@
  * Contains the Rotate class
  */
 
-import Gesture from './Gesture.js';
-import util from './../core/util.js';
+const Gesture = require('./Gesture.js');
+const util = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 2;
 
@@ -103,4 +103,4 @@ class Rotate extends Gesture {
   /* move*/
 }
 
-export default Rotate;
+module.exports = Rotate;

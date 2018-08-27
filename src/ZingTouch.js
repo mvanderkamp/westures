@@ -3,13 +3,13 @@
  * Main object containing API methods and Gesture constructors
  */
 
-import Region from './core/classes/Region.js';
-import Gesture from './gestures/Gesture.js';
-import Pan from './gestures/Pan.js';
-import Pinch from './gestures/Pinch.js';
-import Rotate from './gestures/Rotate.js';
-import Swipe from './gestures/Swipe.js';
-import Tap from './gestures/Tap.js';
+const Region = require('./core/classes/Region.js');
+const Gesture = require('./gestures/Gesture.js');
+const Pan = require('./gestures/Pan.js');
+const Pinch = require('./gestures/Pinch.js');
+const Rotate = require('./gestures/Rotate.js');
+const Swipe = require('./gestures/Swipe.js');
+const Tap = require('./gestures/Tap.js');
 
 /**
  * The global API interface for ZingTouch. Contains a constructor for the
@@ -35,4 +35,4 @@ let ZingTouch = {
   },
 };
 
-export default ZingTouch;
+module.exports = ZingTouch;

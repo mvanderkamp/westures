@@ -4,8 +4,8 @@
  * @file Binding.js
  * Tests Binding class
  */
-import Input from './../../../src/core/classes/Input.js';
-import ZingEvent from './../../../src/core/classes/ZingEvent.js';
+const Input = require('./../../../src/core/classes/Input.js');
+const ZingEvent = require('./../../../src/core/classes/ZingEvent.js');
 /** @test {Input} */
 describe('Input', function() {
   let event = document.createEvent('Event');

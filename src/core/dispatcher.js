@@ -37,4 +37,4 @@ function emitEvent(target, event, binding) {
   }
 }
 
-export default dispatcher;
+module.exports = dispatcher;

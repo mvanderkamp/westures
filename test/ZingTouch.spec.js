@@ -1,4 +1,4 @@
-import ZingTouch from './../src/ZingTouch.js';
+const ZingTouch = require('./../src/ZingTouch.js');
 
 /** @test {ZingTouch} */
 describe('ZingTouch', function() {

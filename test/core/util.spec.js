@@ -6,7 +6,7 @@
  * while not exposing private members.
  */
 
-import util from './../../src/core/util.js';
+const util = require('./../../src/core/util.js');
 
 /** @test {util} */
 describe('util', function() {

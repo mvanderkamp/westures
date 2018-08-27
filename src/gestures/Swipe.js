@@ -3,8 +3,8 @@
  * Contains the Swipe class
  */
 
-import Gesture from './Gesture.js';
-import util from './../core/util.js';
+const Gesture = require('./Gesture.js');
+const util = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 1;
 const DEFAULT_MAX_REST_TIME = 100;
@@ -206,4 +206,4 @@ class Swipe extends Gesture {
   /* end*/
 }
 
-export default Swipe;
+module.exports = Swipe;

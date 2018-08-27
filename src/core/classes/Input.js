@@ -2,7 +2,7 @@
  * @file Input.js
  */
 
-import ZingEvent from './ZingEvent.js';
+const ZingEvent = require('./ZingEvent.js');
 
 /**
  * Tracks a single input and contains information about the
@@ -97,4 +97,4 @@ class Input {
 
 }
 
-export default Input;
+module.exports = Input;
