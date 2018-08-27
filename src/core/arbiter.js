@@ -21,31 +21,26 @@ function arbiter(event, region) {
   const state = region.state;
   const eventType = util.normalizeEvent[ event.type ];
 
-  /*
-   Return if a gesture is not in progress and won't be. Also catches the case
-   where a previous event is in a partial state (2 finger pan, waits for both
-   inputs to reach touchend)
-   */
+   /*
+    * Return if a gesture is not in progress and won't be. Also catches the case
+    * where a previous event is in a partial state (2 finger pan, waits for both
+    * inputs to reach touchend)
+    */
   if (state.inputs.length === 0 && eventType !== 'start') {
     return;
   }
 
-  /*
-   Check for 'stale' or events that lost focus
-   (e.g. a pan goes off screen/off region.)
-   Does not affect mobile devices.
-   */
-  if (typeof event.buttons !== 'undefined' &&
-    eventType !== 'end' &&
-    event.buttons === 0) {
+   /*
+    * Check for 'stale' or events that lost focus (e.g. a pan goes off screen or
+    * off region).
+    * Does not affect mobile devices.
+    */
+  if (eventType !== 'end' && event.buttons === 0) {
     state.resetInputs();
     return;
   }
 
-  // Update the state with the new events. If the event is stopped, return;
-  if (!state.updateInputs(event, region.element)) {
-    return;
-  }
+  state.updateInputs(event, region.element);
 
   // Retrieve the initial target from any one of the inputs
   const bindings = state.retrieveBindingsByInitialPos();
@@ -57,41 +52,40 @@ function arbiter(event, region) {
       util.removeMSPreventDefault(region.element);
     }
 
-    const toBeDispatched = {};
-    const gestures = interpreter(bindings, event, state);
+    const candidates = interpreter(bindings, event, state);
 
     /* Determine the deepest path index to emit the event
      from, to avoid duplicate events being fired. */
+    const toBeDispatched = getDeepestDispatches(event, candidates);
 
-    const path = util.getPropagationPath(event);
-    gestures.forEach((gesture) => {
-      const id = gesture.binding.gesture.getId();
-      if (toBeDispatched[id]) {
-        if (util.getPathIndex(path, gesture.binding.element) <
-          util.getPathIndex(path, toBeDispatched[id].binding.element)) {
-          toBeDispatched[id] = gesture;
-        }
-      } else {
-        toBeDispatched[id] = gesture;
-      }
-    });
-
-    Object.keys(toBeDispatched).forEach((index) => {
-      const gesture = toBeDispatched[index];
+    Object.values(toBeDispatched).forEach( gesture => {
       dispatcher(gesture.binding, gesture.data, gesture.events);
     });
   }
 
-  let endCount = 0;
-  state.inputs.forEach((input) => {
-    if (input.getCurrentEventType() === 'end') {
-      endCount++;
+  if (state.getEndedInputs().length === state.inputs.length) {
+    state.resetInputs();
+  }
+}
+
+function getDeepestDispatches(event, candidates) {
+  const toBeDispatched = {};
+  const path = util.getPropagationPath(event);
+
+  candidates.forEach( candidate => {
+    const id = candidate.binding.gesture.getId();
+    if (toBeDispatched[id]) {
+      const curr = util.getPathIndex(path, candidate.binding.element);
+      const prev = util.getPathIndex(path, toBeDispatched[id].binding.element);
+      if (curr < prev) {
+        toBeDispatched[id] = candidate;
+      }
+    } else {
+      toBeDispatched[id] = candidate;
     }
   });
 
-  if (endCount === state.inputs.length) {
-    state.resetInputs();
-  }
+  return toBeDispatched;
 }
 
 module.exports = arbiter;
