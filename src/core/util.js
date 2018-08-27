@@ -45,8 +45,9 @@ let util = {
    * within the tolerance, false otherwise
    */
   isWithin(currentX, currentY, previousX, previousY, tolerance) {
-    return ((Math.abs(currentY - previousY) <= tolerance) &&
-    (Math.abs(currentX - previousX) <= tolerance));
+    const dx = Math.abs(currentX - previousX);
+    const dy = Math.abs(currentY - previousY);
+    return (dx <= tolerance) && (dy <= tolerance);
   },
   /* isWithin*/
 
