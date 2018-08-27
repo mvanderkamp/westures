@@ -111,6 +111,12 @@ class State {
     element.addEventListener(boundGesture.getId(), handler, capture);
   }
 
+  getEndedInputs() {
+    return this.inputs.filter( input => {
+      return input.getCurrentEventType() === 'end';
+    });
+  }
+
   /**
    * Retrieves the Binding by which an element is associated to.
    * @param {Element} element - The element to find bindings to.
