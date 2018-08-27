@@ -149,54 +149,53 @@ class State {
    *  false if the event is invalid.
    */
   updateInputs(event, regionElement) {
-    let eventType = (event.touches) ?
-      'TouchEvent' : ((event.pointerType) ? 'PointerEvent' : 'MouseEvent');
-    switch (eventType) {
-      case 'TouchEvent':
+    const update_fns = {
+      TouchEvent: (event, regionElement) => {
         Array.from(event.changedTouches).forEach( touch => {
-          update(event, this, touch.identifier, regionElement);
+          this.update(event, touch.identifier, regionElement);
         });
-        break;
+      },
 
-      case 'PointerEvent':
-        update(event, this, event.pointerId, regionElement);
-        break;
+      PointerEvent: (event, regionElement) => {
+        this.update(event, event.pointerId, regionElement);
+      },
 
-      case 'MouseEvent':
-      default:
-        update(event, this, DEFAULT_MOUSE_ID, regionElement);
-        break;
+      MouseEvent: (event, regionElement) => {
+        this.update(event, DEFAULT_MOUSE_ID, regionElement);
+      },
+    };
+
+    let eventType = event.constructor.name;
+    update_fns[eventType].call(this, event, regionElement);
+  }
+
+  update(event, identifier, regionElement) {
+    const eventType = util.normalizeEvent[ event.type ];
+    const input = findInputById(this.inputs, identifier);
+
+    // A starting input was not cleaned up properly and still exists.
+    if (eventType === 'start' && input) {
+      this.resetInputs();
+      return;
     }
-    return true;
 
-    function update(event, state, identifier, regionElement) {
-      const eventType = util.normalizeEvent[ event.type ];
-      const input = findInputById(state.inputs, identifier);
+    // An input has moved outside the region.
+    if (eventType !== 'start' &&
+      input &&
+      !util.isInside(input.current.x, input.current.y, regionElement)) {
+      this.resetInputs();
+      return;
+    }
 
-      // A starting input was not cleaned up properly and still exists.
-      if (eventType === 'start' && input) {
-        state.resetInputs();
-        return;
-      }
+    if (eventType !== 'start' && !input) {
+      this.resetInputs();
+      return;
+    }
 
-      // An input has moved outside the region.
-      if (eventType !== 'start' &&
-        input &&
-        !util.isInside(input.current.x, input.current.y, regionElement)) {
-         state.resetInputs();
-        return;
-      }
-
-      if (eventType !== 'start' && !input) {
-        state.resetInputs();
-        return;
-      }
-
-      if (eventType === 'start') {
-        state.inputs.push(new Input(event, identifier));
-      } else {
-        input.update(event, identifier);
-      }
+    if (eventType === 'start') {
+      this.inputs.push(new Input(event, identifier));
+    } else {
+      input.update(event, identifier);
     }
   }
 
