@@ -8,22 +8,21 @@ const Tap = require('./../../src/gestures/Tap.js');
 
 /** @test {Tap} */
 describe('Tap', function() {
-  it('should be instantiated', function() {
-    expect(Tap).to.not.equal(null);
+  test('should be instantiated', function() {
+    expect(Tap).toBeTruthy();
   });
 
-  it('should return a Tap object.', function() {
-    let _tap = new Tap();
-    expect(_tap instanceof Tap).to.be.true;
+  test('should return a Tap object.', function() {
+    expect(new Tap()).toBeInstanceOf(Tap);
   });
 
-  it('should return accept delay and number of inputs as parameters',
+  test('should return accept delay and number of inputs as parameters',
     function() {
       let _tap = new Tap({
         maxDelay: 2000,
         numInputs: 2,
       });
-      expect(_tap.maxDelay).to.equal(2000);
-      expect(_tap.numInputs).to.equal(2);
+      expect(_tap.maxDelay).toEqual(2000);
+      expect(_tap.numInputs).toEqual(2);
     });
 });

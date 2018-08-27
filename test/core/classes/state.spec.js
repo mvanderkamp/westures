@@ -6,60 +6,60 @@ const Gesture = require('./../../../src/core/classes/Gesture.js');
 /** @test {State} */
 describe('State', function() {
   let state = new State();
-  it('should be instantiated', function() {
-    expect(state).to.not.equal(null);
+  test('should be instantiated', function() {
+    expect(state).toBeTruthy();
   });
 
-  it('should have no inputs', function() {
-    expect(state.inputs).to.be.empty;
+  test('should have no inputs', function() {
+    expect(state.inputs.length).toBe(0);
   });
 
-  it('should have no bindings', function() {
-    expect(state.bindings).to.be.empty;
+  test('should have no bindings', function() {
+    expect(state.bindings.length).toEqual(0);
   });
 
-  it('should have instances of the 6 default gestures', function() {
+  test('should have instances of the 6 default gestures', function() {
     let gestures = ['expand', 'pan', 'pinch', 'rotate', 'swipe', 'tap'];
     for (let i = 0; i < state.registeredGestures.length; i++) {
       expect(gestures.indexOf(state.registeredGestures[i].type))
-        .to.not.equal(-1);
+        .not.toBe(-1);
     }
   });
 });
 
 /** @test {State.addBinding} */
 describe('State.addBinding', function() {
-  it('should add a binding to a registered gesture', function() {
+  test('should add a binding to a registered gesture', function() {
     let state = new State();
     state.addBinding(document.body, 'tap', function() {
     }, false, false);
 
-    expect(state.bindings.length).to.equal(1);
+    expect(state.bindings.length).toEqual(1);
   });
 
-  it('should add a binding to a gesture instance', function() {
+  test('should add a binding to a gesture instance', function() {
     let state = new State();
     state.addBinding(document.body, new Gesture(), function() {
     }, false, false);
 
-    expect(state.bindings.length).to.equal(1);
+    expect(state.bindings.length).toEqual(1);
   });
 
-  it('should not add a binding to a non-registered gesture', function() {
+  test('should not add a binding to a non-registered gesture', function() {
     expect(function() {
       let state = new State();
       state.addBinding(document.body, 'foobar', function() {
       }, false, false);
-    }).to.throw('Parameter foobar is not a registered gesture');
+    }).toThrow('Parameter foobar is not a registered gesture');
   });
 
-  it('should not add a binding to an object not of the Gesture type',
+  test('should not add a binding to an object not of the Gesture type',
     function() {
       expect(function() {
         let state = new State();
         state.addBinding(document.body, {}, function() {
         }, false, false);
-      }).to.throw('Parameter for the gesture is not of a Gesture type');
+      }).toThrow('Parameter for the gesture is not of a Gesture type');
     });
 });
 
@@ -69,11 +69,13 @@ describe('State.retrieveBindings', function() {
   state.addBinding(document.body, 'tap', function() {
   }, false, false);
 
-  it('should retrieve no bindings for elements without any', function() {
-    expect(state.retrieveBindingsByElement(document)).to.be.empty;
+  test('should retrieve no bindings for elements without any', function() {
+    expect(state.retrieveBindingsByElement(document).length)
+      .toBe(0);
   });
 
-  it('should retrieve bindings for elements that are bound', function() {
-    expect(state.retrieveBindingsByElement(document.body)).to.not.be.empty;
+  test('should retrieve bindings for elements that are bound', function() {
+    expect(state.retrieveBindingsByElement(document.body).length)
+      .toBeGreaterThan(0);
   });
 });

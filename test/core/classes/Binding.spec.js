@@ -13,19 +13,19 @@ describe('Binding', function() {
   let element = document.createElement('div');
   let binding = new Binding(element, gesture, function() {}, false, false);
 
-  it('should be instantiated', function() {
-    expect(Binding).to.not.equal(null);
+  test('should be instantiated', function() {
+    expect(Binding).toBeTruthy();
   });
 
-  it('should have an element as a member', function() {
-    expect(binding.element).to.exist;
+  test('should have an element as a member', function() {
+    expect(binding.element).toBe(element);
   });
 
-  it('should have an Gesture as a member', function() {
-    expect(binding.gesture).to.be.an.instanceof(Gesture);
+  test('should have an Gesture as a member', function() {
+    expect(binding.gesture).toBeInstanceOf(Gesture);
   });
 
-  it('should have an function as a member', function() {
-    expect(binding.handler).to.be.an.instanceof(Function);
+  test('should have an function as a member', function() {
+    expect(binding.handler).toBeInstanceOf(Function);
   });
 });

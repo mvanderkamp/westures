@@ -12,22 +12,22 @@ describe('Input', function() {
   let event = document.createEvent('Event');
   let input = new Input(event, 1234);
 
-  it('should be instantiated', function() {
-    expect(Input).to.not.equal(null);
+  test('should be instantiated', function() {
+    expect(Input).toBeTruthy();
   });
 
-  it('should have an initial event', function() {
-    expect(input.initial).to.be.an.instanceof(ZingEvent);
+  test('should have an initial event', function() {
+    expect(input.initial).toBeInstanceOf(ZingEvent);
   });
 
-  it('should have an current event', function() {
-    expect(input.current).to.be.an.instanceof(ZingEvent);
-    expect(input.current).to.equal(input.current);
+  test('should have an current event', function() {
+    expect(input.current).toBeInstanceOf(ZingEvent);
+    expect(input.current).toEqual(input.current);
   });
 
-  it('should have an previous event', function() {
-    expect(input.previous).to.be.an.instanceof(ZingEvent);
-    expect(input.previous).to.equal(input.current);
+  test('should have an previous event', function() {
+    expect(input.previous).toBeInstanceOf(ZingEvent);
+    expect(input.previous).toEqual(input.current);
   });
 });
 
@@ -36,10 +36,10 @@ describe('Input.update', function() {
   let event = document.createEvent('Event');
   let input = new Input(event, 1234);
 
-  it('should update the current event', function() {
+  test('should update the current event', function() {
     let newEvent = document.createEvent('MouseEvent');
     input.update(newEvent, 4321);
-    expect(input.previous).to.not.equal(input.current);
+    expect(input.previous).not.toBe(input.current);
   });
 });
 
@@ -48,31 +48,36 @@ describe('Input.getGestureProgress', function() {
   let event = document.createEvent('Event');
   let input = new Input(event, 1234);
 
-  it('should have no progress initially', function() {
-    expect(input.getGestureProgress('tap')).to.be.empty;
+  test('should have no progress initially', function() {
+    expect(input.getGestureProgress('tap')).toEqual({});
   });
 
-  it(`should have be able to store metadata in the progress object.`,
+  test(`should have be able to store metadata in the progress object.`,
     function() {
-    expect(input.getGestureProgress('tap')).to.be.empty;
+    expect(input.getGestureProgress('tap')).toEqual({});
     (input.getGestureProgress('tap')).foo = 8;
-    expect(input.getGestureProgress('tap').foo).to.equal(8);
+    expect(input.getGestureProgress('tap').foo).toEqual(8);
   });
 });
 
 /** @test {Input.getCurrentEventType} */
 describe('Input.getCurrentEventType', function() {
-  it('should be null for an event it does not understand', function() {
+  test('should be null for an event it does not understand', function() {
     let event = document.createEvent('Event');
     let input = new Input(event, 1234);
-    expect(input.getCurrentEventType()).to.be.undefined;
+    expect(input.getCurrentEventType()).toBeUndefined();
   });
 
-  it('should not be null for an event it does understand', function() {
-    let event = document.createEvent('TouchEvent');
-    event.initUIEvent('touchstart', true, true);
-    let touchInput = new Input(event, 1234);
-    expect(touchInput.getCurrentEventType()).to.equal('start');
+  test('should not be null for an event it does understand', function() {
+    const touch = { identifier: 1, clientX: 42, clientY: 43 };
+    const event = {
+      type: 'touchstart',
+      touches: [touch],
+      changedTouches: [touch],
+      targetTouches: [touch],
+    };
+    const touchInput = new Input(event, touch.identifier);
+    expect(touchInput.getCurrentEventType()).toEqual('start');
   });
 });
 
@@ -80,11 +85,11 @@ describe('Input.getCurrentEventType', function() {
 describe('Input.resetProgress', function() {
   let event = document.createEvent('Event');
   let input = new Input(event, 1234);
-  it('should reset the progress of an existing progress state', function() {
-    expect(input.getGestureProgress('tap')).to.be.empty;
+  test('should reset the progress of an existing progress state', function() {
+    expect(input.getGestureProgress('tap')).toEqual({});
     (input.getGestureProgress('tap')).foo = 8;
-    expect(input.getGestureProgress('tap').foo).to.equal(8);
+    expect(input.getGestureProgress('tap').foo).toEqual(8);
     input.resetProgress('tap');
-    expect(input.getGestureProgress('tap')).to.be.empty;
+    expect(input.getGestureProgress('tap')).toEqual({});
   });
 });

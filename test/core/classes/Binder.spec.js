@@ -9,18 +9,18 @@ const State  = require('./../../../src/core/classes/State.js');
 
 /** @test {Binder} */
 describe('Binder', function() {
-  it('should be instantiated', function() {
-    expect(Binder).to.not.equal(null);
+  test('should be instantiated', function() {
+    expect(Binder).toBeTruthy();
   });
 
-  it('should return a new object with a valid element parameter', function() {
+  test('should return a new object with a valid element parameter', function() {
     let myState = new State();
     let myBinder = new Binder(document.body, false, myState);
-    expect(myBinder).to.not.equal.null;
-    expect(myBinder.element).to.equal(document.body);
+    expect(myBinder).toBeInstanceOf(Binder);
+    expect(myBinder.element).toEqual(document.body);
   });
 
-  it(`should return a chainable object with all of the
+  test(`should return a chainable object with all of the
    current registered gestures`, function() {
     let myState = new State();
     let myBinder = new Binder(document.body, false, myState);
@@ -28,7 +28,7 @@ describe('Binder', function() {
 
     for (let key in myBinder) {
       if (key !== 'element') {
-        expect(gestures.indexOf(key) >= 0).to.be.true;
+        expect(gestures.indexOf(key) >= 0).toBe(true);
       }
     }
   });

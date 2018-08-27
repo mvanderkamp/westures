@@ -2,22 +2,20 @@ const ZingTouch = require('./../src/ZingTouch.js');
 
 /** @test {ZingTouch} */
 describe('ZingTouch', function() {
-  it('should be instantiated', function() {
-    expect(ZingTouch).to.not.equal(null);
+  test('should be instantiated', function() {
+    expect(ZingTouch).toBeTruthy();
   });
 
-  it('should have constructors for all of the gestures', function() {
-    let gestures = [
-      'Expand',
+  test('should have constructors for all of the gestures', function() {
+    const gestures = [
       'Gesture',
       'Pan',
       'Pinch',
       'Rotate',
       'Swipe',
       'Tap',
+      'Region',
     ];
-    Object.keys(ZingTouch).forEach((key) => {
-      expect(gestures.indexOf(key) !== -1);
-    });
+    expect(Object.keys(ZingTouch)).toMatchObject(gestures);
   });
 });

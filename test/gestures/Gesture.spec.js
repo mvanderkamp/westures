@@ -8,15 +8,14 @@ const Gesture = require('./../../src/core/classes/Gesture.js');
 
 /** @test {Gesture} */
 describe('Gesture', function() {
-  it('should be instantiated', function() {
-    expect(Gesture).to.not.equal(null);
+  test('should be instantiated', function() {
+    expect(Gesture).toBeTruthy();
   });
 });
 
 /** @test {Gesture.getType} */
 describe('Gesture.getType', function() {
-  it('should return null for a generic gesture', function() {
-    let _gesture = new Gesture();
-    expect(_gesture.getType()).to.equal(null);
+  test('should return null for a generic gesture', function() {
+    expect(new Gesture().type).toBeNull();
   });
 });
