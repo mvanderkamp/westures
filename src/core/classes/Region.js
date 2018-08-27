@@ -17,7 +17,6 @@ const State   = require('./State.js');
  * @class Region
  */
 class Region {
-
   /**
    * Constructor function for the Region class.
    * @param {Element} element - The element to capture all
@@ -186,7 +185,7 @@ class Region {
       throw new Error('Parameter gesture is an invalid Gesture object');
     }
 
-    gesture.setType(key);
+    gesture.type = key;
     this.state.registerGesture(gesture, key);
   }
 
@@ -203,7 +202,7 @@ class Region {
    */
   unregister(key) {
     this.state.bindings.forEach((binding) => {
-      if (binding.gesture.getType() === key) {
+      if (binding.gesture.type === key) {
         binding.element.removeEventListener(binding.gesture.getId(),
           binding.handler, binding.capture);
       }

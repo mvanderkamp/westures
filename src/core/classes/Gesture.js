@@ -31,22 +31,6 @@ class Gesture {
   }
 
   /**
-   * Set the type of the gesture to be called during an event
-   * @param {String} type - The unique identifier of the gesture being created.
-   */
-  setType(type) {
-    this.type = type;
-  }
-
-  /**
-   * getType() - Returns the generic type of the gesture
-   * @return {String} - The type of gesture
-   */
-  getType() {
-    return this.type;
-  }
-
-  /**
    * Set the id of the gesture to be called during an event
    * @param {String} id - The unique identifier of the gesture being created.
    */
