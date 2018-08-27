@@ -64,6 +64,7 @@ class Pan extends Gesture {
       };
     });
   }
+  /* start */
 
   /**
    * move() - Event hook for the move of a gesture.
@@ -99,40 +100,7 @@ class Pan extends Gesture {
     });
 
     return output;
-
-    function packData( input, progress ) {
-      const distanceFromOrigin = util.distanceBetweenTwoPoints(
-        input.initial.x,
-        input.current.x,
-        input.initial.y,
-        input.current.y
-      );
-      const directionFromOrigin = util.getAngle(
-        input.initial.x,
-        input.initial.y,
-        input.current.x,
-        input.current.y
-      );
-      const currentDirection = util.getAngle(
-        progress.lastEmitted.x,
-        progress.lastEmitted.y,
-        input.current.x,
-        input.current.y
-      );
-      const change = {
-        x: input.current.x - progress.lastEmitted.x,
-        y: input.current.y - progress.lastEmitted.y,
-      };
-
-      return {
-        distanceFromOrigin,
-        directionFromOrigin,
-        currentDirection,
-        change,
-      };
-    }
   }
-
   /* move*/
 
   /**
@@ -152,8 +120,39 @@ class Pan extends Gesture {
     });
     return null;
   }
-
   /* end*/
+}
+
+function packData( input, progress ) {
+  const distanceFromOrigin = util.distanceBetweenTwoPoints(
+    input.initial.x,
+    input.current.x,
+    input.initial.y,
+    input.current.y
+  );
+  const directionFromOrigin = util.getAngle(
+    input.initial.x,
+    input.initial.y,
+    input.current.x,
+    input.current.y
+  );
+  const currentDirection = util.getAngle(
+    progress.lastEmitted.x,
+    progress.lastEmitted.y,
+    input.current.x,
+    input.current.y
+  );
+  const change = {
+    x: input.current.x - progress.lastEmitted.x,
+    y: input.current.y - progress.lastEmitted.y,
+  };
+
+  return {
+    distanceFromOrigin,
+    directionFromOrigin,
+    currentDirection,
+    change,
+  };
 }
 
 module.exports = Pan;
