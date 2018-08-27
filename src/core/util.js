@@ -187,21 +187,16 @@ let util = {
   },
 
   /**
-   * Retrieve the index inside the path array
+   * Retrieve the index of the element inside the path array.
+   *
    * @param {Array} path
    * @param {Element} element
-   * @return {Element}
+   *
+   * @return {Number} The index of the element, or the path length if not found.
    */
   getPathIndex(path, element) {
-    let index = path.length;
-
-    path.forEach((obj, i) => {
-      if (obj === element) {
-        index = i;
-      }
-    });
-
-    return index;
+    const index = path.indexOf(element);
+    return index < 0 ? path.length : index;
   },
 
   setMSPreventDefault(element) {
