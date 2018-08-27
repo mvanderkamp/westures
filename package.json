@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "bundle": "browserify 'index.js' --standalone zingtouch --outfile 'bundle.js'"
+    "bundle": "browserify 'index.js' --standalone zingtouch --outfile 'bundle.js'",
+    "test": "jest"
   },
   "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "repository": {
@@ -18,7 +19,8 @@
   "devDependencies": {
     "browserify": "^16.2.2",
     "eslint": "^3.12.2",
-    "eslint-config-google": "^0.7.1"
+    "eslint-config-google": "^0.7.1",
+    "jest": "^23.5.0"
   },
   "dependencies": {}
 }
