@@ -77,6 +77,7 @@ let util = {
       y: ((y0 + y1) / 2),
     };
   },
+
   /**
    * Calculates the angle between the projection and an origin point.
    *   |                (projectionX,projectionY)
@@ -92,6 +93,7 @@ let util = {
    * @param {number} projectionY
    * @return {number} - Degree along the unit circle where the project lies
    */
+
   getAngle(originX, originY, projectionX, projectionY) {
     let angle = Math.atan2(projectionY - originY, projectionX - originX) *
       ((HALF_CIRCLE_DEGREES) / Math.PI);
@@ -166,6 +168,16 @@ let util = {
     return ((x > rect.left && x < rect.left + rect.width) &&
     (y > rect.top && y < rect.top + rect.height));
   },
+
+  getMouseButtons({ buttons }) {
+    const btns = [];
+    for (let mask = 1; mask < 32; mask << 1) {
+      const btn = buttons & mask;
+      if (btn > 0) btns.push(btn);
+    }
+    return btns;
+  },
+
   /**
    * Polyfill for event.propagationPath
    * @param {Event} event
