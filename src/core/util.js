@@ -110,7 +110,7 @@ function getAngle(originX, originY, projectionX, projectionY) {
  * @return {Number} velocity of px/time
  */
 function getVelocity(startX, startY, startTime, endX, endY, endTime) {
-  let distance = this.distanceBetweenTwoPoints(startX, endX, startY, endY);
+  let distance = distanceBetweenTwoPoints(startX, endX, startY, endY);
   return (distance / (endTime - startTime));
 }
 

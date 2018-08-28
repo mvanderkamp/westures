@@ -4,6 +4,7 @@
  */
 
 const Gesture = require('./../core/classes/Gesture.js');
+const Point2D = require('./../core/classes/Point2D.js');
 const util    = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 1;
@@ -56,10 +57,7 @@ class Pan extends Gesture {
     inputs.forEach((input) => {
       const progress = input.getGestureProgress(this.getId());
       progress.active = true;
-      progress.lastEmitted = {
-        x: input.current.x,
-        y: input.current.y,
-      };
+      progress.lastEmitted = Point2D.clone(input.current.point);
     });
   }
   /* start */
@@ -82,18 +80,14 @@ class Pan extends Gesture {
 
     inputs.forEach( (input, index) => {
       const progress = input.getGestureProgress(this.getId());
-      const distanceFromLastEmit = util.distanceBetweenTwoPoints(
-        progress.lastEmitted.x,
-        progress.lastEmitted.y,
-        input.current.x,
-        input.current.y
+      const distanceFromLastEmit = progress.lastEmitted.distanceTo(
+        input.current.point
       );
       const reachedThreshold = distanceFromLastEmit >= this.threshold;
 
       if (progress.active && reachedThreshold) {
         output.data[index] = packData( input, progress );
-        progress.lastEmitted.x = input.current.x;
-        progress.lastEmitted.y = input.current.y;
+        progress.lastEmitted = Point2D.clone(input.current.point);
       } 
     });
 
@@ -122,28 +116,10 @@ class Pan extends Gesture {
 }
 
 function packData( input, progress ) {
-  const distanceFromOrigin = util.distanceBetweenTwoPoints(
-    input.initial.x,
-    input.current.x,
-    input.initial.y,
-    input.current.y
-  );
-  const directionFromOrigin = util.getAngle(
-    input.initial.x,
-    input.initial.y,
-    input.current.x,
-    input.current.y
-  );
-  const currentDirection = util.getAngle(
-    progress.lastEmitted.x,
-    progress.lastEmitted.y,
-    input.current.x,
-    input.current.y
-  );
-  const change = {
-    x: input.current.x - progress.lastEmitted.x,
-    y: input.current.y - progress.lastEmitted.y,
-  };
+  const distanceFromOrigin = input.totalDistance();
+  const directionFromOrigin = input.totalAngle();
+  const currentDirection = progress.lastEmitted.angleTo(input.current.point);
+  const change = input.current.point.subtract(progress.lastEmitted);
 
   return {
     distanceFromOrigin,

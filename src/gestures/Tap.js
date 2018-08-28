@@ -116,13 +116,7 @@ class Tap extends Gesture {
 
 function areWithinSpatialTolerance(inputs, tolerance) {
   return inputs.every( input => {
-    return util.isWithin(
-      input.current.x,
-      input.current.y,
-      input.initial.x,
-      input.initial.y,
-      tolerance
-    );
+    return input.totalDistanceIsWithin(tolerance);
   });
 }
 

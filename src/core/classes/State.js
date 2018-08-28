@@ -135,7 +135,7 @@ class State {
   retrieveBindingsByInitialPos() {
     return this.bindings.filter( binding => {
       return this.inputs.some( input => {
-        return util.isInside(input.initial.x, input.initial.y, binding.element);
+        return input.initial.point.isInside(binding.element);
       });
     });
   }
@@ -182,7 +182,7 @@ class State {
     // An input has moved outside the region.
     if (eventType !== 'start' &&
       input &&
-      !util.isInside(input.current.x, input.current.y, regionElement)) {
+      !input.current.point.isInside(regionElement)) {
       this.resetInputs();
       return;
     }

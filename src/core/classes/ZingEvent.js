@@ -3,9 +3,9 @@
  * Contains logic for ZingEvents
  */
 
-const util = require('../util.js');
+const util    = require('../util.js');
+const Point2D = require('./Point2D.js');
 
-const INITIAL_COORDINATE = 0;
 /**
  * An event wrapper that normalizes events across browsers and input devices
  * @class ZingEvent
@@ -21,6 +21,8 @@ class ZingEvent {
    * @param {Number} touchIdentifier - The index of touch if applicable
    */
   constructor(event, touchIdentifier) {
+    const eventObj = getEventObject(event, touchIdentifier);
+
     /**
      * The original event object.
      * @type {Event}
@@ -35,35 +37,31 @@ class ZingEvent {
     this.type = util.normalizeEvent[ event.type ];
 
     /**
-     * The X coordinate for the event, based off of the client.
-     * @type {number}
+     * Various x,y coordinates extracted from the inner event.
      */
-    this.x = INITIAL_COORDINATE;
-
-    /**
-     * The Y coordinate for the event, based off of the client.
-     * @type {number}
-     */
-    this.y = INITIAL_COORDINATE;
-
-    let eventObj;
-    if (event.touches && event.changedTouches) {
-      eventObj = Array.from(event.changedTouches).find( t => {
-        return t.identifier === touchIdentifier;
-      });
-    } else {
-      eventObj = event;
-    }
-
-    this.x = this.clientX = eventObj.clientX;
-    this.y = this.clientY = eventObj.clientY;
-
+    this.clientX = eventObj.clientX;
+    this.clientY = eventObj.clientY;
+    
     this.pageX = eventObj.pageX;
     this.pageY = eventObj.pageY;
 
     this.screenX = eventObj.screenX;
     this.screenY = eventObj.screenY;
+
+    /**
+     * The (x,y) coordinate of the event, wrapped in a Point2D.
+     */
+    this.point = new Point2D(this.clientX, this.clientY);
   }
+}
+
+function getEventObject(event, identifier) {
+  if (event.touches && event.changedTouches) {
+    return Array.from(event.changedTouches).find( t => {
+      return t.identifier === identifier;
+    });
+  } 
+  return event;
 }
 
 module.exports = ZingEvent;

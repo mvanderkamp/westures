@@ -46,11 +46,7 @@ class Pinch extends Gesture {
     if (inputs.length === DEFAULT_INPUTS) {
       // Store the progress in the first input.
       const progress = inputs[0].getGestureProgress(this.getId());
-      progress.lastEmittedDistance = util.distanceBetweenTwoPoints(
-        inputs[0].current.x,
-        inputs[1].current.x,
-        inputs[0].current.y,
-        inputs[1].current.y);
+      progress.lastEmittedDistance = inputs[0].currentDistanceTo(inputs[1]);
     }
   }
 
@@ -65,16 +61,8 @@ class Pinch extends Gesture {
    */
   move(inputs, state, element) {
     if (state.numActiveInputs() === DEFAULT_INPUTS) {
-      const currentDistance = util.distanceBetweenTwoPoints(
-        inputs[0].current.x,
-        inputs[1].current.x,
-        inputs[0].current.y,
-        inputs[1].current.y);
-      const centerPoint = util.getMidpoint(
-        inputs[0].current.x,
-        inputs[1].current.x,
-        inputs[0].current.y,
-        inputs[1].current.y);
+      const currentDistance = inputs[0].currentDistanceTo(inputs[1]);
+      const centerPoint = inputs[0].currentMidpointTo(inputs[1]);
 
       // Progress is stored in the first input.
       const progress = inputs[0].getGestureProgress(this.getId());

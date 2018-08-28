@@ -4,6 +4,7 @@
  */
 
 const Gesture = require('./../core/classes/Gesture.js');
+const Point2D = require('./../core/classes/Point2D.js');
 const util    = require('./../core/util.js');
 
 const DEFAULT_INPUTS = 2;
@@ -58,28 +59,19 @@ class Rotate extends Gesture {
     let input;
     if (numActiveInputs === 1) {
       const bRect = element.getBoundingClientRect();
-      currentPivot = {
-        x: bRect.left + bRect.width / 2,
-        y: bRect.top + bRect.height / 2,
-      };
+      currentPivot = new Point2D(
+        bRect.left + bRect.width / 2,
+        bRect.top + bRect.height / 2,
+      );
       initialPivot = currentPivot;
       input = inputs[0];
     } else {
-      currentPivot = util.getMidpoint(
-        inputs[0].current.x,
-        inputs[1].current.x,
-        inputs[0].current.y,
-        inputs[1].current.y);
+      currentPivot = inputs[0].midpointTo(inputs[1]);
       input = util.getRightMostInput(inputs);
     }
 
     // Translate the current pivot point.
-    const currentAngle = util.getAngle(
-      currentPivot.x, 
-      currentPivot.y,
-      input.current.x,
-      input.current.y
-    );
+    const currentAngle = currentPivot.angleTo(input.current.point);
 
     const progress = input.getGestureProgress(this.getId());
     if (!progress.initialAngle) {

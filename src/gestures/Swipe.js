@@ -102,8 +102,7 @@ class Swipe extends Gesture {
 
         progress.moves.push({
           time: new Date().getTime(),
-          x: inputs[i].current.x,
-          y: inputs[i].current.y,
+          point: inputs[i].current.point,
         });
 
         if (progress.length > this.maxProgressStack) {
@@ -168,19 +167,16 @@ class Swipe extends Gesture {
             lastMove.time += this.timeDistortion;
           }
 
-          var velocity = util.getVelocity(lastMove.x, lastMove.y, lastMove.time,
-            currentMove.x, currentMove.y, currentMove.time);
+          const distance = lastMove.point.distanceTo(currentMove.point);
+          const duration = currentMove.time - lastMove.time;
+          var velocity = distance / duration;
 
           output.data[i] = {
-            velocity: velocity,
-            distance: util.distanceBetweenTwoPoints(lastMove.x, currentMove.x, lastMove.y, currentMove.y),
-            duration:  currentMove.time - lastMove.time,
-            currentDirection: util.getAngle(
-              lastMove.x,
-              lastMove.y,
-              currentMove.x,
-              currentMove.y),
-          };
+            velocity,
+            distance,
+            duration,
+            currentDirection: lastMove.point.angleTo(currentMove.point),
+          }
         }
       }
 

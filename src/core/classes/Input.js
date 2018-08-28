@@ -18,7 +18,7 @@ class Input {
    * (taken from event.changedTouches)
    */
   constructor(event, identifier = 0) {
-    let currentEvent = new ZingEvent(event, identifier);
+    const currentEvent = new ZingEvent(event, identifier);
 
     /**
      * Holds the initial event object. A touchstart/mousedown event.
@@ -53,6 +53,26 @@ class Input {
      * @type {Object}
      */
     this.progress = {};
+  }
+
+  currentDistanceTo(input) {
+    return this.current.point.distanceTo(input.current.point);
+  }
+
+  currentMidpointTo(input) {
+    return this.current.point.midpointTo(input.current.point);
+  }
+
+  totalAngle() {
+    return this.initial.point.angleTo(this.current.point);
+  }
+
+  totalDistance() {
+    return this.initial.point.distanceTo(this.current.point);
+  }
+
+  totalDistanceIsWithin(tolerance) {
+    return this.totalDistance() <= tolerance;
   }
 
   /**
