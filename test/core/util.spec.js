@@ -68,34 +68,16 @@ describe('util.distanceBetweenTwoPoints', function() {
 
 /** @test {util.getAngle} */
 describe('util.getAngle', function() {
-  test('should return an angle of 45', function() {
-    expect(util.getAngle(0, 0, 3, 3)).toEqual(315);
-  });
-
-  test('should return an angle of 360', function() {
-    expect(util.getAngle(0, 0, 0, 0)).toEqual(360);
-  });
-
-  test('should return an angle of 180', function() {
-    expect(util.getAngle(0, 0, -3, 0)).toEqual(180);
-  });
-});
-
-/** @test {util.getAngularDistance} */
-describe('util.getAngularDistance', function() {
-  test('should return an angle of 45', function() {
-    expect(util.getAngularDistance(270, 360)).toEqual(-90);
-  });
-
-  test('should return an angle of -15', function() {
-    expect(util.getAngularDistance(5, 350)).toEqual(-15);
-  });
-
-  test('should return an angle of +15', function() {
-    expect(util.getAngularDistance(350, 5)).toEqual(15);
+  test('should return an angle of PI/4', function() {
+    expect(util.getAngle(0, 0, 3, 3)).toBeCloseTo(Math.PI / 4);
   });
 
   test('should return an angle of 0', function() {
-    expect(util.getAngularDistance(360, 360)).toBeCloseTo(0);
+    expect(util.getAngle(0, 0, 0, 0)).toBeCloseTo(0);
+  });
+
+  test('should return an angle of PI', function() {
+    expect(util.getAngle(0, 0, -3, 0)).toBeCloseTo(Math.PI);
   });
 });
+
