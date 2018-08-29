@@ -66,7 +66,7 @@ class Rotate extends Gesture {
       initialPivot = currentPivot;
       input = inputs[0];
     } else {
-      currentPivot = inputs[0].midpointTo(inputs[1]);
+      currentPivot = inputs[0].currentMidpointTo(inputs[1]);
       input = util.getRightMostInput(inputs);
     }
 
