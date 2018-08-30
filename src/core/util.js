@@ -65,25 +65,25 @@ function getMouseButtons({ buttons }) {
 }
 
 /**
- * Polyfill for event.propagationPath
+ * In case event.composedPath() is not available.
  *
  * @param {Event} event
  *
  * @return {Array}
  */
 function getPropagationPath(event) {
-  if (event.path) {
-    return event.path;
-  } else {
-    let path = [];
-    let node = event.target;
-    while (node != document) {
-      path.push(node);
-      node = node.parentNode;
-    }
+  if (typeof event.composedPath === 'function') {
+    return event.composedPath();
+  } 
 
-    return path;
+  const path = [];
+  for (let node = event.target; node !== document; node = node.parentNode) {
+    path.push(node);
   }
+  path.push(document);
+  path.push(window);
+
+  return path;
 }
 
 /**
