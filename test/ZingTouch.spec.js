@@ -1,4 +1,4 @@
-const ZingTouch = require('./../src/ZingTouch.js');
+const ZingTouch = require('./../index.js');
 
 /** @test {ZingTouch} */
 describe('ZingTouch', function() {
