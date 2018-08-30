@@ -24,6 +24,13 @@ class ZingEvent {
     const eventObj = getEventObject(event, touchIdentifier);
 
     /**
+     * The set of elements along this event's propagation path at the time it
+     * was dispatched.
+     * @type {WeakSet}
+     */
+    this.initialElements = getInitialElementsInPath(event);
+
+    /**
      * The original event object.
      * @type {Event}
      */
@@ -85,6 +92,17 @@ class ZingEvent {
   }
 
   /**
+   * Determines if this event is within the given HTML element.
+   *
+   * @param {Element} target
+   *
+   * @return {Boolean}
+   */
+  isInside(element) {
+    return this.point.isInside(element);
+  }
+
+  /**
    * Calculates the midpoint coordinates between two events.
    *
    * @param {ZingEvent} event
@@ -93,6 +111,19 @@ class ZingEvent {
    */
   midpointTo(event) {
     return this.point.midpointTo(event.point);
+  }
+
+  /**
+   * Determines if this event was inside the given element at the time it was
+   * dispatched.
+   *
+   * @param {Element} element
+   *
+   * @return {Boolean} true if the event occurred inside the element, false
+   * otherwise.
+   */
+  wasInside(element) {
+    return this.initialElements.has(element);
   }
 }
 
@@ -103,6 +134,15 @@ function getEventObject(event, identifier) {
     });
   } 
   return event;
+}
+
+function getInitialElementsInPath(event) {
+  const set = new WeakSet();
+  const path = util.getPropagationPath(event);
+  path.forEach( node => {
+    set.add(node);
+  });
+  return set;
 }
 
 module.exports = ZingEvent;

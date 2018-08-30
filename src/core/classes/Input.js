@@ -75,6 +75,10 @@ class Input {
     return this.totalDistance() <= tolerance;
   }
 
+  wasInitiallyInside(element) {
+    return this.initial.wasInside(element);
+  }
+
   /**
    * Receives an input, updates the internal state of what the input has done.
    * @param {Event} event - The event object to wrap with a ZingEvent.

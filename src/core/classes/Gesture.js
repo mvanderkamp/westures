@@ -96,7 +96,7 @@ class Gesture {
    */
   isValid(inputs, state, element) {
     return inputs.every( input => {
-      return input.initial.point.isInside(element);
+      return input.wasInitiallyInside(element);
     });
   }
 }
