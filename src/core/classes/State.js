@@ -112,9 +112,7 @@ class State {
   }
 
   endedInputs() {
-    return this.inputs.filter( input => {
-      return input.getCurrentEventType() === 'end';
-    });
+    return this.inputs.filter( i => i && i.getCurrentEventType() === 'end' );
   }
 
   /**
@@ -135,7 +133,7 @@ class State {
   retrieveBindingsByInitialPos() {
     return this.bindings.filter( binding => {
       return this.inputs.some( input => {
-        return input.wasInitiallyInside(binding.element);
+        return input && input.wasInitiallyInside(binding.element);
       });
     });
   }
@@ -169,11 +167,11 @@ class State {
   }
 
   update(event, identifier) {
-    const input = this.inputs[identifier];
-    if (input) {
-      input.update(event, identifier);
-    } else {
+    const type = util.normalizeEvent[ event.type ];
+    if (type === 'start') {
       this.inputs[identifier] = new Input(event, identifier);
+    } else {
+      this.inputs[identifier].update(event, identifier);
     }
   }
 
@@ -194,14 +192,22 @@ class State {
   }
 
   /**
-   * Counts the number of active inputs at any given time.
-   * @return {Number} - The number of active inputs.
+   * Returns an array containing only the inputs whose current event type is
+   * 'start'.
+   *
+   * @return {Array} The starting inputs.
    */
-  numActiveInputs() {
-    const endType = this.inputs.filter((input) => {
-      return input.current.type !== 'end';
-    });
-    return endType.length;
+  startingInputs() {
+    return this.inputs.filter( i => i && i.getCurrentEventType() === 'start' );
+  }
+
+  /**
+   * Filters out any inputs that aren't "move"ing.
+   *
+   * @return {Array} The moving inputs.
+   */
+  movingInputs() {
+    return this.inputs.filter( i => i && i.getCurrentEventType() === 'move' );
   }
 
   /**
@@ -233,7 +239,7 @@ class State {
  *  null if it did not find any.
  */
 function findInputById(inputs, identifier) {
-  return inputs.find( i => i.identifier === identifier );
+  return inputs.find( i => i && i.identifier === identifier );
 }
 
 module.exports = State;

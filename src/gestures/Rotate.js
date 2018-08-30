@@ -107,9 +107,6 @@ class Rotate extends Gesture {
     };
   }
   /* move*/
-
-  end(inputs, state, element) {
-  }
 }
 
 module.exports = Rotate;

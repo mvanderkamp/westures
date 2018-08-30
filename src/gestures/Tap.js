@@ -77,8 +77,9 @@ class Tap extends Gesture {
    * @param {Array} inputs - The array of Inputs on the screen.
    * @return {null} - Tap does not trigger on a start event.
    */
-  start(inputs) {
-    inputs.forEach( input => {
+  start(inputs, state, element) {
+    const starting = state.startingInputs();
+    starting.forEach( input => {
       const progress = input.getGestureProgress(this.getId());
       progress.start = Date.now();
     });
@@ -99,25 +100,38 @@ class Tap extends Gesture {
    * and end events.
    */
   end(inputs, state, element) {
+    const now = Date.now();
     const ended = state.endedInputs();
-    if (ended.length !== this.numInputs) return null;
-    if (!areWithinSpatialTolerance(ended, this.tolerance)) return null;
+    const timed = ended.filter( i => {
+      const progress = i.getGestureProgress(this.getId());
+      return (now - progress.start) < this.maxDelay;
+    });
 
-    const interval = getTemporalInterval(ended, this.getId());
+    if (timed.length !== this.numInputs) return null;
+    if (!areWithinSpatialTolerance(timed, this.tolerance)) return null;
+
+    const sorted = timed.sort( (a,b) => {
+      const pa = a.getGestureProgress(this.getId());
+      const pb = b.getGestureProgress(this.getId());
+      return pa.start - pb.start 
+    });
+    const interval = now - sorted[0].getGestureProgress(this.getId()).start;
+
     if (isBetween(interval, this.minDelay, this.maxDelay)) {
-      return { interval };
-    } else {
-      inputs.forEach( input => input.resetProgress(this.type) );
-      return null;
-    }
+      const point = sorted[0].current.point;
+      return { 
+        interval,
+        x: point.x,
+        y: point.y,
+      };
+    } 
+    return null;
   }
   /* end*/
 }
 
-function areWithinSpatialTolerance(inputs, tolerance) {
-  return inputs.every( input => {
-    return input.totalDistanceIsWithin(tolerance);
-  });
+function areWithinSpatialTolerance(endedInputs, tolerance) {
+  return endedInputs.every( i => i.totalDistanceIsWithin(tolerance) );
 }
 
 function getTemporalInterval(endedInputs, gestureId) {

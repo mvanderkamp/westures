@@ -53,10 +53,10 @@ class Pan extends Gesture {
    * so it can invalidate any end events.
    * @param {Array} inputs
    */
-  start(inputs) {
-    inputs.forEach((input) => {
+  start(inputs, state, element) {
+    const starting = state.startingInputs(); 
+    starting.forEach( input => {
       const progress = input.getGestureProgress(this.getId());
-      progress.active = true;
       progress.lastEmitted = input.current.point.clone();
     });
   }
@@ -72,19 +72,21 @@ class Pan extends Gesture {
    * @return {Object} - Returns the distance in pixels between the two inputs.
    */
   move(inputs, state, element) {
-    if (this.numInputs !== inputs.length) return null;
+    const active = state.activeInputs();
+
+    if (active.length !== this.numInputs) return null;
 
     const data = [];
 
-    inputs.forEach( (input, index) => {
+    active.forEach( input => {
       const progress = input.getGestureProgress(this.getId());
       const distanceFromLastEmit = progress.lastEmitted.distanceTo(
         input.current.point
       );
       const reachedThreshold = distanceFromLastEmit >= this.threshold;
 
-      if (progress.active && reachedThreshold) {
-        data[index] = packData( input, progress );
+      if (reachedThreshold) {
+        data.push(packData( input, progress ));
         progress.lastEmitted = input.current.point.clone();
       } 
     });
@@ -104,10 +106,11 @@ class Pan extends Gesture {
    * @return {null} - null if the gesture is not to be emitted,
    *  Object with information otherwise.
    */
-  end(inputs) {
-    inputs.forEach((input) => {
+  end(inputs, state, element) {
+    const active = state.activeInputs();
+    active.forEach( input => {
       const progress = input.getGestureProgress(this.getId());
-      progress.active = false;
+      progress.lastEmitted = input.current.point.clone();
     });
     return null;
   }
@@ -121,6 +124,7 @@ function packData( input, progress ) {
   const change = input.current.point.subtract(progress.lastEmitted);
 
   return {
+    identifier: input.identifier,
     distanceFromOrigin,
     directionFromOrigin,
     currentDirection,
