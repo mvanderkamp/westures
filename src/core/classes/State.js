@@ -179,14 +179,6 @@ class State {
       return;
     }
 
-    // An input has moved outside the region.
-    if (eventType !== 'start' &&
-      input &&
-      !input.current.point.isInside(regionElement)) {
-      this.resetInputs();
-      return;
-    }
-
     if (eventType !== 'start' && !input) {
       this.resetInputs();
       return;
