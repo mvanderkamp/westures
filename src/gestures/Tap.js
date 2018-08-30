@@ -99,7 +99,7 @@ class Tap extends Gesture {
    * and end events.
    */
   end(inputs, state, element) {
-    const ended = state.getEndedInputs();
+    const ended = state.endedInputs();
     if (ended.length !== this.numInputs) return null;
     if (!areWithinSpatialTolerance(ended, this.tolerance)) return null;
 

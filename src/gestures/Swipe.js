@@ -127,7 +127,7 @@ class Swipe extends Gesture {
    *  Object with information otherwise.
    */
   end(inputs, state, element) {
-    const ended = state.getEndedInputs();
+    const ended = state.endedInputs();
 
     if (ended.length === this.numInputs) {
       let output = {

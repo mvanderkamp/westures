@@ -111,7 +111,7 @@ class State {
     element.addEventListener(boundGesture.getId(), handler, capture);
   }
 
-  getEndedInputs() {
+  endedInputs() {
     return this.inputs.filter( input => {
       return input.getCurrentEventType() === 'end';
     });
