@@ -43,46 +43,6 @@ class Point2D {
   }
 
   /**
-   * Subtract the given point from this point.
-   *
-   * @param {Point2D} point
-   *
-   * @return {Point2D} A new Point2D, which is the result of (this - point).
-   */
-  subtract(point) {
-    return new Point2D(
-      this.x - point.x,
-      this.y - point.y
-    );
-  }
-
-  /**
-   * Calculates the distance between two points.
-   *
-   * @param {Point2D} point
-   *
-   * @return {number} The distance between the two points, a.k.a. the
-   * hypoteneuse. 
-   */
-  distanceTo(point) {
-    return Math.hypot(point.x - this.x, point.y - this.y);
-  }
-
-  /**
-   * Calculates the midpoint coordinates between two points.
-   *
-   * @param {Point2D} point
-   *
-   * @return {Object} The coordinates of the midpoint.
-   */
-  midpointTo(point) {
-    return new Point2D(
-      (this.x + point.x) / 2,
-      (this.y + point.y) / 2,
-    );
-  }
-
-  /**
    * Calculates the angle between this point and the given point.
    *   |                (projectionX,projectionY)
    *   |             /°
@@ -101,6 +61,27 @@ class Point2D {
   }
 
   /**
+   * Clone this point.
+   *
+   * @return {Point2D} A new Point2D, identical to this point.
+   */
+  clone() {
+    return new Point2D(this.x, this.y);
+  }
+
+  /**
+   * Calculates the distance between two points.
+   *
+   * @param {Point2D} point
+   *
+   * @return {number} The distance between the two points, a.k.a. the
+   * hypoteneuse. 
+   */
+  distanceTo(point) {
+    return Math.hypot(point.x - this.x, point.y - this.y);
+  }
+
+  /**
    * Determines if this point is within the given HTML element.
    *
    * @param {Element} target
@@ -116,10 +97,34 @@ class Point2D {
       this.y <= (rect.top + rect.height)
     );
   }
-}
 
-Point2D.clone = function(point) {
-  return new Point2D(point.x, point.y);
+  /**
+   * Calculates the midpoint coordinates between two points.
+   *
+   * @param {Point2D} point
+   *
+   * @return {Object} The coordinates of the midpoint.
+   */
+  midpointTo(point) {
+    return new Point2D(
+      (this.x + point.x) / 2,
+      (this.y + point.y) / 2,
+    );
+  }
+
+  /**
+   * Subtract the given point from this point.
+   *
+   * @param {Point2D} point
+   *
+   * @return {Point2D} A new Point2D, which is the result of (this - point).
+   */
+  subtract(point) {
+    return new Point2D(
+      this.x - point.x,
+      this.y - point.y
+    );
+  }
 }
 
 module.exports = Point2D;

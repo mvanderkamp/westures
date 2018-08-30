@@ -57,7 +57,7 @@ class Pan extends Gesture {
     inputs.forEach((input) => {
       const progress = input.getGestureProgress(this.getId());
       progress.active = true;
-      progress.lastEmitted = Point2D.clone(input.current.point);
+      progress.lastEmitted = input.current.point.clone();
     });
   }
   /* start */
@@ -85,7 +85,7 @@ class Pan extends Gesture {
 
       if (progress.active && reachedThreshold) {
         data[index] = packData( input, progress );
-        progress.lastEmitted = Point2D.clone(input.current.point);
+        progress.lastEmitted = input.current.point.clone();
       } 
     });
 
