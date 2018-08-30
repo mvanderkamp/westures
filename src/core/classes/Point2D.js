@@ -28,6 +28,13 @@ class Point2D {
     this.y = y;
   }
 
+  /**
+   * Add this point to the given point.
+   *
+   * @param {Point2D} point
+   *
+   * @return {Point2D} A new Point2D, which is the addition of the two points.
+   */
   add(point) {
     return new Point2D(
       this.x + point.x,
@@ -35,25 +42,18 @@ class Point2D {
     );
   }
 
+  /**
+   * Subtract the given point from this point.
+   *
+   * @param {Point2D} point
+   *
+   * @return {Point2D} A new Point2D, which is the result of (this - point).
+   */
   subtract(point) {
     return new Point2D(
       this.x - point.x,
       this.y - point.y
     );
-  }
-
-  /**
-   * Determines if the distance from this point to a given point is within or up
-   * to a certain tolerance.
-   *
-   * @param {Point2D} point - The point to examine the distance of.
-   * @param {Number} tolerance - The tolerance in pixel value.
-   *
-   * @return {Boolean} - true if the current coordinates are within the
-   * tolerance, false otherwise
-   */
-  distanceToPointIsWithinTolerance(point, tolerance) {
-    return this.distanceTo(point) <= tolerance;
   }
 
   /**
