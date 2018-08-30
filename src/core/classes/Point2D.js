@@ -12,7 +12,7 @@ class Point2D {
   /**
    * Constructor function for the Point2D class.
    */
-  constructor(x, y) {
+  constructor(x = 0, y = 0) {
     /**
      * The horizontal (x) coordinate of the point.
      *
@@ -103,7 +103,7 @@ class Point2D {
    *
    * @param {Point2D} point
    *
-   * @return {Object} The coordinates of the midpoint.
+   * @return {Point2D} The coordinates of the midpoint.
    */
   midpointTo(point) {
     return new Point2D(

@@ -56,19 +56,19 @@ class Input {
   }
 
   currentDistanceTo(input) {
-    return this.current.point.distanceTo(input.current.point);
+    return this.current.distanceTo(input.current);
   }
 
   currentMidpointTo(input) {
-    return this.current.point.midpointTo(input.current.point);
+    return this.current.midpointTo(input.current);
   }
 
   totalAngle() {
-    return this.initial.point.angleTo(this.current.point);
+    return this.initial.angleTo(this.current);
   }
 
   totalDistance() {
-    return this.initial.point.distanceTo(this.current.point);
+    return this.initial.distanceTo(this.current);
   }
 
   totalDistanceIsWithin(tolerance) {

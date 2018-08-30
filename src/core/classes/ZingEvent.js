@@ -53,6 +53,47 @@ class ZingEvent {
      */
     this.point = new Point2D(this.clientX, this.clientY);
   }
+
+  /**
+   * Calculates the angle between this event and the given event.
+   *   |                (projectionX,projectionY)
+   *   |             /°
+   *   |          /
+   *   |       /
+   *   |    / θ
+   *   | /__________
+   *   ° (originX, originY)
+   *
+   * @param {ZingEvent} event
+   *
+   * @return {Number} - Degree along the unit circle where the projection lies.
+   */
+  angleTo(event) {
+    return this.point.angleTo(event.point);
+  }
+
+  /**
+   * Calculates the distance between two ZingEvents.
+   *
+   * @param {ZingEvent} event
+   *
+   * @return {number} The distance between the two points, a.k.a. the
+   * hypoteneuse. 
+   */
+  distanceTo(event) {
+    return this.point.distanceTo(event.point);
+  }
+
+  /**
+   * Calculates the midpoint coordinates between two events.
+   *
+   * @param {ZingEvent} event
+   *
+   * @return {Point2D} The coordinates of the midpoint.
+   */
+  midpointTo(event) {
+    return this.point.midpointTo(event.point);
+  }
 }
 
 function getEventObject(event, identifier) {
