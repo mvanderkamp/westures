@@ -135,7 +135,7 @@ class State {
   retrieveBindingsByInitialPos() {
     return this.bindings.filter( binding => {
       return this.inputs.some( input => {
-        return input.initial.point.isInside(binding.element);
+        return input.wasInitiallyInside(binding.element);
       });
     });
   }
