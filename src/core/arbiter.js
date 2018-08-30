@@ -30,16 +30,6 @@ function arbiter(event, region) {
     return;
   }
 
-   /*
-    * Check for 'stale' or events that lost focus (e.g. a pan goes off screen or
-    * off region).
-    * Does not affect mobile devices.
-    */
-  if (eventType !== 'end' && event.buttons === 0) {
-    state.resetInputs();
-    return;
-  }
-
   state.updateInputs(event, region.element);
 
   // Retrieve the initial target from any one of the inputs

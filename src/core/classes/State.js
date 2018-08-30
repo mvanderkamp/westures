@@ -143,51 +143,37 @@ class State {
   /**
    * Updates the inputs with new information based upon a new event being fired.
    * @param {Event} event - The event being captured.
-   * @param {Element} regionElement - The element where
    *  this current Region is bound to.
    * @return {boolean} - returns true for a successful update,
    *  false if the event is invalid.
    */
-  updateInputs(event, regionElement) {
+  updateInputs(event) {
     const update_fns = {
-      TouchEvent: (event, regionElement) => {
+      TouchEvent: (event) => {
         Array.from(event.changedTouches).forEach( touch => {
-          this.update(event, touch.identifier, regionElement);
+          this.update(event, touch.identifier);
         });
       },
 
-      PointerEvent: (event, regionElement) => {
-        this.update(event, event.pointerId, regionElement);
+      PointerEvent: (event) => {
+        this.update(event, event.pointerId);
       },
 
-      MouseEvent: (event, regionElement) => {
-        this.update(event, DEFAULT_MOUSE_ID, regionElement);
+      MouseEvent: (event) => {
+        this.update(event, DEFAULT_MOUSE_ID);
       },
     };
 
     let eventType = event.constructor.name;
-    update_fns[eventType].call(this, event, regionElement);
+    update_fns[eventType].call(this, event);
   }
 
-  update(event, identifier, regionElement) {
-    const eventType = util.normalizeEvent[ event.type ];
-    const input = findInputById(this.inputs, identifier);
-
-    // A starting input was not cleaned up properly and still exists.
-    if (eventType === 'start' && input) {
-      this.resetInputs();
-      return;
-    }
-
-    if (eventType !== 'start' && !input) {
-      this.resetInputs();
-      return;
-    }
-
-    if (eventType === 'start') {
-      this.inputs.push(new Input(event, identifier));
-    } else {
+  update(event, identifier) {
+    const input = this.inputs[identifier];
+    if (input) {
       input.update(event, identifier);
+    } else {
+      this.inputs[identifier] = new Input(event, identifier);
     }
   }
 
@@ -196,6 +182,15 @@ class State {
    */
   resetInputs() {
     this.inputs = [];
+  }
+
+  /**
+   * Filters out any inputs whose current event type is 'end'.
+   *
+   * @return {Array} The active inputs.
+   */
+  activeInputs() {
+    return this.inputs.filter( i => i && i.getCurrentEventType() !== 'end' );
   }
 
   /**

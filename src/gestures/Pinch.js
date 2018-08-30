@@ -40,13 +40,14 @@ class Pinch extends Gesture {
    * @param {Array} inputs
    */
   start(inputs, state, element) {
-    if(!this.isValid(inputs, state, element)) {
-      return null;
-    }
-    if (inputs.length === DEFAULT_INPUTS) {
+    const active = state.activeInputs();
+
+    if (!this.isValid(active, state, element)) return null;
+    
+    if (active.length === DEFAULT_INPUTS) {
       // Store the progress in the first input.
-      const progress = inputs[0].getGestureProgress(this.getId());
-      progress.lastEmittedDistance = inputs[0].currentDistanceTo(inputs[1]);
+      const progress = active[0].getGestureProgress(this.getId());
+      progress.lastEmittedDistance = active[0].currentDistanceTo(active[1]);
     }
   }
 
@@ -60,12 +61,14 @@ class Pinch extends Gesture {
    * @return {Object | null} - Returns the distance in pixels between two inputs
    */
   move(inputs, state, element) {
-    if (state.numActiveInputs() === DEFAULT_INPUTS) {
-      const currentDistance = inputs[0].currentDistanceTo(inputs[1]);
-      const centerPoint = inputs[0].currentMidpointTo(inputs[1]);
+    const active = state.activeInputs();
+
+    if (active.length === DEFAULT_INPUTS) {
+      const currentDistance = active[0].currentDistanceTo(active[1]);
+      const centerPoint = active[0].currentMidpointTo(active[1]);
 
       // Progress is stored in the first input.
-      const progress = inputs[0].getGestureProgress(this.getId());
+      const progress = active[0].getGestureProgress(this.getId());
       const change = currentDistance - progress.lastEmittedDistance;
 
       if (Math.abs(change) >= this.threshold) {

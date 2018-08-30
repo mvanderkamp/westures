@@ -93,22 +93,24 @@ class Swipe extends Gesture {
    * @return {null} - Swipe does not emit from a move.
    */
   move(inputs, state, element) {
-    if (this.numInputs === inputs.length) {
-      for (let i = 0; i < inputs.length; i++) {
-        let progress = inputs[i].getGestureProgress(this.getId());
+    const active = state.activeInputs();
+
+    if (active.length === this.numInputs) {
+      active.forEach( input => {
+        let progress = input.getGestureProgress(this.getId());
         if (!progress.moves) {
           progress.moves = [];
         }
 
         progress.moves.push({
-          time: new Date().getTime(),
-          point: inputs[i].current.point,
+          time: Date.now(),
+          point: input.current.point,
         });
 
-        if (progress.length > this.maxProgressStack) {
+        if (progress.moves.length > this.maxProgressStack) {
           progress.moves.shift();
         }
-      }
+      });
     }
 
     return null;
@@ -124,19 +126,16 @@ class Swipe extends Gesture {
    * @return {null|Object} - null if the gesture is not to be emitted,
    *  Object with information otherwise.
    */
-  end(inputs) {
-    if (this.numInputs === inputs.length) {
+  end(inputs, state, element) {
+    const ended = state.getEndedInputs();
+
+    if (ended.length === this.numInputs) {
       let output = {
         data: [],
       };
 
-      for (var i = 0; i < inputs.length; i++) {
-        // Determine if all input events are on the 'end' event.
-        if (inputs[i].current.type !== 'end') {
-          return;
-        }
-
-        let progress = inputs[i].getGestureProgress(this.getId());
+      for (var i = 0; i < ended.length; i++) {
+        let progress = ended[i].getGestureProgress(this.getId());
         if (progress.moves && progress.moves.length > 2) {
           // CHECK : Return if the input has not moved in maxRestTime ms.
 

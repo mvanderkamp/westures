@@ -34,6 +34,24 @@ class Rotate extends Gesture {
     this.numInputs = options.numInputs || DEFAULT_INPUTS;
   }
 
+  start(inputs, state, element) {
+    const active = state.activeInputs();
+    if (active.length === this.numInputs) {
+      const fst = active[0];
+      const snd = active[1];
+      const pivot = fst.currentMidpointTo(snd);
+      const angle = pivot.angleTo(snd);
+      const progress = fst.getGestureProgress(this.getId());
+      
+      progress.initialAngle = angle;
+      progress.previousAngle = angle;
+      progress.initialPivot = pivot;
+      progress.previousPivot = pivot;
+      progress.distance = 0;
+      progress.change = 0;
+    }
+  }
+
   /**
    * move() - Event hook for the move of a gesture. Obtains the midpoint of two
    * the two inputs and calculates the projection of the right most input along
@@ -52,39 +70,35 @@ class Rotate extends Gesture {
    * last position and the current position.
    */
   move(inputs, state, element) {
-    const numActiveInputs = state.numActiveInputs();
-    if (this.numInputs !== numActiveInputs) return null;
+    const active = state.activeInputs();
+    if (active.length !== this.numInputs) return null;
 
     let currentPivot, initialPivot;
     let input;
-    if (numActiveInputs === 1) {
+    if (active.length === 1) {
       const bRect = element.getBoundingClientRect();
       currentPivot = new Point2D(
         bRect.left + bRect.width / 2,
         bRect.top + bRect.height / 2,
       );
       initialPivot = currentPivot;
-      input = inputs[0];
+      input = active[0];
     } else {
-      currentPivot = inputs[0].currentMidpointTo(inputs[1]);
-      input = util.getRightMostInput(inputs);
+      const fst = active[0];
+      const snd = active[1];
+      currentPivot = fst.currentMidpointTo(snd);
+      input = active[0];
     }
 
     // Translate the current pivot point.
     const currentAngle = currentPivot.angleTo(input.current.point);
 
     const progress = input.getGestureProgress(this.getId());
-    if (!progress.initialAngle) {
-      progress.initialAngle = currentAngle;
-      progress.previousAngle = currentAngle;
-      progress.distance = 0;
-      progress.change = 0;
-    } else {
-      progress.change = currentAngle - progress.previousAngle;
-      progress.distance = progress.distance + progress.change;
-    }
+    progress.change = currentAngle - progress.previousAngle;
+    progress.distance = progress.distance + progress.change;
 
     progress.previousAngle = currentAngle;
+    progress.previousPivot = currentPivot;
 
     return {
       angle: currentAngle,
@@ -92,8 +106,10 @@ class Rotate extends Gesture {
       distanceFromLast: progress.change,
     };
   }
-
   /* move*/
+
+  end(inputs, state, element) {
+  }
 }
 
 module.exports = Rotate;
