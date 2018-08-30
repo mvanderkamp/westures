@@ -120,8 +120,9 @@ class Pan extends Gesture {
 function packData( input, progress ) {
   const distanceFromOrigin = input.totalDistance();
   const directionFromOrigin = input.totalAngle();
-  const currentDirection = progress.lastEmitted.angleTo(input.current.point);
-  const change = input.current.point.subtract(progress.lastEmitted);
+  const point = input.current.point;
+  const currentDirection = progress.lastEmitted.angleTo(point);
+  const change = point.subtract(progress.lastEmitted);
 
   return {
     identifier: input.identifier,
@@ -129,6 +130,7 @@ function packData( input, progress ) {
     directionFromOrigin,
     currentDirection,
     change,
+    point,
   };
 }
 
