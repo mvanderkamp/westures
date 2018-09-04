@@ -127,22 +127,35 @@ class Point2D {
   }
 }
 
+Point2D.averageDistanceTo = function(pt, points = []) {
+  if (!(pt instanceof Point2D)) throw 'Cannot calculated distance to undefined';
+  if (points.length === 0) throw 'Need points to exist to calculate distance!';
+  return Point2D.totalDistanceTo(pt, points) / points.length;
+}
+
 Point2D.midpoint = function(points = []) {
   if (points.length === 0) throw 'Need points to exist to calculate midpoint!';
-
-  const total = Point2D.total(points);
+  const total = Point2D.sum(points);
   return new Point2D (
     total.x / points.length,
     total.y / points.length,
   );
 }
 
-Point2D.total = function(points = []) {
+Point2D.sum = function(points = []) {
   return points.reduce( (total, current) => {
     total.x += current.x;
     total.y += current.y;
     return total;
   }, new Point2D(0,0) );
+}
+
+Point2D.totalDistanceTo = function(pt, points = []) {
+  if (!(pt instanceof Point2D)) throw 'Cannot calculated distance to undefined';
+  return points.reduce( (distance, point) => {
+    distance += point.distanceTo(pt);
+    return distance;
+  }, 0);
 }
 
 module.exports = Point2D;
