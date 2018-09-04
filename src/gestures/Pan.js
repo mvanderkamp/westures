@@ -26,13 +26,7 @@ class Pan extends Gesture {
    * pixels the input has to move to trigger this gesture.
    */
   constructor(options = {}) {
-    super();
-
-    /**
-     * The type of the Gesture.
-     * @type {String}
-     */
-    this.type = 'pan';
+    super('pan');
 
     /**
      * The number of inputs to trigger a Pan can be variable,

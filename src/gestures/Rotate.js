@@ -19,13 +19,7 @@ class Rotate extends Gesture {
    * Constructor function for the Rotate class.
    */
   constructor(options = {}) {
-    super();
-
-    /**
-     * The type of the Gesture.
-     * @type {String}
-     */
-    this.type = 'rotate';
+    super('rotate');
 
     /**
      * The number of touches required to emit Rotate events.

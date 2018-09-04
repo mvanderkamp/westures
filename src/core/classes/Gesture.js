@@ -5,6 +5,8 @@
 
 const util = require('../util.js');
 
+let nextGestureNum = 0;
+
 /**
  * The Gesture class that all gestures inherit from.
  */
@@ -13,13 +15,13 @@ class Gesture {
    * Constructor function for the Gesture class.
    * @class Gesture
    */
-  constructor() {
+  constructor(type) {
     /**
-     * The generic string type of gesture ('expand'|'pan'|'pinch'|
-     *  'rotate'|'swipe'|'tap').
+     * The generic string type of gesture. (e.g. 'pan' or 'tap' or 'pinch').
      * @type {String}
      */
-    this.type = null;
+    if (typeof type === 'undefined') throw 'Gestures require a type!1';
+    this.type = type;
 
     /**
      * The unique identifier for each gesture determined at bind time by the
@@ -27,15 +29,7 @@ class Gesture {
      * Gestures that are created on the fly (e.g. Tap-1, Tap-2, etc).
      * @type {String|null}
      */
-    this.id = null;
-  }
-
-  /**
-   * Set the id of the gesture to be called during an event
-   * @param {String} id - The unique identifier of the gesture being created.
-   */
-  setId(id) {
-    this.id = id;
+    this.id = `gesture-${this.type}-${nextGestureNum++}`;
   }
 
   /**

@@ -19,13 +19,7 @@ class Pinch extends Gesture {
    * @param {Object} options
    */
   constructor(options = {}) {
-    super();
-
-    /**
-     * The type of the Gesture.
-     * @type {String}
-     */
-    this.type = 'pinch';
+    super('pinch');
 
     /**
      * The minimum amount in pixels the inputs must move until it is fired.

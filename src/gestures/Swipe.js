@@ -36,12 +36,7 @@ class Swipe extends Gesture {
    * track of for a swipe.
    */
   constructor(options = {}) {
-    super();
-    /**
-     * The type of the Gesture
-     * @type {String}
-     */
-    this.type = 'swipe';
+    super('swipe');
 
     /**
      * The number of inputs to trigger a Swipe can be variable,

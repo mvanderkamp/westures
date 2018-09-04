@@ -25,12 +25,6 @@ class State {
    */
   constructor(regionId) {
     /**
-     * The id for the region this state is bound to.
-     * @type {String}
-     */
-    this.regionId = regionId;
-
-    /**
      * An array of current and recently inactive
      *  Input objects related to a gesture.
      * @type {Input}
@@ -42,12 +36,6 @@ class State {
      * @type {Binding}
      */
     this.bindings = [];
-
-    /**
-     * The number of gestures that have been bound with this state.
-     * @type {Number}
-     */
-    this.numGestures = 0;
   }
 
   /**
@@ -67,7 +55,6 @@ class State {
       throw new Error('Parameter for the gesture is not of a Gesture type');
     }
 
-    this.assignGestureId(gesture);
     this.bindings.push(new Binding(
       element, 
       gesture,
@@ -75,6 +62,7 @@ class State {
       capture, 
       bindOnce
     ));
+
     element.addEventListener(gesture.getId(), handler, capture);
   }
 
@@ -84,7 +72,7 @@ class State {
    * @param {Gesture} gesture - The gesture to track
    */
   assignGestureId(gesture) {
-    gesture.setId(`${this.regionId}-${this.numGestures++}`);
+    gesture.assignId();
   }
 
   /**

@@ -28,13 +28,7 @@ class Tap extends Gesture {
    *  a user can move.
    */
   constructor(options = {}) {
-    super();
-
-    /**
-     * The type of the Gesture.
-     * @type {String}
-     */
-    this.type = 'tap';
+    super('tap');
 
     /**
      * The minimum amount between a touchstart and a touchend can be configured
