@@ -44,22 +44,12 @@ class ZingEvent {
     this.type = util.normalizeEvent[ event.type ];
 
     /**
-     * Various x,y coordinates extracted from the inner event.
-     */
-    this.clientX = eventObj.clientX;
-    this.clientY = eventObj.clientY;
-    
-    this.pageX = eventObj.pageX;
-    this.pageY = eventObj.pageY;
-
-    this.screenX = eventObj.screenX;
-    this.screenY = eventObj.screenY;
-
-    /**
      * The (x,y) coordinate of the event, wrapped in a Point2D.
      */
-    this.point = new Point2D(this.clientX, this.clientY);
+    this.point = new Point2D(eventObj.clientX, eventObj.clientY);
   }
+
+  get timeStamp() { return this.originalEvent.timeStamp; }
 
   /**
    * Calculates the angle between this event and the given event.

@@ -112,7 +112,7 @@ class State {
   }
 
   endedInputs() {
-    return this.inputs.filter( i => i && i.getCurrentEventType() === 'end' );
+    return this.inputs.filter( i => i && i.phase === 'end' );
   }
 
   /**
@@ -188,7 +188,7 @@ class State {
    * @return {Array} The active inputs.
    */
   activeInputs() {
-    return this.inputs.filter( i => i && i.getCurrentEventType() !== 'end' );
+    return this.inputs.filter( i => i && i.phase !== 'end' );
   }
 
   /**
@@ -198,7 +198,7 @@ class State {
    * @return {Array} The starting inputs.
    */
   startingInputs() {
-    return this.inputs.filter( i => i && i.getCurrentEventType() === 'start' );
+    return this.inputs.filter( i => i && i.phase === 'start' );
   }
 
   /**
@@ -207,7 +207,7 @@ class State {
    * @return {Array} The moving inputs.
    */
   movingInputs() {
-    return this.inputs.filter( i => i && i.getCurrentEventType() === 'move' );
+    return this.inputs.filter( i => i && i.phase === 'move' );
   }
 
   /**

@@ -55,6 +55,10 @@ class Input {
     this.progress = {};
   }
 
+  get phase()       { return this.current.type; }
+  get currentTime() { return this.current.timeStamp; }
+  get startTime()   { return this.initial.timeStamp; }
+
   currentDistanceTo(input) {
     return this.current.distanceTo(input.current);
   }
@@ -100,22 +104,6 @@ class Input {
       this.progress[id] = {};
     }
     return this.progress[id];
-  }
-
-  /**
-   * Returns the normalized current Event's type.
-   * @return {String} The current event's type ( start | move | end )
-   */
-  getCurrentEventType() {
-    return this.current.type;
-  }
-
-  /**
-   * Resets a progress/state object of the specified gesture.
-   * @param {String} id - The identifier of the specified gesture
-   */
-  resetProgress(id) {
-    this.progress[id] = {};
   }
 }
 
