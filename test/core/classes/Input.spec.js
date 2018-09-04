@@ -43,20 +43,20 @@ describe('Input.update', function() {
   });
 });
 
-/** @test {Input.getGestureProgress} */
-describe('Input.getGestureProgress', function() {
+/** @test {Input.getProgressOfGesture} */
+describe('Input.getProgressOfGesture', function() {
   let event = document.createEvent('Event');
   let input = new Input(event, 1234);
 
   test('should have no progress initially', function() {
-    expect(input.getGestureProgress('tap')).toEqual({});
+    expect(input.getProgressOfGesture('tap')).toEqual({});
   });
 
   test(`should have be able to store metadata in the progress object.`,
     function() {
-    expect(input.getGestureProgress('tap')).toEqual({});
-    (input.getGestureProgress('tap')).foo = 8;
-    expect(input.getGestureProgress('tap').foo).toEqual(8);
+    expect(input.getProgressOfGesture('tap')).toEqual({});
+    (input.getProgressOfGesture('tap')).foo = 8;
+    expect(input.getProgressOfGesture('tap').foo).toEqual(8);
   });
 });
 
@@ -86,10 +86,10 @@ describe('Input.resetProgress', function() {
   let event = document.createEvent('Event');
   let input = new Input(event, 1234);
   test('should reset the progress of an existing progress state', function() {
-    expect(input.getGestureProgress('tap')).toEqual({});
-    (input.getGestureProgress('tap')).foo = 8;
-    expect(input.getGestureProgress('tap').foo).toEqual(8);
+    expect(input.getProgressOfGesture('tap')).toEqual({});
+    (input.getProgressOfGesture('tap')).foo = 8;
+    expect(input.getProgressOfGesture('tap').foo).toEqual(8);
     input.resetProgress('tap');
-    expect(input.getGestureProgress('tap')).toEqual({});
+    expect(input.getProgressOfGesture('tap')).toEqual({});
   });
 });

@@ -42,7 +42,8 @@ class Input {
     this.previous = currentEvent;
 
     /**
-     * Refers to the event.touches index, or 0 if a simple mouse event occurred.
+     * The identifier for the pointer / touch / mouse button associated with
+     * this event.
      * @type {Number}
      */
     this.identifier = identifier;
@@ -55,51 +56,88 @@ class Input {
     this.progress = {};
   }
 
+  /**
+   * @return {String} The phase of the input: 'start' or 'move' or 'end'
+   */
   get phase()       { return this.current.type; }
+
+  /**
+   * @return {Number} The timestamp of the most current event for this input.
+   */
   get currentTime() { return this.current.timeStamp; }
+
+  /**
+   * @return {Number} The timestamp of the initiating event for this input.
+   */
   get startTime()   { return this.initial.timeStamp; }
 
+  /**
+   * Determines the distance between the current events for two inputs.
+   *
+   * @return {Number} The distance between the inputs' current events.
+   */
   currentDistanceTo(input) {
     return this.current.distanceTo(input.current);
   }
 
+  /**
+   * @return {Number} The midpoint between the inputs' current events.
+   */
   currentMidpointTo(input) {
     return this.current.midpointTo(input.current);
   }
 
+  /**
+   * @return {Number} The angle, in radians, between the initiating event for
+   * this input and its current event.
+   */
   totalAngle() {
     return this.initial.angleTo(this.current);
   }
 
+  /**
+   * @return {Number} The distance between the initiating event for this input
+   * and its current event.
+   */
   totalDistance() {
     return this.initial.distanceTo(this.current);
   }
 
+  /**
+   * @return {Boolean} true if the total distance is less than or equal to the
+   * tolerance.
+   */
   totalDistanceIsWithin(tolerance) {
     return this.totalDistance() <= tolerance;
   }
 
+  /**
+   * @return {Boolean} true if the given element existed along the propagation
+   * path of this input's initiating event.
+   */
   wasInitiallyInside(element) {
     return this.initial.wasInside(element);
   }
 
   /**
-   * Receives an input, updates the internal state of what the input has done.
+   * Saves the given raw event in ZingEvent form as the current event for this
+   * input, pushing the old current event into the previous slot, and tossing
+   * out the old previous event.
+   *
    * @param {Event} event - The event object to wrap with a ZingEvent.
    * @param {Number} touchIdentifier - The index of inputs, from event.touches
    */
-  update(event, touchIdentifier) {
+  update(event, identifier) {
     this.previous = this.current;
-    this.current = new ZingEvent(event, touchIdentifier);
+    this.current = new ZingEvent(event, identifier);
   }
 
   /**
-   * Returns the progress of the specified gesture.
    * @param {String} id - The identifier for each unique Gesture's progress.
+   *
    * @return {Object} - The progress of the gesture.
-   * Creates an empty object if no progress has begun.
    */
-  getGestureProgress(id) {
+  getProgressOfGesture(id) {
     if (!this.progress[id]) {
       this.progress[id] = {};
     }

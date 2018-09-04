@@ -68,22 +68,7 @@ class Tap extends Gesture {
      */
     this.tolerance = options.tolerance || DEFAULT_MOVE_PX_TOLERANCE;
   }
-
   /* constructor*/
-
-  /**
-   * Event hook for the start of a gesture. Keeps track of when the inputs
-   * trigger the start event.
-   * @param {Array} inputs - The array of Inputs on the screen.
-   * @return {null} - Tap does not trigger on a start event.
-   */
-  start(inputs, state, element) {
-    const starting = state.startingInputs();
-    starting.forEach( input => {
-      const progress = input.getGestureProgress(this.getId());
-      progress.start = Date.now();
-    });
-  }
 
   /**
    * Event hook for the end of a gesture.
@@ -100,54 +85,30 @@ class Tap extends Gesture {
    * and end events.
    */
   end(inputs, state, element) {
-    const now = Date.now();
     const ended = state.endedInputs();
     const timed = ended.filter( i => {
-      const progress = i.getGestureProgress(this.getId());
-      return (now - progress.start) < this.maxDelay;
+      const tdiff = i.currentTime - i.startTime;
+      return tdiff <= this.maxDelay && tdiff >= this.minDelay;
     });
 
     if (timed.length !== this.numInputs) return null;
-    if (!areWithinSpatialTolerance(timed, this.tolerance)) return null;
+    if (!timed.every( i => i.totalDistanceIsWithin(this.tolerance))) {
+      return null;
+    }
 
-    const sorted = timed.sort( (a,b) => {
-      const pa = a.getGestureProgress(this.getId());
-      const pb = b.getGestureProgress(this.getId());
-      return pa.start - pb.start 
-    });
-    const interval = now - sorted[0].getGestureProgress(this.getId()).start;
-
-    if (isBetween(interval, this.minDelay, this.maxDelay)) {
-      const point = sorted[0].current.point;
+    const sorted = timed.sort( (a,b) => a.startTime - b.startTime );
+    if (sorted.length > 0) {
+      const tapped = sorted[0];
+      const { x, y } = tapped.current.point;
       return { 
-        interval,
-        x: point.x,
-        y: point.y,
+        interval: tapped.currentTime - tapped.startTime,
+        x,
+        y,
       };
-    } 
+    }
     return null;
   }
   /* end*/
-}
-
-function areWithinSpatialTolerance(endedInputs, tolerance) {
-  return endedInputs.every( i => i.totalDistanceIsWithin(tolerance) );
-}
-
-function getTemporalInterval(endedInputs, gestureId) {
-  const now = Date.now();
-
-  const startTime = endedInputs.reduce( (earliest, input) => {
-    const progress = input.getGestureProgress(gestureId);
-    if (progress.start < earliest) earliest = progress.start;
-    return earliest;
-  }, now);
-
-  return now - startTime;
-}
-
-function isBetween(x, low, high) {
-  return (x >= low) && (x <= high)
 }
 
 module.exports = Tap;

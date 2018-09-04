@@ -20,9 +20,7 @@ class ZingEvent {
    * points that participated in the event.
    * @param {Number} touchIdentifier - The index of touch if applicable
    */
-  constructor(event, touchIdentifier) {
-    const eventObj = getEventObject(event, touchIdentifier);
-
+  constructor(event, identifier) {
     /**
      * The set of elements along this event's propagation path at the time it
      * was dispatched.
@@ -46,24 +44,25 @@ class ZingEvent {
     /**
      * The (x,y) coordinate of the event, wrapped in a Point2D.
      */
+    const eventObj = getEventObject(event, identifier);
     this.point = new Point2D(eventObj.clientX, eventObj.clientY);
   }
 
+  /**
+   * Exposes easy access to the event's timestamp.
+   * 
+   * @return {Number} The time elapsed (in milliseconds) from the beginning of
+   * the current document's lifetime until the original event was created.
+   */
   get timeStamp() { return this.originalEvent.timeStamp; }
 
   /**
    * Calculates the angle between this event and the given event.
-   *   |                (projectionX,projectionY)
-   *   |             /°
-   *   |          /
-   *   |       /
-   *   |    / θ
-   *   | /__________
-   *   ° (originX, originY)
    *
    * @param {ZingEvent} event
    *
-   * @return {Number} - Degree along the unit circle where the projection lies.
+   * @return {Number} - Radians measurement between this event and the given
+   * event's points.
    */
   angleTo(event) {
     return this.point.angleTo(event.point);
@@ -74,7 +73,7 @@ class ZingEvent {
    *
    * @param {ZingEvent} event
    *
-   * @return {number} The distance between the two points, a.k.a. the
+   * @return {Number} The distance between the two points, a.k.a. the
    * hypoteneuse. 
    */
   distanceTo(event) {
