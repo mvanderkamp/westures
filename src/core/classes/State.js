@@ -15,8 +15,8 @@ const util    = require('./../util.js');
 const DEFAULT_MOUSE_ID = 0;
 
 /**
- * Creates an object related to a Region's state,
- * and contains helper methods to update and clean up different states.
+ * Creates an object related to a Region's state, and contains helper methods to
+ * update and clean up different states.
  */
 class State {
   /**
@@ -38,8 +38,7 @@ class State {
     this.inputs = [];
 
     /**
-     * An array of Binding objects; The list of relations between elements,
-     *   their gestures, and the handlers.
+     * The list of relations between elements, their gestures, and the handlers.
      * @type {Binding}
      */
     this.bindings = [];
@@ -165,9 +164,7 @@ class State {
    */
   retrieveBindingsByInitialPos() {
     return this.bindings.filter( 
-      binding => this.inputs.some( 
-        input => input && input.wasInitiallyInside(binding.element) 
-      )
+      b => this.inputs.some( i => i && i.wasInitiallyInside(b.element) )
     );
   }
 
@@ -178,8 +175,7 @@ class State {
    * @param {Number} identifier - The identifier of the input to update.
    */
   updateInput(event, identifier) {
-    const type = util.normalizeEvent[ event.type ];
-    if (type === 'start') {
+    if (util.normalizeEvent[ event.type ] === 'start') {
       this.inputs[identifier] = new Input(event, identifier);
     } else {
       this.inputs[identifier].update(event, identifier);
@@ -210,21 +206,9 @@ class State {
       },
     };
 
-    let eventType = event.constructor.name;
-    update_fns[eventType].call(this, event);
+    update_fns[event.constructor.name].call(this, event);
   }
 }
 
-/**
- * Searches through each input, comparing the browser's identifier key
- *  for touches, to the stored one in each input
- * @param {Array} inputs - The array of inputs in state.
- * @param {String} identifier - The identifier the browser has assigned.
- * @return {Input} - The input object with the corresponding identifier,
- *  null if it did not find any.
- */
-function findInputById(inputs, identifier) {
-  return inputs.find( i => i && i.identifier === identifier );
-}
-
 module.exports = State;
+
