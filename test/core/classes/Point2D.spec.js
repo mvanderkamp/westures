@@ -75,18 +75,18 @@ describe('Prototype methods', () => {
 });
 
 describe('Static methods', () => {
-  describe('total(points)', () => {
+  describe('sum(points)', () => {
     test('Returns the origin if given no arguments', () => {
-      expect(Point2D.total()).toMatchObject({x: 0, y: 0});
+      expect(Point2D.sum()).toMatchObject({x: 0, y: 0});
     });
 
     test('Returns the origin if given an empty array', () => {
-      expect(Point2D.total([])).toMatchObject({x: 0, y: 0});
+      expect(Point2D.sum([])).toMatchObject({x: 0, y: 0});
     });
 
     test('Returns the point if given an array of one point', () => {
       const p = new Point2D(42,43);
-      expect(Point2D.total([p])).toEqual(p);
+      expect(Point2D.sum([p])).toEqual(p);
     });
 
     test('Adds up all the points in an array', () => {
@@ -95,7 +95,7 @@ describe('Static methods', () => {
       const r = new Point2D(-5, +5);
       const s = new Point2D(1,2);
       const t = new Point2D(46,57);
-      expect(Point2D.total([p,q,r,s])).toEqual(t);
+      expect(Point2D.sum([p,q,r,s])).toEqual(t);
     });
   });
 
@@ -122,5 +122,9 @@ describe('Static methods', () => {
       expect(Point2D.midpoint([p,q,r,s])).toEqual(t);
     });
   });
+
+  describe('totalDistanceTo(pt, points)', () => {
+  });
+
 });
 
