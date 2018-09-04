@@ -33,14 +33,6 @@ class Gesture {
   }
 
   /**
-   * Return the id of the event. If the id does not exist, return the type.
-   * @return {String}
-   */
-  getId() {
-    return (this.id !== null) ? this.id : this.type;
-  }
-
-  /**
    * Updates internal properties with new ones, only if the properties exist.
    * @param {Object} object
    */
