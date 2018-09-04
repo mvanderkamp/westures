@@ -29,20 +29,24 @@ class Pinch extends Gesture {
     this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
   }
 
+  initializeProgress(state) {
+    const active = state.getInputsNotInPhase('end');
+    if (active.length < REQUIRED_INPUTS) return null;
+
+    const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
+
+    // Progress is store on the first active input.
+    const progress = active[0].getProgressOfGesture(this.id);
+    progress.previousDistance = averageDistance;
+  }
+
   /**
    * Event hook for the start of a gesture. Initialized the lastEmitted
    * gesture and stores it in the first input for reference events.
    * @param {Array} inputs
    */
   start(inputs, state, element) {
-    const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
-    
-    const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
-    
-    // Progress is store on the first active input.
-    const progress = active[0].getProgressOfGesture(this.id);
-    progress.previousDistance = averageDistance;
+    this.initializeProgress(state);
   }
 
   /**
@@ -76,14 +80,7 @@ class Pinch extends Gesture {
   }
 
   end(inputs, state, element) {
-    const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
-    
-    const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
-
-    // Progress is store on the first active input.
-    const progress = active[0].getProgressOfGesture(this.id);
-    progress.previousDistance = averageDistance;
+    this.initializeProgress(state);
   }
 }
 

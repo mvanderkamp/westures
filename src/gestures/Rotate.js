@@ -7,7 +7,7 @@ const Gesture = require('./../core/classes/Gesture.js');
 const Point2D = require('./../core/classes/Point2D.js');
 const util    = require('./../core/util.js');
 
-const DEFAULT_INPUTS = 2;
+const REQUIRED_INPUTS = 2;
 
 /**
  * A Rotate is defined as two inputs moving about a circle,
@@ -18,32 +18,25 @@ class Rotate extends Gesture {
   /**
    * Constructor function for the Rotate class.
    */
-  constructor(options = {}) {
+  constructor() {
     super('rotate');
+  }
 
-    /**
-     * The number of touches required to emit Rotate events.
-     * @type {Number}
-     */
-    this.numInputs = options.numInputs || DEFAULT_INPUTS;
+  initializeProgress(state) {
+    const active = state.getInputsNotInPhase('end');
+    if (active.length < REQUIRED_INPUTS) return null;
+
+    const { midpoint, averageAngle } = getMidpointAndAverageAngle(active);
+
+    // Progress is stored on the first active input.
+    const progress = active[0].getProgressOfGesture(this.id);
+    progress.previousAngle = averageAngle;
+    progress.distance = 0;
+    progress.change = 0;
   }
 
   start(inputs, state, element) {
-    const active = state.getInputsNotInPhase('end');
-    if (active.length === this.numInputs) {
-      const fst = active[0];
-      const snd = active[1];
-      const pivot = fst.currentMidpointTo(snd);
-      const angle = pivot.angleTo(snd);
-      const progress = fst.getProgressOfGesture(this.id);
-      
-      progress.initialAngle = angle;
-      progress.previousAngle = angle;
-      progress.initialPivot = pivot;
-      progress.previousPivot = pivot;
-      progress.distance = 0;
-      progress.change = 0;
-    }
+    this.initializeProgress(state);
   }
 
   /**
@@ -65,42 +58,47 @@ class Rotate extends Gesture {
    */
   move(inputs, state, element) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length !== this.numInputs) return null;
 
-    let currentPivot, initialPivot;
-    let input;
-    if (active.length === 1) {
-      const bRect = element.getBoundingClientRect();
-      currentPivot = new Point2D(
-        bRect.left + bRect.width / 2,
-        bRect.top + bRect.height / 2,
-      );
-      initialPivot = currentPivot;
-      input = active[0];
-    } else {
-      const fst = active[0];
-      const snd = active[1];
-      currentPivot = fst.currentMidpointTo(snd);
-      input = active[0];
-    }
+    const { midpoint, averageAngle } = getMidpointAndAverageAngle(active);
 
-    // Translate the current pivot point.
-    const currentAngle = currentPivot.angleTo(input.current.point);
-
-    const progress = input.getProgressOfGesture(this.id);
-    progress.change = currentAngle - progress.previousAngle;
-    progress.distance = progress.distance + progress.change;
-
-    progress.previousAngle = currentAngle;
-    progress.previousPivot = currentPivot;
+    const progress = active[0].getProgressOfGesture(this.id);
+    // progress.change = averageAngle - progress.previousAngle;
+    progress.change = getAngleChange(averageAngle, progress.previousAngle);
+    progress.distance += progress.change;
+    progress.previousAngle = averageAngle;
 
     return {
-      angle: currentAngle,
+      angle: averageAngle,
       distanceFromOrigin: progress.distance,
       distanceFromLast: progress.change,
     };
   }
   /* move*/
+
+  end(inputs, state, element) {
+    this.initializeProgress(state);
+  }
+}
+
+const CIRCLE = 2 * Math.PI;
+function getAngleChange(curr, prev) {
+  const diff = curr - prev;
+  if (diff <= (-Math.PI)) {
+    return diff + CIRCLE;
+  }
+
+  if (diff >= Math.PI) {
+    return diff - CIRCLE;
+  }
+
+  return diff;
+}
+
+function getMidpointAndAverageAngle(inputs) {
+  const points = inputs.map( i => i.current.point );
+  const midpoint = Point2D.midpoint(points); 
+  const averageAngle = Point2D.averageAngleTo(midpoint, points);
+  return { midpoint, averageAngle };
 }
 
 module.exports = Rotate;
