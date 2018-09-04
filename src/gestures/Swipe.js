@@ -92,7 +92,7 @@ class Swipe extends Gesture {
 
     if (active.length === this.numInputs) {
       active.forEach( input => {
-        let progress = input.getProgressOfGesture(this.getId());
+        let progress = input.getProgressOfGesture(this.id);
         if (!progress.moves) {
           progress.moves = [];
         }
@@ -130,7 +130,7 @@ class Swipe extends Gesture {
       };
 
       for (var i = 0; i < ended.length; i++) {
-        let progress = ended[i].getProgressOfGesture(this.getId());
+        let progress = ended[i].getProgressOfGesture(this.id);
         if (progress.moves && progress.moves.length > 2) {
           // CHECK : Return if the input has not moved in maxRestTime ms.
 

@@ -15,7 +15,7 @@
 function dispatcher(binding, data, events) {
   data.events = events;
 
-  const newEvent = new CustomEvent(binding.gesture.getId(), {
+  const newEvent = new CustomEvent(binding.gesture.id, {
     detail: data,
     bubbles: true,
     cancelable: true,

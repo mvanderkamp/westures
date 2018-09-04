@@ -149,7 +149,7 @@ class Region {
     bindings.forEach((binding) => {
       if (gesture) {
         element.removeEventListener(
-          binding.gesture.getId(),
+          binding.gesture.id,
           binding.handler,
           binding.capture);
         unbound.push(binding);

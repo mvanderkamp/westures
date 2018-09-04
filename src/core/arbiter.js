@@ -63,7 +63,7 @@ function getDeepestDispatches(event, candidates) {
   const path = util.getPropagationPath(event);
 
   candidates.forEach( candidate => {
-    const id = candidate.binding.gesture.getId();
+    const id = candidate.binding.gesture.id;
     if (toBeDispatched[id]) {
       const curr = util.getPathIndex(path, candidate.binding.element);
       const prev = util.getPathIndex(path, toBeDispatched[id].binding.element);

@@ -50,7 +50,7 @@ class Pan extends Gesture {
   start(inputs, state, element) {
     const starting = state.getInputsInPhase('start');
     starting.forEach( input => {
-      const progress = input.getProgressOfGesture(this.getId());
+      const progress = input.getProgressOfGesture(this.id);
       progress.lastEmitted = input.current.point.clone();
     });
   }
@@ -73,7 +73,7 @@ class Pan extends Gesture {
     const data = [];
 
     active.forEach( input => {
-      const progress = input.getProgressOfGesture(this.getId());
+      const progress = input.getProgressOfGesture(this.id);
       const distanceFromLastEmit = progress.lastEmitted.distanceTo(
         input.current.point
       );
@@ -103,7 +103,7 @@ class Pan extends Gesture {
   end(inputs, state, element) {
     const active = state.getInputsNotInPhase('end');
     active.forEach( input => {
-      const progress = input.getProgressOfGesture(this.getId());
+      const progress = input.getProgressOfGesture(this.id);
       progress.lastEmitted = input.current.point.clone();
     });
     return null;
