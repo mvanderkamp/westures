@@ -12,8 +12,7 @@ const State   = require('./State.js');
  * into. This can be as narrow as the element itself, or as big as the document
  * itself. The more specific an area, the better performant the overall
  * application will perform. Contains API methods to bind/unbind specific
- * elements to corresponding gestures. Also contains the ability to
- * register/unregister new gestures.
+ * elements to corresponding gestures. 
  * @class Region
  */
 class Region {
@@ -56,7 +55,7 @@ class Region {
 
     /**
      * The internal state object for a Region.
-     * Keeps track of registered gestures, inputs, and events.
+     * Keeps track of inputs and bindings.
      * @type {State}
      */
     this.state = new State(id);
@@ -88,19 +87,22 @@ class Region {
   }
 
   /**
-   * Bind an element to a registered/unregistered gesture with
-   * multiple function signatures.
+   * Bind an element to a gesture with multiple function signatures.
+   *
    * @example
    * bind(element) - chainable
+   *
    * @example
    * bind(element, gesture, handler, [capture])
+   *
    * @param {Element} element - The element object.
    * @param {String|Object} [gesture] - Gesture key, or a Gesture object.
    * @param {Function} [handler] - The function to execute when an event is
-   *  emitted.
+   * emitted.
    * @param {Boolean} [capture] - capture/bubble
-   * @param {Boolean} [bindOnce = false] - Option to bind once and
-   *  only emit the event once.
+   * @param {Boolean} [bindOnce = false] - Option to bind once and only emit the
+   * event once.
+   *
    * @return {Object} - a chainable object that has the same function as bind.
    */
   bind(element, gesture, handler, capture, bindOnce) {
@@ -146,17 +148,6 @@ class Region {
 
     bindings.forEach((binding) => {
       if (gesture) {
-        if (typeof gesture === 'string' &&
-          this.state.registeredGestures[gesture]) {
-          let registeredGesture = this.state.registeredGestures[gesture];
-          if (registeredGesture.id === binding.gesture.id) {
-            element.removeEventListener(
-              binding.gesture.getId(),
-              binding.handler, binding.capture);
-            unbound.push(binding);
-          }
-        }
-      } else {
         element.removeEventListener(
           binding.gesture.getId(),
           binding.handler,
@@ -167,50 +158,7 @@ class Region {
 
     return unbound;
   }
-
   /* unbind*/
-
-  /**
-   * Registers a new gesture with an assigned key
-   * @param {String} key - The key used to register an element to that gesture
-   * @param {Gesture} gesture - A gesture object
-   */
-  register(key, gesture) {
-    if (typeof key !== 'string') {
-      throw new Error('Parameter key is an invalid string');
-    }
-
-    if (!gesture instanceof Gesture) {
-      throw new Error('Parameter gesture is an invalid Gesture object');
-    }
-
-    gesture.type = key;
-    this.state.registerGesture(gesture, key);
-  }
-
-  /* register*/
-
-  /**
-   * Un-registers a gesture from the Region's state such that
-   * it is no longer emittable.
-   * Unbinds all events that were registered with the type.
-   * @param {String|Object} key - Gesture key that was used to
-   *  register the object
-   * @return {Object} - The Gesture object that was unregistered
-   *  or null if it could not be found.
-   */
-  unregister(key) {
-    this.state.bindings.forEach((binding) => {
-      if (binding.gesture.type === key) {
-        binding.element.removeEventListener(binding.gesture.getId(),
-          binding.handler, binding.capture);
-      }
-    });
-
-    let registeredGesture = this.state.registeredGestures[key];
-    delete this.state.registeredGestures[key];
-    return registeredGesture;
-  }
 }
 
 module.exports = Region;

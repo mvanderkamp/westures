@@ -44,33 +44,17 @@ class State {
     this.bindings = [];
 
     /**
-     * The number of gestures that have been registered with this state
+     * The number of gestures that have been bound with this state.
      * @type {Number}
      */
     this.numGestures = 0;
-
-    /**
-     * A key/value map all the registered gestures for the listener.
-     *  Note: Can only have one gesture registered to one key.
-     * @type {Object}
-     */
-    this.registeredGestures = {};
-
-    this.registerGesture(new Pan(), 'pan');
-    this.registerGesture(new Rotate(), 'rotate');
-    this.registerGesture(new Pinch(), 'pinch');
-    this.registerGesture(new Swipe(), 'swipe');
-    this.registerGesture(new Tap(), 'tap');
   }
 
   /**
-   * Creates a new binding with the given element and gesture object. If the
-   * gesture object provided is unregistered, it's reference will be saved in as
-   * a binding to be later referenced.
+   * Creates a new binding with the given element and gesture object. 
    *
-   * @param  {Element} element - The element the gesture is bound to.
-   * @param {String|Object} gesture  - Either a name of a registered gesture, or
-   * an unregistered  Gesture object.
+   * @param {Element} element - The element the gesture is bound to.
+   * @param {Gesture} gesture - The Gesture to bind. 
    * @param {Function} handler - The function handler to be called when the
    * event is emitted. Used to bind/unbind.
    * @param {Boolean} capture - Whether the gesture is to be detected in the
@@ -79,32 +63,19 @@ class State {
    * once.
    */
   addBinding(element, gesture, handler, capture, bindOnce) {
-    let boundGesture;
-
-    // Error type checking.
-    if (typeof gesture === 'string' && !this.registeredGestures[gesture]) {
-      throw new Error('Parameter ' + gesture + ' is not a registered gesture');
-    } else if (typeof gesture === 'object' && !(gesture instanceof Gesture)) {
+    if (!(gesture instanceof Gesture)) {
       throw new Error('Parameter for the gesture is not of a Gesture type');
     }
 
-    if (typeof gesture === 'string') {
-      boundGesture = this.registeredGestures[gesture];
-    } else {
-      boundGesture = gesture;
-      if (boundGesture.id === null) {
-        this.assignGestureId(boundGesture);
-      }
-    }
-
+    this.assignGestureId(gesture);
     this.bindings.push(new Binding(
       element, 
-      boundGesture,
+      gesture,
       handler, 
       capture, 
       bindOnce
     ));
-    element.addEventListener(boundGesture.getId(), handler, capture);
+    element.addEventListener(gesture.getId(), handler, capture);
   }
 
   /**
@@ -128,16 +99,6 @@ class State {
    */
   getInputsNotInPhase(phase) {
     return this.inputs.filter( i => i && i.phase !== phase );
-  }
-
-  /**
-   * Register the gesture to the current region.
-   * @param {Object} gesture - The gesture to register
-   * @param {String} key - The key to define the new gesture as.
-   */
-  registerGesture(gesture, key) {
-    this.assignGestureId(gesture);
-    this.registeredGestures[key] = gesture;
   }
 
   /**

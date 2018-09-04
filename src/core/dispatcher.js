@@ -33,7 +33,7 @@ function dispatcher(binding, data, events) {
 function emitEvent(target, event, binding) {
   target.dispatchEvent(event);
   if (binding.bindOnce) {
-    ZingTouch.unbind(binding.element, binding.gesture.type);
+    ZingTouch.unbind(binding.element, binding.gesture);
   }
 }
 
