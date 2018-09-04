@@ -30,7 +30,7 @@ function arbiter(event, region) {
     return;
   }
 
-  state.updateInputs(event, region.element);
+  state.updateAllInputs(event, region.element);
 
   // Retrieve the initial target from any one of the inputs
   const bindings = state.retrieveBindingsByInitialPos();

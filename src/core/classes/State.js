@@ -117,10 +117,16 @@ class State {
     gesture.setId(`${this.regionId}-${this.numGestures++}`);
   }
 
+  /**
+   * @return {Array} Inputs in the given phase.
+   */
   getInputsInPhase(phase) {
     return this.inputs.filter( i => i && i.phase === phase );
   }
 
+  /**
+   * @return {Array} Inputs _not_ in the given phase.
+   */
   getInputsNotInPhase(phase) {
     return this.inputs.filter( i => i && i.phase !== phase );
   }
@@ -158,14 +164,20 @@ class State {
    * @return {Array} - An array of Bindings to which that element is bound
    */
   retrieveBindingsByInitialPos() {
-    return this.bindings.filter( binding => {
-      return this.inputs.some( input => {
-        return input && input.wasInitiallyInside(binding.element);
-      });
-    });
+    return this.bindings.filter( 
+      binding => this.inputs.some( 
+        input => input && input.wasInitiallyInside(binding.element) 
+      )
+    );
   }
 
-  update(event, identifier) {
+  /**
+   * Update the input with the given identifier using the given event.
+   *
+   * @param {Event} event - The event being captured.
+   * @param {Number} identifier - The identifier of the input to update.
+   */
+  updateInput(event, identifier) {
     const type = util.normalizeEvent[ event.type ];
     if (type === 'start') {
       this.inputs[identifier] = new Input(event, identifier);
@@ -181,20 +193,20 @@ class State {
    * @return {boolean} - returns true for a successful update,
    *  false if the event is invalid.
    */
-  updateInputs(event) {
+  updateAllInputs(event) {
     const update_fns = {
       TouchEvent: (event) => {
         Array.from(event.changedTouches).forEach( touch => {
-          this.update(event, touch.identifier);
+          this.updateInput(event, touch.identifier);
         });
       },
 
       PointerEvent: (event) => {
-        this.update(event, event.pointerId);
+        this.updateInput(event, event.pointerId);
       },
 
       MouseEvent: (event) => {
-        this.update(event, DEFAULT_MOUSE_ID);
+        this.updateInput(event, DEFAULT_MOUSE_ID);
       },
     };
 
