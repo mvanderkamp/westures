@@ -20,7 +20,7 @@ class Gesture {
      * The generic string type of gesture. (e.g. 'pan' or 'tap' or 'pinch').
      * @type {String}
      */
-    if (typeof type === 'undefined') throw 'Gestures require a type!1';
+    if (typeof type === 'undefined') throw 'Gestures require a type!';
     this.type = type;
 
     /**
