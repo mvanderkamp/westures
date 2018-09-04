@@ -53,7 +53,7 @@ function arbiter(event, region) {
     });
   }
 
-  if (state.endedInputs().length === state.inputs.length) {
+  if (state.getInputsInPhase('end').length === state.inputs.length) {
     state.resetInputs();
   }
 }
