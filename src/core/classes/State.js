@@ -23,7 +23,7 @@ class State {
    * Constructor for the State class.
    * @param {String} regionId - The id the region this state is bound to.
    */
-  constructor(regionId) {
+  constructor() {
     /**
      * An array of current and recently inactive
      *  Input objects related to a gesture.
@@ -63,16 +63,7 @@ class State {
       bindOnce
     ));
 
-    element.addEventListener(gesture.getId(), handler, capture);
-  }
-
-  /**
-   * Tracks the gesture to this state object to become uniquely identifiable.
-   * Useful for nested Regions.
-   * @param {Gesture} gesture - The gesture to track
-   */
-  assignGestureId(gesture) {
-    gesture.assignId();
+    element.addEventListener(gesture.id, handler, capture);
   }
 
   /**
