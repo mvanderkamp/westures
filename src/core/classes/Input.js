@@ -88,6 +88,18 @@ class Input {
   }
 
   /**
+   * @param {String} id - The identifier for each unique Gesture's progress.
+   *
+   * @return {Object} - The progress of the gesture.
+   */
+  getProgressOfGesture(id) {
+    if (!this.progress[id]) {
+      this.progress[id] = {};
+    }
+    return this.progress[id];
+  }
+
+  /**
    * @return {Number} The angle, in radians, between the initiating event for
    * this input and its current event.
    */
@@ -112,14 +124,6 @@ class Input {
   }
 
   /**
-   * @return {Boolean} true if the given element existed along the propagation
-   * path of this input's initiating event.
-   */
-  wasInitiallyInside(element) {
-    return this.initial.wasInside(element);
-  }
-
-  /**
    * Saves the given raw event in ZingEvent form as the current event for this
    * input, pushing the old current event into the previous slot, and tossing
    * out the old previous event.
@@ -133,15 +137,11 @@ class Input {
   }
 
   /**
-   * @param {String} id - The identifier for each unique Gesture's progress.
-   *
-   * @return {Object} - The progress of the gesture.
+   * @return {Boolean} true if the given element existed along the propagation
+   * path of this input's initiating event.
    */
-  getProgressOfGesture(id) {
-    if (!this.progress[id]) {
-      this.progress[id] = {};
-    }
-    return this.progress[id];
+  wasInitiallyInside(element) {
+    return this.initial.wasInside(element);
   }
 }
 
