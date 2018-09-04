@@ -42,19 +42,17 @@ class ZingEvent {
     this.type = util.normalizeEvent[ event.type ];
 
     /**
+     * The timestamp of the event in milliseconds elapsed since January 1, 1970,
+     * 00:00:00 UTC.
+     */
+    this.time = Date.now();
+
+    /**
      * The (x,y) coordinate of the event, wrapped in a Point2D.
      */
     const eventObj = getEventObject(event, identifier);
     this.point = new Point2D(eventObj.clientX, eventObj.clientY);
   }
-
-  /**
-   * Exposes easy access to the event's timestamp.
-   * 
-   * @return {Number} The time elapsed (in milliseconds) from the beginning of
-   * the current document's lifetime until the original event was created.
-   */
-  get timeStamp() { return this.originalEvent.timeStamp; }
 
   /**
    * Calculates the angle between this event and the given event.

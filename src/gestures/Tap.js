@@ -85,9 +85,10 @@ class Tap extends Gesture {
    * and end events.
    */
   end(inputs, state, element) {
-    const ended = state.endedInputs();
+    const now = Date.now();
+    const ended = state.getInputsInPhase('end');
     const timed = ended.filter( i => {
-      const tdiff = i.currentTime - i.startTime;
+      const tdiff = now - i.startTime;
       return tdiff <= this.maxDelay && tdiff >= this.minDelay;
     });
 

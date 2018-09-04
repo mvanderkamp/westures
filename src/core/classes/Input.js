@@ -64,12 +64,12 @@ class Input {
   /**
    * @return {Number} The timestamp of the most current event for this input.
    */
-  get currentTime() { return this.current.timeStamp; }
+  get currentTime() { return this.current.time; }
 
   /**
    * @return {Number} The timestamp of the initiating event for this input.
    */
-  get startTime()   { return this.initial.timeStamp; }
+  get startTime()   { return this.initial.time; }
 
   /**
    * Determines the distance between the current events for two inputs.
