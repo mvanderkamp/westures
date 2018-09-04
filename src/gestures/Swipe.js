@@ -93,7 +93,7 @@ class Swipe extends Gesture {
    * @return {null} - Swipe does not emit from a move.
    */
   move(inputs, state, element) {
-    const active = state.activeInputs();
+    const active = state.getInputsNotInPhase('end');
 
     if (active.length === this.numInputs) {
       active.forEach( input => {

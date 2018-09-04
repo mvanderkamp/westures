@@ -35,7 +35,7 @@ class Rotate extends Gesture {
   }
 
   start(inputs, state, element) {
-    const active = state.activeInputs();
+    const active = state.getInputsNotInPhase('end');
     if (active.length === this.numInputs) {
       const fst = active[0];
       const snd = active[1];
@@ -70,7 +70,7 @@ class Rotate extends Gesture {
    * last position and the current position.
    */
   move(inputs, state, element) {
-    const active = state.activeInputs();
+    const active = state.getInputsNotInPhase('end');
     if (active.length !== this.numInputs) return null;
 
     let currentPivot, initialPivot;

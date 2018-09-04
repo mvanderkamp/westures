@@ -65,15 +65,6 @@ class State {
   }
 
   /**
-   * Filters out any inputs whose current event type is 'end'.
-   *
-   * @return {Array} The active inputs.
-   */
-  activeInputs() {
-    return this.inputs.filter( i => i && i.phase !== 'end' );
-  }
-
-  /**
    * Creates a new binding with the given element and gesture object. If the
    * gesture object provided is unregistered, it's reference will be saved in as
    * a binding to be later referenced.
@@ -123,7 +114,7 @@ class State {
    * @param {Gesture} gesture - The gesture to track
    */
   assignGestureId(gesture) {
-    gesture.setId(this.regionId + '-' + this.numGestures++);
+    gesture.setId(`${this.regionId}-${this.numGestures++}`);
   }
 
   getInputsInPhase(phase) {
@@ -135,22 +126,13 @@ class State {
   }
 
   /**
-   * Filters out any inputs that aren't "move"ing.
-   *
-   * @return {Array} The moving inputs.
+   * Register the gesture to the current region.
+   * @param {Object} gesture - The gesture to register
+   * @param {String} key - The key to define the new gesture as.
    */
-  movingInputs() {
-    return this.inputs.filter( i => i && i.phase === 'move' );
-  }
-
-  /**
-   * Returns an array containing only the inputs whose current event type is
-   * 'start'.
-   *
-   * @return {Array} The starting inputs.
-   */
-  startingInputs() {
-    return this.inputs.filter( i => i && i.phase === 'start' );
+  registerGesture(gesture, key) {
+    this.assignGestureId(gesture);
+    this.registeredGestures[key] = gesture;
   }
 
   /**
@@ -218,16 +200,6 @@ class State {
 
     let eventType = event.constructor.name;
     update_fns[eventType].call(this, event);
-  }
-
-  /**
-   * Register the gesture to the current region.
-   * @param {Object} gesture - The gesture to register
-   * @param {String} key - The key to define the new gesture as.
-   */
-  registerGesture(gesture, key) {
-    this.assignGestureId(gesture);
-    this.registeredGestures[key] = gesture;
   }
 }
 

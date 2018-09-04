@@ -40,7 +40,7 @@ class Pinch extends Gesture {
    * @param {Array} inputs
    */
   start(inputs, state, element) {
-    const active = state.activeInputs();
+    const active = state.getInputsNotInPhase('end');
 
     if (!this.isValid(active, state, element)) return null;
     
@@ -61,7 +61,7 @@ class Pinch extends Gesture {
    * @return {Object | null} - Returns the distance in pixels between two inputs
    */
   move(inputs, state, element) {
-    const active = state.activeInputs();
+    const active = state.getInputsNotInPhase('end');
 
     if (active.length === DEFAULT_INPUTS) {
       const currentDistance = active[0].currentDistanceTo(active[1]);
