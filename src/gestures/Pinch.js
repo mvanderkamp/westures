@@ -4,9 +4,10 @@
  */
 
 const Gesture = require('./../core/classes/Gesture.js');
+const Point2D = require('./../core/classes/Point2D.js');
 const util    = require('./../core/util.js');
 
-const DEFAULT_INPUTS = 2;
+const REQUIRED_INPUTS = 2;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 /**
@@ -35,14 +36,13 @@ class Pinch extends Gesture {
    */
   start(inputs, state, element) {
     const active = state.getInputsNotInPhase('end');
-
-    if (!this.isValid(active, state, element)) return null;
+    if (active.length < REQUIRED_INPUTS) return null;
     
-    if (active.length === DEFAULT_INPUTS) {
-      // Store the progress in the first input.
-      const progress = active[0].getProgressOfGesture(this.getId());
-      progress.lastEmittedDistance = active[0].currentDistanceTo(active[1]);
-    }
+    const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
+    
+    // Progress is store on the first active input.
+    const progress = active[0].getProgressOfGesture(this.id);
+    progress.previousDistance = averageDistance;
   }
 
   /**
@@ -57,26 +57,41 @@ class Pinch extends Gesture {
   move(inputs, state, element) {
     const active = state.getInputsNotInPhase('end');
 
-    if (active.length === DEFAULT_INPUTS) {
-      const currentDistance = active[0].currentDistanceTo(active[1]);
-      const centerPoint = active[0].currentMidpointTo(active[1]);
+    const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 
-      // Progress is stored in the first input.
-      const progress = active[0].getProgressOfGesture(this.getId());
-      const change = currentDistance - progress.lastEmittedDistance;
+    const baseProgress = active[0].getProgressOfGesture(this.id);
+    const change = averageDistance - baseProgress.previousDistance;
 
-      if (Math.abs(change) >= this.threshold) {
-        progress.lastEmittedDistance = currentDistance;
-        return {
-          distance: currentDistance,
-          center: centerPoint,
-          change: change,
-        };
-      }
+    if (Math.abs(change) >= this.threshold) {
+      // Progress is store on the first active input.
+      const progress = active[0].getProgressOfGesture(this.id);
+      progress.previousDistance = averageDistance;
+
+      return {
+        distance: averageDistance,
+        midpoint,
+        change,
+      };
     }
-
-    return null;
   }
+
+  end(inputs, state, element) {
+    const active = state.getInputsNotInPhase('end');
+    if (active.length < REQUIRED_INPUTS) return null;
+    
+    const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
+
+    // Progress is store on the first active input.
+    const progress = active[0].getProgressOfGesture(this.id);
+    progress.previousDistance = averageDistance;
+  }
+}
+
+function getMidpointAndAverageDistance(inputs) {
+  const points = inputs.map( i => i.current.point );
+  const midpoint = Point2D.midpoint(points); 
+  const averageDistance = Point2D.averageDistanceTo(midpoint, points);
+  return { midpoint, averageDistance };
 }
 
 module.exports = Pinch;
