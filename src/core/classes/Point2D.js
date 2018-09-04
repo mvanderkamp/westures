@@ -127,4 +127,22 @@ class Point2D {
   }
 }
 
+Point2D.midpoint = function(points = []) {
+  if (points.length === 0) throw 'Need points to exist to calculate midpoint!';
+
+  const total = Point2D.total(points);
+  return new Point2D (
+    total.x / points.length,
+    total.y / points.length,
+  );
+}
+
+Point2D.total = function(points = []) {
+  return points.reduce( (total, current) => {
+    total.x += current.x;
+    total.y += current.y;
+    return total;
+  }, new Point2D(0,0) );
+}
+
 module.exports = Point2D;
