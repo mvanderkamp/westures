@@ -80,15 +80,16 @@ class Rotate extends Gesture {
   }
 }
 
-const CIRCLE = 2 * Math.PI;
+const HALF_PI = Math.PI / 2;
 function getAngleChange(curr, prev) {
   const diff = curr - prev;
-  if (diff <= (-Math.PI)) {
-    return diff + CIRCLE;
+
+  if (diff > HALF_PI) {
+    return diff - Math.PI;
   }
 
-  if (diff >= Math.PI) {
-    return diff - CIRCLE;
+  if (diff < -HALF_PI) {
+    return diff + Math.PI;
   }
 
   return diff;
