@@ -60,6 +60,7 @@ class Pinch extends Gesture {
    */
   move(inputs, state, element) {
     const active = state.getInputsNotInPhase('end');
+    if (active.length < REQUIRED_INPUTS) return null;
 
     const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 

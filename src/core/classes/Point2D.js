@@ -127,13 +127,6 @@ class Point2D {
   }
 }
 
-Point2D.averageAngleTo = function(pt, points = []) {
-  if (!(pt instanceof Point2D)) throw 'Cannot calculated angle to undefined';
-  if (points.length === 0) throw 'Need points to exist to calculate angle!';
-  const total = points.reduce( (angle, point) => angle + point.angleTo(pt), 0);
-  return total / points.length;
-}
-
 Point2D.averageDistanceTo = function(pt, points = []) {
   if (!(pt instanceof Point2D)) throw 'Cannot calculated distance to undefined';
   if (points.length === 0) throw 'Need points to exist to calculate distance!';

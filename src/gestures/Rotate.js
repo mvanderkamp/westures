@@ -22,17 +22,44 @@ class Rotate extends Gesture {
     super('rotate');
   }
 
+  getMidpointAndAverageAngle(inputs) {
+    const points = inputs.map( i => i.current.point );
+    const midpoint = Point2D.midpoint( points );
+    const totalChange = inputs.reduce( (total, input) => {
+      const angle = input.current.point.angleTo(midpoint);
+      const progress = input.getProgressOfGesture(this.id);
+      if (!progress.hasOwnProperty('previousAngle')) {
+        progress.previousAngle = angle;
+      }
+      const change = getAngleChange( angle, progress.previousAngle );
+      if (change > 1) debugger;
+      progress.previousAngle = angle;
+      return total + change;
+    }, 0);
+    const averageChange = totalChange / inputs.length;
+    return { midpoint, averageChange };
+    // const points = inputs.map( i => i.current.point );
+    // const midpoint = Point2D.midpoint(points); 
+    // const averageAngle = Point2D.averageAngleTo(midpoint, points);
+    // return { midpoint, averageAngle };
+  }
+
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
     if (active.length < REQUIRED_INPUTS) return null;
 
-    const { midpoint, averageAngle } = getMidpointAndAverageAngle(active);
-
     // Progress is stored on the first active input.
-    const progress = active[0].getProgressOfGesture(this.id);
-    progress.previousAngle = averageAngle;
-    progress.distance = 0;
-    progress.change = 0;
+    active.forEach( input => {
+      const progress = input.getProgressOfGesture(this.id);
+      delete progress.previousAngle;
+      progress.distance = 0;
+      progress.change = 0;
+    });
+    // const progress = active[0].getProgressOfGesture(this.id);
+    // // progress.previousAngle = averageAngle;
+    // delete progress.previousAngle;
+    // progress.distance = 0;
+    // progress.change = 0;
   }
 
   start(inputs, state, element) {
@@ -58,17 +85,19 @@ class Rotate extends Gesture {
    */
   move(inputs, state, element) {
     const active = state.getInputsNotInPhase('end');
+    if (active.length < REQUIRED_INPUTS) return null;
 
-    const { midpoint, averageAngle } = getMidpointAndAverageAngle(active);
+    const { midpoint, averageChange } = this.getMidpointAndAverageAngle(active);
 
     const progress = active[0].getProgressOfGesture(this.id);
+    progress.change = averageChange;
+    progress.distance += averageChange;
     // progress.change = averageAngle - progress.previousAngle;
-    progress.change = getAngleChange(averageAngle, progress.previousAngle);
-    progress.distance += progress.change;
-    progress.previousAngle = averageAngle;
+    // progress.change = getAngleChange(averageAngle, progress.previousAngle);
+    // progress.distance += progress.change;
+    // progress.previousAngle = averageAngle;
 
     return {
-      angle: averageAngle,
       distanceFromOrigin: progress.distance,
       distanceFromLast: progress.change,
     };
@@ -81,6 +110,7 @@ class Rotate extends Gesture {
 }
 
 const HALF_PI = Math.PI / 2;
+const MINUS_HALF_PI = -HALF_PI;
 function getAngleChange(curr, prev) {
   const diff = curr - prev;
 
@@ -88,18 +118,11 @@ function getAngleChange(curr, prev) {
     return diff - Math.PI;
   }
 
-  if (diff < -HALF_PI) {
+  if (diff < MINUS_HALF_PI) {
     return diff + Math.PI;
   }
 
   return diff;
-}
-
-function getMidpointAndAverageAngle(inputs) {
-  const points = inputs.map( i => i.current.point );
-  const midpoint = Point2D.midpoint(points); 
-  const averageAngle = Point2D.averageAngleTo(midpoint, points);
-  return { midpoint, averageAngle };
 }
 
 module.exports = Rotate;
