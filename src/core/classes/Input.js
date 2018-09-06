@@ -72,6 +72,13 @@ class Input {
   get startTime()   { return this.initial.time; }
 
   /**
+   * @return {Number} The angle in radians between the inputs' current events.
+   */
+  currentAngleTo(input) {
+    return this.current.angleTo(input.current);
+  }
+
+  /**
    * Determines the distance between the current events for two inputs.
    *
    * @return {Number} The distance between the inputs' current events.
