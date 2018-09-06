@@ -27,34 +27,8 @@ const normalizeEvent = Object.freeze({
 /* normalizeEvent*/
 
 /**
- * Returns the farthest right input
- *
- * @param {Array} inputs
- *
- * @return {Object}
+ * @return {Array} Identifiers of the mouse buttons used.
  */
-function getRightMostInput(inputs) {
-  let rightMost = null;
-  let distance = Number.MIN_VALUE;
-  inputs.forEach((input) => {
-    if (input.initial.point.x > distance) {
-      rightMost = input;
-    }
-  });
-  return rightMost;
-}
-
-/**
- * Determines is the value is an integer and not a floating point
- *
- * @param {Mixed} value
- *
- * @return {boolean}
- */
-function isInteger(value) {
-  return (typeof value === 'number') && (value % 1 === 0);
-}
-
 function getMouseButtons({ buttons }) {
   const btns = [];
   for (let mask = 1; mask < 32; mask << 1) {
@@ -119,12 +93,10 @@ function preventDefault(event) {
 
 module.exports = Object.freeze({
   normalizeEvent,
-  isInteger,
   preventDefault,
   removeMSPreventDefault,
   setMSPreventDefault,
   getPathIndex,
   getPropagationPath,
-  getRightMostInput,
   getMouseButtons,
 });
