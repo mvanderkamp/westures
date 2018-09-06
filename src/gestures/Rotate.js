@@ -22,28 +22,14 @@ class Rotate extends Gesture {
     super('rotate');
   }
 
-  getMidpointAndAverageAngle(inputs) {
-    const points = inputs.map( i => i.current.point );
-    const midpoint = Point2D.midpoint( points );
-    const totalChange = inputs.reduce( (total, input) => {
-      const angle = input.current.point.angleTo(midpoint);
-      const progress = input.getProgressOfGesture(this.id);
-      if (!progress.hasOwnProperty('previousAngle')) {
-        progress.previousAngle = angle;
-      }
-      const change = getAngleChange( angle, progress.previousAngle );
-      if (change > 1) debugger;
-      progress.previousAngle = angle;
-      return total + change;
-    }, 0);
-    const averageChange = totalChange / inputs.length;
-    return { midpoint, averageChange };
-    // const points = inputs.map( i => i.current.point );
-    // const midpoint = Point2D.midpoint(points); 
-    // const averageAngle = Point2D.averageAngleTo(midpoint, points);
-    // return { midpoint, averageAngle };
-  }
-
+  /**
+   * Initialize the progress of the gesture.
+   *
+   * Only runs if the number of active inputs is the expected amount.
+   *
+   * @param {State} state - The State object from which the list of inputs will
+   * be retrieved.
+   */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
     if (active.length !== REQUIRED_INPUTS) return null;
@@ -56,20 +42,31 @@ class Rotate extends Gesture {
     progress.change = 0;
   }
 
+  /**
+   * Event hook for the start of a gesture.
+   *
+   * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current listener.
+   * @param {Element} element - The element associated to the binding.
+   *
+   * @return {null}
+   */
   start(inputs, state, element) {
     this.initializeProgress(state);
   }
 
   /**
-   * move() - Event hook for the move of a gesture. Obtains the midpoint of two
-   * the two inputs and calculates the projection of the right most input along
-   * a unit circle to obtain an angle. This angle is compared to the previously
+   * Event hook for the move of a gesture. Obtains the midpoint of two the two
+   * inputs and calculates the projection of the right most input along a unit
+   * circle to obtain an angle. This angle is compared to the previously
    * calculated angle to output the change of distance, and is compared to the
    * initial angle to output the distance from the initial angle to the current
    * angle.
+   *
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current listener.
    * @param {Element} element - The element associated to the binding.
+   *
    * @return {null} - null if this event did not occur
    * @return {Object} obj.angle - The current angle along the unit circle
    * @return {Object} obj.distanceFromOrigin - The angular distance travelled
@@ -98,6 +95,15 @@ class Rotate extends Gesture {
   }
   /* move*/
 
+  /**
+   * Event hook for the end of a gesture.
+   *
+   * @param {Array} inputs - The array of Inputs on the screen
+   * @param {Object} state - The state object of the current listener.
+   * @param {Element} element - The element associated to the binding.
+   *
+   * @return {null}
+   */
   end(inputs, state, element) {
     this.initializeProgress(state);
   }
