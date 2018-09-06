@@ -2,7 +2,6 @@
  * @file Region.js
  */
 
-const Binder  = require('./Binder.js');
 const Gesture = require('./Gesture.js');
 const arbiter = require('./../arbiter.js');
 const State   = require('./State.js');

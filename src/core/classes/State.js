@@ -3,11 +3,6 @@
  */
 
 const Gesture = require('./Gesture.js');
-const Pan     = require('./../../gestures/Pan.js');
-const Pinch   = require('./../../gestures/Pinch.js');
-const Rotate  = require('./../../gestures/Rotate.js');
-const Swipe   = require('./../../gestures/Swipe.js');
-const Tap     = require('./../../gestures/Tap.js');
 const Binding = require('./Binding.js');
 const Input   = require('./Input.js');
 const util    = require('./../util.js');
