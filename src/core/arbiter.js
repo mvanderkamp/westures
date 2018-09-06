@@ -36,10 +36,7 @@ function arbiter(event, region) {
   const bindings = state.retrieveBindingsByInitialPos();
   if (bindings.length > 0) {
     if (region.preventDefault) {
-      util.setMSPreventDefault(region.element);
-      util.preventDefault(event);
-    } else {
-      util.removeMSPreventDefault(region.element);
+      event.preventDefault();
     }
 
     const candidates = interpreter(bindings, event, state);
