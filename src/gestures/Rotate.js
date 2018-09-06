@@ -46,20 +46,14 @@ class Rotate extends Gesture {
 
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
+    if (active.length !== REQUIRED_INPUTS) return null;
 
     // Progress is stored on the first active input.
-    active.forEach( input => {
-      const progress = input.getProgressOfGesture(this.id);
-      delete progress.previousAngle;
-      progress.distance = 0;
-      progress.change = 0;
-    });
-    // const progress = active[0].getProgressOfGesture(this.id);
-    // // progress.previousAngle = averageAngle;
-    // delete progress.previousAngle;
-    // progress.distance = 0;
-    // progress.change = 0;
+    const angle = active[0].currentAngleTo(active[1]);
+    const progress = active[0].getProgressOfGesture(this.id);
+    progress.previousAngle = angle;
+    progress.distance = 0;
+    progress.change = 0;
   }
 
   start(inputs, state, element) {
@@ -85,19 +79,19 @@ class Rotate extends Gesture {
    */
   move(inputs, state, element) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
+    if (active.length !== REQUIRED_INPUTS) return null;
 
-    const { midpoint, averageChange } = this.getMidpointAndAverageAngle(active);
+    const pivot = active[0].currentMidpointTo(active[1]);
+    const angle = active[0].currentAngleTo(active[1]);
 
     const progress = active[0].getProgressOfGesture(this.id);
-    progress.change = averageChange;
-    progress.distance += averageChange;
-    // progress.change = averageAngle - progress.previousAngle;
-    // progress.change = getAngleChange(averageAngle, progress.previousAngle);
-    // progress.distance += progress.change;
-    // progress.previousAngle = averageAngle;
+    progress.change = angle - progress.previousAngle;
+    progress.distance += progress.change;
+    progress.previousAngle = angle;
 
     return {
+      angle,
+      pivot,
       distanceFromOrigin: progress.distance,
       distanceFromLast: progress.change,
     };
@@ -109,20 +103,5 @@ class Rotate extends Gesture {
   }
 }
 
-const HALF_PI = Math.PI / 2;
-const MINUS_HALF_PI = -HALF_PI;
-function getAngleChange(curr, prev) {
-  const diff = curr - prev;
-
-  if (diff > HALF_PI) {
-    return diff - Math.PI;
-  }
-
-  if (diff < MINUS_HALF_PI) {
-    return diff + Math.PI;
-  }
-
-  return diff;
-}
-
 module.exports = Rotate;
+
