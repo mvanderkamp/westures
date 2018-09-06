@@ -105,33 +105,8 @@ class Region {
    *
    * @return {Object} - a chainable object that has the same function as bind.
    */
-  bind(element, gesture, handler, capture, bindOnce) {
-    if (!element || (element && !element.tagName)) {
-      throw 'Bind must contain an element';
-    }
-
-    bindOnce = (typeof bindOnce !== 'undefined') ? bindOnce : false;
-    if (!gesture) {
-      return new Binder(element, bindOnce, this.state);
-    } else {
-      this.state.addBinding(element, gesture, handler, capture, bindOnce);
-    }
-  }
-
-  /**
-   * Bind an element and sets up actions to remove the binding once
-   * it has been emitted for the first time.
-   * 1. bind(element) - chainable
-   * 2. bind(element, gesture, handler, [capture])
-   * @param {Element} element - The element object.
-   * @param {String|Object} gesture - Gesture key, or a Gesture object.
-   * @param {Function} handler - The function to execute when an
-   *  event is emitted.
-   * @param {Boolean} capture - capture/bubble
-   * @return {Object} - a chainable object that has the same function as bind.
-   */
-  bindOnce(element, gesture, handler, capture) {
-    this.bind(element, gesture, handler, capture, true);
+  bind(element, gesture, handler, capture, bindOnce = false) {
+    this.state.addBinding(element, gesture, handler, capture, bindOnce);
   }
 
   /**
