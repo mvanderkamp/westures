@@ -21,7 +21,10 @@ function interpreter(bindings, event, state) {
 
   const candidates = bindings.reduce( (accumulator, binding) => {
     const data = binding.gesture[evType](state.inputs, state, binding.element);
-    if (data) accumulator.push({ binding, data, events });
+    if (data) {
+      data.events = events;
+      accumulator.push({ binding, data });
+    }
     return accumulator;
   }, []);
 

@@ -26,11 +26,13 @@ class Binding {
      * @type {Element}
      */
     this.element = element;
+
     /**
      * A instance of the Gesture type.
      * @type {Gesture}
      */
     this.gesture = gesture;
+
     /**
      * The function handler to execute when a gesture is
      * recognized on the associated element.
@@ -50,6 +52,26 @@ class Binding {
      * @type {Boolean}
      */
     this.bindOnce = bindOnce;
+
+    // Start listening immediately.
+    this.listen();
+  }
+
+  dispatch(data) {
+    const emittable = new CustomEvent(this.gesture.id, {
+      detail: data,
+      bubbles: true,
+      cancelable: true,
+    });
+    this.element.dispatchEvent(emittable);
+  }
+
+  listen() {
+    this.element.addEventListener(
+      this.gesture.id,
+      this.handler,
+      this.capture
+    );
   }
 }
 

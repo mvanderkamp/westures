@@ -50,15 +50,9 @@ class State {
       throw new Error('Parameter for the gesture is not of a Gesture type');
     }
 
-    this.bindings.push(new Binding(
-      element, 
-      gesture,
-      handler, 
-      capture, 
-      bindOnce
-    ));
-
-    element.addEventListener(gesture.id, handler, capture);
+    this.bindings.push(
+      new Binding( element, gesture, handler, capture, bindOnce )
+    );
   }
 
   /**

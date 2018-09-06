@@ -3,7 +3,6 @@
  * Contains logic for the dispatcher
  */
 
-const dispatcher  = require('./dispatcher.js');
 const interpreter = require('./interpreter.js');
 const util        = require('./util.js');
 
@@ -41,12 +40,12 @@ function arbiter(event, region) {
 
     const candidates = interpreter(bindings, event, state);
 
-    /* Determine the deepest path index to emit the event
-     from, to avoid duplicate events being fired. */
+    // Determine the deepest path index to emit the event from, to avoid
+    // duplicate events being fired.
     const toBeDispatched = getDeepestDispatches(event, candidates);
 
-    Object.values(toBeDispatched).forEach( gesture => {
-      dispatcher(gesture.binding, gesture.data, gesture.events);
+    Object.values(toBeDispatched).forEach( ({ binding, data }) => {
+      binding.dispatch(data);
     });
   }
 
