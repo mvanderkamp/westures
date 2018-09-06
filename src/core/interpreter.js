@@ -20,7 +20,7 @@ function interpreter(bindings, event, state) {
   const events = state.inputs.map( input => input.current );
 
   const candidates = bindings.reduce( (accumulator, binding) => {
-    const data = binding.gesture[evType](state.inputs, state, binding.element);
+    const data = binding.gesture[evType](state.inputs, state);
     if (data) {
       data.events = events;
       accumulator.push({ binding, data });

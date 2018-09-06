@@ -49,7 +49,7 @@ class Gesture {
    * @param {Element} element - The element associated to the binding.
    * @return {null|Object}  - Default of null
    */
-  start(inputs, state, element) {
+  start(inputs, state) {
     return null;
   }
 
@@ -60,7 +60,7 @@ class Gesture {
    * @param {Element} element - The element associated to the binding.
    * @return {null|Object} - Default of null
    */
-  move(inputs, state, element) {
+  move(inputs, state) {
     return null;
   }
 

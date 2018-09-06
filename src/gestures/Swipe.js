@@ -84,10 +84,9 @@ class Swipe extends Gesture {
    * and the time of it's event on a stack.
    * @param {Array} inputs - The array of Inputs on the screen.
    * @param {Object} state - The state object of the current region.
-   * @param {Element} element - The element associated to the binding.
    * @return {null} - Swipe does not emit from a move.
    */
-  move(inputs, state, element) {
+  move(inputs, state) {
     const active = state.getInputsNotInPhase('end');
 
     if (active.length === this.numInputs) {
@@ -121,7 +120,7 @@ class Swipe extends Gesture {
    * @return {null|Object} - null if the gesture is not to be emitted,
    *  Object with information otherwise.
    */
-  end(inputs, state, element) {
+  end(inputs, state) {
     const ended = state.getInputsInPhase('end');
 
     if (ended.length === this.numInputs) {

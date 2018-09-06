@@ -47,11 +47,10 @@ class Rotate extends Gesture {
    *
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current listener.
-   * @param {Element} element - The element associated to the binding.
    *
    * @return {null}
    */
-  start(inputs, state, element) {
+  start(inputs, state) {
     this.initializeProgress(state);
   }
 
@@ -65,7 +64,6 @@ class Rotate extends Gesture {
    *
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current listener.
-   * @param {Element} element - The element associated to the binding.
    *
    * @return {null} - null if this event did not occur
    * @return {Object} obj.angle - The current angle along the unit circle
@@ -74,7 +72,7 @@ class Rotate extends Gesture {
    * @return {Object} obj.distanceFromLast - The change of angle between the
    * last position and the current position.
    */
-  move(inputs, state, element) {
+  move(inputs, state) {
     const active = state.getInputsNotInPhase('end');
     if (active.length !== REQUIRED_INPUTS) return null;
 
@@ -100,11 +98,10 @@ class Rotate extends Gesture {
    *
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current listener.
-   * @param {Element} element - The element associated to the binding.
    *
    * @return {null}
    */
-  end(inputs, state, element) {
+  end(inputs, state) {
     this.initializeProgress(state);
   }
 }

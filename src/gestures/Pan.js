@@ -47,7 +47,7 @@ class Pan extends Gesture {
    * so it can invalidate any end events.
    * @param {Array} inputs
    */
-  start(inputs, state, element) {
+  start(inputs, state) {
     const starting = state.getInputsInPhase('start');
     starting.forEach( input => {
       const progress = input.getProgressOfGesture(this.id);
@@ -62,10 +62,9 @@ class Pan extends Gesture {
    * the gesture has fired at least once.
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current region.
-   * @param {Element} element - The element associated to the binding.
    * @return {Object} - Returns the distance in pixels between the two inputs.
    */
-  move(inputs, state, element) {
+  move(inputs, state) {
     const active = state.getInputsNotInPhase('end');
 
     if (active.length !== this.numInputs) return null;
@@ -100,7 +99,7 @@ class Pan extends Gesture {
    * @return {null} - null if the gesture is not to be emitted,
    *  Object with information otherwise.
    */
-  end(inputs, state, element) {
+  end(inputs, state) {
     const active = state.getInputsNotInPhase('end');
     active.forEach( input => {
       const progress = input.getProgressOfGesture(this.id);

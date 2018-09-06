@@ -45,7 +45,7 @@ class Pinch extends Gesture {
    * gesture and stores it in the first input for reference events.
    * @param {Array} inputs
    */
-  start(inputs, state, element) {
+  start(inputs, state) {
     this.initializeProgress(state);
   }
 
@@ -55,10 +55,9 @@ class Pinch extends Gesture {
    *  to the current distance and the last distance.
    * @param {Array} inputs - The array of Inputs on the screen.
    * @param {Object} state - The state object of the current region.
-   * @param {Element} element - The element associated to the binding.
    * @return {Object | null} - Returns the distance in pixels between two inputs
    */
-  move(inputs, state, element) {
+  move(inputs, state) {
     const active = state.getInputsNotInPhase('end');
     if (active.length < REQUIRED_INPUTS) return null;
 
@@ -80,7 +79,7 @@ class Pinch extends Gesture {
     }
   }
 
-  end(inputs, state, element) {
+  end(inputs, state) {
     this.initializeProgress(state);
   }
 }
