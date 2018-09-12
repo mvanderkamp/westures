@@ -39,6 +39,19 @@ function getMouseButtons({ buttons }) {
 }
 
 /**
+ * Retrieve the index of the element inside the path array.
+ *
+ * @param {Array} path
+ * @param {Element} element
+ *
+ * @return {Number} The index of the element, or the path length if not found.
+ */
+function getPathIndex(path, element) {
+  const index = path.indexOf(element);
+  return index < 0 ? path.length : index;
+}
+
+/**
  * In case event.composedPath() is not available.
  *
  * @param {Event} event
@@ -58,19 +71,6 @@ function getPropagationPath(event) {
   path.push(window);
 
   return path;
-}
-
-/**
- * Retrieve the index of the element inside the path array.
- *
- * @param {Array} path
- * @param {Element} element
- *
- * @return {Number} The index of the element, or the path length if not found.
- */
-function getPathIndex(path, element) {
-  const index = path.indexOf(element);
-  return index < 0 ? path.length : index;
 }
 
 function setMSPreventDefault(element) {
