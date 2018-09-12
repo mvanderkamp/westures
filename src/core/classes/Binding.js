@@ -73,6 +73,14 @@ class Binding {
       this.capture
     );
   }
+
+  unbind() {
+    this.element.removeEventListener(
+      this.gesture.id,
+      this.handler,
+      this.capture
+    );
+  }
 }
 
 module.exports = Binding;
