@@ -28,6 +28,13 @@ class State {
   }
 
   /**
+   * @return {Array} Current event for all inputs.
+   */
+  getCurrentEvents() {
+    return this.inputs.map( i => i && i.current );
+  }
+
+  /**
    * @return {Array} Inputs in the given phase.
    */
   getInputsInPhase(phase) {

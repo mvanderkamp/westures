@@ -4,7 +4,6 @@
 
 const Binding = require('./Binding.js');
 const Gesture = require('./Gesture.js');
-const interpreter = require('../interpreter.js');
 const util    = require('../util.js');
 const State   = require('./State.js');
 
@@ -139,12 +138,48 @@ class Region {
   evaluate(event, bindings) {
     if (this.preventDefault) event.preventDefault();
 
-    const candidates = interpreter(bindings, event, this.state);
+    const candidates = this.interpret(event, bindings);
 
     // Determine the deepest path index to emit the event from, to avoid
     // duplicate events being fired.
     this.getDeepestDispatches(event, candidates)
       .forEach( ({ binding, data }) => binding.dispatch(data) );
+  }
+
+  getDeepestDispatches(event, candidates) {
+    const dispatches = {};
+    const path = util.getPropagationPath(event);
+
+    candidates.forEach( candidate => {
+      const id = candidate.binding.gesture.id;
+      if (dispatches[id]) {
+        const curr = util.getPathIndex(path, candidate.binding.element);
+        const prev = util.getPathIndex(path, dispatches[id].binding.element);
+        if (curr < prev) {
+          dispatches[id] = candidate;
+        }
+      } else {
+        dispatches[id] = candidate;
+      }
+    });
+
+    return Object.values(dispatches);
+  }
+
+  interpret(event, bindings) {
+    const evType = util.normalizeEvent[ event.type ];
+    const events = this.state.getCurrentEvents();
+
+    const candidates = bindings.reduce( (accumulator, binding) => {
+      const data = binding.gesture[evType](this.state.inputs, this.state);
+      if (data) {
+        data.events = events;
+        accumulator.push({ binding, data });
+      }
+      return accumulator;
+    }, []);
+
+    return candidates;
   }
 
   /**
@@ -170,26 +205,6 @@ class Region {
     this.bindings.push(
       new Binding( element, gesture, handler, capture, bindOnce )
     );
-  }
-
-  getDeepestDispatches(event, candidates) {
-    const dispatches = {};
-    const path = util.getPropagationPath(event);
-
-    candidates.forEach( candidate => {
-      const id = candidate.binding.gesture.id;
-      if (dispatches[id]) {
-        const curr = util.getPathIndex(path, candidate.binding.element);
-        const prev = util.getPathIndex(path, dispatches[id].binding.element);
-        if (curr < prev) {
-          dispatches[id] = candidate;
-        }
-      } else {
-        dispatches[id] = candidate;
-      }
-    });
-
-    return Object.values(dispatches);
   }
 
   /**
