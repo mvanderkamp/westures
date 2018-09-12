@@ -170,13 +170,13 @@ class Region {
     const evType = util.normalizeEvent[ event.type ];
     const events = this.state.getCurrentEvents();
 
-    const candidates = bindings.reduce( (accumulator, binding) => {
+    const candidates = bindings.reduce( (candidates, binding) => {
       const data = binding.gesture[evType](this.state.inputs, this.state);
       if (data) {
         data.events = events;
-        accumulator.push({ binding, data });
+        candidates.push({ binding, data });
       }
-      return accumulator;
+      return candidates;
     }, []);
 
     return candidates;
