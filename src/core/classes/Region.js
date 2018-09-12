@@ -137,14 +137,14 @@ class Region {
   }
 
   evaluate(event, bindings) {
-      if (this.preventDefault) event.preventDefault();
+    if (this.preventDefault) event.preventDefault();
 
-      const candidates = interpreter(bindings, event, this.state);
+    const candidates = interpreter(bindings, event, this.state);
 
-      // Determine the deepest path index to emit the event from, to avoid
-      // duplicate events being fired.
-      this.getDeepestDispatches(event, candidates)
-        .forEach( ({ binding, data }) => binding.dispatch(data) );
+    // Determine the deepest path index to emit the event from, to avoid
+    // duplicate events being fired.
+    this.getDeepestDispatches(event, candidates)
+      .forEach( ({ binding, data }) => binding.dispatch(data) );
   }
 
   /**
@@ -176,9 +176,6 @@ class Region {
     const dispatches = {};
     const path = util.getPropagationPath(event);
 
-    console.group();
-    console.log(candidates);
-
     candidates.forEach( candidate => {
       const id = candidate.binding.gesture.id;
       if (dispatches[id]) {
@@ -192,8 +189,6 @@ class Region {
       }
     });
 
-    console.log(dispatches);
-    console.groupEnd();
     return Object.values(dispatches);
   }
 
