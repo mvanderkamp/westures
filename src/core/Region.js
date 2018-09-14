@@ -133,31 +133,7 @@ class Region {
     if (this.preventDefault) event.preventDefault();
 
     const candidates = this.interpret(event, bindings);
-
-    // Determine the deepest path index to emit the event from, to avoid
-    // duplicate events being fired.
-    this.getDeepestDispatches(event, candidates)
-      .forEach( ({ binding, data }) => binding.dispatch(data) );
-  }
-
-  getDeepestDispatches(event, candidates) {
-    const dispatches = {};
-    const path = util.getPropagationPath(event);
-
-    candidates.forEach( candidate => {
-      const id = candidate.binding.gesture.id;
-      if (dispatches[id]) {
-        const curr = util.getPathIndex(path, candidate.binding.element);
-        const prev = util.getPathIndex(path, dispatches[id].binding.element);
-        if (curr < prev) {
-          dispatches[id] = candidate;
-        }
-      } else {
-        dispatches[id] = candidate;
-      }
-    });
-
-    return Object.values(dispatches);
+    candidates.forEach( ({ binding, data }) => binding.dispatch(data) );
   }
 
   interpret(event, bindings) {
