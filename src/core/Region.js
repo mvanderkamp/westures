@@ -36,22 +36,16 @@ const TOUCH_EVENTS = [
 class Region {
   /**
    * Constructor function for the Region class.
-   * @param {Element} element - The element to capture all
-   *  window events in that region to feed into ZingTouch.
-   * @param {boolean} [capture=false] - Whether the region listens for
-   *  captures or bubbles.
+   *
+   * @param {Element} element - The element to capture all window events in that
+   * region to feed into ZingTouch.
+   * @param {boolean} [capture=false] - Whether the region listens for captures
+   * or bubbles.
    * @param {boolean} [preventDefault=true] - Whether the default browser
-   *  functionality should be disabled;
+   * functionality should be disabled;
    * @param {Number} id - The id of the region, assigned by the ZingTouch object
    */
-  constructor(element, capture = false, preventDefault = true, id) {
-    /**
-     * The identifier for the Region. This is assigned by the ZingTouch object
-     * and is used to hash gesture id for uniqueness.
-     * @type {Number}
-     */
-    this.id = id;
-
+  constructor(element, capture = false, preventDefault = true) {
     /**
      * The list of relations between elements, their gestures, and the handlers.
      * @type {Binding}
@@ -82,7 +76,7 @@ class Region {
      * Keeps track of inputs and bindings.
      * @type {State}
      */
-    this.state = new State(id);
+    this.state = new State();
 
     /**
      * The function which will be bound as an event listener for interaction

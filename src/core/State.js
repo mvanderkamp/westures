@@ -16,7 +16,6 @@ const DEFAULT_MOUSE_ID = 0;
 class State {
   /**
    * Constructor for the State class.
-   * @param {String} regionId - The id the region this state is bound to.
    */
   constructor() {
     /**

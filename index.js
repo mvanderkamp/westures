@@ -11,28 +11,19 @@ const Rotate  = require('./src/gestures/Rotate.js');
 const Swipe   = require('./src/gestures/Swipe.js');
 const Tap     = require('./src/gestures/Tap.js');
 
-// Currently keeping track of all regions.
-const regions = [];
-
 /**
  * The global API interface for ZingTouch. Contains a constructor for the
  * Region Object, and constructors for each predefined Gesture.
  * @type {Object}
  * @namespace ZingTouch
  */
-const ZingTouch = {
+module.exports = {
   Gesture,
   Pan,
   Pinch,
   Rotate,
   Swipe,
   Tap,
-  Region: function(element, capture, preventDefault) {
-    const id = regions.length;
-    const region = new Region(element, capture, preventDefault, id);
-    regions.push(region);
-    return region;
-  },
+  Region,
 };
 
-module.exports = ZingTouch;
