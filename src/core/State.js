@@ -5,7 +5,7 @@
 const Gesture = require('./Gesture.js');
 const Binding = require('./Binding.js');
 const Input   = require('./Input.js');
-const util    = require('./../util.js');
+const util    = require('./util.js');
 
 const DEFAULT_MOUSE_ID = 0;
 

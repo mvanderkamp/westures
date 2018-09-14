@@ -4,8 +4,8 @@
  * @file Region.spec..js
  * Tests Region class
  */
-const Region = require('./../../../src/core/classes/Region.js');
-const Binder = require('./../../../src/core/classes/Binder.js');
+const Region = require('./../../../src/core/Region.js');
+const Binder = require('./../../../src/core/Binder.js');
 
 /** @test {Region} */
 describe('Region', function() {

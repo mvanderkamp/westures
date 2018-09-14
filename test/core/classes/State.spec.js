@@ -1,6 +1,6 @@
 'use strict';
 
-const State   = require('./../../../src/core/classes/State.js');
+const State   = require('./../../../src/core/State.js');
 const Tap     = require('./../../../src/gestures/Tap.js');
 
 describe('constructor()', () => {

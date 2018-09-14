@@ -4,7 +4,7 @@
 
 const Binding = require('./Binding.js');
 const Gesture = require('./Gesture.js');
-const util    = require('../util.js');
+const util    = require('./util.js');
 const State   = require('./State.js');
 
 const POINTER_EVENTS = [

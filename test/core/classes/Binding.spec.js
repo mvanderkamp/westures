@@ -4,8 +4,8 @@
  * @file Binding.js
  * Tests Binding class
  */
-const Binding = require('./../../../src/core/classes/Binding.js');
-const Gesture = require('./../../../src/core/classes/Gesture.js');
+const Binding = require('./../../../src/core/Binding.js');
+const Gesture = require('./../../../src/core/Gesture.js');
 
 /** @test {Binding} */
 describe('Binding', function() {

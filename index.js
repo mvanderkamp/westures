@@ -3,8 +3,8 @@
  * Main object containing API methods and Gesture constructors
  */
 
-const Region  = require('./src/core/classes/Region.js');
-const Gesture = require('./src/core/classes/Gesture.js');
+const Region  = require('./src/core/Region.js');
+const Gesture = require('./src/core/Gesture.js');
 const Pan     = require('./src/gestures/Pan.js');
 const Pinch   = require('./src/gestures/Pinch.js');
 const Rotate  = require('./src/gestures/Rotate.js');

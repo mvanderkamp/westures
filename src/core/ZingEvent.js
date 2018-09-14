@@ -3,7 +3,7 @@
  * Contains logic for ZingEvents
  */
 
-const util    = require('../util.js');
+const util    = require('./util.js');
 const Point2D = require('./Point2D.js');
 
 /**

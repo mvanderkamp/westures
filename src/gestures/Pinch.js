@@ -3,8 +3,8 @@
  * Contains the abstract Pinch class
  */
 
-const Gesture = require('./../core/classes/Gesture.js');
-const Point2D = require('./../core/classes/Point2D.js');
+const Gesture = require('./../core/Gesture.js');
+const Point2D = require('./../core/Point2D.js');
 const util    = require('./../core/util.js');
 
 const REQUIRED_INPUTS = 2;
