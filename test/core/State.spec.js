@@ -29,17 +29,10 @@ describe('prototype methods', () => {
     delete state.inputs[4];
   });
 
-  describe('addBinding(element, gesture, handler, capture, bindOnce)', () => {
-    test('Adds a binding to a gesture instance', () => {
-      state.addBinding(document.body, new Tap(), () => {}, false, false);
-      expect(state.bindings.length).toBe(1);
-    });
-  });
-
   describe('getInputsInPhase(phase)', () => {
-    describe('phase: start', () => {
+    describe('start', () => {
       let starts;
-      beforeAll(() => {
+      beforeEach(() => {
         starts = state.getInputsInPhase('start');
       });
 
@@ -62,7 +55,7 @@ describe('prototype methods', () => {
 
     describe('phase: move', () => {
       let moves;
-      beforeAll(() => {
+      beforeEach(() => {
         moves = state.getInputsInPhase('move');
       });
 
@@ -84,7 +77,7 @@ describe('prototype methods', () => {
 
     describe('phase: end', () => {
       let ends;
-      beforeAll(() => {
+      beforeEach(() => {
         ends = state.getInputsInPhase('end');
       });
 
@@ -107,7 +100,7 @@ describe('prototype methods', () => {
   describe('getInputsNotInPhase(phase)', () => {
     describe('phase: start', () => {
       let starts;
-      beforeAll(() => {
+      beforeEach(() => {
         starts = state.getInputsNotInPhase('start');
       });
 
@@ -130,7 +123,7 @@ describe('prototype methods', () => {
 
     describe('phase: move', () => {
       let moves;
-      beforeAll(() => {
+      beforeEach(() => {
         moves = state.getInputsNotInPhase('move');
       });
 
@@ -154,7 +147,7 @@ describe('prototype methods', () => {
 
     describe('phase: end', () => {
       let ends;
-      beforeAll(() => {
+      beforeEach(() => {
         ends = state.getInputsNotInPhase('end');
       });
 

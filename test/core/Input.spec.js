@@ -11,41 +11,79 @@ describe('Module exists', () => {
   expect(Input).toBeDefined();
 });
 
+let event = {
+  type: 'mousedown',
+  clientX: 42,
+  clientY: 43,
+  target: document
+};
+
+// let event = new MouseEvent('mousedown');
+// document.dispatchEvent(event);
+
 /** @test {Input} */
 describe('constructor', function() {
-  let event = document.createEvent('Event');
-  let input = new Input(event, 1234);
+  let input;
+  test('Can be instantiated', () => {
+    expect(() => input = new Input(event, 1234)).not.toThrow();
+  });
 
-  test('should have an initial event', function() {
+  test('has an initial event', function() {
     expect(input.initial).toBeInstanceOf(ZingEvent);
   });
 
-  test('should have an current event', function() {
+  test('has a current event', function() {
     expect(input.current).toBeInstanceOf(ZingEvent);
     expect(input.current).toEqual(input.current);
   });
 
-  test('should have an previous event', function() {
+  test('has a previous event', function() {
     expect(input.previous).toBeInstanceOf(ZingEvent);
     expect(input.previous).toEqual(input.current);
   });
 });
 
-/** @test {Input.update} */
-describe('Input.update', function() {
-  let event = document.createEvent('Event');
+describe('getters', () => {
   let input = new Input(event, 1234);
 
-  test('should update the current event', function() {
-    let newEvent = document.createEvent('MouseEvent');
+  describe('phase', () => {
+    test('Returns the current phase of the Input', () => {
+      expect(input.phase).toBe('start');
+    });
+  });
+
+  describe('currentTime', () => {
+    test('Returns the time of the current event', () => {
+      expect(input.currentTime).toBe(input.current.time);
+    });
+  });
+
+  describe('startTime', () => {
+    test('Returns the time of the initial event', () => {
+      expect(input.startTime).toBe(input.initial.time);
+    });
+
+  });
+
+});
+
+/** @test {Input.update} */
+describe('update', function() {
+  let input = new Input(event, 1234);
+  test('updates the current event', function() {
+    let newEvent = {
+      type: 'mousemove',
+      clientX: 45,
+      clientY: 41,
+      target: document
+    };
     input.update(newEvent, 4321);
     expect(input.previous).not.toBe(input.current);
   });
 });
 
-/** @test {Input.getProgressOfGesture} */
-describe('Input.getProgressOfGesture', function() {
-  let event = document.createEvent('Event');
+/** @test {getProgressOfGesture} */
+describe('getProgressOfGesture', function() {
   let input = new Input(event, 1234);
 
   test('should have no progress initially', function() {
@@ -55,41 +93,8 @@ describe('Input.getProgressOfGesture', function() {
   test(`should have be able to store metadata in the progress object.`,
     function() {
     expect(input.getProgressOfGesture('tap')).toEqual({});
-    (input.getProgressOfGesture('tap')).foo = 8;
+    input.getProgressOfGesture('tap').foo = 8;
     expect(input.getProgressOfGesture('tap').foo).toEqual(8);
   });
 });
 
-/** @test {Input.getCurrentEventType} */
-describe('Input.getCurrentEventType', function() {
-  test('should be null for an event it does not understand', function() {
-    let event = document.createEvent('Event');
-    let input = new Input(event, 1234);
-    expect(input.getCurrentEventType()).toBeUndefined();
-  });
-
-  test('should not be null for an event it does understand', function() {
-    const touch = { identifier: 1, clientX: 42, clientY: 43 };
-    const event = {
-      type: 'touchstart',
-      touches: [touch],
-      changedTouches: [touch],
-      targetTouches: [touch],
-    };
-    const touchInput = new Input(event, touch.identifier);
-    expect(touchInput.getCurrentEventType()).toEqual('start');
-  });
-});
-
-/** @test {Input.getCurrentEventType} */
-describe('Input.resetProgress', function() {
-  let event = document.createEvent('Event');
-  let input = new Input(event, 1234);
-  test('should reset the progress of an existing progress state', function() {
-    expect(input.getProgressOfGesture('tap')).toEqual({});
-    (input.getProgressOfGesture('tap')).foo = 8;
-    expect(input.getProgressOfGesture('tap').foo).toEqual(8);
-    input.resetProgress('tap');
-    expect(input.getProgressOfGesture('tap')).toEqual({});
-  });
-});

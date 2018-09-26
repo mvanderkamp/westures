@@ -7,15 +7,19 @@
 const Gesture = require('../../src/core/Gesture.js');
 
 /** @test {Gesture} */
-describe('Gesture', function() {
-  test('should be instantiated', function() {
-    expect(Gesture).toBeTruthy();
+describe('Module exists', function() {
+  expect(Gesture).toBeDefined();
+});
+
+describe('constructor', () => {
+  test('Returns a new gesture of the given type', () => {
+    let gesture = null;
+    expect(() => gesture = new Gesture('dummy')).not.toThrow();
+    expect(gesture.type).toBe('dummy');
+  });
+
+  test('Throws an exception if no type provided to constructor', function() {
+    expect(() => new Gesture()).toThrow();
   });
 });
 
-/** @test {Gesture.getType} */
-describe('Gesture.getType', function() {
-  test('should return null for a generic gesture', function() {
-    expect(new Gesture().type).toBeNull();
-  });
-});
