@@ -52,6 +52,15 @@ describe('Prototype methods', () => {
     });
   });
 
+  describe('averageDistanceTo(points)', () => {
+    let left = new Point2D(3,4);
+    let right = new Point2D(-3,-4);
+
+    test('gives the correct distance', () => {
+      expect(origin.averageDistanceTo([left,right])).toBe(5);
+    });
+  });
+
   describe('clone()', () => {
     test('Returns a clone of the given point', () => {
       const pt = origin.clone();
@@ -70,6 +79,61 @@ describe('Prototype methods', () => {
       const pt = new Point2D(3,4);
       expect(origin.distanceTo(pt)).toBe(5);
       expect(origin.distanceTo(origin)).toBe(0);
+    });
+  });
+
+  describe('isInside(element)', () => {
+    const element = {
+      getBoundingClientRect: jest.fn()
+    };
+    element.getBoundingClientRect.mockReturnValue({
+      left: 10,
+      top: 30,
+      width: 50,
+      height: 50,
+    });
+  
+    test('Returns true for points inside the element', () => {
+      const tl = new Point2D(10,30);
+      const tr = new Point2D(60,30);
+      const mid = new Point2D(40,50);
+      const br = new Point2D(60,80);
+      const bl = new Point2D(10,80);
+      const points = [tl,tr,mid,br,bl];
+      
+      points.forEach( p => {
+        expect(p.isInside(element)).toBe(true);
+      });
+    });
+  
+    test('Returns false for points outside the element', () => {
+      expect(origin.isInside(element)).toBe(false);
+    });
+  });
+
+  describe('midpointTo(point)', () => {
+    test('Returns the midpoint of two points', () => {
+      const right = new Point2D(84,90);
+      const result = new Point2D(42,45);
+      expect(origin.midpointTo(right)).toMatchObject(result);
+    });
+  });
+
+  describe('subtract(point)', () => {
+    test('Returns the subtraction of two points', () => {
+      const left = new Point2D(42,45);
+      const right = new Point2D(84,100);
+      const result = new Point2D(42, 55);
+      expect(right.subtract(left)).toMatchObject(result);
+    });
+  });
+
+  describe('totalDistanceTo(points)', () => {
+    let left = new Point2D(3,4);
+    let right = new Point2D(-3,-4);
+  
+    test('gives the correct distance', () => {
+      expect(origin.totalDistanceTo([left,right])).toBe(10);
     });
   });
 });
@@ -122,9 +186,5 @@ describe('Static methods', () => {
       expect(Point2D.midpoint([p,q,r,s])).toEqual(t);
     });
   });
-
-  describe('totalDistanceTo(pt, points)', () => {
-  });
-
 });
 

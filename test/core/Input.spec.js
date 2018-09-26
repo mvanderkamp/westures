@@ -7,14 +7,14 @@
 const Input     = require('../../src/core/Input.js');
 const ZingEvent = require('../../src/core/ZingEvent.js');
 
+describe('Module exists', () => {
+  expect(Input).toBeDefined();
+});
+
 /** @test {Input} */
-describe('Input', function() {
+describe('constructor', function() {
   let event = document.createEvent('Event');
   let input = new Input(event, 1234);
-
-  test('should be instantiated', function() {
-    expect(Input).toBeTruthy();
-  });
 
   test('should have an initial event', function() {
     expect(input.initial).toBeInstanceOf(ZingEvent);
