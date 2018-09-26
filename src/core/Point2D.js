@@ -43,20 +43,6 @@ class Point2D {
   }
 
   /**
-   * Determine the average distance from this point to the provided array of
-   * points.
-   *
-   * @param {Array} points - the Point2D objects to calculate the average
-   * distance to.
-   *
-   * @return {Number} The average distance from this point to the provided
-   * points.
-   */
-  averageDistanceTo(points = []) {
-    return this.totalDistanceTo(points) / points.length;
-  }
-
-  /**
    * Calculates the angle between this point and the given point.
    *   |                (projectionX,projectionY)
    *   |             /°
@@ -72,6 +58,20 @@ class Point2D {
    */
   angleTo(point) {
     return Math.atan2(point.y - this.y, point.x - this.x);
+  }
+
+  /**
+   * Determine the average distance from this point to the provided array of
+   * points.
+   *
+   * @param {Array} points - the Point2D objects to calculate the average
+   * distance to.
+   *
+   * @return {Number} The average distance from this point to the provided
+   * points.
+   */
+  averageDistanceTo(points = []) {
+    return this.totalDistanceTo(points) / points.length;
   }
 
   /**
