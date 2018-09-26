@@ -11,26 +11,28 @@ const DEFAULT_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 /**
- * A Pan is defined as a normal movement in any direction on a screen.
- * Pan gestures do not track start events and can interact with pinch and \
- *  expand gestures.
+ * A Pan is defined as a normal movement in any direction on a screen.  Pan
+ * gestures do not track start events and can interact with pinch and expand
+ * gestures.
+ *
  * @class Pan
  */
 class Pan extends Gesture {
   /**
    * Constructor function for the Pan class.
+   *
    * @param {Object} [options] - The options object.
-   * @param {Number} [options.numInputs=1] - Number of inputs for the
-   *  Pan gesture.
-   * @param {Number} [options.threshold=1] - The minimum number of
-   * pixels the input has to move to trigger this gesture.
+   * @param {Number} [options.numInputs=1] - Number of inputs for the Pan
+   * gesture.
+   * @param {Number} [options.threshold=1] - The minimum number of pixels the
+   * input has to move to trigger this gesture.
    */
   constructor(options = {}) {
     super('pan');
 
     /**
-     * The number of inputs to trigger a Pan can be variable,
-     * and the maximum number being a factor of the browser.
+     * The number of inputs to trigger a Pan can be variable, and the maximum
+     * number being a factor of the browser.
      * @type {Number}
      */
     this.numInputs = options.numInputs || DEFAULT_INPUTS;
@@ -45,6 +47,7 @@ class Pan extends Gesture {
   /**
    * Event hook for the start of a gesture. Marks each input as active,
    * so it can invalidate any end events.
+   *
    * @param {Array} inputs
    */
   start(inputs, state) {
@@ -57,12 +60,14 @@ class Pan extends Gesture {
   /* start */
 
   /**
-   * move() - Event hook for the move of a gesture.
-   * Fired whenever the input length is met, and keeps a boolean flag that
-   * the gesture has fired at least once.
+   * move() - Event hook for the move of a gesture.  Fired whenever the input
+   * length is met, and keeps a boolean flag that the gesture has fired at least
+   * once.
+   *
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current region.
-   * @return {Object} - Returns the distance in pixels between the two inputs.
+   *
+   * @return {Object} The distance in pixels between the two inputs.
    */
   move(inputs, state) {
     const active = state.getInputsNotInPhase('end');
@@ -95,9 +100,11 @@ class Pan extends Gesture {
    * inputs will not trigger the event until all inputs have reached the
    * touchend event. Any touchend->touchstart events that occur before all
    * inputs are fully off the screen should not fire.
+   *
    * @param {Array} inputs - The array of Inputs on the screen
-   * @return {null} - null if the gesture is not to be emitted,
-   *  Object with information otherwise.
+   *
+   * @return {null} - null if the gesture is not to be emitted, Object with
+   * information otherwise.
    */
   end(inputs, state) {
     const active = state.getInputsNotInPhase('end');

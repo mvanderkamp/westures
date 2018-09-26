@@ -33,20 +33,12 @@ class Gesture {
   }
 
   /**
-   * Updates internal properties with new ones, only if the properties exist.
-   * @param {Object} object
-   */
-  update(object) {
-    Object.keys(object).forEach( key => {
-      this[key] = object[key];
-    });
-  }
-
-  /**
    * start() - Event hook for the start of a gesture
+   *
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current region.
    * @param {Element} element - The element associated to the binding.
+   *
    * @return {null|Object}  - Default of null
    */
   start(inputs, state) {
@@ -55,9 +47,11 @@ class Gesture {
 
   /**
    * move() - Event hook for the move of a gesture
+   *
    * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current region.
    * @param {Element} element - The element associated to the binding.
+   *
    * @return {null|Object} - Default of null
    */
   move(inputs, state) {
@@ -66,10 +60,12 @@ class Gesture {
 
   /**
    * end() - Event hook for the move of a gesture
+   *
    * @param {Array} inputs - The array of Inputs on the screen
+   *
    * @return {null|Object}  - Default of null
    */
-  end(inputs) {
+  end(inputs, state) {
     return null;
   }
 }

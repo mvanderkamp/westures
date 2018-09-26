@@ -13,11 +13,12 @@ const Point2D = require('./Point2D.js');
 class ZingEvent {
   /**
    * @constructor
+   *
    * @param {Event} event - The event object being wrapped.
-   * @param {Array} event.touches - The number of touches on
-   *  a screen (mobile only).
-   * @param {Object} event.changedTouches - The TouchList representing
-   * points that participated in the event.
+   * @param {Array} event.touches - The number of touches on a screen (mobile
+   * only).
+   * @param {Object} event.changedTouches - The TouchList representing points
+   * that participated in the event.
    * @param {Number} touchIdentifier - The index of touch if applicable
    */
   constructor(event, identifier) {

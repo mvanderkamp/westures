@@ -43,6 +43,20 @@ class Point2D {
   }
 
   /**
+   * Determine the average distance from this point to the provided array of
+   * points.
+   *
+   * @param {Array} points - the Point2D objects to calculate the average
+   * distance to.
+   *
+   * @return {Number} The average distance from this point to the provided
+   * points.
+   */
+  averageDistanceTo(points = []) {
+    return this.totalDistanceTo(points) / points.length;
+  }
+
+  /**
    * Calculates the angle between this point and the given point.
    *   |                (projectionX,projectionY)
    *   |             /°
@@ -125,14 +139,28 @@ class Point2D {
       this.y - point.y
     );
   }
+
+  /**
+   * Calculates the total distance from this point to an array of points.
+   *
+   * @param {Array} points - The array of Point2D objects to calculate the total
+   * distance to.
+   *
+   * @return {Number} The total distance from this point to the provided points.
+   */
+  totalDistanceTo(points = []) {
+    return points.reduce( (d, p) => d + this.distanceTo(p), 0);
+  }
 }
 
-Point2D.averageDistanceTo = function(pt, points = []) {
-  if (!(pt instanceof Point2D)) throw 'Cannot calculated distance to undefined';
-  if (points.length === 0) throw 'Need points to exist to calculate distance!';
-  return Point2D.totalDistanceTo(pt, points) / points.length;
-}
-
+/**
+ * Calculates the midpoint of a list of points.
+ *
+ * @param {Array} points - The array of Point2D objects to calculate the
+ * midpoint of.
+ *
+ * @return {Point2D} The midpoint of the provided points.
+ */
 Point2D.midpoint = function(points = []) {
   if (points.length === 0) throw 'Need points to exist to calculate midpoint!';
   const total = Point2D.sum(points);
@@ -142,20 +170,19 @@ Point2D.midpoint = function(points = []) {
   );
 }
 
+/**
+ * Calculates the sum of the given points.
+ *
+ * @param {Array} points - The Point2D objects to sum up.
+ *
+ * @return {Point2D} A new Point2D representing the sum of the given points.
+ */
 Point2D.sum = function(points = []) {
   return points.reduce( (total, current) => {
     total.x += current.x;
     total.y += current.y;
     return total;
   }, new Point2D(0,0) );
-}
-
-Point2D.totalDistanceTo = function(pt, points = []) {
-  if (!(pt instanceof Point2D)) throw 'Cannot calculated distance to undefined';
-  return points.reduce( (distance, point) => {
-    distance += point.distanceTo(pt);
-    return distance;
-  }, 0);
 }
 
 module.exports = Point2D;

@@ -13,9 +13,10 @@ const ZingEvent = require('./ZingEvent.js');
 class Input {
   /**
    * Constructor function for the Input class.
+   *
    * @param {Event} event - The Event object from the window
-   * @param {Number} [identifier=0] - The identifier for each input event
-   * (taken from event.changedTouches)
+   * @param {Number} [identifier=0] - The identifier for each input event (taken
+   * from event.changedTouches)
    */
   constructor(event, identifier = 0) {
     const currentEvent = new ZingEvent(event, identifier);
@@ -28,9 +29,9 @@ class Input {
 
     /**
      * Holds the most current event for this Input, disregarding any other past,
-     * current, and future events that other Inputs participate in.
-     * e.g. This event ended in an 'end' event, but another Input is still
-     * participating in events -- this will not be updated in such cases.
+     * current, and future events that other Inputs participate in.  e.g. This
+     * event ended in an 'end' event, but another Input is still participating
+     * in events -- this will not be updated in such cases.
      * @type {ZingEvent}
      */
     this.current = currentEvent;

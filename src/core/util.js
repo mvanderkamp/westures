@@ -100,3 +100,4 @@ module.exports = Object.freeze({
   getPropagationPath,
   getMouseButtons,
 });
+

@@ -10,8 +10,9 @@ const util    = require('./../core/util.js');
 const REQUIRED_INPUTS = 2;
 
 /**
- * A Rotate is defined as two inputs moving about a circle,
- * maintaining a relatively equal radius.
+ * A Rotate is defined as two inputs moving about a circle, maintaining a
+ * relatively equal radius.
+ *
  * @class Rotate
  */
 class Rotate extends Gesture {
@@ -23,9 +24,8 @@ class Rotate extends Gesture {
   }
 
   /**
-   * Initialize the progress of the gesture.
-   *
-   * Only runs if the number of active inputs is the expected amount.
+   * Initialize the progress of the gesture.  Only runs if the number of active
+   * inputs is the expected amount.
    *
    * @param {State} state - The State object from which the list of inputs will
    * be retrieved.

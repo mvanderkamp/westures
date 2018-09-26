@@ -43,7 +43,6 @@ class Region {
    * or bubbles.
    * @param {boolean} [preventDefault=true] - Whether the default browser
    * functionality should be disabled;
-   * @param {Number} id - The id of the region, assigned by the ZingTouch object
    */
   constructor(element, capture = false, preventDefault = true) {
     /**
@@ -129,18 +128,25 @@ class Region {
     }
   }
 
+  /**
+   * Interprets the event for every binding and dispatches the results.
+   */
   evaluate(event, bindings) {
     if (this.preventDefault) event.preventDefault();
-
     const candidates = this.interpret(event, bindings);
     candidates.forEach( ({ binding, data }) => binding.dispatch(data) );
   }
 
+  /**
+   * Calls the appropriate gesture hook for each binding. Filters out gestures
+   * that returned null and packages the data from gestures that did not return
+   * null such that it is ready for dispatching.
+   */
   interpret(event, bindings) {
     const evType = util.normalizeEvent[ event.type ];
     const events = this.state.getCurrentEvents();
 
-    const candidates = bindings.reduce( (candidates, binding) => {
+    return bindings.reduce( (candidates, binding) => {
       const data = binding.gesture[evType](this.state.inputs, this.state);
       if (data) {
         data.events = events;
@@ -148,8 +154,6 @@ class Region {
       }
       return candidates;
     }, []);
-
-    return candidates;
   }
 
   /**
@@ -188,8 +192,9 @@ class Region {
 
   /**
    * Retrieves all bindings based upon the initial X/Y position of the inputs.
-   * e.g. if gesture started on the correct target element,
-   *  but diverted away into the correct region, this would still be valid.
+   * e.g. if gesture started on the correct target element, but diverted away
+   * into the correct region, this would still be valid.
+   *
    * @return {Array} - An array of Bindings to which that element is bound
    */
   retrieveBindingsByInitialPos() {

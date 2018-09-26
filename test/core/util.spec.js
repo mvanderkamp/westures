@@ -2,8 +2,8 @@
 
 /**
  * @file util.js
- * Tests the user-facing API, ensuring the object functions
- * while not exposing private members.
+ * Tests the user-facing API, ensuring the object functions while not exposing
+ * private members.
  */
 
 const util = require('./../../src/core/util.js');

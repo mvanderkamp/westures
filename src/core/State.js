@@ -19,8 +19,8 @@ class State {
    */
   constructor() {
     /**
-     * An array of current and recently inactive
-     *  Input objects related to a gesture.
+     * An array of current and recently inactive Input objects related to a
+     * gesture.
      * @type {Input}
      */
     this.inputs = [];
@@ -77,10 +77,12 @@ class State {
 
   /**
    * Updates the inputs with new information based upon a new event being fired.
-   * @param {Event} event - The event being captured.
-   *  this current Region is bound to.
-   * @return {boolean} - returns true for a successful update,
-   *  false if the event is invalid.
+   *
+   * @param {Event} event - The event being captured.  this current Region is
+   * bound to.
+   *
+   * @return {boolean} - returns true for a successful update, false if the
+   * event is invalid.
    */
   updateAllInputs(event) {
     const update_fns = {

@@ -17,6 +17,7 @@ const DEFAULT_MIN_THRESHOLD = 1;
 class Pinch extends Gesture {
   /**
    * Constructor function for the Pinch class.
+   *
    * @param {Object} options
    */
   constructor(options = {}) {
@@ -41,8 +42,9 @@ class Pinch extends Gesture {
   }
 
   /**
-   * Event hook for the start of a gesture. Initialized the lastEmitted
-   * gesture and stores it in the first input for reference events.
+   * Event hook for the start of a gesture. Initialized the lastEmitted gesture
+   * and stores it in the first input for reference events.
+   *
    * @param {Array} inputs
    */
   start(inputs, state) {
@@ -50,11 +52,13 @@ class Pinch extends Gesture {
   }
 
   /**
-   * Event hook for the move of a gesture.
-   *  Determines if the two points are moved in the expected direction relative
-   *  to the current distance and the last distance.
+   * Event hook for the move of a gesture.  Determines if the two points are
+   * moved in the expected direction relative to the current distance and the
+   * last distance.
+   *
    * @param {Array} inputs - The array of Inputs on the screen.
    * @param {Object} state - The state object of the current region.
+   *
    * @return {Object | null} - Returns the distance in pixels between two inputs
    */
   move(inputs, state) {
@@ -87,7 +91,7 @@ class Pinch extends Gesture {
 function getMidpointAndAverageDistance(inputs) {
   const points = inputs.map( i => i.current.point );
   const midpoint = Point2D.midpoint(points); 
-  const averageDistance = Point2D.averageDistanceTo(midpoint, points);
+  const averageDistance = midpoint.averageDistanceTo(points);
   return { midpoint, averageDistance };
 }
 

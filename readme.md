@@ -1,7 +1,9 @@
 # ZingTouch 
 https://zingchart.github.io/zingtouch
 
-A modern JavaScript touch gesture library. The library allows developers to configure pre-existing gestures as well as create their own using ZingTouch's life cycle.
+A modern JavaScript touch gesture library. The library allows developers to
+configure pre-existing gestures as well as create their own using ZingTouch's
+life cycle.
 
 [![Build Status](https://travis-ci.org/zingchart/zingtouch.svg?branch=master)](https://travis-ci.org/zingchart/zingtouch)
 [![Code Climate](https://codeclimate.com/github/zingchart/zingtouch/badges/gpa.svg)](https://codeclimate.com/github/zingchart/zingtouch) [![Documentation](http://zingchart.github.io/zingtouch/docs/badge.svg)](http://zingchart.github.io/zingtouch/docs/index.html)
@@ -22,7 +24,8 @@ A modern JavaScript touch gesture library. The library allows developers to conf
 
 # Overview
 
-ZingTouch is built to make implementing gestures for the browser as easy or complex as you need it to be. ZingTouch comes with 6 main gestures :
+ZingTouch is built to make implementing gestures for the browser as easy or
+complex as you need it to be. ZingTouch comes with 6 main gestures :
 
 * Tap
 * Swipe
@@ -31,9 +34,13 @@ ZingTouch is built to make implementing gestures for the browser as easy or comp
 * Pan
 * Rotate
 
-These gestures can be customized including the number of inputs it accepts, or how sensitive the gesture is to be recognized.
+These gestures can be customized including the number of inputs it accepts, or
+how sensitive the gesture is to be recognized.
 
-ZingTouch is also has lifecycle events that you can hook into to create new Gestures or to act upon certain touch events. We know supporting touch events across multiple browsers can be a pain; ZingTouch makes it easy by defining 3 hooks to pass callbacks to :
+ZingTouch is also has lifecycle events that you can hook into to create new
+Gestures or to act upon certain touch events. We know supporting touch events
+across multiple browsers can be a pain; ZingTouch makes it easy by defining 3
+hooks to pass callbacks to :
 
 * start
 * move
@@ -118,11 +125,16 @@ new Region(element, [capture], [preventDefault])
 ```
  * element - The element to set the listener upon
  * capture - Whether the region listens for captures or bubbles.
- * preventDefault - Disables browser functionality such as scrolling and zooming over the region.
+ * preventDefault - Disables browser functionality such as scrolling and zooming
+   over the region.
 
-Regions specify an area to listen for all window events. ZingTouch needs to listen to all window events in order to determine if a gesture is recognized. Note that you can reuse regions for multiple elements and gesture bindings. They simply specify an area where to listen for gestures.
+Regions specify an area to listen for all window events. ZingTouch needs to
+listen to all window events in order to determine if a gesture is recognized.
+Note that you can reuse regions for multiple elements and gesture bindings. They
+simply specify an area where to listen for gestures.
 
-Suppose you had an element that you wanted to track gestures on. We set the region on that element along with binding it to a gesture.
+Suppose you had an element that you wanted to track gestures on. We set the
+region on that element along with binding it to a gesture.
 
 ```js
 var touchArea = document.getElementById('toucharea');
@@ -133,12 +145,16 @@ myRegion.bind(touchArea, 'swipe', function(e){
 });
 ```
 
-The shaded area in blue shows the area where ZingTouch will now listen for events such as touchstart, touchmove, touchend, etc.
+The shaded area in blue shows the area where ZingTouch will now listen for
+events such as touchstart, touchmove, touchend, etc.
 
 ![Region](http://demos.zingchart.com/assets/zingtouch-docs/region.png)
 
 
-But humans aren't perfect. Suppose the element #toucharea were to listen for the `Swipe` gesture. The tracking of the window events will stop when the user reaches the edges of #toucharea. But what if the user didn't finish until say 10-50px ***outside*** the element? Regions are here to help.
+But humans aren't perfect. Suppose the element #toucharea were to listen for the
+`Swipe` gesture. The tracking of the window events will stop when the user
+reaches the edges of #toucharea. But what if the user didn't finish until say
+10-50px ***outside*** the element? Regions are here to help.
 
 Suppose you set the Region to the parent of the #toucharea element instead.
 
@@ -154,14 +170,22 @@ myRegion.bind(touchArea, 'swipe', function(e){
 
 ![Parent Region](http://demos.zingchart.com/assets/zingtouch-docs/parent-region.png)
 
-ZingTouch now tracks the swipe gesture inside the `#toucharea` element AND the #parent-toucharea. This allows some forgiveness when the user tries to swipe on the `#toucharea`, but lifts their finger somewhere in the `#parent-toucharea`.
+ZingTouch now tracks the swipe gesture inside the `#toucharea` element AND the
+#parent-toucharea. This allows some forgiveness when the user tries to swipe on
+the `#toucharea`, but lifts their finger somewhere in the `#parent-toucharea`.
 
-**Note:** The swipe gesture can only be initiated on the area it is bound to. This means the user has to being touching the `#toucharea` element first, but can move out and end within `#parent-toucharea` and including `#toucharea`.
+**Note:** The swipe gesture can only be initiated on the area it is bound to.
+This means the user has to being touching the `#toucharea` element first, but
+can move out and end within `#parent-toucharea` and including `#toucharea`.
 
 
 ### Multiple Regions
 
-Regions only are aware of themselves and their contents, not across regions. This allows for control at a larger scale so you can group similar gestures together. While you can throw a Region on top of the `document.body`, we suggest splitting up your application into regions for better performance -- the less bindings a single region has to iterate through to detect a gesture, the better.
+Regions only are aware of themselves and their contents, not across regions.
+This allows for control at a larger scale so you can group similar gestures
+together. While you can throw a Region on top of the `document.body`, we suggest
+splitting up your application into regions for better performance -- the less
+bindings a single region has to iterate through to detect a gesture, the better.
 
 ![Multiple Regions](http://demos.zingchart.com/assets/zingtouch-docs/multiple-regions.png)
 
@@ -177,12 +201,17 @@ A tap is detected when the user touches the screen and releases in quick success
 
 #### Options
 
-* `options.maxDelay` *optional* - The maximum delay between a start and end event. This number is measured in milliseconds.
-	* default: 300
-* `options.numInputs` *optional* - The number of inputs to trigger the tap event.
-	* default: 1
-* `options.tolerance` *optional* - A tolerance value which allows the user to move their finger about a radius measured in pixels. This allows the Tap gesture to be triggered more easily since a User might move their finger slightly during a tap event.
-	* default: 10
+* `options.maxDelay` *optional* - The maximum delay between a start and end
+  event. This number is measured in milliseconds.
+  * default: 300
+* `options.numInputs` *optional* - The number of inputs to trigger the tap
+  event.
+  * default: 1
+* `options.tolerance` *optional* - A tolerance value which allows the user to
+  move their finger about a radius measured in pixels. This allows the Tap
+  gesture to be triggered more easily since a User might move their finger
+  slightly during a tap event.
+  * default: 10
 
 #### Example
 
@@ -196,7 +225,8 @@ new ZingTouch.Tap({
 
 #### Emits
 
-* `interval` - a time measured in milliseconds between the start of the gesture, and the end.
+* `interval` - a time measured in milliseconds between the start of the gesture,
+  and the end.
 
 ---
 
@@ -204,16 +234,20 @@ new ZingTouch.Tap({
 
 ![Swipe Gesture](http://demos.zingchart.com/assets/zingtouch-docs/swipe.gif)
 
-A swipe is detected when the user touches the screen and moves in a relatively increasing velocity, leaving the screen at some point before it drops below a certain velocity.
+A swipe is detected when the user touches the screen and moves in a relatively
+increasing velocity, leaving the screen at some point before it drops below a
+certain velocity.
 
 #### Options
 
 * `options.numInputs` *optional* - The number of inputs to trigger the event.
 	* Default: 1
-* `options.escapeVelocity` *optional* - The minimum velocity (px/ms) that the gesture has to obtain by the end event.
-	* Default: 0.2
-* `options.maxRestTime` *optional* - The amount of time allowed in milliseconds inbetween events before a the motion becomes inelligible to be a swipe.
-	* Default: 100
+* `options.escapeVelocity` *optional* - The minimum velocity (px/ms) that the
+  gesture has to obtain by the end event.
+  * Default: 0.2
+* `options.maxRestTime` *optional* - The amount of time allowed in milliseconds
+  inbetween events before a the motion becomes inelligible to be a swipe.
+  * Default: 100
 
 
 #### Example
@@ -227,8 +261,10 @@ new ZingTouch.Swipe({
 
 #### Emits
 An array of data objects containing:
-* `velocity` - The value in units of pixels per millisecond the gesture was travelling until it's ending point.
-* `currentDirection` - The angle the swipe ended at in degrees, relative to the unit circle. (e.g. straight down is 270deg while straight left is 180deg).
+* `velocity` - The value in units of pixels per millisecond the gesture was
+  travelling until it's ending point.
+* `currentDirection` - The angle the swipe ended at in degrees, relative to the
+  unit circle. (e.g. straight down is 270deg while straight left is 180deg).
 
 Each index represents an input that participated in the event.
 
@@ -238,7 +274,8 @@ Each index represents an input that participated in the event.
 
 ![Pinch Gesture](http://demos.zingchart.com/assets/zingtouch-docs/pinch.gif)
 
-A pinch is detected when the user has two inputs on the screen and moves one or both closer towards the other input.
+A pinch is detected when the user has two inputs on the screen and moves one or
+both closer towards the other input.
 
 #### Example
 ```js
@@ -255,7 +292,8 @@ new ZingTouch.Pinch()
 
 ![Expand Gesture](http://demos.zingchart.com/assets/zingtouch-docs/expand.gif)
 
-An expand is detected when the user has two inputs on the screen and moves one or both away from the other input.
+An expand is detected when the user has two inputs on the screen and moves one
+or both away from the other input.
 
 #### Example
 ```js
@@ -277,7 +315,8 @@ A pan is detected when the user touches the screen and moves about the area.
 #### Options
 * `options.numInputs` *optional* - The number of inputs to trigger the event.
 	* Default: 1
-* `options.threshold` *optional* - The minimum number of pixels the input has to move to trigget this gesture.
+* `options.threshold` *optional* - The minimum number of pixels the input has to
+  move to trigget this gesture.
    * Default: 1
 
 #### Example
@@ -290,9 +329,14 @@ new ZingTouch.Pan({
 #### Emits
 
 An array of data objects containing:
-* `distanceFromOrigin` - The distance in pixels traveled from the current position from the starting position.
-* `directionFromOrigin` - The angle of the pan in degrees, relative to the unit circle.(e.g. straight down is 270deg while straight left is 180deg). The starting point of where the input began during the "start" event denotes the origin point.
-* `currentDirection` - The angle of the pan gesture in degrees, relative to the unit circle. The previously emitted point is used as an origin point.
+* `distanceFromOrigin` - The distance in pixels traveled from the current
+  position from the starting position.
+* `directionFromOrigin` - The angle of the pan in degrees, relative to the unit
+  circle.(e.g. straight down is 270deg while straight left is 180deg). The
+  starting point of where the input began during the "start" event denotes the
+  origin point.
+* `currentDirection` - The angle of the pan gesture in degrees, relative to the
+  unit circle. The previously emitted point is used as an origin point.
 
 Each index represents an input that participated in the event.
 
@@ -305,7 +349,8 @@ Each index represents an input that participated in the event.
 
 A Rotate is detected when:
  * the user has two inputs moving about a circle on the edges of a diameter.
- * the user has one input moving in a circular motion around the center point of the bound target element.
+ * the user has one input moving in a circular motion around the center point of
+   the bound target element.
 
 #### Example
 ```js
@@ -314,15 +359,21 @@ new ZingTouch.Rotate()
 
 #### Emits
 
-* `angle` - The angle of the initial right most input, in relation to the unit circle.
-* `distanceFromOrigin` - The angular distance travelled by the initial right most input.
-* `distanceFromLast` - The change of angle between the last position and the current position. Positive denotes a counter-clockwise motion, while negative denotes a clockwise motion.
+* `angle` - The angle of the initial right most input, in relation to the unit
+  circle.
+* `distanceFromOrigin` - The angular distance travelled by the initial right
+  most input.
+* `distanceFromLast` - The change of angle between the last position and the
+  current position. Positive denotes a counter-clockwise motion, while negative
+  denotes a clockwise motion.
 
 ---
 
 ### Gesture
 
-A generic gesture. By default, this gesture does not emit but is useful for hooking into ZingTouch's life cycle. See [ZingTouch Life Cycle](#zingtouch-life-cycle) for more information.
+A generic gesture. By default, this gesture does not emit but is useful for
+hooking into ZingTouch's life cycle. See [ZingTouch Life
+Cycle](#zingtouch-life-cycle) for more information.
 
 #### Example
 ```js
@@ -333,15 +384,20 @@ new ZingTouch.Gesture()
 ## Methods
 
 ### Region.bind(element, gesture, handler, [capture])
-Binds a single element to a gesture, executing the handler when the gesture is emitted.
+Binds a single element to a gesture, executing the handler when the gesture is
+emitted.
 
 **Parameters**
 
 * element - A DOM element
-* gesture - Either the key (string) of a default or registered gesture, or an instance of the `Gesture` class itself.
+* gesture - Either the key (string) of a default or registered gesture, or an
+  instance of the `Gesture` class itself.
 * handler - A function to be called every time the gesture is emitted.
-	* The handler function has an Event object emitted from the [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) interface. Any information relavant to the gesture will be in `event.detail`.
-* `capture` - An optional boolean to designate the event to be fired on the capture or bubbling phase.
+	* The handler function has an Event object emitted from the 
+  [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent)
+  interface. Any information relavant to the gesture will be in `event.detail`.
+* `capture` - An optional boolean to designate the event to be fired on the
+  capture or bubbling phase.
 
 **Example #1**
 
@@ -368,13 +424,21 @@ myRegion.bind(myElement, myTapGesture, function(e) {
 
 **Notes**
 
-1. Instance Gestures that are passed to bind will be stored and maintained in memory, therefore it is reccomended to reuse gestures object where possible, or to use the `Region.register` syntax -- they essentially do the same thing. Either works fine, but try to avoid using the following pattern where an instance variable is created at every bind :
+1. Instance Gestures that are passed to bind will be stored and maintained in
+   memory, therefore it is reccomended to reuse gestures object where possible,
+   or to use the `Region.register` syntax -- they essentially do the same thing.
+   Either works fine, but try to avoid using the following pattern where an
+   instance variable is created at every bind :
 
 ```js
 //Poor performance
 var delay = 100;
 for (var i = 0; i < 100; i++){
-	myRegion.bind(myElement, new ZingTouch.Tap({maxDelay : delay}),function(e){...});
+	myRegion.bind(
+    myElement, 
+    new ZingTouch.Tap({maxDelay : delay}),
+    function(e){...}
+  );
 }
 
 ```
@@ -391,7 +455,9 @@ for (var i = 0; i < 100; i++){
 ---
 
 ### Region.bind(element)
-Passing a qualified DOM element to the bind function will return an object that can be chainable with the 6 main gestures, or any other gestures that you may have registered with `Region.register`
+Passing a qualified DOM element to the bind function will return an object that
+can be chainable with the 6 main gestures, or any other gestures that you may
+have registered with `Region.register`
 
 **Parameters**
 
@@ -401,10 +467,16 @@ Passing a qualified DOM element to the bind function will return an object that 
 
 * A chainable object that takes two parameters :
 	* `handler` - A function to be called every time the gesture is emitted.
-		* The chainable object has 6 methods available at all times : `.tap()` ,`.swipe()` ,`.pinch()` ,`.expand()` ,`.pan()` ,`.rotate()`. Custom Gesture are accessible using the `ZingTouch.register` method.
-		* The handler function has an Event object emitted from the [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) interface. Any information relavant to the gesture will be in `event.detail`.
+    * The chainable object has 6 methods available at all times : `.tap()`
+      ,`.swipe()` ,`.pinch()` ,`.expand()` ,`.pan()` ,`.rotate()`. Custom
+      Gesture are accessible using the `ZingTouch.register` method.
+    * The handler function has an Event object emitted from the
+      [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent)
+      interface. Any information relavant to the gesture will be in
+      `event.detail`.
 
-	* `capture` - An optional boolean to designate the event to be fired on the capture or bubbling phase.
+  * `capture` - An optional boolean to designate the event to be fired on the
+    capture or bubbling phase.
 
 
 **Example**
@@ -425,19 +497,22 @@ chainableObject
 ---
 
 ### Region.bindOnce()
-Identical to both method signatures of bind, but is "bound once" meaning the event will only be captured once before it is destroyed.
+Identical to both method signatures of bind, but is "bound once" meaning the
+event will only be captured once before it is destroyed.
 
 See [Region.bind](#bind)
 
 ---
 
 ### Region.unbind(element, [gesture])
-Unbinds an element from a specific gesture, or all gestures if none is specified.
+Unbinds an element from a specific gesture, or all gestures if none is
+specified.
 
 **Parameters**
 
 * `element` - A DOM element
-* `gesture` *optional* - Either a registered gesture's key (String) or the gesture object used to bind the element.
+* `gesture` *optional* - Either a registered gesture's key (String) or the
+  gesture object used to bind the element.
 
 **Returns**
 
@@ -475,7 +550,9 @@ myRegion.unbind(myElement, myTapGesture);
 ---
 
 ### Region.register(key, gesture)
-Register a gesture of the Gesture class to each Region. Allows the newly registered Gesture to be accessible in the bind/unbind syntax including the chainable object of bind.
+Register a gesture of the Gesture class to each Region. Allows the newly
+registered Gesture to be accessible in the bind/unbind syntax including the
+chainable object of bind.
 
 **Parameters**
 
@@ -506,7 +583,8 @@ myRegion.bind(myElement).shortTap(function(e){});
 ---
 
 ### Region.unregister(key)
-Unregisters a gesture that was previously registered. Unregistering a gesture will automatically unbind any elements that were bound to this gesture.
+Unregisters a gesture that was previously registered. Unregistering a gesture
+will automatically unbind any elements that were bound to this gesture.
 
 **Parameters**
 
@@ -526,27 +604,37 @@ myRegion.unregister('shortTap');
 
 # ZingTouch Life Cycle
 
-Utilizing ZingTouch's life cycle (start, move, end) allows you to create new gestures and to interface with the mobile event cycle in a much finer detail. It will allow you to hook into events and to apply external functions during events.
-Imagine the `Pan` gesture allowing in-between events to be triggered:
+Utilizing ZingTouch's life cycle (start, move, end) allows you to create new
+gestures and to interface with the mobile event cycle in a much finer detail. It
+will allow you to hook into events and to apply external functions during
+events.  Imagine the `Pan` gesture allowing in-between events to be triggered:
 
 * Pan - start
 * Pan - move
 * Pan - end
 * Pan -> Event detected.
 
-The syntax for utilizing the life cycle is still to be determined, but will be released in the near future.
+The syntax for utilizing the life cycle is still to be determined, but will be
+released in the near future.
 
 ---
 
 # Pitfalls
 
 **Binding an event and DOM mutation to an element**
-ZingTouch treats a gesture as a non-mutable event, meaning that the element is bound to is not expected to change between the start and end. Binding a transformation of an element's bounding box to the middle of a gesture event could provide unwanted results. 
+ZingTouch treats a gesture as a non-mutable event, meaning that the element is
+bound to is not expected to change between the start and end. Binding a
+transformation of an element's bounding box to the middle of a gesture event
+could provide unwanted results. 
 
-Example: Binding a pan event directly to an element that you want to move around every time the callback is fired. The initial state of when the gesture was registered changes throughout the event, and the initial reference point is no longer valid. 
+Example: Binding a pan event directly to an element that you want to move around
+every time the callback is fired. The initial state of when the gesture was
+registered changes throughout the event, and the initial reference point is no
+longer valid. 
 
-Solution: Attach the gesture listener to a non-mutating element such as a parent container, and modify your target element in the callback. This will provide a more predictable state that zingtouch can recognize. 
----
+Solution: Attach the gesture listener to a non-mutating element such as a parent
+container, and modify your target element in the callback. This will provide a
+more predictable state that zingtouch can recognize.  ---
 
 # Contributing
 
@@ -558,7 +646,9 @@ Solution: Attach the gesture listener to a non-mutating element such as a parent
 
 **Comments and Documentation**
 
-* We follow [JSDoc](http://usejsdoc.org/) guidelines but utilize [ESDoc](https://esdoc.org/) to output documentation. We find ESDoc to be friendlier with ES6/class structured codebases.
+* We follow [JSDoc](http://usejsdoc.org/) guidelines but utilize 
+  [ESDoc](https://esdoc.org/) to output documentation. We find ESDoc to be
+  friendlier with ES6/class structured codebases.
 
 **Testing**
 
@@ -573,7 +663,10 @@ Solution: Attach the gesture listener to a non-mutating element such as a parent
 
 ## Browser Compatibility
 
-Below is a list of confirmed browser and device compatibility that I have confirmed either though the physical device or by way of a Virtual Machine. If you have any issues or would like to contribute to this list, please pull request onto this readme file.
+Below is a list of confirmed browser and device compatibility that I have
+confirmed either though the physical device or by way of a Virtual Machine. If
+you have any issues or would like to contribute to this list, please pull
+request onto this readme file.
 
 **Confirmed browser compatibility with:**
 * Chrome 22+

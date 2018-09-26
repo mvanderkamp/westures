@@ -9,16 +9,15 @@
 class Binding {
   /**
    * Constructor function for the Binding class.
+   *
    * @param {Element} element - The element to associate the gesture to.
    * @param {Gesture} gesture - A instance of the Gesture type.
-   * @param {Function} handler - The function handler to execute when a
-   * gesture is recognized
-   * on the associated element.
-   * @param {Boolean} [capture=false] - A boolean signifying if the event is
-   * to be emitted during
-   * the capture or bubble phase.
-   * @param {Boolean} [bindOnce=false] - A boolean flag
-   * used for the bindOnce syntax.
+   * @param {Function} handler - The function handler to execute when a gesture
+   * is recognized on the associated element.
+   * @param {Boolean} [capture=false] - A boolean signifying if the event is to
+   * be emitted during the capture or bubble phase.
+   * @param {Boolean} [bindOnce=false] - A boolean flag used for the bindOnce
+   * syntax.
    */
   constructor(element, gesture, handler, capture = false, bindOnce = false) {
     /**
@@ -34,15 +33,15 @@ class Binding {
     this.gesture = gesture;
 
     /**
-     * The function handler to execute when a gesture is
-     * recognized on the associated element.
+     * The function handler to execute when a gesture is recognized on the
+     * associated element.
      * @type {Function}
      */
     this.handler = handler;
 
     /**
-     * A boolean signifying if the event is to be
-     * emitted during the capture or bubble phase.
+     * A boolean signifying if the event is to be emitted during the capture or
+     * bubble phase.
      * @type {Boolean}
      */
     this.capture = capture;
@@ -57,6 +56,12 @@ class Binding {
     this.listen();
   }
 
+  /**
+   * Dispatches a custom event on the bound element, sending the provided data.
+   * The event's name will be the id of the bound gesture.
+   *
+   * @param {Object} data - The data to send with the event.
+   */
   dispatch(data) {
     const emittable = new CustomEvent(this.gesture.id, {
       detail: data,
@@ -66,6 +71,10 @@ class Binding {
     this.element.dispatchEvent(emittable);
   }
 
+  /**
+   * Sets the bound element to begin listening to events of the same name as the
+   * bound gesture's id.
+   */
   listen() {
     this.element.addEventListener(
       this.gesture.id,
@@ -74,6 +83,9 @@ class Binding {
     );
   }
 
+  /**
+   * Stops listening for events of the same name as the bound gesture's id.
+   */
   unbind() {
     this.element.removeEventListener(
       this.gesture.id,
