@@ -29,11 +29,13 @@ const normalizeEvent = Object.freeze({
 /**
  * @return {Array} Identifiers of the mouse buttons used.
  */
-function getMouseButtons({ buttons }) {
+function getMouseButtons(event) {
   const btns = [];
-  for (let mask = 1; mask < 32; mask << 1) {
-    const btn = buttons & mask;
-    if (btn > 0) btns.push(btn);
+  if (event && event.buttons) {
+    for (let mask = 1; mask < 32; mask <<= 1) {
+      const btn = event.buttons & mask;
+      if (btn > 0) btns.push(btn);
+    }
   }
   return btns;
 }
