@@ -6,7 +6,7 @@
  * private members.
  */
 
-const util = require('./../../src/core/util.js');
+const util = require('../../src/core/util.js');
 
 /** @test {util} */
 describe('util', function() {

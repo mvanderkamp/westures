@@ -6,7 +6,7 @@
  * Tests the Point2D class.
  */
 
-const Point2D = require('../../../src/core/Point2D.js');
+const Point2D = require('../../src/core/Point2D.js');
 
 describe('Constructor', () => {
   test('does not throw an error given valid input', () => {

@@ -4,8 +4,8 @@
  * @file Binding.js
  * Tests Binding class
  */
-const Input = require('./../../../src/core/Input.js');
-const ZingEvent = require('./../../../src/core/ZingEvent.js');
+const Input     = require('../../src/core/Input.js');
+const ZingEvent = require('../../src/core/ZingEvent.js');
 
 /** @test {Input} */
 describe('Input', function() {

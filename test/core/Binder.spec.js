@@ -4,8 +4,8 @@
  * @file Binder.js
  * Tests Binder class
  */
-const Binder = require('./../../../src/core/Binder.js');
-const State  = require('./../../../src/core/State.js');
+const Binder = require('../../src/core/Binder.js');
+const State  = require('../../src/core/State.js');
 
 /** @test {Binder} */
 describe('Binder', function() {
