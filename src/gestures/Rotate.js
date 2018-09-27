@@ -27,8 +27,7 @@ class Rotate extends Gesture {
    * Initialize the progress of the gesture.  Only runs if the number of active
    * inputs is the expected amount.
    *
-   * @param {State} state - The State object from which the list of inputs will
-   * be retrieved.
+   * @param {State} input status object
    */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
@@ -45,12 +44,11 @@ class Rotate extends Gesture {
   /**
    * Event hook for the start of a gesture.
    *
-   * @param {Array} inputs - The array of Inputs on the screen
-   * @param {Object} state - The state object of the current listener.
+   * @param {State} input status object
    *
    * @return {null}
    */
-  start(inputs, state) {
+  start(state) {
     this.initializeProgress(state);
   }
 
@@ -62,8 +60,7 @@ class Rotate extends Gesture {
    * initial angle to output the distance from the initial angle to the current
    * angle.
    *
-   * @param {Array} inputs - The array of Inputs on the screen
-   * @param {Object} state - The state object of the current listener.
+   * @param {State} input status object
    *
    * @return {null} - null if this event did not occur
    * @return {Object} obj.angle - The current angle along the unit circle
@@ -72,7 +69,7 @@ class Rotate extends Gesture {
    * @return {Object} obj.distanceFromLast - The change of angle between the
    * last position and the current position.
    */
-  move(inputs, state) {
+  move(state) {
     const active = state.getInputsNotInPhase('end');
     if (active.length !== REQUIRED_INPUTS) return null;
 
@@ -96,12 +93,11 @@ class Rotate extends Gesture {
   /**
    * Event hook for the end of a gesture.
    *
-   * @param {Array} inputs - The array of Inputs on the screen
-   * @param {Object} state - The state object of the current listener.
+   * @param {State} input status object
    *
    * @return {null}
    */
-  end(inputs, state) {
+  end(state) {
     this.initializeProgress(state);
   }
 }

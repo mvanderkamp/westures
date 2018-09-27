@@ -82,14 +82,13 @@ class Tap extends Gesture {
    * of the inputs to be off the screen before determining if the gesture is
    * triggered.
    *
-   * @param {Array} inputs - The array of Inputs on the screen.
-   * @param {Object} state - The state object of the current region.
+   * @param {State} input status object
    *
    * @return {null|Object} - null if the gesture is not to be emitted, Object
    * with information otherwise. Returns the interval time between start and end
    * events.
    */
-  end(inputs, state) {
+  end(state) {
     const now = Date.now();
 
     this.ended = this.ended.concat(state.getInputsInPhase('end'))

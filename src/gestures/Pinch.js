@@ -30,6 +30,12 @@ class Pinch extends Gesture {
     this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
   }
 
+  /**
+   * Initializes the gesture progress and stores it in the first input for
+   * reference events.
+   *
+   * @param {State} input status object
+   */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
     if (active.length < REQUIRED_INPUTS) return null;
@@ -42,12 +48,11 @@ class Pinch extends Gesture {
   }
 
   /**
-   * Event hook for the start of a gesture. Initialized the lastEmitted gesture
-   * and stores it in the first input for reference events.
+   * Event hook for the start of a gesture. 
    *
-   * @param {Array} inputs
+   * @param {State} input status object
    */
-  start(inputs, state) {
+  start(state) {
     this.initializeProgress(state);
   }
 
@@ -56,12 +61,11 @@ class Pinch extends Gesture {
    * moved in the expected direction relative to the current distance and the
    * last distance.
    *
-   * @param {Array} inputs - The array of Inputs on the screen.
-   * @param {Object} state - The state object of the current region.
+   * @param {State} input status object
    *
    * @return {Object | null} - Returns the distance in pixels between two inputs
    */
-  move(inputs, state) {
+  move(state) {
     const active = state.getInputsNotInPhase('end');
     if (active.length < REQUIRED_INPUTS) return null;
 
@@ -83,7 +87,12 @@ class Pinch extends Gesture {
     }
   }
 
-  end(inputs, state) {
+  /**
+   * Event hook for the end of a gesture. 
+   *
+   * @param {State} input status object
+   */
+  end(state) {
     this.initializeProgress(state);
   }
 }

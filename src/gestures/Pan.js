@@ -48,9 +48,9 @@ class Pan extends Gesture {
    * Event hook for the start of a gesture. Marks each input as active,
    * so it can invalidate any end events.
    *
-   * @param {Array} inputs
+   * @param {State} input status object
    */
-  start(inputs, state) {
+  start(state) {
     const starting = state.getInputsInPhase('start');
     starting.forEach( input => {
       const progress = input.getProgressOfGesture(this.id);
@@ -64,12 +64,11 @@ class Pan extends Gesture {
    * length is met, and keeps a boolean flag that the gesture has fired at least
    * once.
    *
-   * @param {Array} inputs - The array of Inputs on the screen
-   * @param {Object} state - The state object of the current region.
+   * @param {State} input status object
    *
    * @return {Object} The distance in pixels between the two inputs.
    */
-  move(inputs, state) {
+  move(state) {
     const active = state.getInputsNotInPhase('end');
 
     if (active.length !== this.numInputs) return null;
@@ -101,12 +100,12 @@ class Pan extends Gesture {
    * touchend event. Any touchend->touchstart events that occur before all
    * inputs are fully off the screen should not fire.
    *
-   * @param {Array} inputs - The array of Inputs on the screen
+   * @param {State} input status object
    *
    * @return {null} - null if the gesture is not to be emitted, Object with
    * information otherwise.
    */
-  end(inputs, state) {
+  end(state) {
     const active = state.getInputsNotInPhase('end');
     active.forEach( input => {
       const progress = input.getProgressOfGesture(this.id);

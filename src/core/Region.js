@@ -117,7 +117,7 @@ class Region {
     const events = this.state.getCurrentEvents();
 
     this.retrieveBindingsByInitialPos().forEach( binding => {
-      const data = binding.gesture[hook](this.state.inputs, this.state);
+      const data = binding.gesture[hook](this.state);
       if (data) {
         data.events = events;
         binding.dispatch(data);

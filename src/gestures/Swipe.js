@@ -87,12 +87,11 @@ class Swipe extends Gesture {
    * Event hook for the move of a gesture. Captures an input's x/y coordinates
    * and the time of it's event on a stack.
    *
-   * @param {Array} inputs - The array of Inputs on the screen.
-   * @param {Object} state - The state object of the current region.
+   * @param {State} input status object
    *
    * @return {null} - Swipe does not emit from a move.
    */
-  move(inputs, state) {
+  move(state) {
     const active = state.getInputsNotInPhase('end');
 
     if (active.length === this.numInputs) {
@@ -122,12 +121,12 @@ class Swipe extends Gesture {
    * it did not come to a complete stop (maxRestTime), and if it had enough of a
    * velocity to be considered (ESCAPE_VELOCITY).
    *
-   * @param {Array} inputs - The array of Inputs on the screen
+   * @param {State} input status object
    *
    * @return {null|Object} - null if the gesture is not to be emitted, Object
    * with information otherwise.
    */
-  end(inputs, state) {
+  end(state) {
     const ended = state.getInputsInPhase('end');
 
     if (ended.length === this.numInputs) {

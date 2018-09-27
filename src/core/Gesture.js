@@ -35,26 +35,22 @@ class Gesture {
   /**
    * start() - Event hook for the start of a gesture
    *
-   * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current region.
-   * @param {Element} element - The element associated to the binding.
    *
    * @return {null|Object}  - Default of null
    */
-  start(inputs, state) {
+  start(state) {
     return null;
   }
 
   /**
    * move() - Event hook for the move of a gesture
    *
-   * @param {Array} inputs - The array of Inputs on the screen
    * @param {Object} state - The state object of the current region.
-   * @param {Element} element - The element associated to the binding.
    *
    * @return {null|Object} - Default of null
    */
-  move(inputs, state) {
+  move(state) {
     return null;
   }
 
@@ -65,7 +61,7 @@ class Gesture {
    *
    * @return {null|Object}  - Default of null
    */
-  end(inputs, state) {
+  end(state) {
     return null;
   }
 }
