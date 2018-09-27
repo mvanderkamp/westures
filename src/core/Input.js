@@ -15,36 +15,35 @@ class Input {
    * Constructor function for the Input class.
    *
    * @param {Event} event - The Event object from the window
-   * @param {Number} [identifier=0] - The identifier for each input event (taken
-   * from event.changedTouches)
+   * @param {Number} [identifier=0] - The identifier for this input (taken
+   * from event.changedTouches or this input's button number)
    */
   constructor(event, identifier = 0) {
-    const currentEvent = new PointerData(event, identifier);
+    const currentData = new PointerData(event, identifier);
 
     /**
-     * Holds the initial event object. A touchstart/mousedown event.
+     * Holds the initial data from the mousedown / touchstart / pointerdown that
+     * began this input.
      * @type {PointerData}
      */
-    this.initial = currentEvent;
+    this.initial = currentData;
 
     /**
-     * Holds the most current event for this Input, disregarding any other past,
-     * current, and future events that other Inputs participate in.  e.g. This
-     * event ended in an 'end' event, but another Input is still participating
-     * in events -- this will not be updated in such cases.
+     * Holds the most current data for this Input, disregarding any other past,
+     * current, and future events that other Inputs participate in. 
      * @type {PointerData}
      */
-    this.current = currentEvent;
+    this.current = currentData;
 
     /**
-     * Holds the previous event that took place.
+     * Holds data for the previous event that took place.
      * @type {PointerData}
      */
-    this.previous = currentEvent;
+    this.previous = currentData;
 
     /**
      * The identifier for the pointer / touch / mouse button associated with
-     * this event.
+     * this input.
      * @type {Number}
      */
     this.identifier = identifier;
@@ -154,3 +153,4 @@ class Input {
 }
 
 module.exports = Input;
+
