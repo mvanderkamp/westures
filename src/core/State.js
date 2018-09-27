@@ -71,6 +71,13 @@ class State {
   }
 
   /**
+   * @return {Boolean} - true if some input was initially inside the element.
+   */
+  someInputWasInitiallyInside(element) {
+    return this.inputs.some( i => i && i.wasInitiallyInside(element) );
+  }
+
+  /**
    * Update the input with the given identifier using the given event.
    *
    * @param {Event} event - The event being captured.

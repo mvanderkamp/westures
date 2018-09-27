@@ -99,13 +99,10 @@ class Region {
   }
 
   /**
-   * Function that handles event flow, negotiating with the interpreter, and
-   * dispatcher.
-   *
-   * 1. Receiving all touch events in the window.
-   * 2. Determining which gestures are linked to the target element.
-   * 3. Negotiating with the Interpreter what event should occur.
-   * 4. Sending events to the dispatcher to emit events to the target.
+   * All input events flow through this function. It makes sure that the input
+   * state is maintained, determines which bindings to analyze based on the
+   * initial position of the inputs, calls the relevant gesture hooks, and
+   * dispatches gesture data.
    *
    * @param {Event} event - The event emitted from the window object.
    */
@@ -114,42 +111,25 @@ class Region {
 
     this.state.updateAllInputs(event, this.element);
 
-    this.getDispatchableGestureData(event, this.retrieveBindingsByInitialPos())
-      .forEach( ({ binding, data }) => binding.dispatch(data) );
+    const hook = util.normalizeEvent[ event.type ];
+    const events = this.state.getCurrentEvents();
+
+    this.retrieveBindingsByInitialPos().forEach( binding => {
+      const data = binding.gesture[hook](this.state.inputs, this.state);
+      if (data) {
+        data.events = events;
+        binding.dispatch(data);
+      }
+    });
 
     this.state.clearEndedInputs();
   }
 
   /**
-   * Calls the appropriate gesture hook for each binding. Filters out gestures
-   * that returned null and packages the data from gestures that did not return
-   * null such that it is ready for dispatching.
-   */
-  getDispatchableGestureData(event, bindings) {
-    const hook = util.normalizeEvent[ event.type ];
-    const events = this.state.getCurrentEvents();
-
-    return bindings.reduce( (dispatchables, binding) => {
-      const data = binding.gesture[hook](this.state.inputs, this.state);
-      if (data) {
-        data.events = events;
-        dispatchables.push({ binding, data });
-      }
-      return dispatchables;
-    }, []);
-  }
-
-  /**
    * Bind an element to a gesture with multiple function signatures.
    *
-   * @example
-   * bind(element) - chainable
-   *
-   * @example
-   * bind(element, gesture, handler, [capture])
-   *
    * @param {Element} element - The element object.
-   * @param {String|Object} [gesture] - Gesture key, or a Gesture object.
+   * @param {Gesture} gesture - Gesture object.
    * @param {Function} [handler] - The function to execute when an event is
    * emitted.
    * @param {Boolean} [capture] - capture/bubble
@@ -166,7 +146,9 @@ class Region {
 
   /**
    * Retrieves the Binding by which an element is associated to.
+   *
    * @param {Element} element - The element to find bindings to.
+   *
    * @return {Array} - An array of Bindings to which that element is bound
    */
   retrieveBindingsByElement(element) {
@@ -182,7 +164,7 @@ class Region {
    */
   retrieveBindingsByInitialPos() {
     return this.bindings.filter( 
-      b => this.state.inputs.some( i => i && i.wasInitiallyInside(b.element) )
+      b => this.state.someInputWasInitiallyInside(b.element)
     );
   }
 
@@ -212,3 +194,4 @@ class Region {
 }
 
 module.exports = Region;
+
