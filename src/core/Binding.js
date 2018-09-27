@@ -79,14 +79,17 @@ class Binding {
     this.element.addEventListener(
       this.gesture.id,
       this.handler,
-      this.capture
+      {
+        capture: this.capture,
+        once: this.bindOnce,
+      },
     );
   }
 
   /**
    * Stops listening for events of the same name as the bound gesture's id.
    */
-  unbind() {
+  stop() {
     this.element.removeEventListener(
       this.gesture.id,
       this.handler,

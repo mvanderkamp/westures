@@ -121,6 +121,9 @@ class Region {
       if (data) {
         data.events = events;
         binding.dispatch(data);
+        if (binding.bindOnce) {
+          this.bindings.splice(this.bindings.indexOf(binding), 1);
+        }
       }
     });
 
@@ -185,9 +188,9 @@ class Region {
 
     bindings.forEach( b => {
       if (gesture == undefined || b.gesture === gesture) {
-        b.unbind();
-        unbound.push(b);
+        b.stop();
         this.bindings.splice(this.bindings.indexOf(b), 1);
+        unbound.push(b);
       }
     });
 
