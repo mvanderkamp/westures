@@ -114,7 +114,7 @@ class Region {
 
     this.state.updateAllInputs(event, this.element);
 
-    this.getDispatchableGestureData(event, bindings)
+    this.getDispatchableGestureData(event, this.retrieveBindingsByInitialPos())
       .forEach( ({ binding, data }) => binding.dispatch(data) );
 
     this.state.clearEndedInputs();
