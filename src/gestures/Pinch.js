@@ -97,6 +97,12 @@ class Pinch extends Gesture {
   }
 }
 
+/**
+ * Packs together the midpoint and the average distance to that midpoint of a
+ * collection of points, which are gathered from their input objects. These are
+ * packed together so that the inputs only have to be mapped to their current
+ * points once.
+ */
 function getMidpointAndAverageDistance(inputs) {
   const points = inputs.map( i => i.current.point );
   const midpoint = Point2D.midpoint(points); 

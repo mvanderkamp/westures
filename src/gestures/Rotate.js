@@ -78,14 +78,12 @@ class Rotate extends Gesture {
 
     const progress = active[0].getProgressOfGesture(this.id);
     progress.change = angle - progress.previousAngle;
-    progress.distance += progress.change;
     progress.previousAngle = angle;
 
     return {
       angle,
       pivot,
-      distanceFromOrigin: progress.distance,
-      distanceFromLast: progress.change,
+      delta: progress.change,
     };
   }
   /* move*/
