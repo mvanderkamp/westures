@@ -71,7 +71,7 @@ class State {
     if (util.normalizeEvent[ event.type ] === 'start') {
       this.inputs[identifier] = new Input(event, identifier);
     } else {
-      this.inputs[identifier].update(event, identifier);
+      this.inputs[identifier].update(event);
     }
   }
 

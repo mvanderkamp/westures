@@ -140,7 +140,7 @@ class Input {
    */
   update(event, identifier) {
     this.previous = this.current;
-    this.current = new PointerData(event, identifier);
+    this.current = new PointerData(event, this.identifier);
   }
 
   /**
