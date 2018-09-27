@@ -2,7 +2,7 @@
  * @file Input.js
  */
 
-const ZingEvent = require('./ZingEvent.js');
+const PointerData = require('./PointerData.js');
 
 /**
  * Tracks a single input and contains information about the
@@ -19,11 +19,11 @@ class Input {
    * from event.changedTouches)
    */
   constructor(event, identifier = 0) {
-    const currentEvent = new ZingEvent(event, identifier);
+    const currentEvent = new PointerData(event, identifier);
 
     /**
      * Holds the initial event object. A touchstart/mousedown event.
-     * @type {ZingEvent}
+     * @type {PointerData}
      */
     this.initial = currentEvent;
 
@@ -32,13 +32,13 @@ class Input {
      * current, and future events that other Inputs participate in.  e.g. This
      * event ended in an 'end' event, but another Input is still participating
      * in events -- this will not be updated in such cases.
-     * @type {ZingEvent}
+     * @type {PointerData}
      */
     this.current = currentEvent;
 
     /**
      * Holds the previous event that took place.
-     * @type {ZingEvent}
+     * @type {PointerData}
      */
     this.previous = currentEvent;
 
@@ -132,16 +132,16 @@ class Input {
   }
 
   /**
-   * Saves the given raw event in ZingEvent form as the current event for this
+   * Saves the given raw event in PointerData form as the current event for this
    * input, pushing the old current event into the previous slot, and tossing
    * out the old previous event.
    *
-   * @param {Event} event - The event object to wrap with a ZingEvent.
+   * @param {Event} event - The event object to wrap with a PointerData.
    * @param {Number} touchIdentifier - The index of inputs, from event.touches
    */
   update(event, identifier) {
     this.previous = this.current;
-    this.current = new ZingEvent(event, identifier);
+    this.current = new PointerData(event, identifier);
   }
 
   /**

@@ -1,6 +1,6 @@
 /**
- * @file ZingEvent.js
- * Contains logic for ZingEvents
+ * @file PointerData.js
+ * Contains logic for PointerDatas
  */
 
 const util    = require('./util.js');
@@ -8,9 +8,9 @@ const Point2D = require('./Point2D.js');
 
 /**
  * An event wrapper that normalizes events across browsers and input devices
- * @class ZingEvent
+ * @class PointerData
  */
-class ZingEvent {
+class PointerData {
   /**
    * @constructor
    *
@@ -58,7 +58,7 @@ class ZingEvent {
   /**
    * Calculates the angle between this event and the given event.
    *
-   * @param {ZingEvent} event
+   * @param {PointerData} event
    *
    * @return {Number} - Radians measurement between this event and the given
    * event's points.
@@ -68,9 +68,9 @@ class ZingEvent {
   }
 
   /**
-   * Calculates the distance between two ZingEvents.
+   * Calculates the distance between two PointerDatas.
    *
-   * @param {ZingEvent} event
+   * @param {PointerData} event
    *
    * @return {Number} The distance between the two points, a.k.a. the
    * hypoteneuse. 
@@ -93,7 +93,7 @@ class ZingEvent {
   /**
    * Calculates the midpoint coordinates between two events.
    *
-   * @param {ZingEvent} event
+   * @param {PointerData} event
    *
    * @return {Point2D} The coordinates of the midpoint.
    */
@@ -116,7 +116,7 @@ class ZingEvent {
 }
 
 function getEventObject(event, identifier) {
-  if (event.touches && event.changedTouches) {
+  if (event.changedTouches) {
     return Array.from(event.changedTouches).find( t => {
       return t.identifier === identifier;
     });
@@ -125,12 +125,13 @@ function getEventObject(event, identifier) {
 }
 
 function getInitialElementsInPath(event) {
+  // A WeakSet is used so that references will be garbage collected when the
+  // element they point to is removed from the page.
   const set = new WeakSet();
   const path = util.getPropagationPath(event);
-  path.forEach( node => {
-    set.add(node);
-  });
+  path.forEach( node => set.add(node) );
   return set;
 }
 
-module.exports = ZingEvent;
+module.exports = PointerData;
+

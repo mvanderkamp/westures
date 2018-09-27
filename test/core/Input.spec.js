@@ -5,7 +5,7 @@
  * Tests Binding class
  */
 const Input     = require('../../src/core/Input.js');
-const ZingEvent = require('../../src/core/ZingEvent.js');
+const PointerData = require('../../src/core/PointerData.js');
 
 describe('Module exists', () => {
   expect(Input).toBeDefined();
@@ -29,16 +29,16 @@ describe('constructor', function() {
   });
 
   test('has an initial event', function() {
-    expect(input.initial).toBeInstanceOf(ZingEvent);
+    expect(input.initial).toBeInstanceOf(PointerData);
   });
 
   test('has a current event', function() {
-    expect(input.current).toBeInstanceOf(ZingEvent);
+    expect(input.current).toBeInstanceOf(PointerData);
     expect(input.current).toEqual(input.current);
   });
 
   test('has a previous event', function() {
-    expect(input.previous).toBeInstanceOf(ZingEvent);
+    expect(input.previous).toBeInstanceOf(PointerData);
     expect(input.previous).toEqual(input.current);
   });
 });
