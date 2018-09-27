@@ -77,12 +77,13 @@ class Region {
      */
     this.state = new State();
 
-    /**
-     * The function which will be bound as an event listener for interaction
-     * events.
-     */
-    this.arbiter = this.arbitrate.bind(this);
+    this.activate();
+  }
 
+  /**
+   * Begin operations.
+   */
+  activate() {
     let eventNames = [];
     if (window.PointerEvent && !window.TouchEvent) {
       eventNames = POINTER_EVENTS;
@@ -91,8 +92,9 @@ class Region {
     }
 
     // Bind detected browser events to the region element.
+    const arbiter = this.arbitrate.bind(this);
     eventNames.forEach( eventName => {
-      this.element.addEventListener(eventName, this.arbiter );
+      this.element.addEventListener(eventName, arbiter);
     });
   }
 
@@ -108,33 +110,14 @@ class Region {
    * @param {Event} event - The event emitted from the window object.
    */
   arbitrate(event) {
-    const eventType = util.normalizeEvent[ event.type ];
-
-    /*
-     * Return if a gesture is not in progress and won't be. Also catches the
-     * case where a previous event is in a partial state (2 finger pan, waits
-     * for both inputs to reach touchend)
-     */
-    if (this.state.inputs.length === 0 && eventType !== 'start') return;
+    if (this.preventDefault) event.preventDefault();
 
     this.state.updateAllInputs(event, this.element);
 
-    // Retrieve the initial target from any one of the inputs
-    const bindings = this.retrieveBindingsByInitialPos();
-    if (bindings.length > 0) this.evaluate(event, bindings);
+    this.getDispatchableGestureData(event, bindings)
+      .forEach( ({ binding, data }) => binding.dispatch(data) );
 
-    if (this.state.hasOnlyEndedInputs()) {
-      this.state.resetInputs();
-    }
-  }
-
-  /**
-   * Interprets the event for every binding and dispatches the results.
-   */
-  evaluate(event, bindings) {
-    if (this.preventDefault) event.preventDefault();
-    const candidates = this.interpret(event, bindings);
-    candidates.forEach( ({ binding, data }) => binding.dispatch(data) );
+    this.state.clearEndedInputs();
   }
 
   /**
@@ -142,17 +125,17 @@ class Region {
    * that returned null and packages the data from gestures that did not return
    * null such that it is ready for dispatching.
    */
-  interpret(event, bindings) {
-    const evType = util.normalizeEvent[ event.type ];
+  getDispatchableGestureData(event, bindings) {
+    const hook = util.normalizeEvent[ event.type ];
     const events = this.state.getCurrentEvents();
 
-    return bindings.reduce( (candidates, binding) => {
-      const data = binding.gesture[evType](this.state.inputs, this.state);
+    return bindings.reduce( (dispatchables, binding) => {
+      const data = binding.gesture[hook](this.state.inputs, this.state);
       if (data) {
         data.events = events;
-        candidates.push({ binding, data });
+        dispatchables.push({ binding, data });
       }
-      return candidates;
+      return dispatchables;
     }, []);
   }
 

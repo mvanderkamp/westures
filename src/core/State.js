@@ -27,6 +27,15 @@ class State {
   }
 
   /**
+   * Replaces all inputs that are in the 'end' phase with undefined.
+   */
+  clearEndedInputs() {
+    this.inputs = this.inputs.map( i => {
+      return (i && i.phase == 'end') ? undefined : i;
+    });
+  }
+
+  /**
    * @return {Array} Current event for all inputs.
    */
   getCurrentEvents() {
@@ -70,7 +79,7 @@ class State {
   updateInput(event, identifier) {
     if (util.normalizeEvent[ event.type ] === 'start') {
       this.inputs[identifier] = new Input(event, identifier);
-    } else {
+    } else if (this.inputs[identifier]) {
       this.inputs[identifier].update(event);
     }
   }

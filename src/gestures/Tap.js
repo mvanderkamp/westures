@@ -3,8 +3,9 @@
  * Contains the Tap class
  */
 
-const Gesture = require('./../core/Gesture.js');
-const util    = require('./../core/util.js');
+const Gesture = require('../core/Gesture.js');
+const util    = require('../core/util.js');
+const Point2D = require('../core/Point2D.js');
 
 const DEFAULT_MIN_DELAY_MS = 0;
 const DEFAULT_MAX_DELAY_MS = 300;
@@ -67,6 +68,11 @@ class Tap extends Gesture {
      * @type {number}
      */
     this.tolerance = options.tolerance || DEFAULT_MOVE_PX_TOLERANCE;
+
+    /**
+     * An array of inputs that have ended recently.
+     */
+    this.ended = [];
   }
   /* constructor*/
 
@@ -85,28 +91,21 @@ class Tap extends Gesture {
    */
   end(inputs, state) {
     const now = Date.now();
-    const ended = state.getInputsInPhase('end');
-    const timed = ended.filter( i => {
-      const tdiff = now - i.startTime;
-      return tdiff <= this.maxDelay && tdiff >= this.minDelay;
-    });
 
-    if (timed.length !== this.numInputs) return null;
-    if (!timed.every( i => i.totalDistanceIsWithin(this.tolerance))) {
+    this.ended = this.ended.concat(state.getInputsInPhase('end'))
+      .filter( i => {
+        const tdiff = now - i.startTime;
+        return tdiff <= this.maxDelay && tdiff >= this.minDelay;
+      });
+
+    if (this.ended.length === 0 ||
+        this.ended.length !== this.numInputs || 
+        !this.ended.every( i => i.totalDistanceIsWithin(this.tolerance))) {
       return null;
     }
 
-    const sorted = timed.sort( (a,b) => a.startTime - b.startTime );
-    if (sorted.length > 0) {
-      const tapped = sorted[0];
-      const { x, y } = tapped.current.point;
-      return { 
-        interval: tapped.currentTime - tapped.startTime,
-        x,
-        y,
-      };
-    }
-    return null;
+    const {x,y} = Point2D.midpoint( this.ended.map( i => i.current.point ) );
+    return {x,y};
   }
   /* end*/
 }
