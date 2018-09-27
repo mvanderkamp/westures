@@ -138,7 +138,7 @@ class Input {
    * @param {Event} event - The event object to wrap with a PointerData.
    * @param {Number} touchIdentifier - The index of inputs, from event.touches
    */
-  update(event, identifier) {
+  update(event) {
     this.previous = this.current;
     this.current = new PointerData(event, this.identifier);
   }
