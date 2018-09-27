@@ -77,11 +77,13 @@ class Region {
      */
     this.state = new State();
 
+    // Begin operating immediately.
     this.activate();
   }
 
   /**
-   * Begin operations.
+   * Activates the region by adding event listeners for all appropriate input
+   * events to the region's element.
    */
   activate() {
     let eventNames = [];
@@ -169,12 +171,11 @@ class Region {
   }
 
   /**
-   * Unbinds an element from either the specified gesture or all if no element
+   * Unbinds an element from either the specified gesture or all if no gesture
    * is specified.
    *
-   * @param {Element} element -The element to remove.
-   * @param {String | Object} [gesture] - A String representing the gesture, or
-   * the actual object being used.
+   * @param {Element} element - The element to unbind.
+   * @param {Gesture} gesture - The gesture to unbind.
    *
    * @return {Array} - An array of Bindings that were unbound to the element;
    */
@@ -183,9 +184,11 @@ class Region {
     let unbound = [];
 
     bindings.forEach( b => {
-      b.unbind();
-      unbound.push(b);
-      this.bindings.splice(this.bindings.indexOf(b), 1);
+      if (gesture == undefined || b.gesture === gesture) {
+        b.unbind();
+        unbound.push(b);
+        this.bindings.splice(this.bindings.indexOf(b), 1);
+      }
     });
 
     return unbound;
