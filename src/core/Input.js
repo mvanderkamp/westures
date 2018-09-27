@@ -72,6 +72,13 @@ class Input {
   get startTime()   { return this.initial.time; }
 
   /**
+   * @return {Point2D} A clone of the current point.
+   */
+  cloneCurrentPoint() {
+    return this.current.point.clone();
+  }
+
+  /**
    * @return {Number} The angle in radians between the inputs' current events.
    */
   currentAngleTo(input) {
