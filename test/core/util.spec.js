@@ -48,21 +48,6 @@ describe('getMouseButtons', () => {
   });
 });
 
-describe('getPathIndex', () => {
-  const arr = [1,2,3];
-  test('Returns the index of an element in the array', () => {
-    expect(util.getPathIndex(arr, 1)).toBe(0);
-    expect(util.getPathIndex(arr, 2)).toBe(1);
-    expect(util.getPathIndex(arr, 3)).toBe(2);
-  });
-
-  test('Returns the length of the array if element not found', () => {
-    expect(util.getPathIndex(arr, 4)).toBe(3);
-    expect(util.getPathIndex(arr, 5)).toBe(3);
-    expect(util.getPathIndex(arr, 6)).toBe(3);
-  });
-});
-
 describe('getPropagationPath', () => {
   const with_comp = {
     composedPath: jest.fn()
