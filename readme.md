@@ -75,7 +75,7 @@ const wes = new Westures.Region(document.body);
 const myElement = document.getElementById('my-div');
 
 wes.bind(myElement, new Westures.Tap(), function(e){
-	//Actions here
+  //Actions here
 });
 ```
 
@@ -125,7 +125,7 @@ const touchArea = document.getElementById('toucharea');
 const myRegion = new Westures.Region(touchArea);
 
 myRegion.bind(touchArea, new Westures.Pan(), function(e){
-	console.log(e.detail);
+  console.log(e.detail);
 });
 ```
 
@@ -141,7 +141,7 @@ const parentTouchArea = touchArea.parentNode;
 const myParentRegion = new Westures.Region(parentTouchArea);
 
 myParentRegion.bind(touchArea, new Westures.Pan(), function(e){
-	console.log(e.detail);
+  console.log(e.detail);
 });
 ```
 
@@ -183,8 +183,8 @@ succession.
 
 ```js
 new Westures.Tap({
-	maxDelay: 200,
-	tolerance: 125
+  maxDelay: 200,
+  tolerance: 125
 })
 ```
 
@@ -228,7 +228,7 @@ A pan is detected when the user touches the screen and moves about the area.
 #### Example
 ```js
 new Westures.Pan({
-	threshold: 2
+  threshold: 2
 })
 ```
 
@@ -265,7 +265,7 @@ emitted.
 * gesture - Either the key (string) of a default or registered gesture, or an
   instance of the `Gesture` class itself.
 * handler - A function to be called every time the gesture is emitted.
-	* The handler function has an Event object emitted from the 
+  * The handler function has an Event object emitted from the 
   [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent)
   interface. Any information relavant to the gesture will be in `event.detail`.
 
