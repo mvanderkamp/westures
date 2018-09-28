@@ -96,7 +96,7 @@ class Region {
     // Bind detected browser events to the region element.
     const arbiter = this.arbitrate.bind(this);
     eventNames.forEach( eventName => {
-      this.element.addEventListener(eventName, arbiter);
+      this.element.addEventListener(eventName, arbiter, this.capture);
     });
   }
 
@@ -117,14 +117,7 @@ class Region {
     const events = this.state.getCurrentEvents();
 
     this.retrieveBindingsByInitialPos().forEach( binding => {
-      const data = binding.gesture[hook](this.state);
-      if (data) {
-        data.events = events;
-        binding.dispatch(data);
-        if (binding.bindOnce) {
-          this.bindings.splice(this.bindings.indexOf(binding), 1);
-        }
-      }
+      binding.evaluateHook(hook, this.state, events);
     });
 
     this.state.clearEndedInputs();
@@ -138,15 +131,11 @@ class Region {
    * @param {Function} [handler] - The function to execute when an event is
    * emitted.
    * @param {Boolean} [capture] - capture/bubble
-   * @param {Boolean} [bindOnce = false] - Option to bind once and only emit the
-   * event once.
    *
    * @return {Object} - a chainable object that has the same function as bind.
    */
-  bind(element, gesture, handler, capture, bindOnce = false) {
-    this.bindings.push(
-      new Binding( element, gesture, handler, capture, bindOnce )
-    );
+  bind(element, gesture, handler) {
+    this.bindings.push( new Binding(element, gesture, handler) );
   }
 
   /**

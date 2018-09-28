@@ -19,7 +19,7 @@ class Binding {
    * @param {Boolean} [bindOnce=false] - A boolean flag used for the bindOnce
    * syntax.
    */
-  constructor(element, gesture, handler, capture = false, bindOnce = false) {
+  constructor(element, gesture, handler) {
     /**
      * The element to associate the gesture to.
      * @type {Element}
@@ -38,19 +38,6 @@ class Binding {
      * @type {Function}
      */
     this.handler = handler;
-
-    /**
-     * A boolean signifying if the event is to be emitted during the capture or
-     * bubble phase.
-     * @type {Boolean}
-     */
-    this.capture = capture;
-
-    /**
-     * A boolean flag used for the bindOnce syntax.
-     * @type {Boolean}
-     */
-    this.bindOnce = bindOnce;
 
     // Start listening immediately.
     this.listen();
@@ -72,6 +59,17 @@ class Binding {
   }
 
   /**
+   * Evalutes the given gesture hook, and dispatches any data that is produced.
+   */
+  evaluateHook(hook, state, events) {
+    const data = this.gesture[hook](state);
+    if (data) {
+      data.events = events;
+      this.dispatch(data);
+    }
+  }
+
+  /**
    * Sets the bound element to begin listening to events of the same name as the
    * bound gesture's id.
    */
@@ -79,10 +77,6 @@ class Binding {
     this.element.addEventListener(
       this.gesture.id,
       this.handler,
-      {
-        capture: this.capture,
-        once: this.bindOnce,
-      },
     );
   }
 
@@ -93,7 +87,6 @@ class Binding {
     this.element.removeEventListener(
       this.gesture.id,
       this.handler,
-      this.capture
     );
   }
 }
