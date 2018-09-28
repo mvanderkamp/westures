@@ -26,8 +26,8 @@ class Gesture {
     /**
      * The unique identifier for each gesture determined at bind time by the
      * state object. This allows for distinctions across instance variables of
-     * Gestures that are created on the fly (e.g. Tap-1, Tap-2, etc).
-     * @type {String|null}
+     * Gestures that are created on the fly (e.g. gesture-tap-1, gesture-tap-2).
+     * @type {String}
      */
     this.id = `gesture-${this.type}-${nextGestureNum++}`;
   }
