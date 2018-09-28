@@ -309,8 +309,8 @@ Unbind from a gesture instance.
 
 ```js
 const myElement = document.getElementById('mydiv');
-const myRegion = new ZingTouch.Region(document.body);
-const myTapGesture = new ZingTouch.Tap({ maxDelay : 100 });
+const myRegion = new Westures.Region(document.body);
+const myTapGesture = new Westures.Tap({ maxDelay : 100 });
 
 myRegion.bind(myElement, myTapGesture, function(e) {});
 
@@ -337,7 +337,7 @@ Details on how to do so will be forthcoming...
 # Pitfalls
 
 **Binding an event and DOM mutation to an element**
-ZingTouch treats a gesture as a non-mutable event, meaning that the element is
+Westures treats a gesture as a non-mutable event, meaning that the element is
 bound to is not expected to change between the start and end. Binding a
 transformation of an element's bounding box to the middle of a gesture event
 could provide unwanted results. 
