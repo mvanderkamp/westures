@@ -686,3 +686,4 @@ request onto this readme file.
 MIT License
 
 &copy; 2017 ZingChart, Inc.
+

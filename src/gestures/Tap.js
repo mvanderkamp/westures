@@ -110,3 +110,4 @@ class Tap extends Gesture {
 }
 
 module.exports = Tap;
+

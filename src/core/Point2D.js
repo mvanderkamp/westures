@@ -186,3 +186,4 @@ Point2D.sum = function(points = []) {
 }
 
 module.exports = Point2D;
+

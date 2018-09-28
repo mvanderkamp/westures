@@ -111,3 +111,4 @@ function getMidpointAndAverageDistance(inputs) {
 }
 
 module.exports = Pinch;
+

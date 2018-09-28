@@ -19,3 +19,4 @@ describe('ZingTouch', function() {
     expect(Object.keys(ZingTouch)).toMatchObject(gestures);
   });
 });
+

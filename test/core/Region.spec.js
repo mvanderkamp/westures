@@ -26,3 +26,4 @@ describe('Region.bind(element)', function() {
     }).toThrow();
   });
 });
+
