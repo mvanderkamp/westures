@@ -115,6 +115,10 @@ class PointerData {
   }
 }
 
+/**
+ * @return {Event} The Event object which corresponds to the given identifier.
+ * Contains clientX, clientY values.
+ */
 function getEventObject(event, identifier) {
   if (event.changedTouches) {
     return Array.from(event.changedTouches).find( t => {
@@ -124,6 +128,9 @@ function getEventObject(event, identifier) {
   return event;
 }
 
+/**
+ * @return {WeakSet} The Elements in the path of the given event.
+ */
 function getInitialElementsInPath(event) {
   // A WeakSet is used so that references will be garbage collected when the
   // element they point to is removed from the page.
