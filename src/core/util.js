@@ -41,19 +41,6 @@ function getMouseButtons(event) {
 }
 
 /**
- * Retrieve the index of the element inside the path array.
- *
- * @param {Array} path
- * @param {Element} element
- *
- * @return {Number} The index of the element, or the path length if not found.
- */
-function getPathIndex(path, element) {
-  const index = path.indexOf(element);
-  return index < 0 ? path.length : index;
-}
-
-/**
  * In case event.composedPath() is not available.
  *
  * @param {Event} event
@@ -75,30 +62,8 @@ function getPropagationPath(event) {
   return path;
 }
 
-function setMSPreventDefault(element) {
-  element.style['-ms-content-zooming'] = 'none';
-  element.style['touch-action'] = 'none';
-}
-
-function removeMSPreventDefault(element) {
-  element.style['-ms-content-zooming'] = '';
-  element.style['touch-action'] = '';
-}
-
-function preventDefault(event) {
-  if (event.preventDefault) {
-    event.preventDefault();
-  } else {
-    event.returnValue = false;
-  }
-}
-
 module.exports = Object.freeze({
   normalizeEvent,
-  preventDefault,
-  removeMSPreventDefault,
-  setMSPreventDefault,
-  getPathIndex,
   getPropagationPath,
   getMouseButtons,
 });
