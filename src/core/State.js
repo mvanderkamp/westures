@@ -19,62 +19,52 @@ class State {
    */
   constructor() {
     /**
-     * An array of current and recently inactive Input objects related to a
-     * gesture.
+     * An array of current Input objects related to a gesture.
      * @type {Input}
      */
-    this.inputs = [];
+    this._inputs_obj = {};
   }
 
   /**
-   * Replaces all inputs that are in the 'end' phase with undefined.
+   * @return {Array} The currently valid inputs.
+   */
+  get inputs() { return Object.values(this._inputs_obj); }
+
+  /**
+   * Deletes all inputs that are in the 'end' phase.
    */
   clearEndedInputs() {
-    this.inputs = this.inputs.map( i => {
-      return (i && i.phase == 'end') ? undefined : i;
-    });
+    for (let k in this._inputs_obj) {
+      if (this._inputs_obj[k].phase === 'end') delete this._inputs_obj[k];
+    }
   }
 
   /**
    * @return {Array} Current event for all inputs.
    */
   getCurrentEvents() {
-    return this.inputs.map( i => i && i.current );
+    return this.inputs.map( i => i.current );
   }
 
   /**
    * @return {Array} Inputs in the given phase.
    */
   getInputsInPhase(phase) {
-    return this.inputs.filter( i => i && i.phase === phase );
+    return this.inputs.filter( i => i.phase === phase );
   }
 
   /**
    * @return {Array} Inputs _not_ in the given phase.
    */
   getInputsNotInPhase(phase) {
-    return this.inputs.filter( i => i && i.phase !== phase );
-  }
-
-  /**
-   * @return {Boolean} true if all inputs are in 'end' phase.
-   */
-  hasOnlyEndedInputs() {
-    return this.getInputsInPhase('end').length === this.inputs.length;
-  }
-
-  /**
-   * Removes all inputs from the state, allowing for a new gesture.
-   */
-  resetInputs() {
-    this.inputs = [];
+    return this.inputs.filter( i => i.phase !== phase );
   }
 
   /**
    * @return {Boolean} - true if some input was initially inside the element.
    */
   someInputWasInitiallyInside(element) {
-    return this.inputs.some( i => i && i.wasInitiallyInside(element) );
+    return this.inputs.some( i => i.wasInitiallyInside(element) );
   }
 
   /**
@@ -85,9 +75,9 @@ class State {
    */
   updateInput(event, identifier) {
     if (util.normalizeEvent[ event.type ] === 'start') {
-      this.inputs[identifier] = new Input(event, identifier);
-    } else if (this.inputs[identifier]) {
-      this.inputs[identifier].update(event);
+      this._inputs_obj[identifier] = new Input(event, identifier);
+    } else if (this._inputs_obj[identifier]) {
+      this._inputs_obj[identifier].update(event);
     }
   }
 
