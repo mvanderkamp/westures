@@ -58,29 +58,29 @@ class PointerData {
   /**
    * Calculates the angle between this event and the given event.
    *
-   * @param {PointerData} event
+   * @param {PointerData} pdata
    *
    * @return {Number} - Radians measurement between this event and the given
    * event's points.
    */
-  angleTo(event) {
-    return this.point.angleTo(event.point);
+  angleTo(pdata) {
+    return this.point.angleTo(pdata.point);
   }
 
   /**
    * Calculates the distance between two PointerDatas.
    *
-   * @param {PointerData} event
+   * @param {PointerData} pdata
    *
    * @return {Number} The distance between the two points, a.k.a. the
    * hypoteneuse. 
    */
-  distanceTo(event) {
-    return this.point.distanceTo(event.point);
+  distanceTo(pdata) {
+    return this.point.distanceTo(pdata.point);
   }
 
   /**
-   * Determines if this event is within the given HTML element.
+   * Determines if this PointerData is within the given HTML element.
    *
    * @param {Element} target
    *
@@ -91,23 +91,23 @@ class PointerData {
   }
 
   /**
-   * Calculates the midpoint coordinates between two events.
+   * Calculates the midpoint coordinates between two PointerData objects.
    *
-   * @param {PointerData} event
+   * @param {PointerData} pdata
    *
    * @return {Point2D} The coordinates of the midpoint.
    */
-  midpointTo(event) {
-    return this.point.midpointTo(event.point);
+  midpointTo(pdata) {
+    return this.point.midpointTo(pdata.point);
   }
 
   /**
-   * Determines if this event was inside the given element at the time it was
-   * dispatched.
+   * Determines if this PointerData was inside the given element at the time it
+   * was dispatched.
    *
    * @param {Element} element
    *
-   * @return {Boolean} true if the event occurred inside the element, false
+   * @return {Boolean} true if the PointerData occurred inside the element, false
    * otherwise.
    */
   wasInside(element) {
