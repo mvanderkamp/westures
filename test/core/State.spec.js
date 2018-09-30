@@ -22,11 +22,11 @@ describe('prototype methods', () => {
       { phase: 'end', id: 1 },
       { phase: 'move', id: 2 },
       { phase: 'move', id: 3 },
-      { will: 'be empty' },
+      { will: 'be empty', id: 4 },
       { phase: 'start', id: 5 },
       { phase: 'start', id: 6 },
-    ].forEach( i => state.inputs.push(i) );
-    delete state.inputs[4];
+    ].forEach( i => state._inputs_obj[i.id] = i );
+    delete state._inputs_obj[4];
   });
 
   describe('getInputsInPhase(phase)', () => {
