@@ -7,6 +7,8 @@
 /**
  * The Point2D class stores and operates on 2-dimensional points, represented as
  * x and y coordinates.
+ *
+ * @class Point2D
  */
 class Point2D {
   /**
@@ -52,9 +54,9 @@ class Point2D {
    *   | /__________
    *   ° (originX, originY)
    *
-   * @param {Point2D} point
+   * @param {Point2D} point - The projection
    *
-   * @return {Number} - Degree along the unit circle where the projection lies.
+   * @return {Number} - Radians along the unit circle where the projection lies.
    */
   angleTo(point) {
     return Math.atan2(point.y - this.y, point.x - this.x);
@@ -65,10 +67,10 @@ class Point2D {
    * points.
    *
    * @param {Array} points - the Point2D objects to calculate the average
-   * distance to.
+   *    distance to.
    *
    * @return {Number} The average distance from this point to the provided
-   * points.
+   *    points.
    */
   averageDistanceTo(points = []) {
     return this.totalDistanceTo(points) / points.length;
@@ -89,7 +91,7 @@ class Point2D {
    * @param {Point2D} point
    *
    * @return {number} The distance between the two points, a.k.a. the
-   * hypoteneuse. 
+   *    hypoteneuse. 
    */
   distanceTo(point) {
     return Math.hypot(point.x - this.x, point.y - this.y);
@@ -100,7 +102,8 @@ class Point2D {
    *
    * @param {Element} target
    *
-   * @return {Boolean}
+   * @return {Boolean} true if the given point is within element, false
+   *    otherwise. 
    */
   isInside(element) {
     const rect = element.getBoundingClientRect();
@@ -144,7 +147,7 @@ class Point2D {
    * Calculates the total distance from this point to an array of points.
    *
    * @param {Array} points - The array of Point2D objects to calculate the total
-   * distance to.
+   *    distance to.
    *
    * @return {Number} The total distance from this point to the provided points.
    */
@@ -156,8 +159,8 @@ class Point2D {
 /**
  * Calculates the midpoint of a list of points.
  *
- * @param {Array} points - The array of Point2D objects to calculate the
- * midpoint of.
+ * @param {Array} points - The array of Point2D objects for which to calculate
+ *    the midpoint
  *
  * @return {Point2D} The midpoint of the provided points.
  */

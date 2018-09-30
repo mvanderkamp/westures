@@ -31,6 +31,7 @@ const TOUCH_EVENTS = [
  * itself. The more specific an area, the better performant the overall
  * application will perform. Contains API methods to bind/unbind specific
  * elements to corresponding gestures. 
+ *
  * @class Region
  */
 class Region {
@@ -38,27 +39,30 @@ class Region {
    * Constructor function for the Region class.
    *
    * @param {Element} element - The element to capture all window events in that
-   * region to feed into ZingTouch.
-   * @param {boolean} [capture=false] - Whether the region listens for captures
-   * or bubbles.
+   *    region to feed into ZingTouch.
+   * @param {boolean} [capture=false] - Whether the region uses the capture or
+   *    bubble phase of input events.
    * @param {boolean} [preventDefault=true] - Whether the default browser
-   * functionality should be disabled;
+   *    functionality should be disabled;
    */
   constructor(element, capture = false, preventDefault = true) {
     /**
      * The list of relations between elements, their gestures, and the handlers.
+     *
      * @type {Binding}
      */
     this.bindings = [];
 
     /**
      * The element being bound to.
+     *
      * @type {Element}
      */
     this.element = element;
 
     /**
      * Whether the region listens for captures or bubbles.
+     *
      * @type {boolean}
      */
     this.capture = capture;
@@ -66,13 +70,15 @@ class Region {
     /**
      * Boolean to disable browser functionality such as scrolling and zooming
      * over the region
+     *
      * @type {boolean}
      */
     this.preventDefault = preventDefault;
 
     /**
-     * The internal state object for a Region.
-     * Keeps track of inputs and bindings.
+     * The internal state object for a Region.  Keeps track of inputs and
+     * bindings.
+     *
      * @type {State}
      */
     this.state = new State();
@@ -129,7 +135,7 @@ class Region {
    * @param {Element} element - The element object.
    * @param {Gesture} gesture - Gesture object.
    * @param {Function} [handler] - The function to execute when an event is
-   * emitted.
+   *    emitted.
    * @param {Boolean} [capture] - capture/bubble
    *
    * @return {Object} - a chainable object that has the same function as bind.

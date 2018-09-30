@@ -12,6 +12,8 @@ const DEFAULT_MOUSE_ID = 0;
 /**
  * Creates an object related to a Region's state, and contains helper methods to
  * update and clean up different states.
+ *
+ * @class State
  */
 class State {
   /**
@@ -20,6 +22,7 @@ class State {
   constructor() {
     /**
      * An array of current Input objects related to a gesture.
+     *
      * @type {Input}
      */
     this._inputs_obj = {};
@@ -85,10 +88,10 @@ class State {
    * Updates the inputs with new information based upon a new event being fired.
    *
    * @param {Event} event - The event being captured.  this current Region is
-   * bound to.
+   *    bound to.
    *
    * @return {boolean} - returns true for a successful update, false if the
-   * event is invalid.
+   *    event is invalid.
    */
   updateAllInputs(event) {
     const update_fns = {

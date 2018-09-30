@@ -23,13 +23,14 @@ class Pan extends Gesture {
    *
    * @param {Object} [options] - The options object.
    * @param {Number} [options.threshold=1] - The minimum number of pixels the
-   * input has to move to trigger this gesture.
+   *    input has to move to trigger this gesture.
    */
   constructor(options = {}) {
     super('pan');
 
     /**
      * The minimum amount in pixels the pan must move until it is fired.
+     *
      * @type {Number}
      */
     this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
@@ -44,8 +45,8 @@ class Pan extends Gesture {
   }
 
   /**
-   * Event hook for the start of a gesture. Marks each input as active,
-   * so it can invalidate any end events.
+   * Event hook for the start of a gesture. Marks each input as active, so it
+   * can invalidate any end events.
    *
    * @param {State} input status object
    */

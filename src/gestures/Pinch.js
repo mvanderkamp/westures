@@ -12,6 +12,7 @@ const DEFAULT_MIN_THRESHOLD = 1;
 
 /**
  * A Pinch is defined as two inputs moving either together or apart.
+ *
  * @class Pinch
  */
 class Pinch extends Gesture {
@@ -25,6 +26,7 @@ class Pinch extends Gesture {
 
     /**
      * The minimum amount in pixels the inputs must move until it is fired.
+     *
      * @type {Number}
      */
     this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;

@@ -23,12 +23,12 @@ class Tap extends Gesture {
    *
    * @param {Object} [options] - The options object.
    * @param {Number} [options.minDelay=0] - The minimum delay between a
-   * touchstart and touchend can be configured in milliseconds.
+   *    touchstart and touchend can be configured in milliseconds.
    * @param {Number} [options.maxDelay=300] - The maximum delay between a
-   * touchstart and touchend can be configured in milliseconds.
+   *    touchstart and touchend can be configured in milliseconds.
    * @param {Number} [options.numInputs=1] - Number of inputs for Tap gesture.
    * @param {Number} [options.tolerance=10] - The tolerance in pixels a user can
-   * move.
+   *    move.
    */
   constructor(options = {}) {
     super('tap');
@@ -85,8 +85,8 @@ class Tap extends Gesture {
    * @param {State} input status object
    *
    * @return {null|Object} - null if the gesture is not to be emitted, Object
-   * with information otherwise. Returns the interval time between start and end
-   * events.
+   *    with information otherwise. Returns the interval time between start and
+   *    end events.
    */
   end(state) {
     const now = Date.now();

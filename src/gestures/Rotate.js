@@ -65,9 +65,9 @@ class Rotate extends Gesture {
    * @return {null} - null if this event did not occur
    * @return {Object} obj.angle - The current angle along the unit circle
    * @return {Object} obj.distanceFromOrigin - The angular distance travelled
-   * from the initial right most point.
+   *    from the initial right most point.
    * @return {Object} obj.distanceFromLast - The change of angle between the
-   * last position and the current position.
+   *    last position and the current position.
    */
   move(state) {
     const active = state.getInputsNotInPhase('end');

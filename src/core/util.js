@@ -9,7 +9,7 @@
  * @param {String} type - The event type emitted by the browser
  *
  * @return {null|String} - The normalized event, or null if it is an event not
- * predetermined.
+ *    predetermined.
  */
 const normalizeEvent = Object.freeze({
   mousedown:   'start',

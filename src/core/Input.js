@@ -5,9 +5,10 @@
 const PointerData = require('./PointerData.js');
 
 /**
- * Tracks a single input and contains information about the
- * current, previous, and initial events.
- * Contains the progress of each Input and it's associated gestures.
+ * Tracks a single input and contains information about the current, previous,
+ * and initial events.  Contains the progress of each Input and it's associated
+ * gestures.
+ *
  * @class Input
  */
 class Input {
@@ -16,7 +17,7 @@ class Input {
    *
    * @param {Event} event - The Event object from the window
    * @param {Number} [identifier=0] - The identifier for this input (taken
-   * from event.changedTouches or this input's button number)
+   *    from event.changedTouches or this input's button number)
    */
   constructor(event, identifier = 0) {
     const currentData = new PointerData(event, identifier);
@@ -24,19 +25,21 @@ class Input {
     /**
      * Holds the initial data from the mousedown / touchstart / pointerdown that
      * began this input.
+     *
      * @type {PointerData}
      */
     this.initial = currentData;
 
     /**
-     * Holds the most current data for this Input, disregarding any other past,
-     * current, and future events that other Inputs participate in. 
+     * Holds the most current pointer data for this Input.
+     *
      * @type {PointerData}
      */
     this.current = currentData;
 
     /**
-     * Holds data for the previous event that took place.
+     * Holds the previous pointer data for this Input.
+     *
      * @type {PointerData}
      */
     this.previous = currentData;
@@ -44,13 +47,15 @@ class Input {
     /**
      * The identifier for the pointer / touch / mouse button associated with
      * this input.
+     *
      * @type {Number}
      */
     this.identifier = identifier;
 
     /**
-     * Stores internal state between events for
-     * each gesture based off of the gesture's id.
+     * Stores internal state between events for each gesture based off of the
+     * gesture's id.
+     *
      * @type {Object}
      */
     this.progress = {};
@@ -138,9 +143,9 @@ class Input {
   }
 
   /**
-   * Saves the given raw event in PointerData form as the current event for this
-   * input, pushing the old current event into the previous slot, and tossing
-   * out the old previous event.
+   * Saves the given raw event in PointerData form as the current data for this
+   * input, pushing the old current data into the previous slot, and tossing
+   * out the old previous data.
    *
    * @param {Event} event - The event object to wrap with a PointerData.
    * @param {Number} touchIdentifier - The index of inputs, from event.touches

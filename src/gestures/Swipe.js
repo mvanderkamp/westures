@@ -24,17 +24,14 @@ class Swipe extends Gesture {
    * Constructor function for the Swipe class.
    *
    * @param {Object} [options] - The options object.
-   * @param {Number} [options.numInputs] - The number of inputs to trigger a
-   * Swipe can be variable, and the maximum number being a factor of the browser
-   * move and current move events.
    * @param {Number} [options.maxRestTime] - The maximum resting time a point
-   * has between it's last
+   *    has between it's last
    * @param {Number} [options.escapeVelocity] - The minimum velocity the input
-   * has to be at to emit a swipe.
+   *    has to be at to emit a swipe.
    * @param {Number} [options.timeDistortion] - (EXPERIMENTAL) A value of time
-   * in milliseconds to distort between events.
+   *    in milliseconds to distort between events.
    * @param {Number} [options.maxProgressStack] - (EXPERIMENTAL)The maximum
-   * amount of move events to keep track of for a swipe.
+   *    amount of move events to keep track of for a swipe.
    */
   constructor(options = {}) {
     super('swipe');
@@ -69,6 +66,7 @@ class Swipe extends Gesture {
     /**
      * (EXPERIMENTAL) The maximum amount of move events to keep track of for a
      * swipe. This helps give a more accurate estimate of the user's velocity.
+     *
      * @type {number}
      */
     this.maxProgressStack = options.maxProgressStack || 
@@ -112,7 +110,7 @@ class Swipe extends Gesture {
    * @param {State} input status object
    *
    * @return {null|Object} - null if the gesture is not to be emitted, Object
-   * with information otherwise.
+   *    with information otherwise.
    */
   end(state) {
     const ended = state.getInputsInPhase('end');
@@ -139,64 +137,6 @@ class Swipe extends Gesture {
       };
     }
     return null;
-    
-
-    // for (var i = 0; i < ended.length; i++) {
-    //   let progress = ended[i].getProgressOfGesture(this.id);
-    //   if (progress.moves && progress.moves.length > 2) {
-    //     // CHECK : Return if the input has not moved in maxRestTime ms.
-
-    //     let currentMove = progress.moves.pop();
-    //     if (Date.now() - currentMove.time > this.maxRestTime) {
-    //       return null;
-    //     }
-
-    //     let lastMove;
-    //     let index = progress.moves.length - 1;
-
-    //     [> Date is unreliable, so we retrieve the last move event where
-    //        the time is not the same. */
-    //     while (index !== -1) {
-    //       if (progress.moves[index].time !== currentMove.time) {
-    //         lastMove = progress.moves[index];
-    //         break;
-    //       }
-
-    //       index--;
-    //     }
-
-    //     [> If the date is REALLY unreliable, we apply a time distortion
-    //        to the last event.
-    //        */
-    //     if (!lastMove) {
-    //       lastMove = progress.moves.pop();
-    //       lastMove.time += this.timeDistortion;
-    //     }
-
-    //     const distance = lastMove.point.distanceTo(currentMove.point);
-    //     const duration = currentMove.time - lastMove.time;
-    //     var velocity = distance / duration;
-
-    //     output.data[i] = {
-    //       velocity,
-    //       distance,
-    //       duration,
-    //       currentDirection: lastMove.point.angleTo(currentMove.point),
-    //     }
-    //   }
-    // }
-
-    // for (var i = 0; i < output.data.length; i++) {
-    //   if (velocity < this.escapeVelocity) {
-    //     return null;
-    //   }
-    // }
-
-    // if (output.data.length > 0) {
-    //   return output;
-    // }
-
-    // return null;
   }
 
   /* end*/

@@ -7,7 +7,9 @@ const util    = require('./util.js');
 const Point2D = require('./Point2D.js');
 
 /**
- * An event wrapper that normalizes events across browsers and input devices
+ * Low-level storage of pointer data based on incoming data from an interaction
+ * event.
+ *
  * @class PointerData
  */
 class PointerData {
@@ -16,28 +18,31 @@ class PointerData {
    *
    * @param {Event} event - The event object being wrapped.
    * @param {Array} event.touches - The number of touches on a screen (mobile
-   * only).
+   *    only).
    * @param {Object} event.changedTouches - The TouchList representing points
-   * that participated in the event.
+   *    that participated in the event.
    * @param {Number} touchIdentifier - The index of touch if applicable
    */
   constructor(event, identifier) {
     /**
-     * The set of elements along this event's propagation path at the time it
-     * was dispatched.
+     * The set of elements along the original event's propagation path at the
+     * time it was dispatched.
+     *
      * @type {WeakSet}
      */
     this.initialElements = getInitialElementsInPath(event);
 
     /**
      * The original event object.
+     *
      * @type {Event}
      */
     this.originalEvent = event;
 
     /**
-     * The type of event or null if it is an event not predetermined.
-     * @see util.normalizeEvent
+     * The type or 'phase' of this batch of pointer data. 'start' or 'move' or
+     * 'end'.
+     *
      * @type {String | null}
      */
     this.type = util.normalizeEvent[ event.type ];
@@ -45,6 +50,8 @@ class PointerData {
     /**
      * The timestamp of the event in milliseconds elapsed since January 1, 1970,
      * 00:00:00 UTC.
+     * 
+     * @type {Number}
      */
     this.time = Date.now();
 
@@ -61,7 +68,7 @@ class PointerData {
    * @param {PointerData} pdata
    *
    * @return {Number} - Radians measurement between this event and the given
-   * event's points.
+   *    event's points.
    */
   angleTo(pdata) {
     return this.point.angleTo(pdata.point);
@@ -73,7 +80,7 @@ class PointerData {
    * @param {PointerData} pdata
    *
    * @return {Number} The distance between the two points, a.k.a. the
-   * hypoteneuse. 
+   *    hypoteneuse. 
    */
   distanceTo(pdata) {
     return this.point.distanceTo(pdata.point);
@@ -107,8 +114,8 @@ class PointerData {
    *
    * @param {Element} element
    *
-   * @return {Boolean} true if the PointerData occurred inside the element, false
-   * otherwise.
+   * @return {Boolean} true if the PointerData occurred inside the element,
+   *    false otherwise.
    */
   wasInside(element) {
     return this.initialElements.has(element);
@@ -117,7 +124,7 @@ class PointerData {
 
 /**
  * @return {Event} The Event object which corresponds to the given identifier.
- * Contains clientX, clientY values.
+ *    Contains clientX, clientY values.
  */
 function getEventObject(event, identifier) {
   if (event.changedTouches) {
