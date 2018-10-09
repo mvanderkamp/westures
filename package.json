@@ -1,26 +1,24 @@
 {
-  "name": "zingtouch",
-  "version": "1.0.5",
-  "description": "A modern JavaScript touch gesture library",
+  "name": "westures",
+  "version": "0.0.1",
+  "description": "A lightweight JavaScript gesture library.",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "bundle": "browserify 'index.js' --standalone zingtouch --outfile 'bundle.js'",
+    "bundle": "browserify 'index.js' --standalone westures --outfile 'bundle.js'",
     "test": "jest"
   },
   "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mvanderkamp/zingtouch"
+    "url": "https://github.com/mvanderkamp/westures"
   },
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^16.2.2",
-    "eslint": "^3.12.2",
-    "eslint-config-google": "^0.7.1",
-    "jest": "^23.5.0"
+    "browserify": "^16.2.3",
+    "jest": "^23.6.0"
   },
   "dependencies": {}
 }

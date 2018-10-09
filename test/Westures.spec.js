@@ -1,9 +1,9 @@
-const ZingTouch = require('./../index.js');
+const Westures = require('../index.js');
 
-/** @test {ZingTouch} */
-describe('ZingTouch', function() {
+/** @test {Westures} */
+describe('Westures', function() {
   test('should be instantiated', function() {
-    expect(ZingTouch).toBeTruthy();
+    expect(Westures).toBeTruthy();
   });
 
   test('should have constructors for all of the gestures', function() {
@@ -16,7 +16,7 @@ describe('ZingTouch', function() {
       'Tap',
       'Region',
     ];
-    expect(Object.keys(ZingTouch)).toMatchObject(gestures);
+    expect(Object.keys(Westures)).toMatchObject(gestures);
   });
 });
 

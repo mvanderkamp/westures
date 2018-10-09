@@ -4,7 +4,7 @@
  * @file Tap.js
  * Tests Tap class
  */
-const Tap = require('../../src/gestures/Tap.js');
+const Tap = require('../src/Tap.js');
 
 /** @test {Tap} */
 describe('Tap', function() {
