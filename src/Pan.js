@@ -3,9 +3,7 @@
  * Contains the Pan class
  */
 
-const Gesture = require('../core/Gesture.js');
-const Point2D = require('../core/Point2D.js');
-const util    = require('../core/util.js');
+const Gesture = require('../../westures-core/src/Gesture.js');
 
 const DEFAULT_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;

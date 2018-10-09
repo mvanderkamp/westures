@@ -3,8 +3,7 @@
  * Contains the Swipe class
  */
 
-const Gesture = require('../core/Gesture.js');
-const util    = require('../core/util.js');
+const Gesture = require('../../westures-core/src/Gesture.js');
 
 const REQUIRED_INPUTS = 1;
 const DEFAULT_MAX_REST_TIME = 100;

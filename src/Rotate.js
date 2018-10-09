@@ -3,9 +3,7 @@
  * Contains the Rotate class
  */
 
-const Gesture = require('../core/Gesture.js');
-const Point2D = require('../core/Point2D.js');
-const util    = require('../core/util.js');
+const Gesture = require('../../westures-core/src/Gesture.js');
 
 const REQUIRED_INPUTS = 2;
 
