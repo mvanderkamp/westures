@@ -1,5 +1,36 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.westures = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /**
+ * @file Westures.js
+ * Main object containing API methods and Gesture constructors
+ */
+
+const Core    = require('westures-core');
+const Pan     = require('./src/Pan.js');
+const Pinch   = require('./src/Pinch.js');
+const Rotate  = require('./src/Rotate.js');
+const Swipe   = require('./src/Swipe.js');
+const Tap     = require('./src/Tap.js');
+
+/**
+ * The global API interface for Westures. Contains a constructor for the
+ * Region Object, and constructors for each predefined Gesture.
+ * @type {Object}
+ * @namespace Westures
+ */
+module.exports = Object.assign({}, 
+  Core,
+  {
+    Pan,
+    Pinch,
+    Rotate,
+    Swipe,
+    Tap,
+  },
+);
+
+
+},{"./src/Pan.js":11,"./src/Pinch.js":12,"./src/Rotate.js":13,"./src/Swipe.js":14,"./src/Tap.js":15,"westures-core":2}],2:[function(require,module,exports){
+/**
  * @file index.js
  * Main object containing API methods and Gesture constructors
  */
@@ -22,7 +53,7 @@ module.exports = {
 };
 
 
-},{"./src/Gesture.js":3,"./src/Point2D.js":6,"./src/Region.js":8}],2:[function(require,module,exports){
+},{"./src/Gesture.js":4,"./src/Point2D.js":7,"./src/Region.js":9}],3:[function(require,module,exports){
 /**
  * @file Binding.js
  */
@@ -120,7 +151,7 @@ class Binding {
 module.exports = Binding;
 
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * @file Gesture.js
  * Contains the Gesture class
@@ -192,7 +223,7 @@ class Gesture {
 module.exports = Gesture;
 
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * @file Input.js
  */
@@ -362,7 +393,7 @@ class Input {
 module.exports = Input;
 
 
-},{"./PointerData.js":7}],5:[function(require,module,exports){
+},{"./PointerData.js":8}],6:[function(require,module,exports){
 /**
  * @file PHASE.js
  */
@@ -393,7 +424,7 @@ const PHASE = Object.freeze({
 module.exports = PHASE;
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * @File Point2D.js
  *
@@ -587,7 +618,7 @@ Point2D.sum = function(points = []) {
 module.exports = Point2D;
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * @file PointerData.js
  * Contains logic for PointerDatas
@@ -760,7 +791,7 @@ function getPropagationPath(event) {
 module.exports = PointerData;
 
 
-},{"./PHASE.js":5,"./Point2D.js":6}],8:[function(require,module,exports){
+},{"./PHASE.js":6,"./Point2D.js":7}],9:[function(require,module,exports){
 /**
  * @file Region.js
  */
@@ -959,7 +990,7 @@ class Region {
 module.exports = Region;
 
 
-},{"./Binding.js":2,"./PHASE.js":5,"./State.js":9}],9:[function(require,module,exports){
+},{"./Binding.js":3,"./PHASE.js":6,"./State.js":10}],10:[function(require,module,exports){
 /**
  * @file State.js
  */
@@ -1091,44 +1122,13 @@ function getMouseButtons(event) {
 module.exports = State;
 
 
-},{"./Input.js":4,"./PHASE.js":5}],10:[function(require,module,exports){
-/**
- * @file Westures.js
- * Main object containing API methods and Gesture constructors
- */
-
-const Core    = require('../westures-core');
-const Pan     = require('./src/Pan.js');
-const Pinch   = require('./src/Pinch.js');
-const Rotate  = require('./src/Rotate.js');
-const Swipe   = require('./src/Swipe.js');
-const Tap     = require('./src/Tap.js');
-
-/**
- * The global API interface for Westures. Contains a constructor for the
- * Region Object, and constructors for each predefined Gesture.
- * @type {Object}
- * @namespace Westures
- */
-module.exports = Object.assign({}, 
-  Core,
-  {
-    Pan,
-    Pinch,
-    Rotate,
-    Swipe,
-    Tap,
-  },
-);
-
-
-},{"../westures-core":1,"./src/Pan.js":11,"./src/Pinch.js":12,"./src/Rotate.js":13,"./src/Swipe.js":14,"./src/Tap.js":15}],11:[function(require,module,exports){
+},{"./Input.js":5,"./PHASE.js":6}],11:[function(require,module,exports){
 /**
  * @file Pan.js
  * Contains the Pan class
  */
 
-const { Gesture } = require('../../westures-core');
+const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
@@ -1218,15 +1218,15 @@ class Pan extends Gesture {
 module.exports = Pan;
 
 
-},{"../../westures-core":1}],12:[function(require,module,exports){
+},{"westures-core":2}],12:[function(require,module,exports){
 /**
  * @file Pinch.js
  * Contains the abstract Pinch class
  */
 
-const { Gesture, Point2D } = require('../../westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
-const REQUIRED_INPUTS = 2;
+const DEFAULT_MIN_INPUTS = 2;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 /**
@@ -1249,6 +1249,14 @@ class Pinch extends Gesture {
      * @type {Number}
      */
     this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
+
+    /**
+     * The minimum number of inputs that must be active for a Pinch to be
+     * recognized.
+     *
+     * @type {Number}
+     */
+    this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
   }
 
   /**
@@ -1259,7 +1267,7 @@ class Pinch extends Gesture {
    */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
+    if (active.length < this.minInputs) return null;
 
     const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 
@@ -1288,7 +1296,7 @@ class Pinch extends Gesture {
    */
   move(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
+    if (active.length < this.minInputs) return null;
 
     const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 
@@ -1334,13 +1342,13 @@ function getMidpointAndAverageDistance(inputs) {
 module.exports = Pinch;
 
 
-},{"../../westures-core":1}],13:[function(require,module,exports){
+},{"westures-core":2}],13:[function(require,module,exports){
 /**
  * @file Rotate.js
  * Contains the Rotate class
  */
 
-const { Gesture } = require('../../westures-core');
+const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 2;
 
@@ -1438,13 +1446,13 @@ class Rotate extends Gesture {
 module.exports = Rotate;
 
 
-},{"../../westures-core":1}],14:[function(require,module,exports){
+},{"westures-core":2}],14:[function(require,module,exports){
 /**
  * @file Swipe.js
  * Contains the Swipe class
  */
 
-const { Gesture } = require('../../westures-core');
+const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const DEFAULT_MAX_REST_TIME = 100;
@@ -1591,13 +1599,13 @@ function velocity(minit, mend) {
 module.exports = Swipe;
 
 
-},{"../../westures-core":1}],15:[function(require,module,exports){
+},{"westures-core":2}],15:[function(require,module,exports){
 /**
  * @file Tap.js
  * Contains the Tap class
  */
 
-const { Gesture, Point2D } = require('../../westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
 const DEFAULT_MIN_DELAY_MS = 0;
 const DEFAULT_MAX_DELAY_MS = 300;
@@ -1704,5 +1712,5 @@ class Tap extends Gesture {
 module.exports = Tap;
 
 
-},{"../../westures-core":1}]},{},[10])(10)
+},{"westures-core":2}]},{},[1])(1)
 });
