@@ -18,7 +18,8 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "^16.2.3",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "westures-core": "0.0.1"
   },
   "dependencies": {}
 }
