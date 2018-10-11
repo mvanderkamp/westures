@@ -3,7 +3,7 @@
  * Main object containing API methods and Gesture constructors
  */
 
-const { Region, Gesture }  = require('../westures-core/index.js');
+const Core    = require('../westures-core');
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
 const Rotate  = require('./src/Rotate.js');
@@ -16,13 +16,14 @@ const Tap     = require('./src/Tap.js');
  * @type {Object}
  * @namespace Westures
  */
-module.exports = {
-  Gesture,
-  Pan,
-  Pinch,
-  Rotate,
-  Swipe,
-  Tap,
-  Region,
-};
+module.exports = Object.assign({}, 
+  Core,
+  {
+    Pan,
+    Pinch,
+    Rotate,
+    Swipe,
+    Tap,
+  },
+);
 
