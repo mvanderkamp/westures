@@ -3,9 +3,9 @@
  * Contains the Pan class
  */
 
-const Gesture = require('../../westures-core/src/Gesture.js');
+const { Gesture } = require('../../westures-core');
 
-const DEFAULT_INPUTS = 1;
+const REQUIRED_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 /**
@@ -55,14 +55,13 @@ class Pan extends Gesture {
 
   /**
    * move() - Event hook for the move of a gesture.  
-   *
    * @param {State} input status object
    *
    * @return {Object} The change in position and the current position.
    */
   move(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length !== 1) return null;
+    if (active.length !== REQUIRED_INPUTS) return null;
 
     const progress = active[0].getProgressOfGesture(this.id);
     const point = active[0].current.point;
