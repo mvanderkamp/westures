@@ -3,7 +3,7 @@
  * Contains the Tap class
  */
 
-const { Gesture, Point2D } = require('../../westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
 const DEFAULT_MIN_DELAY_MS = 0;
 const DEFAULT_MAX_DELAY_MS = 300;

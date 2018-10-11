@@ -3,7 +3,7 @@
  * Main object containing API methods and Gesture constructors
  */
 
-const Core    = require('../westures-core');
+const Core    = require('westures-core');
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
 const Rotate  = require('./src/Rotate.js');

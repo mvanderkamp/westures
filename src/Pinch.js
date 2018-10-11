@@ -3,9 +3,9 @@
  * Contains the abstract Pinch class
  */
 
-const { Gesture, Point2D } = require('../../westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
-const REQUIRED_INPUTS = 2;
+const DEFAULT_MIN_INPUTS = 2;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 /**
@@ -28,6 +28,14 @@ class Pinch extends Gesture {
      * @type {Number}
      */
     this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
+
+    /**
+     * The minimum number of inputs that must be active for a Pinch to be
+     * recognized.
+     *
+     * @type {Number}
+     */
+    this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
   }
 
   /**
@@ -38,7 +46,7 @@ class Pinch extends Gesture {
    */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
+    if (active.length < this.minInputs) return null;
 
     const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 
@@ -67,7 +75,7 @@ class Pinch extends Gesture {
    */
   move(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
+    if (active.length < this.minInputs) return null;
 
     const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 

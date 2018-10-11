@@ -3,7 +3,7 @@
  * Contains the Rotate class
  */
 
-const { Gesture } = require('../../westures-core');
+const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 2;
 

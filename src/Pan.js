@@ -3,7 +3,7 @@
  * Contains the Pan class
  */
 
-const { Gesture } = require('../../westures-core');
+const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
