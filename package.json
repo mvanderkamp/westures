@@ -1,44 +1,25 @@
 {
-  "name": "zingtouch",
-  "version": "1.0.5",
-  "description": "A modern JavaScript touch gesture library",
+  "name": "westures",
+  "version": "0.0.1",
+  "description": "A lightweight JavaScript gesture library.",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "build": "node_modules/webpack/bin/webpack.js",
-    "build:dev": "node_modules/webpack/bin/webpack.js",
-    "build:prod": "node_modules/webpack/bin/webpack.js --minimize",
-    "dev": "node_modules/webpack-dev-server/bin/webpack-dev-server.js --quiet --inline --hot --dashboard",
-    "docs": "esdoc -c esdoc.json",
-    "test": "karma start karma.conf.js"
+    "bundle": "browserify 'index.js' --standalone westures --outfile 'bundle.js'",
+    "test": "jest"
   },
-  "author": "ZingChart",
+  "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zingchart/zingtouch"
+    "url": "https://github.com/mvanderkamp/westures"
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.5.2",
-    "babel-loader": "^6.2.3",
-    "babel-preset-es2015": "^6.9.0",
-    "babelify": "~5.0.3",
-    "chai": "^3.5.0",
-    "eslint": "^3.12.2",
-    "eslint-config-google": "^0.7.1",
-    "karma": "^0.13.15",
-    "karma-chai": "^0.1.0",
-    "karma-jasmine": "~0.3.5",
-    "karma-mocha": "^0.2.2",
-    "karma-phantomjs-launcher": "~0.1.4",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.7.0",
-    "mocha": "^2.4.5",
-    "webpack": "^1.12.13",
-    "webpack-dashboard": "^0.2.1",
-    "webpack-dev-server": "^1.16.2"
+    "browserify": "^16.2.3",
+    "jest": "^23.6.0",
+    "westures-core": "0.0.1"
   },
   "dependencies": {}
 }
