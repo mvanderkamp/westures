@@ -1,35 +1,28 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.zingtouch = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.westures = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /**
- * @file ZingTouch.js
+ * @file index.js
  * Main object containing API methods and Gesture constructors
  */
 
-const Region  = require('./src/core/Region.js');
-const Gesture = require('./src/core/Gesture.js');
-const Pan     = require('./src/gestures/Pan.js');
-const Pinch   = require('./src/gestures/Pinch.js');
-const Rotate  = require('./src/gestures/Rotate.js');
-const Swipe   = require('./src/gestures/Swipe.js');
-const Tap     = require('./src/gestures/Tap.js');
+const Region  = require('./src/Region.js');
+const Point2D = require('./src/Point2D.js');
+const Gesture = require('./src/Gesture.js');
 
 /**
- * The global API interface for ZingTouch. Contains a constructor for the
- * Region Object, and constructors for each predefined Gesture.
+ * The global API interface for Westures. Contains a constructor for the Region
+ * Object and the generic Gesture class for user gestures to implement.
+ *
  * @type {Object}
- * @namespace ZingTouch
+ * @namespace Westures
  */
 module.exports = {
   Gesture,
-  Pan,
-  Pinch,
-  Rotate,
-  Swipe,
-  Tap,
+  Point2D,
   Region,
 };
 
 
-},{"./src/core/Gesture.js":3,"./src/core/Region.js":7,"./src/gestures/Pan.js":10,"./src/gestures/Pinch.js":11,"./src/gestures/Rotate.js":12,"./src/gestures/Swipe.js":13,"./src/gestures/Tap.js":14}],2:[function(require,module,exports){
+},{"./src/Gesture.js":3,"./src/Point2D.js":6,"./src/Region.js":8}],2:[function(require,module,exports){
 /**
  * @file Binding.js
  */
@@ -133,8 +126,6 @@ module.exports = Binding;
  * Contains the Gesture class
  */
 
-const util = require('./util.js');
-
 let nextGestureNum = 0;
 
 /**
@@ -201,7 +192,7 @@ class Gesture {
 module.exports = Gesture;
 
 
-},{"./util.js":9}],4:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * @file Input.js
  */
@@ -371,7 +362,38 @@ class Input {
 module.exports = Input;
 
 
-},{"./PointerData.js":6}],5:[function(require,module,exports){
+},{"./PointerData.js":7}],5:[function(require,module,exports){
+/**
+ * @file PHASE.js
+ */
+
+/**
+ * Normalizes window events to be either of type start, move, or end.
+ *
+ * @param {String} type - The event type emitted by the browser
+ *
+ * @return {null|String} - The normalized event, or null if it is an event not
+ *    predetermined.
+ */
+const PHASE = Object.freeze({
+  mousedown:   'start',
+  touchstart:  'start',
+  pointerdown: 'start',
+
+  mousemove:   'move',
+  touchmove:   'move',
+  pointermove: 'move',
+
+  mouseup:   'end',
+  touchend:  'end',
+  pointerup: 'end',
+});
+/* PHASE*/
+
+module.exports = PHASE;
+
+
+},{}],6:[function(require,module,exports){
 /**
  * @File Point2D.js
  *
@@ -565,14 +587,14 @@ Point2D.sum = function(points = []) {
 module.exports = Point2D;
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * @file PointerData.js
  * Contains logic for PointerDatas
  */
 
-const util    = require('./util.js');
 const Point2D = require('./Point2D.js');
+const PHASE   = require('./PHASE.js');
 
 /**
  * Low-level storage of pointer data based on incoming data from an interaction
@@ -598,7 +620,7 @@ class PointerData {
      *
      * @type {WeakSet}
      */
-    this.initialElements = getInitialElementsInPath(event);
+    this.initialElements = getElementsInPath(event);
 
     /**
      * The original event object.
@@ -613,7 +635,7 @@ class PointerData {
      *
      * @type {String | null}
      */
-    this.type = util.normalizeEvent[ event.type ];
+    this.type = PHASE[ event.type ];
 
     /**
      * The timestamp of the event in milliseconds elapsed since January 1, 1970,
@@ -704,29 +726,48 @@ function getEventObject(event, identifier) {
 }
 
 /**
+ * A WeakSet is used so that references will be garbage collected when the
+ * element they point to is removed from the page.
+ *
  * @return {WeakSet} The Elements in the path of the given event.
  */
-function getInitialElementsInPath(event) {
-  // A WeakSet is used so that references will be garbage collected when the
-  // element they point to is removed from the page.
-  const set = new WeakSet();
-  const path = util.getPropagationPath(event);
-  path.forEach( node => set.add(node) );
-  return set;
+function getElementsInPath(event) {
+  return new WeakSet(getPropagationPath(event));
+}
+
+/**
+ * In case event.composedPath() is not available.
+ *
+ * @param {Event} event
+ *
+ * @return {Array}
+ */
+function getPropagationPath(event) {
+  if (typeof event.composedPath === 'function') {
+    return event.composedPath();
+  } 
+
+  const path = [];
+  for (let node = event.target; node !== document; node = node.parentNode) {
+    path.push(node);
+  }
+  path.push(document);
+  path.push(window);
+
+  return path;
 }
 
 module.exports = PointerData;
 
 
-},{"./Point2D.js":5,"./util.js":9}],7:[function(require,module,exports){
+},{"./PHASE.js":5,"./Point2D.js":6}],8:[function(require,module,exports){
 /**
  * @file Region.js
  */
 
 const Binding = require('./Binding.js');
-const Gesture = require('./Gesture.js');
-const util    = require('./util.js');
 const State   = require('./State.js');
+const PHASE   = require('./PHASE.js');
 
 const POINTER_EVENTS = [
   'pointerdown',
@@ -746,12 +787,9 @@ const TOUCH_EVENTS = [
   'touchend',
 ];
 
-/**
- * Allows the user to specify a region to capture all events to feed ZingTouch
- * into. This can be as narrow as the element itself, or as big as the document
- * itself. The more specific an area, the better performant the overall
- * application will perform. Contains API methods to bind/unbind specific
- * elements to corresponding gestures. 
+/** 
+ * Allows the user to specify the control region which will listen for user
+ * input events.
  *
  * @class Region
  */
@@ -759,8 +797,7 @@ class Region {
   /**
    * Constructor function for the Region class.
    *
-   * @param {Element} element - The element to capture all window events in that
-   *    region to feed into ZingTouch.
+   * @param {Element} element - The element which should listen to input events.
    * @param {boolean} [capture=false] - Whether the region uses the capture or
    *    bubble phase of input events.
    * @param {boolean} [preventDefault=true] - Whether the default browser
@@ -823,7 +860,11 @@ class Region {
     // Bind detected browser events to the region element.
     const arbiter = this.arbitrate.bind(this);
     eventNames.forEach( eventName => {
-      this.element.addEventListener(eventName, arbiter, this.capture);
+      this.element.addEventListener(eventName, arbiter, {
+        capture: this.capture,
+        once: false,
+        passive: false,
+      });
     });
   }
 
@@ -840,7 +881,7 @@ class Region {
 
     this.state.updateAllInputs(event, this.element);
 
-    const hook = util.normalizeEvent[ event.type ];
+    const hook = PHASE[ event.type ];
     const events = this.state.getCurrentEvents();
 
     this.retrieveBindingsByInitialPos().forEach( binding => {
@@ -854,7 +895,7 @@ class Region {
    * Bind an element to a gesture with multiple function signatures.
    *
    * @param {Element} element - The element object.
-   * @param {Gesture} gesture - Gesture object.
+   * @param {Gesture} gesture - Gesture type with which to bind.
    * @param {Function} [handler] - The function to execute when an event is
    *    emitted.
    * @param {Boolean} [capture] - capture/bubble
@@ -918,15 +959,13 @@ class Region {
 module.exports = Region;
 
 
-},{"./Binding.js":2,"./Gesture.js":3,"./State.js":8,"./util.js":9}],8:[function(require,module,exports){
+},{"./Binding.js":2,"./PHASE.js":5,"./State.js":9}],9:[function(require,module,exports){
 /**
  * @file State.js
  */
 
-const Gesture = require('./Gesture.js');
-const Binding = require('./Binding.js');
 const Input   = require('./Input.js');
-const util    = require('./util.js');
+const PHASE   = require('./PHASE.js');
 
 const DEFAULT_MOUSE_ID = 0;
 
@@ -998,7 +1037,7 @@ class State {
    * @param {Number} identifier - The identifier of the input to update.
    */
   updateInput(event, identifier) {
-    if (util.normalizeEvent[ event.type ] === 'start') {
+    if (PHASE[ event.type ] === 'start') {
       this._inputs_obj[identifier] = new Input(event, identifier);
     } else if (this._inputs_obj[identifier]) {
       this._inputs_obj[identifier].update(event);
@@ -1035,38 +1074,6 @@ class State {
   }
 }
 
-module.exports = State;
-
-
-},{"./Binding.js":2,"./Gesture.js":3,"./Input.js":4,"./util.js":9}],9:[function(require,module,exports){
-/**
- * @file util.js
- * Various accessor and mutator functions to handle state and validation.
- */
-
-/**
- * Normalizes window events to be either of type start, move, or end.
- *
- * @param {String} type - The event type emitted by the browser
- *
- * @return {null|String} - The normalized event, or null if it is an event not
- *    predetermined.
- */
-const normalizeEvent = Object.freeze({
-  mousedown:   'start',
-  touchstart:  'start',
-  pointerdown: 'start',
-
-  mousemove:   'move',
-  touchmove:   'move',
-  pointermove: 'move',
-
-  mouseup:   'end',
-  touchend:  'end',
-  pointerup: 'end',
-});
-/* normalizeEvent*/
-
 /**
  * @return {Array} Identifiers of the mouse buttons used.
  */
@@ -1081,46 +1088,49 @@ function getMouseButtons(event) {
   return btns;
 }
 
+module.exports = State;
+
+
+},{"./Input.js":4,"./PHASE.js":5}],10:[function(require,module,exports){
 /**
- * In case event.composedPath() is not available.
- *
- * @param {Event} event
- *
- * @return {Array}
+ * @file Westures.js
+ * Main object containing API methods and Gesture constructors
  */
-function getPropagationPath(event) {
-  if (typeof event.composedPath === 'function') {
-    return event.composedPath();
-  } 
 
-  const path = [];
-  for (let node = event.target; node !== document; node = node.parentNode) {
-    path.push(node);
-  }
-  path.push(document);
-  path.push(window);
+const Core    = require('../westures-core');
+const Pan     = require('./src/Pan.js');
+const Pinch   = require('./src/Pinch.js');
+const Rotate  = require('./src/Rotate.js');
+const Swipe   = require('./src/Swipe.js');
+const Tap     = require('./src/Tap.js');
 
-  return path;
-}
+/**
+ * The global API interface for Westures. Contains a constructor for the
+ * Region Object, and constructors for each predefined Gesture.
+ * @type {Object}
+ * @namespace Westures
+ */
+module.exports = Object.assign({}, 
+  Core,
+  {
+    Pan,
+    Pinch,
+    Rotate,
+    Swipe,
+    Tap,
+  },
+);
 
-module.exports = Object.freeze({
-  normalizeEvent,
-  getPropagationPath,
-  getMouseButtons,
-});
 
-
-},{}],10:[function(require,module,exports){
+},{"../westures-core":1,"./src/Pan.js":11,"./src/Pinch.js":12,"./src/Rotate.js":13,"./src/Swipe.js":14,"./src/Tap.js":15}],11:[function(require,module,exports){
 /**
  * @file Pan.js
  * Contains the Pan class
  */
 
-const Gesture = require('../core/Gesture.js');
-const Point2D = require('../core/Point2D.js');
-const util    = require('../core/util.js');
+const { Gesture } = require('../../westures-core');
 
-const DEFAULT_INPUTS = 1;
+const REQUIRED_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 /**
@@ -1170,14 +1180,13 @@ class Pan extends Gesture {
 
   /**
    * move() - Event hook for the move of a gesture.  
-   *
    * @param {State} input status object
    *
    * @return {Object} The change in position and the current position.
    */
   move(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length !== 1) return null;
+    if (active.length !== REQUIRED_INPUTS) return null;
 
     const progress = active[0].getProgressOfGesture(this.id);
     const point = active[0].current.point;
@@ -1209,15 +1218,13 @@ class Pan extends Gesture {
 module.exports = Pan;
 
 
-},{"../core/Gesture.js":3,"../core/Point2D.js":5,"../core/util.js":9}],11:[function(require,module,exports){
+},{"../../westures-core":1}],12:[function(require,module,exports){
 /**
  * @file Pinch.js
  * Contains the abstract Pinch class
  */
 
-const Gesture = require('../core/Gesture.js');
-const Point2D = require('../core/Point2D.js');
-const util    = require('../core/util.js');
+const { Gesture, Point2D } = require('../../westures-core');
 
 const REQUIRED_INPUTS = 2;
 const DEFAULT_MIN_THRESHOLD = 1;
@@ -1327,15 +1334,13 @@ function getMidpointAndAverageDistance(inputs) {
 module.exports = Pinch;
 
 
-},{"../core/Gesture.js":3,"../core/Point2D.js":5,"../core/util.js":9}],12:[function(require,module,exports){
+},{"../../westures-core":1}],13:[function(require,module,exports){
 /**
  * @file Rotate.js
  * Contains the Rotate class
  */
 
-const Gesture = require('../core/Gesture.js');
-const Point2D = require('../core/Point2D.js');
-const util    = require('../core/util.js');
+const { Gesture } = require('../../westures-core');
 
 const REQUIRED_INPUTS = 2;
 
@@ -1433,14 +1438,13 @@ class Rotate extends Gesture {
 module.exports = Rotate;
 
 
-},{"../core/Gesture.js":3,"../core/Point2D.js":5,"../core/util.js":9}],13:[function(require,module,exports){
+},{"../../westures-core":1}],14:[function(require,module,exports){
 /**
  * @file Swipe.js
  * Contains the Swipe class
  */
 
-const Gesture = require('../core/Gesture.js');
-const util    = require('../core/util.js');
+const { Gesture } = require('../../westures-core');
 
 const REQUIRED_INPUTS = 1;
 const DEFAULT_MAX_REST_TIME = 100;
@@ -1587,15 +1591,13 @@ function velocity(minit, mend) {
 module.exports = Swipe;
 
 
-},{"../core/Gesture.js":3,"../core/util.js":9}],14:[function(require,module,exports){
+},{"../../westures-core":1}],15:[function(require,module,exports){
 /**
  * @file Tap.js
  * Contains the Tap class
  */
 
-const Gesture = require('../core/Gesture.js');
-const util    = require('../core/util.js');
-const Point2D = require('../core/Point2D.js');
+const { Gesture, Point2D } = require('../../westures-core');
 
 const DEFAULT_MIN_DELAY_MS = 0;
 const DEFAULT_MAX_DELAY_MS = 300;
@@ -1702,5 +1704,5 @@ class Tap extends Gesture {
 module.exports = Tap;
 
 
-},{"../core/Gesture.js":3,"../core/Point2D.js":5,"../core/util.js":9}]},{},[1])(1)
+},{"../../westures-core":1}]},{},[10])(10)
 });
