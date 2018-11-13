@@ -1,6 +1,6 @@
 {
   "name": "westures",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A lightweight JavaScript gesture library.",
   "main": "index.js",
   "directories": {
@@ -18,8 +18,9 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "^16.2.3",
-    "jest": "^23.6.0",
-    "westures-core": "0.0.1"
+    "jest": "^23.6.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "westures-core": "0.0.1"
+  }
 }
