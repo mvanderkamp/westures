@@ -39,7 +39,9 @@ class Pan extends Gesture {
     if (active.length > 0) {
       const progress = active[0].getProgressOfGesture(this.id);
       progress.lastEmitted = active[0].cloneCurrentPoint();
+      return { change: 0, point: progress.lastEmitted };
     }
+    return null;
   }
 
   /**
@@ -49,7 +51,9 @@ class Pan extends Gesture {
    * @param {State} input status object
    */
   start(state) {
-    this.initialize(state);
+    const data = this.initialize(state);
+    if (data) data.phase = 'start';
+    return data;
   }
   /* start */
 
@@ -70,7 +74,7 @@ class Pan extends Gesture {
     if (diff >= this.threshold) {
       const change = point.subtract(progress.lastEmitted);
       progress.lastEmitted = point;
-      return { change, point };
+      return { change, point, phase: 'move' };
     } 
 
     return null;
@@ -85,7 +89,18 @@ class Pan extends Gesture {
    * @return {null} 
    */
   end(state) {
+    let data = null;
+    const ended = state.getInputsInPhase('end');
+
+    if (ended.length > 0) {
+      const progress = ended[0].getProgressOfGesture(this.id);
+      const point = ended[0].current.point;
+      const change = point.subtract(progress.lastEmitted);
+      data = { change, point, phase: 'end' };
+    }
+
     this.initialize(state);
+    return data;
   }
   /* end*/
 }
