@@ -1,6 +1,6 @@
 {
   "name": "westures",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A lightweight JavaScript gesture library.",
   "main": "index.js",
   "directories": {
