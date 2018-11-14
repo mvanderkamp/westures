@@ -6,7 +6,7 @@
 const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
-const ESCAPE_VELOCITY = 6;
+const ESCAPE_VELOCITY = 4.5;
 const PROGRESS_STACK_SIZE = 3;
 
 /**
@@ -71,7 +71,14 @@ class Swipe extends Gesture {
       return null;
     }
 
-    const moves = progress.moves;
+    const moves = progress.moves.map( ({time, point}) => {
+      point.x /= window.innerWidth;
+      point.y /= window.innerHeight;
+      return {
+        time,
+        point, 
+      };
+    });
 
     const vlim = PROGRESS_STACK_SIZE - 1;
     const velos = [];
@@ -79,14 +86,17 @@ class Swipe extends Gesture {
       velos[i] = calc_velocity(moves[i], moves[i + 1]);
     }
 
-    const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc);
     const point = moves[PROGRESS_STACK_SIZE-1].point;
     const direction = moves[PROGRESS_STACK_SIZE-2].point.angleTo(point);
+    const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc) * 1000;
+
+    console.log(velocity);
 
     if (velocity >= ESCAPE_VELOCITY) {
       return {
         velocity,
-        ...point,
+        x: point.x * window.innerWidth,
+        y: point.y * window.innerHeight,
         direction,
       };
     }
