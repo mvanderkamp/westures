@@ -90,8 +90,6 @@ class Swipe extends Gesture {
     const direction = moves[PROGRESS_STACK_SIZE-2].point.angleTo(point);
     const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc) * 1000;
 
-    console.log(velocity);
-
     if (velocity >= ESCAPE_VELOCITY) {
       return {
         velocity,
