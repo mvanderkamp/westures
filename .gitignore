@@ -8,3 +8,6 @@ docs/
 yarn-error.log
 examples/
 dist/index.html
+*.swp
+tags
+
