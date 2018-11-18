@@ -29,7 +29,7 @@ class Rotate extends Gesture {
    */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length !== REQUIRED_INPUTS) return null;
+    if (active.length < REQUIRED_INPUTS) return null;
 
     // Progress is stored on the first active input.
     const angle = active[0].currentAngleTo(active[1]);

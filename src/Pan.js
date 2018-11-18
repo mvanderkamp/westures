@@ -39,7 +39,9 @@ class Pan extends Gesture {
     if (active.length > 0) {
       const progress = active[0].getProgressOfGesture(this.id);
       progress.lastEmitted = active[0].cloneCurrentPoint();
+      return { change: 0, point: progress.lastEmitted };
     }
+    return null;
   }
 
   /**
@@ -49,7 +51,9 @@ class Pan extends Gesture {
    * @param {State} input status object
    */
   start(state) {
-    this.initialize(state);
+    const data = this.initialize(state);
+    if (data) data.phase = 'start';
+    return data;
   }
   /* start */
 
@@ -61,7 +65,9 @@ class Pan extends Gesture {
    */
   move(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length !== REQUIRED_INPUTS) return null;
+    if (active.length !== REQUIRED_INPUTS) {
+      return { change: 0, point: { x: 0, y: 0 }, phase: 'cancel' };
+    }
 
     const progress = active[0].getProgressOfGesture(this.id);
     const point = active[0].current.point;
@@ -70,7 +76,7 @@ class Pan extends Gesture {
     if (diff >= this.threshold) {
       const change = point.subtract(progress.lastEmitted);
       progress.lastEmitted = point;
-      return { change, point };
+      return { change, point, phase: 'move' };
     } 
 
     return null;
@@ -85,7 +91,27 @@ class Pan extends Gesture {
    * @return {null} 
    */
   end(state) {
+    let data = null;
+    const ended = state.getInputsInPhase('end');
+    const active = state.getInputsNotInPhase('end');
+
+    // If the ended input was part of a valid pan, need to emit an event
+    // notifying that the pan has ended. Have to make sure that only inputs
+    // which were involved in a valid pan pass through this block. Checking for
+    // a 'lastEmitted' entity will do the trick, as it will only exist on the
+    // first active input, which is the only one that can currently be part of a
+    // valid pan.
+    if (ended.length > 0) {
+      const progress = ended[0].getProgressOfGesture(this.id);
+      if (progress.lastEmitted) {
+        const point = ended[0].current.point;
+        const change = point.subtract(progress.lastEmitted);
+        data = { change, point, phase: 'end' };
+      }
+    }
+
     this.initialize(state);
+    return data;
   }
   /* end*/
 }

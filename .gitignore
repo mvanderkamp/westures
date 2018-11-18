@@ -10,4 +10,7 @@ examples/
 dist/index.html
 *.swp
 tags
+edit.sh
+usage.sh
+
 
