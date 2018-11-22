@@ -21,6 +21,6 @@
     "jest": "^23.6.0"
   },
   "dependencies": {
-    "westures-core": "0.0.1"
+    "westures-core": "^0.1.0"
   }
 }
