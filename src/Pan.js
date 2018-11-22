@@ -32,6 +32,13 @@ class Pan extends Gesture {
      * @type {Number}
      */
     this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
+
+    /**
+     * Don't emit any data if this key is pressed.
+     *
+     * @type {String}
+     */
+    this.muteKey = options.muteKey;
   }
 
   initialize(state) {
@@ -73,9 +80,13 @@ class Pan extends Gesture {
     const point = active[0].current.point;
     const diff = point.distanceTo(progress.lastEmitted);
 
-    if (diff >= this.threshold) {
-      const change = point.subtract(progress.lastEmitted);
-      progress.lastEmitted = point;
+    const change = point.subtract(progress.lastEmitted);
+    progress.lastEmitted = point;
+
+    const event = active[0].current.originalEvent;
+    const muted = this.muteKey && event[this.muteKey];
+
+    if (!muted && diff >= this.threshold) {
       return { change, point, phase: 'move' };
     } 
 
