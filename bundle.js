@@ -5,6 +5,7 @@
  */
 
 const Core    = require('westures-core');
+// const Core    = require('../westures-core');
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
 const Rotate  = require('./src/Rotate.js');
@@ -881,11 +882,34 @@ class Region {
    * events to the region's element.
    */
   activate() {
+    /*
+     * I will now indulge myself in some mild venting about web standards.
+     *
+     * What. The. Ever. Loving. Shit.
+     *
+     * Why oh why is this necessary. PointerEvent would have been so nice!
+     * Except they screwed up the standard by not implementing the full range of
+     * properties as were present in the mouse events! Where's my "ctrlKey" and
+     * "altKey" properties!!!! Now I have to limit PointerEvent to a fallback
+     * which will probably never be hit.
+     *
+     * Not to mention the jankyness of having to listen to _both_ touch and
+     * mouse events to make sure that you get the correct behaviour! And _then_
+     * having to call preventDefault() to make sure you don't get double
+     * occurrence of any events!! But that kills default page behaviour!!
+     *
+     * Now I have to recommend to users that they keep regions small! Grr.
+     *
+     * See:
+     *  https://www.html5rocks.com/en/mobile/touchandmouse/
+     *  https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
+     *  https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events
+     */
     let eventNames = [];
-    if (window.PointerEvent && !window.TouchEvent) {
-      eventNames = POINTER_EVENTS;
-    } else {
+    if (window.TouchEvent || window.MouseEvent) {
       eventNames = MOUSE_EVENTS.concat(TOUCH_EVENTS);
+    } else {
+      eventNames = POINTER_EVENTS;
     }
 
     // Bind detected browser events to the region element.
@@ -1133,6 +1157,15 @@ const { Gesture } = require('westures-core');
 const REQUIRED_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
 
+const CANCELED = Object.freeze({ 
+  change: 0, 
+  point: Object.freeze({ 
+    x: 0, 
+    y: 0 
+  }), 
+  phase: 'cancel' 
+});
+
 /**
  * A Pan is defined as a normal movement in any direction on a screen.  Pan
  * gestures do not track start events and can interact with pinch and expand
@@ -1157,6 +1190,13 @@ class Pan extends Gesture {
      * @type {Number}
      */
     this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
+
+    /**
+     * Don't emit any data if this key is pressed.
+     *
+     * @type {String}
+     */
+    this.muteKey = options.muteKey;
   }
 
   initialize(state) {
@@ -1164,7 +1204,9 @@ class Pan extends Gesture {
     if (active.length > 0) {
       const progress = active[0].getProgressOfGesture(this.id);
       progress.lastEmitted = active[0].cloneCurrentPoint();
+      return { change: 0, point: progress.lastEmitted };
     }
+    return null;
   }
 
   /**
@@ -1174,7 +1216,9 @@ class Pan extends Gesture {
    * @param {State} input status object
    */
   start(state) {
-    this.initialize(state);
+    const data = this.initialize(state);
+    if (data) data.phase = 'start';
+    return data;
   }
   /* start */
 
@@ -1186,16 +1230,32 @@ class Pan extends Gesture {
    */
   move(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length !== REQUIRED_INPUTS) return null;
+
+    /*
+     * This should only be encountered when a user adds extra inputs beyond what
+     * is used for this gesture. This allows whoever is working with this
+     * library to cancel tracking or locks that may be associated with this
+     * gesture, as it is not what the user is trying to perform.
+     */
+    if (active.length !== REQUIRED_INPUTS) {
+      return Object.assign({}, CANCELED);
+    }
 
     const progress = active[0].getProgressOfGesture(this.id);
     const point = active[0].current.point;
     const diff = point.distanceTo(progress.lastEmitted);
 
-    if (diff >= this.threshold) {
-      const change = point.subtract(progress.lastEmitted);
-      progress.lastEmitted = point;
-      return { change, point };
+    const change = point.subtract(progress.lastEmitted);
+    progress.lastEmitted = point;
+
+    const event = active[0].current.originalEvent;
+    const muted = this.muteKey && event[this.muteKey];
+
+    // See above comment for CANCELED return value. Similar concept here.
+    if (muted) {
+      return Object.assign({}, CANCELED);
+    } else if (diff >= this.threshold) {
+      return { change, point, phase: 'move' };
     } 
 
     return null;
@@ -1210,7 +1270,27 @@ class Pan extends Gesture {
    * @return {null} 
    */
   end(state) {
+    let data = null;
+    const ended = state.getInputsInPhase('end');
+    const active = state.getInputsNotInPhase('end');
+
+    // If the ended input was part of a valid pan, need to emit an event
+    // notifying that the pan has ended. Have to make sure that only inputs
+    // which were involved in a valid pan pass through this block. Checking for
+    // a 'lastEmitted' entity will do the trick, as it will only exist on the
+    // first active input, which is the only one that can currently be part of a
+    // valid pan.
+    if (ended.length > 0) {
+      const progress = ended[0].getProgressOfGesture(this.id);
+      if (progress.lastEmitted) {
+        const point = ended[0].current.point;
+        const change = point.subtract(progress.lastEmitted);
+        data = { change, point, phase: 'end' };
+      }
+    }
+
     this.initialize(state);
+    return data;
   }
   /* end*/
 }
@@ -1267,11 +1347,11 @@ class Pinch extends Gesture {
    */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length < this.minInputs) return null;
+    if (active.length < 1) return null;
 
     const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 
-    // Progress is store on the first active input.
+    // Progress is stored on the first active input.
     const progress = active[0].getProgressOfGesture(this.id);
     progress.previousDistance = averageDistance;
   }
@@ -1374,7 +1454,7 @@ class Rotate extends Gesture {
    */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length !== REQUIRED_INPUTS) return null;
+    if (active.length < REQUIRED_INPUTS) return null;
 
     // Progress is stored on the first active input.
     const angle = active[0].currentAngleTo(active[1]);
@@ -1455,10 +1535,8 @@ module.exports = Rotate;
 const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
-const DEFAULT_MAX_REST_TIME = 100;
-const DEFAULT_ESCAPE_VELOCITY = 0.2;
-const DEFAULT_TIME_DISTORTION = 100;
-const DEFAULT_MAX_PROGRESS_STACK = 10;
+const ESCAPE_VELOCITY = 4.5;
+const PROGRESS_STACK_SIZE = 3;
 
 /**
  * A swipe is defined as input(s) moving in the same direction in an relatively
@@ -1470,55 +1548,9 @@ const DEFAULT_MAX_PROGRESS_STACK = 10;
 class Swipe extends Gesture {
   /**
    * Constructor function for the Swipe class.
-   *
-   * @param {Object} [options] - The options object.
-   * @param {Number} [options.maxRestTime] - The maximum resting time a point
-   *    has between it's last
-   * @param {Number} [options.escapeVelocity] - The minimum velocity the input
-   *    has to be at to emit a swipe.
-   * @param {Number} [options.timeDistortion] - (EXPERIMENTAL) A value of time
-   *    in milliseconds to distort between events.
-   * @param {Number} [options.maxProgressStack] - (EXPERIMENTAL)The maximum
-   *    amount of move events to keep track of for a swipe.
    */
-  constructor(options = {}) {
+  constructor() {
     super('swipe');
-
-    /**
-     * The maximum resting time a point has between it's last move and current
-     * move events.
-     *
-     * @type {Number}
-     */
-    this.maxRestTime = options.maxRestTime || DEFAULT_MAX_REST_TIME;
-
-    /**
-     * The minimum velocity the input has to be at to emit a swipe.  This is
-     * useful for determining the difference between a swipe and a pan gesture.
-     *
-     * @type {number}
-     */
-    this.escapeVelocity = options.escapeVelocity || DEFAULT_ESCAPE_VELOCITY;
-
-    /**
-     * (EXPERIMENTAL) A value of time in milliseconds to distort between events.
-     * Browsers do not accurately measure time with the Date constructor in
-     * milliseconds, so consecutive events sometimes display the same timestamp
-     * but different x/y coordinates. This will distort a previous time in such
-     * cases by the timeDistortion's value.
-     *
-     * @type {number}
-     */
-    this.timeDistortion = options.timeDistortion || DEFAULT_TIME_DISTORTION;
-
-    /**
-     * (EXPERIMENTAL) The maximum amount of move events to keep track of for a
-     * swipe. This helps give a more accurate estimate of the user's velocity.
-     *
-     * @type {number}
-     */
-    this.maxProgressStack = options.maxProgressStack || 
-      DEFAULT_MAX_PROGRESS_STACK;
   }
 
   /**
@@ -1541,7 +1573,7 @@ class Swipe extends Gesture {
         point: input.cloneCurrentPoint(),
       });
 
-      while (progress.moves.length > this.maxProgressStack) {
+      while (progress.moves.length > PROGRESS_STACK_SIZE) {
         progress.moves.shift();
       }
     });
@@ -1551,9 +1583,7 @@ class Swipe extends Gesture {
   /* move*/
 
   /**
-   * Determines if the input's history validates a swipe motion.  Determines if
-   * it did not come to a complete stop (maxRestTime), and if it had enough of a
-   * velocity to be considered (ESCAPE_VELOCITY).
+   * Determines if the input's history validates a swipe motion.
    *
    * @param {State} input status object
    *
@@ -1566,33 +1596,47 @@ class Swipe extends Gesture {
     if (ended.length !== REQUIRED_INPUTS) return null;
 
     const progress = ended[0].getProgressOfGesture(this.id);
-    if (!progress.moves || progress.moves.length < 3) return null;
+    if (!progress.moves || progress.moves.length < PROGRESS_STACK_SIZE) {
+      return null;
+    }
 
-    const len = progress.moves.length;
-    const last = progress.moves[len - 1];
-    const prev = progress.moves[len - 2];
-    const first = progress.moves[len - 3];
-
-    const v1 = velocity(first, prev);
-    const v2 = velocity(prev, last);
-    const acc = Math.abs(v1 - v2) / (last.time - first.time);
-
-    if (acc >= 0.1) {
+    const moves = progress.moves.map( ({time, point}) => {
+      point.x /= window.innerWidth;
+      point.y /= window.innerHeight;
       return {
-        acceleration: acc,
-        finalVelocity: v2,
-        finalPoint: last.point,
+        time,
+        point, 
+      };
+    });
+
+    const vlim = PROGRESS_STACK_SIZE - 1;
+    const velos = [];
+    for (let i = 0; i < vlim; ++i) {
+      velos[i] = calc_velocity(moves[i], moves[i + 1]);
+    }
+
+    const point = moves[PROGRESS_STACK_SIZE-1].point;
+    const direction = moves[PROGRESS_STACK_SIZE-2].point.angleTo(point);
+    const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc) * 1000;
+
+    if (velocity >= ESCAPE_VELOCITY) {
+      return {
+        velocity,
+        x: point.x * window.innerWidth,
+        y: point.y * window.innerHeight,
+        direction,
       };
     }
+
     return null;
   }
 
   /* end*/
 }
 
-function velocity(minit, mend) {
-  const distance = mend.point.distanceTo(minit.point);
-  const time = mend.time - minit.time;
+function calc_velocity(start, end) {
+  const distance = end.point.distanceTo(start.point);
+  const time = end.time - start.time;
   return distance / time;
 }
 
