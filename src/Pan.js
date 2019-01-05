@@ -96,7 +96,7 @@ class Pan extends Gesture {
     const point = active[0].current.point;
     const diff = point.distanceTo(progress.lastEmitted);
 
-    const change = point.subtract(progress.lastEmitted);
+    const change = point.minus(progress.lastEmitted);
     progress.lastEmitted = point;
 
     const event = active[0].current.originalEvent;
@@ -135,7 +135,7 @@ class Pan extends Gesture {
       const progress = ended[0].getProgressOfGesture(this.id);
       if (progress.lastEmitted) {
         const point = ended[0].current.point;
-        const change = point.subtract(progress.lastEmitted);
+        const change = point.minus(progress.lastEmitted);
         data = { change, point, phase: 'end' };
       }
     }
