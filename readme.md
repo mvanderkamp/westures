@@ -24,6 +24,7 @@ __NOTE:__ _This readme is still under construction!_
 - [Overview](#overview)
 - [Basic Usage](#basic-usage)
 - [Implementing Custom Gestures](#implementing-custom-gestures)
+- [What's Changed](#changes-from-zingtouch)
 
 ## Overview
 
@@ -117,4 +118,28 @@ class Tap extends Gesture {
 
 The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.
+
+## Changes From ZingTouch
+The fundamental idea of ZingTouch, the three-phase hook structure, remains more
+or less the same. Most of the changes have to do with streamlining and
+simplifying the code such that it is easier to use and has a wider range of
+capabilities. Specifically:
+
+- Split project in two: `westures` and `westures-core`. This is so that the core
+  functionality is available without having to also include the sample gestures
+  that are included in the main `westures` module.
+- Reorganized and simplified code structure.
+- Creation and use of a Point2D class.
+- Redesigned technique for handling inputs allows continuous use of touches.
+  ZingTouch had a tendency to stop responding to touches if some gesture ended,
+  this should no longer be the case. Users should now be able to seamlessly flow
+  from one gesture to another (or even multiple simultaneously) without having
+  to restart their touches.
+- Support for using the window object as a region.
+- Simplified hook interaction. A single 'state' object is passed, as that is
+  all that is really needed.
+- Simplified handler interaction. As the handlers are called directly instead of
+  as the callback for an event, the parameters do not need to be wrapped up
+  inside the 'details' property of an event object.
+
 
