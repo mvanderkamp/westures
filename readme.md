@@ -122,7 +122,7 @@ forwarded to bound handlers when a non-null value is returned by a hook.
 ## Changes From ZingTouch
 The fundamental idea of ZingTouch, the three-phase hook structure, remains more
 or less the same. Most of the changes have to do with streamlining and
-simplifying the code such that it is easier to user and has a wider range of
+simplifying the code such that it is easier to use and has a wider range of
 capabilities. Specifically:
 
 - Split project in two: `westures` and `westures-core`. This is so that the core
