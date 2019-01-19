@@ -5,10 +5,12 @@
 
 const { Gesture, Point2D } = require('westures-core');
 
-const DEFAULT_MIN_DELAY_MS = 0;
-const DEFAULT_MAX_DELAY_MS = 300;
-const DEFAULT_INPUTS = 1;
-const DEFAULT_MOVE_PX_TOLERANCE = 10;
+const defaults = Object.freeze({
+  MIN_DELAY_MS: 0,
+  MAX_DELAY_MS: 300,
+  NUM_INPUTS: 1,
+  MOVE_PX_TOLERANCE: 10,
+});
 
 /**
  * A Tap is defined as a touchstart to touchend event in quick succession.
@@ -39,7 +41,7 @@ class Tap extends Gesture {
      *
      * @type {Number}
      */
-    this.minDelay = options.minDelay || DEFAULT_MIN_DELAY_MS;
+    this.minDelay = options.minDelay || defaults.MIN_DELAY_MS;
 
     /**
      * The maximum delay between a touchstart and touchend can be configured in
@@ -49,7 +51,7 @@ class Tap extends Gesture {
      *
      * @type {Number}
      */
-    this.maxDelay = options.maxDelay || DEFAULT_MAX_DELAY_MS;
+    this.maxDelay = options.maxDelay || defaults.MAX_DELAY_MS;
 
     /**
      * The number of inputs to trigger a Tap can be variable, and the maximum
@@ -57,7 +59,7 @@ class Tap extends Gesture {
      *
      * @type {Number}
      */
-    this.numInputs = options.numInputs || DEFAULT_INPUTS;
+    this.numInputs = options.numInputs || defaults.NUM_INPUTS;
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end
@@ -65,7 +67,7 @@ class Tap extends Gesture {
      *
      * @type {number}
      */
-    this.tolerance = options.tolerance || DEFAULT_MOVE_PX_TOLERANCE;
+    this.tolerance = options.tolerance || defaults.MOVE_PX_TOLERANCE;
 
     /**
      * An array of inputs that have ended recently.
@@ -101,8 +103,8 @@ class Tap extends Gesture {
       return null;
     }
 
-    const {x,y} = Point2D.midpoint( this.ended.map( i => i.current.point ) );
-    return {x,y};
+    const { x, y } = Point2D.midpoint( this.ended.map( i => i.current.point ) );
+    return { x, y };
   }
   /* end*/
 }

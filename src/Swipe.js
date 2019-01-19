@@ -40,7 +40,7 @@ class Swipe extends Gesture {
       if (!progress.moves) progress.moves = [];
 
       progress.moves.push({
-        time: Date.now(),
+        time: Date.now(), // TODO: Replace with input.currentTime ?
         point: input.cloneCurrentPoint(),
       });
 
