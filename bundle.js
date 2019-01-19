@@ -95,25 +95,6 @@ class Binding {
      * @type {Function}
      */
     this.handler = handler;
-
-    // Start listening immediately.
-    this.listen();
-  }
-
-  /**
-   * Dispatches a custom event on the bound element, sending the provided data.
-   * The event's name will be the id of the bound gesture.
-   *
-   * @param {Object} data - The data to send with the event.
-   */
-  dispatch(data) {
-    this.element.dispatchEvent(new CustomEvent(
-      this.gesture.id, {
-        detail: data,
-        bubbles: true,
-        cancelable: true,
-      })
-    );
   }
 
   /**
@@ -123,29 +104,8 @@ class Binding {
     const data = this.gesture[hook](state);
     if (data) {
       data.events = events;
-      this.dispatch(data);
+      this.handler(data);
     }
-  }
-
-  /**
-   * Sets the bound element to begin listening to events of the same name as the
-   * bound gesture's id.
-   */
-  listen() {
-    this.element.addEventListener(
-      this.gesture.id,
-      this.handler,
-    );
-  }
-
-  /**
-   * Stops listening for events of the same name as the bound gesture's id.
-   */
-  stop() {
-    this.element.removeEventListener(
-      this.gesture.id,
-      this.handler,
-    );
   }
 }
 
@@ -459,20 +419,6 @@ class Point2D {
   }
 
   /**
-   * Add this point to the given point.
-   *
-   * @param {Point2D} point
-   *
-   * @return {Point2D} A new Point2D, which is the addition of the two points.
-   */
-  add(point) {
-    return new Point2D(
-      this.x + point.x,
-      this.y + point.y,
-    );
-  }
-
-  /**
    * Calculates the angle between this point and the given point.
    *   |                (projectionX,projectionY)
    *   |             /°
@@ -526,24 +472,6 @@ class Point2D {
   }
 
   /**
-   * Determines if this point is within the given HTML element.
-   *
-   * @param {Element} target
-   *
-   * @return {Boolean} true if the given point is within element, false
-   *    otherwise. 
-   */
-  isInside(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-      this.x >= rect.left &&
-      this.x <= (rect.left + rect.width) &&
-      this.y >= rect.top &&
-      this.y <= (rect.top + rect.height)
-    );
-  }
-
-  /**
    * Calculates the midpoint coordinates between two points.
    *
    * @param {Point2D} point
@@ -564,10 +492,24 @@ class Point2D {
    *
    * @return {Point2D} A new Point2D, which is the result of (this - point).
    */
-  subtract(point) {
+  minus(point) {
     return new Point2D(
       this.x - point.x,
       this.y - point.y
+    );
+  }
+
+  /**
+   * Return the summation of this point to the given point.
+   *
+   * @param {Point2D} point
+   *
+   * @return {Point2D} A new Point2D, which is the addition of the two points.
+   */
+  plus(point) {
+    return new Point2D(
+      this.x + point.x,
+      this.y + point.y,
     );
   }
 
@@ -609,11 +551,7 @@ Point2D.midpoint = function(points = []) {
  * @return {Point2D} A new Point2D representing the sum of the given points.
  */
 Point2D.sum = function(points = []) {
-  return points.reduce( (total, current) => {
-    total.x += current.x;
-    total.y += current.y;
-    return total;
-  }, new Point2D(0,0) );
+  return points.reduce( (total, pt) => total.plus(pt), new Point2D(0,0) );
 }
 
 module.exports = Point2D;
@@ -706,17 +644,6 @@ class PointerData {
    */
   distanceTo(pdata) {
     return this.point.distanceTo(pdata.point);
-  }
-
-  /**
-   * Determines if this PointerData is within the given HTML element.
-   *
-   * @param {Element} target
-   *
-   * @return {Boolean}
-   */
-  isInside(element) {
-    return this.point.isInside(element);
   }
 
   /**
@@ -883,22 +810,18 @@ class Region {
    */
   activate() {
     /*
-     * I will now indulge myself in some mild venting about web standards.
+     * Having to listen to both mouse and touch events is annoying, but
+     * necessary due to conflicting standards and browser implementations.
+     * Pointer is a fallback instead of the primary because it lacks useful
+     * properties such as 'ctrlKey' and 'altKey'.
      *
-     * What. The. Ever. Loving. Shit.
+     * Listening to both mouse and touch comes with the difficulty that
+     * preventDefault() must be called to prevent both events from iterating
+     * through the system. However I have left it as an option to the end user,
+     * which defaults to calling preventDefault(), in case there's a use-case I
+     * haven't considered or am not aware of.
      *
-     * Why oh why is this necessary. PointerEvent would have been so nice!
-     * Except they screwed up the standard by not implementing the full range of
-     * properties as were present in the mouse events! Where's my "ctrlKey" and
-     * "altKey" properties!!!! Now I have to limit PointerEvent to a fallback
-     * which will probably never be hit.
-     *
-     * Not to mention the jankyness of having to listen to _both_ touch and
-     * mouse events to make sure that you get the correct behaviour! And _then_
-     * having to call preventDefault() to make sure you don't get double
-     * occurrence of any events!! But that kills default page behaviour!!
-     *
-     * Now I have to recommend to users that they keep regions small! Grr.
+     * It is also a good idea to keep regions small in large pages.
      *
      * See:
      *  https://www.html5rocks.com/en/mobile/touchandmouse/
@@ -1000,7 +923,6 @@ class Region {
 
     bindings.forEach( b => {
       if (gesture == undefined || b.gesture === gesture) {
-        b.stop();
         this.bindings.splice(this.bindings.indexOf(b), 1);
         unbound.push(b);
       }
@@ -1245,7 +1167,7 @@ class Pan extends Gesture {
     const point = active[0].current.point;
     const diff = point.distanceTo(progress.lastEmitted);
 
-    const change = point.subtract(progress.lastEmitted);
+    const change = point.minus(progress.lastEmitted);
     progress.lastEmitted = point;
 
     const event = active[0].current.originalEvent;
@@ -1284,7 +1206,7 @@ class Pan extends Gesture {
       const progress = ended[0].getProgressOfGesture(this.id);
       if (progress.lastEmitted) {
         const point = ended[0].current.point;
-        const change = point.subtract(progress.lastEmitted);
+        const change = point.minus(progress.lastEmitted);
         data = { change, point, phase: 'end' };
       }
     }

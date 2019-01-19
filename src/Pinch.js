@@ -79,20 +79,15 @@ class Pinch extends Gesture {
 
     const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 
-    const baseProgress = active[0].getProgressOfGesture(this.id);
-    const change = averageDistance - baseProgress.previousDistance;
+    const progress = active[0].getProgressOfGesture(this.id);
+    let change = averageDistance / progress.previousDistance;
+    progress.previousDistance = averageDistance;
 
-    if (Math.abs(change) >= this.threshold) {
-      // Progress is store on the first active input.
-      const progress = active[0].getProgressOfGesture(this.id);
-      progress.previousDistance = averageDistance;
-
-      return {
-        distance: averageDistance,
-        midpoint,
-        change,
-      };
-    }
+    return {
+      distance: averageDistance,
+      midpoint,
+      change,
+    };
   }
 
   /**
