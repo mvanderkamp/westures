@@ -3,17 +3,14 @@
  * Contains the Pan class
  */
 
-const { Gesture } = require('westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 const CANCELED = Object.freeze({ 
-  change: 0, 
-  point: Object.freeze({ 
-    x: 0, 
-    y: 0 
-  }), 
+  change: new Point2D(0,0),
+  point: new Point2D(0,0),
   phase: 'cancel' 
 });
 
@@ -53,9 +50,13 @@ class Pan extends Gesture {
   initialize(state) {
     const active = state.getInputsNotInPhase('end');
     if (active.length > 0) {
+      const point = Point2D.midpoint(active.map( i => i.current.point));
       const progress = active[0].getProgressOfGesture(this.id);
-      progress.lastEmitted = active[0].cloneCurrentPoint();
-      return { change: 0, point: progress.lastEmitted };
+      progress.lastEmitted = point;
+      // const progress = active[0].getProgressOfGesture(this.id);
+      // progress.lastEmitted = active[0].cloneCurrentPoint();
+      // return { change: 0, point: progress.lastEmitted };
+      return { change: new Point2D(0,0), point };
     }
     return null;
   }
@@ -68,7 +69,7 @@ class Pan extends Gesture {
    */
   start(state) {
     const data = this.initialize(state);
-    if (data) data.phase = 'start';
+    // if (data) data.phase = 'start';
     return data;
   }
   /* start */
@@ -88,12 +89,13 @@ class Pan extends Gesture {
      * library to cancel tracking or locks that may be associated with this
      * gesture, as it is not what the user is trying to perform.
      */
-    if (active.length !== REQUIRED_INPUTS) {
-      return Object.assign({}, CANCELED);
-    }
+    // if (active.length !== REQUIRED_INPUTS) {
+    //   return Object.freeze(Object.assign({}, CANCELED));
+    // }
 
     const progress = active[0].getProgressOfGesture(this.id);
-    const point = active[0].current.point;
+    const point = Point2D.midpoint(active.map( i => i.current.point));
+    // const point = active[0].current.point;
     const diff = point.distanceTo(progress.lastEmitted);
 
     const change = point.minus(progress.lastEmitted);
@@ -122,8 +124,14 @@ class Pan extends Gesture {
    */
   end(state) {
     let data = null;
-    const ended = state.getInputsInPhase('end');
+    // const ended = state.getInputsInPhase('end');
     const active = state.getInputsNotInPhase('end');
+    if (active.length === 0) {
+      return {};
+    } else {
+      this.initialize(state);
+      return null;
+    }
 
     // If the ended input was part of a valid pan, need to emit an event
     // notifying that the pan has ended. Have to make sure that only inputs
@@ -134,7 +142,8 @@ class Pan extends Gesture {
     if (ended.length > 0) {
       const progress = ended[0].getProgressOfGesture(this.id);
       if (progress.lastEmitted) {
-        const point = ended[0].current.point;
+        const point = Point2D.midpoint(state.inputs.map( i => i.current.point));
+        // const point = ended[0].current.point;
         const change = point.minus(progress.lastEmitted);
         data = { change, point, phase: 'end' };
       }

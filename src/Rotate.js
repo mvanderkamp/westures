@@ -3,7 +3,8 @@
  * Contains the Rotate class
  */
 
-const { Gesture } = require('westures-core');
+// const { Gesture } = require('westures-core');
+const { Gesture } = require('../../westures-core');
 
 const REQUIRED_INPUTS = 2;
 
@@ -37,6 +38,7 @@ class Rotate extends Gesture {
     progress.previousAngle = angle;
     progress.distance = 0;
     progress.change = 0;
+    return active[0].currentMidpointTo(active[1]);
   }
 
   /**
@@ -47,7 +49,11 @@ class Rotate extends Gesture {
    * @return {null}
    */
   start(state) {
-    this.initializeProgress(state);
+    const pivot = this.initializeProgress(state);
+    if (pivot) 
+      return { pivot };
+    else 
+      return null;
   }
 
   /**
@@ -95,6 +101,14 @@ class Rotate extends Gesture {
    */
   end(state) {
     this.initializeProgress(state);
+    // return null;
+    // const pivot = this.initializeProgress(state);
+    // if (pivot) 
+    //   return { pivot };
+    // else 
+    //   return null;
+    // this.initializeProgress(state);
+    // return {};
   }
 }
 
