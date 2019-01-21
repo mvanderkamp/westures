@@ -53,12 +53,7 @@ class Pan extends Gesture {
       const point = Point2D.midpoint(active.map( i => i.current.point));
       const progress = active[0].getProgressOfGesture(this.id);
       progress.lastEmitted = point;
-      // const progress = active[0].getProgressOfGesture(this.id);
-      // progress.lastEmitted = active[0].cloneCurrentPoint();
-      // return { change: 0, point: progress.lastEmitted };
-      return { change: new Point2D(0,0), point };
     }
-    return null;
   }
 
   /**
@@ -68,9 +63,7 @@ class Pan extends Gesture {
    * @param {State} input status object
    */
   start(state) {
-    const data = this.initialize(state);
-    // if (data) data.phase = 'start';
-    return data;
+    this.initialize(state);
   }
   /* start */
 
@@ -83,35 +76,22 @@ class Pan extends Gesture {
   move(state) {
     const active = state.getInputsNotInPhase('end');
 
-    /*
-     * This should only be encountered when a user adds extra inputs beyond what
-     * is used for this gesture. This allows whoever is working with this
-     * library to cancel tracking or locks that may be associated with this
-     * gesture, as it is not what the user is trying to perform.
-     */
-    // if (active.length !== REQUIRED_INPUTS) {
-    //   return Object.freeze(Object.assign({}, CANCELED));
-    // }
-
     const progress = active[0].getProgressOfGesture(this.id);
     const point = Point2D.midpoint(active.map( i => i.current.point));
-    // const point = active[0].current.point;
     const diff = point.distanceTo(progress.lastEmitted);
 
     const change = point.minus(progress.lastEmitted);
     progress.lastEmitted = point;
 
+    // Mute if the MUTEKEY was pressed.
     const event = active[0].current.originalEvent;
     const muted = this.muteKey && event[this.muteKey];
 
-    // See above comment for CANCELED return value. Similar concept here.
-    if (muted) {
-      return Object.assign({}, CANCELED);
-    } else if (diff >= this.threshold) {
+    if (!muted) {
       return { change, point, phase: 'move' };
-    } 
-
-    return null;
+    } else {
+      return null;
+    }
   }
   /* move*/
 
@@ -123,34 +103,7 @@ class Pan extends Gesture {
    * @return {null} 
    */
   end(state) {
-    let data = null;
-    // const ended = state.getInputsInPhase('end');
-    const active = state.getInputsNotInPhase('end');
-    if (active.length === 0) {
-      return {};
-    } else {
-      this.initialize(state);
-      return null;
-    }
-
-    // If the ended input was part of a valid pan, need to emit an event
-    // notifying that the pan has ended. Have to make sure that only inputs
-    // which were involved in a valid pan pass through this block. Checking for
-    // a 'lastEmitted' entity will do the trick, as it will only exist on the
-    // first active input, which is the only one that can currently be part of a
-    // valid pan.
-    if (ended.length > 0) {
-      const progress = ended[0].getProgressOfGesture(this.id);
-      if (progress.lastEmitted) {
-        const point = Point2D.midpoint(state.inputs.map( i => i.current.point));
-        // const point = ended[0].current.point;
-        const change = point.minus(progress.lastEmitted);
-        data = { change, point, phase: 'end' };
-      }
-    }
-
     this.initialize(state);
-    return data;
   }
   /* end*/
 }
