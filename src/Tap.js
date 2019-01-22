@@ -78,15 +78,12 @@ class Tap extends Gesture {
 
   /**
    * Event hook for the end of a gesture.  Determines if this the tap event can
-   * be fired if the delay and tolerance constraints are met. Also waits for all
-   * of the inputs to be off the screen before determining if the gesture is
-   * triggered.
+   * be fired if the delay and tolerance constraints are met. 
    *
    * @param {State} input status object
    *
    * @return {null|Object} - null if the gesture is not to be emitted, Object
-   *    with information otherwise. Returns the interval time between start and
-   *    end events.
+   *    with information otherwise. 
    */
   end(state) {
     const now = Date.now();
