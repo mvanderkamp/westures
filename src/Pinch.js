@@ -9,7 +9,7 @@ const DEFAULT_MIN_INPUTS = 2;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 /**
- * A Pinch is defined as two inputs moving either together or apart.
+ * A Pinch is defined as two or more inputs moving either together or apart.
  *
  * @class Pinch
  */
@@ -46,7 +46,7 @@ class Pinch extends Gesture {
    */
   initializeProgress(state) {
     const active = state.getInputsNotInPhase('end');
-    if (active.length < 1) return null;
+    if (active.length < this.minInputs) return null;
 
     const { midpoint, averageDistance } = getMidpointAndAverageDistance(active);
 
@@ -65,13 +65,11 @@ class Pinch extends Gesture {
   }
 
   /**
-   * Event hook for the move of a gesture.  Determines if the two points are
-   * moved in the expected direction relative to the current distance and the
-   * last distance.
+   * Event hook for the move of a gesture.
    *
    * @param {State} input status object
    *
-   * @return {Object | null} - Returns the distance in pixels between two inputs
+   * @return {Object | null} - Returns the distance in pixels between inputs
    */
   move(state) {
     const active = state.getInputsNotInPhase('end');
