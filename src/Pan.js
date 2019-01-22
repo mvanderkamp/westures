@@ -5,7 +5,6 @@
 
 const { Gesture, Point2D } = require('westures-core');
 
-const REQUIRED_INPUTS = 1;
 const DEFAULT_MIN_THRESHOLD = 1;
 
 const CANCELED = Object.freeze({ 
@@ -15,9 +14,7 @@ const CANCELED = Object.freeze({
 });
 
 /**
- * A Pan is defined as a normal movement in any direction on a screen.  Pan
- * gestures do not track start events and can interact with pinch and expand
- * gestures.
+ * A Pan is defined as a normal movement in any direction on a screen.
  *
  * @class Pan
  */
@@ -28,6 +25,8 @@ class Pan extends Gesture {
    * @param {Object} [options] - The options object.
    * @param {Number} [options.threshold=1] - The minimum number of pixels the
    *    input has to move to trigger this gesture.
+   * @param {String} [options.muteKey] - One of the keys reported by touch input
+   *    events. If this key is pressed, this gesture will be muted.
    */
   constructor(options = {}) {
     super('pan');
@@ -57,8 +56,8 @@ class Pan extends Gesture {
   }
 
   /**
-   * Event hook for the start of a gesture. Marks each input as active, so it
-   * can invalidate any end events.
+   * Event hook for the start of a Pan gesture. Records the current centroid of
+   * the inputs.
    *
    * @param {State} input status object
    */
@@ -69,6 +68,7 @@ class Pan extends Gesture {
 
   /**
    * move() - Event hook for the move of a gesture.  
+   *
    * @param {State} input status object
    *
    * @return {Object} The change in position and the current position.
@@ -87,11 +87,7 @@ class Pan extends Gesture {
     const event = active[0].current.originalEvent;
     const muted = this.muteKey && event[this.muteKey];
 
-    if (!muted) {
-      return { change, point, phase: 'move' };
-    } else {
-      return null;
-    }
+    return muted ? null : { change, point };
   }
   /* move*/
 
