@@ -30,9 +30,12 @@ class Rotate extends Gesture {
     if (active.length < REQUIRED_INPUTS) return null;
 
     // Progress is stored on the first active input.
+
     const angle = active[0].currentAngleTo(active[1]);
     const progress = active[0].getProgressOfGesture(this.id);
     progress.previousAngle = angle;
+
+    // let angle
   }
 
   /**
@@ -65,7 +68,7 @@ class Rotate extends Gesture {
     const angle = active[0].currentAngleTo(active[1]);
 
     const progress = active[0].getProgressOfGesture(this.id);
-    const delta = angle - progress.previousAngle;
+    const delta = angularMinus(angle, progress.previousAngle);
     progress.previousAngle = angle;
 
     return {
@@ -86,6 +89,17 @@ class Rotate extends Gesture {
   end(state) {
     this.initializeProgress(state);
   }
+}
+
+const PI2 = 2 * Math.PI;
+function angularMinus(a, b) {
+  let diff = a - b;
+  if (diff < -Math.PI) {
+    diff += PI2;
+  } else if (diff > Math.PI) {
+    diff -= PI2;
+  }
+  return diff;
 }
 
 module.exports = Rotate;
