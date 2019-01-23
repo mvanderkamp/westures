@@ -6,6 +6,7 @@
 const { Gesture, Point2D } = require('westures-core');
 
 const DEFAULT_MIN_THRESHOLD = 1;
+const REQUIRED_INPUTS = 1;
 
 const CANCELED = Object.freeze({ 
   change: new Point2D(0,0),
@@ -47,12 +48,8 @@ class Pan extends Gesture {
   }
 
   initialize(state) {
-    const active = state.getInputsNotInPhase('end');
-    if (active.length > 0) {
-      const point = Point2D.midpoint(active.map( i => i.current.point));
-      const progress = active[0].getProgressOfGesture(this.id);
-      progress.lastEmitted = point;
-    }
+    const progress = state.active[0].getProgressOfGesture(this.id);
+    progress.lastEmitted = state.centroid;
   }
 
   /**
@@ -62,6 +59,7 @@ class Pan extends Gesture {
    * @param {State} input status object
    */
   start(state) {
+    if (state.active.length < REQUIRED_INPUTS) return null;
     this.initialize(state);
   }
   /* start */
@@ -74,18 +72,15 @@ class Pan extends Gesture {
    * @return {Object} The change in position and the current position.
    */
   move(state) {
-    const active = state.getInputsNotInPhase('end');
+    if (state.active.length < REQUIRED_INPUTS) return null;
 
-    const progress = active[0].getProgressOfGesture(this.id);
-    const point = Point2D.midpoint(active.map( i => i.current.point));
-    const diff = point.distanceTo(progress.lastEmitted);
-
+    const progress = state.active[0].getProgressOfGesture(this.id);
+    const point = state.centroid;
     const change = point.minus(progress.lastEmitted);
     progress.lastEmitted = point;
 
     // Mute if the MUTEKEY was pressed.
-    const event = active[0].current.originalEvent;
-    const muted = this.muteKey && event[this.muteKey];
+    const muted = this.muteKey && state.event[this.muteKey];
 
     return muted ? null : { change, point };
   }
@@ -99,6 +94,7 @@ class Pan extends Gesture {
    * @return {null} 
    */
   end(state) {
+    if (state.active.length < REQUIRED_INPUTS) return null;
     this.initialize(state);
   }
   /* end*/

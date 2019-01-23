@@ -36,17 +36,6 @@ class Rotate extends Gesture {
   }
 
   /**
-   * Initialize the progress of the gesture.
-   *
-   * @param {State} input status object
-   */
-  initializeProgress(state) {
-    const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
-    this.getAngle(active);
-  }
-
-  /**
    * Event hook for the start of a gesture.
    *
    * @param {State} input status object
@@ -54,7 +43,8 @@ class Rotate extends Gesture {
    * @return {null}
    */
   start(state) {
-    this.initializeProgress(state);
+    if (state.active.length < REQUIRED_INPUTS) return null;
+    this.getAngle(state.active);
   }
 
   /**
@@ -69,15 +59,11 @@ class Rotate extends Gesture {
    *                              move.
    */
   move(state) {
-    const active = state.getInputsNotInPhase('end');
-    if (active.length < REQUIRED_INPUTS) return null;
-
-    const pivot = Point2D.midpoint(active.map( i => i.current.point ));
-    const delta = this.getAngle(active);
+    if (state.active.length < REQUIRED_INPUTS) return null;
 
     return {
-      pivot,
-      delta,
+      pivot: state.centroid,
+      delta: this.getAngle(state.active),
     };
   }
   /* move*/
@@ -90,7 +76,8 @@ class Rotate extends Gesture {
    * @return {null}
    */
   end(state) {
-    this.initializeProgress(state);
+    if (state.active.length < REQUIRED_INPUTS) return null;
+    this.getAngle(state.active);
   }
 }
 
