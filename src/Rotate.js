@@ -23,15 +23,15 @@ class Rotate extends Gesture {
   /**
    * Store individual angle progress on each input, return average angle change.
    */
-  getAngle(active) {
+  getAngle(state) {
     let angle = 0;
-    for (let i = 1; i < active.length; ++i) {
-      const progress = active[i].getProgressOfGesture(this.id);
-      const currentAngle = active[0].currentAngleTo(active[i]);
+    state.active.forEach( i => {
+      const progress = i.getProgressOfGesture(this.id);
+      const currentAngle = state.centroid.angleTo(i.current.point);
       angle += angularMinus(currentAngle, progress.previousAngle);
       progress.previousAngle = currentAngle;
-    }
-    angle /= (active.length - 1);
+    });
+    angle /= (state.active.length);
     return angle;
   }
 
@@ -44,7 +44,8 @@ class Rotate extends Gesture {
    */
   start(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
-    this.getAngle(state.active);
+    // this.getAngle(state.active);
+    this.getAngle(state);
   }
 
   /**
@@ -60,10 +61,9 @@ class Rotate extends Gesture {
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
-
     return {
       pivot: state.centroid,
-      delta: this.getAngle(state.active),
+      delta: this.getAngle(state),
     };
   }
   /* move*/
@@ -77,7 +77,7 @@ class Rotate extends Gesture {
    */
   end(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
-    this.getAngle(state.active);
+    this.getAngle(state);
   }
 }
 
