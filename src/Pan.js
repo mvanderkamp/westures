@@ -74,7 +74,7 @@ class Pan extends Gesture {
     const change = point.minus(progress.lastEmitted);
     progress.lastEmitted = point;
 
-    return muted ? null : { change, point };
+    return { change, point };
   }
   /* move*/
 
