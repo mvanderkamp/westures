@@ -44,7 +44,6 @@ class Rotate extends Gesture {
    */
   start(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
-    // this.getAngle(state.active);
     this.getAngle(state);
   }
 

@@ -8,12 +8,6 @@ const { Gesture, Point2D } = require('westures-core');
 const DEFAULT_MIN_THRESHOLD = 1;
 const REQUIRED_INPUTS = 1;
 
-const CANCELED = Object.freeze({ 
-  change: new Point2D(0,0),
-  point: new Point2D(0,0),
-  phase: 'cancel' 
-});
-
 /**
  * A Pan is defined as a normal movement in any direction on a screen.
  *
@@ -73,14 +67,12 @@ class Pan extends Gesture {
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
+    if (this.muteKey && state.event[this.muteKey]) return null;
 
     const progress = state.active[0].getProgressOfGesture(this.id);
     const point = state.centroid;
     const change = point.minus(progress.lastEmitted);
     progress.lastEmitted = point;
-
-    // Mute if the MUTEKEY was pressed.
-    const muted = this.muteKey && state.event[this.muteKey];
 
     return muted ? null : { change, point };
   }
