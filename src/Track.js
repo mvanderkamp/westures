@@ -5,7 +5,7 @@
 
 'use strict';
 
-const { Gesture, Point2D } = require('westures-core');
+const { Gesture } = require('westures-core');
 
 /**
  * A Track gesture forwards a list of active points and their centroid on each

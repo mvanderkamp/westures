@@ -5,7 +5,7 @@
 
 'use strict';
 
-const { Gesture, Point2D } = require('westures-core');
+const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 2;
 
