@@ -6,8 +6,8 @@
 const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
-const ESCAPE_VELOCITY = 4.5;
-const PROGRESS_STACK_SIZE = 3;
+// const ESCAPE_VELOCITY = 4.5;
+const PROGRESS_STACK_SIZE = 5;
 
 /**
  * A swipe is defined as input(s) moving in the same direction in an relatively
@@ -40,7 +40,7 @@ class Swipe extends Gesture {
       if (!progress.moves) progress.moves = [];
 
       progress.moves.push({
-        time: Date.now(), // TODO: Replace with input.currentTime ?
+        time: Date.now(),
         point: input.cloneCurrentPoint(),
       });
 
@@ -70,38 +70,27 @@ class Swipe extends Gesture {
     if (!progress.moves || progress.moves.length < PROGRESS_STACK_SIZE) {
       return null;
     }
-
-    const moves = progress.moves.map( ({time, point}) => {
-      point.x /= window.innerWidth;
-      point.y /= window.innerHeight;
-      return {
-        time,
-        point, 
-      };
-    });
+    const moves = progress.moves;
 
     const vlim = PROGRESS_STACK_SIZE - 1;
+    const point = moves[vlim].point;
     const velos = [];
+    let direction = 0;
     for (let i = 0; i < vlim; ++i) {
       velos[i] = calc_velocity(moves[i], moves[i + 1]);
+      direction += moves[i].point.angleTo(point);
     }
+    direction /= vlim;
 
-    const point = moves[PROGRESS_STACK_SIZE-1].point;
-    const direction = moves[PROGRESS_STACK_SIZE-2].point.angleTo(point);
-    const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc) * 1000;
+    const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc);
 
-    if (velocity >= ESCAPE_VELOCITY) {
-      return {
-        velocity,
-        x: point.x * window.innerWidth,
-        y: point.y * window.innerHeight,
-        direction,
-      };
-    }
-
-    return null;
+    return {
+      x: point.x,
+      y: point.y,
+      velocity,
+      direction,
+    };
   }
-
   /* end*/
 }
 
