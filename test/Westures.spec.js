@@ -1,3 +1,9 @@
+/**
+ * Test file for the westures index.
+ */
+
+'use strict';
+
 const Westures = require('../index.js');
 
 /** @test {Westures} */

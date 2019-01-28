@@ -3,6 +3,8 @@
  * Contains the Swipe class
  */
 
+'use strict';
+
 const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;

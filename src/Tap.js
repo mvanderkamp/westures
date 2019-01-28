@@ -3,6 +3,8 @@
  * Contains the Tap class
  */
 
+'use strict';
+
 const { Gesture, Point2D } = require('westures-core');
 
 const defaults = Object.freeze({

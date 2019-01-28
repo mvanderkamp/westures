@@ -3,6 +3,8 @@
  * Contains the abstract Pinch class
  */
 
+'use strict';
+
 const { Gesture, Point2D } = require('westures-core');
 
 const DEFAULT_MIN_INPUTS = 2;

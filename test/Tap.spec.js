@@ -1,9 +1,10 @@
-'use strict';
-
 /**
  * @file Tap.js
  * Tests Tap class
  */
+
+'use strict';
+
 const Tap = require('../src/Tap.js');
 
 /** @test {Tap} */
