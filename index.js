@@ -9,7 +9,9 @@ const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
 const Rotate  = require('./src/Rotate.js');
 const Swipe   = require('./src/Swipe.js');
+const Swivel  = require('./src/Swivel.js');
 const Tap     = require('./src/Tap.js');
+const Track   = require('./src/Track.js');
 
 /**
  * The global API interface for Westures. Contains a constructor for the
@@ -24,7 +26,9 @@ module.exports = Object.assign({},
     Pinch,
     Rotate,
     Swipe,
+    Swivel,
     Tap,
+    Track,
   },
 );
 
