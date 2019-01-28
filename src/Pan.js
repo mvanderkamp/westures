@@ -67,7 +67,10 @@ class Pan extends Gesture {
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
-    if (this.muteKey && state.event[this.muteKey]) return null;
+    if (this.muteKey && state.event[this.muteKey]) {
+      this.initialize(state);
+      return null;
+    }
 
     const progress = state.active[0].getProgressOfGesture(this.id);
     const point = state.centroid;
