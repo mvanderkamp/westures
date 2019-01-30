@@ -21,16 +21,14 @@ const Track   = require('./src/Track.js');
  * @type {Object}
  * @namespace Westures
  */
-module.exports = Object.assign({}, 
-  Core,
-  {
-    Pan,
-    Pinch,
-    Rotate,
-    Swipe,
-    Swivel,
-    Tap,
-    Track,
-  },
-);
+module.exports = {
+  ...Core,
+  Pan,
+  Pinch,
+  Rotate,
+  Swipe,
+  Swivel,
+  Tap,
+  Track,
+};
 
