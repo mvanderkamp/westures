@@ -43,7 +43,7 @@ class Swipe extends Gesture {
 
       progress.moves.push({
         time: Date.now(),
-        point: input.cloneCurrentPoint(),
+        point: input.current.point,
       });
 
       while (progress.moves.length > PROGRESS_STACK_SIZE) {
