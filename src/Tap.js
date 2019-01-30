@@ -98,7 +98,7 @@ class Tap extends Gesture {
 
     if (this.ended.length === 0 ||
         this.ended.length !== this.numInputs || 
-        !this.ended.every( i => i.totalDistanceIsWithin(this.tolerance))) {
+        !this.ended.every( i => i.totalDistance() <= this.tolerance)) {
       return null;
     }
 
