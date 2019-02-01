@@ -1,14 +1,27 @@
 {
   "name": "westures",
   "version": "0.3.1",
-  "description": "A lightweight JavaScript gesture library.",
+  "description": "A library for multitouch, simultaneous gestures.",
+  "keywords": [
+    "gesture",
+    "tap",
+    "pinch",
+    "rotate",
+    "pan",
+    "swipe",
+    "swivel",
+    "track",
+    "simultaneous",
+    "multitouch"
+  ],
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "bundle": "browserify 'index.js' --standalone westures --outfile 'bundle.js'",
-    "test": "jest"
+    "test": "jest",
+    "docs": "jsdoc src index.js -c .jsdocrc.json"
   },
   "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "repository": {
@@ -19,7 +32,8 @@
   "devDependencies": {
     "browserify": "^16.2.3",
     "eslint": "^5.12.1",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "jsdoc": "^3.5.5"
   },
   "dependencies": {
     "westures-core": "^0.3.1"
