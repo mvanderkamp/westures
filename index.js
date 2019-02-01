@@ -16,10 +16,10 @@ const Tap     = require('./src/Tap.js');
 const Track   = require('./src/Track.js');
 
 /**
- * The global API interface for Westures. Contains a constructor for the
- * Region Object, and constructors for each predefined Gesture.
- * @type {Object}
- * @namespace Westures
+ * The global API interface for Westures. Contains a constructor for the Region
+ * Object, and constructors for each predefined Gesture.
+ *
+ * @module westures
  */
 module.exports = {
   ...Core,
