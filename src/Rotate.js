@@ -1,6 +1,5 @@
 /**
- * @file Rotate.js
- * Contains the Rotate class
+ * @file Contains the Rotate class.
  */
 
 'use strict';
@@ -10,9 +9,16 @@ const { Gesture } = require('westures-core');
 const REQUIRED_INPUTS = 2;
 
 /**
+ * @typedef RotateData
+ * @type {Object}
+ * @property {Number} delta - In radians, the change in angle since last emit.
+ * @property {Point2D} pivot - The centroid of the currently active points.
+ * @property {Number} pivot.x - x coordinate of centroid.
+ * @property {Number} pivot.y - y coordinate of centroid.
+ */
+
+/**
  * A Rotate is defined as two inputs moving with a changing angle between them.
- *
- * @class Rotate
  */
 class Rotate extends Gesture {
   /**
@@ -24,6 +30,10 @@ class Rotate extends Gesture {
 
   /**
    * Store individual angle progress on each input, return average angle change.
+   *
+   * @private
+   * @param {State} state - current input state.
+   * @return {null}
    */
   getAngle(state) {
     let angle = 0;
@@ -40,9 +50,9 @@ class Rotate extends Gesture {
   /**
    * Event hook for the start of a gesture.
    *
-   * @param {State} input status object
-   *
-   * @return {null}
+   * @private
+   * @param {State} state - current input state.
+   * @return {undefined}
    */
   start(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -52,13 +62,8 @@ class Rotate extends Gesture {
   /**
    * Event hook for the move of a Rotate gesture.
    *
-   * @param {State} input status object
-   *
-   * @return {null} - null if this event did not occur
-   * @return {Object} obj.angle - The current angle along the unit circle
-   * @return {Object} obj.pivot - The pivot point of the rotation
-   * @return {Object} obj.delta - The change in angle since the last emitted
-   *                              move.
+   * @param {State} state - current input state.
+   * @return {?RotateData} - null if this event did not occur
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -67,14 +72,13 @@ class Rotate extends Gesture {
       delta: this.getAngle(state),
     };
   }
-  /* move*/
 
   /**
    * Event hook for the end of a gesture.
    *
-   * @param {State} input status object
-   *
-   * @return {null}
+   * @private
+   * @param {State} state - current input state.
+   * @return {undefined}
    */
   end(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -82,7 +86,7 @@ class Rotate extends Gesture {
   }
 }
 
-/**
+/*
  * Helper function to regulate angular differences, so they don't jump from 0 to
  * 2*PI or vice versa.
  */

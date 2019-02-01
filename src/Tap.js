@@ -1,6 +1,5 @@
 /**
- * @file Tap.js
- * Contains the Tap class
+ * @file Contains the Tap class.
  */
 
 'use strict';
@@ -15,9 +14,14 @@ const defaults = Object.freeze({
 });
 
 /**
+ * @typedef TapData
+ * @type {Object}
+ * @property {Number} x - x coordinate of tap point.
+ * @property {Number} y - y coordinate of tap point.
+ */
+
+/**
  * A Tap is defined as a touchstart to touchend event in quick succession.
- *
- * @class Tap
  */
 class Tap extends Gesture {
   /**
@@ -82,9 +86,8 @@ class Tap extends Gesture {
    * Event hook for the end of a gesture.  Determines if this the tap event can
    * be fired if the delay and tolerance constraints are met. 
    *
-   * @param {State} input status object
-   *
-   * @return {null|Object} - null if the gesture is not to be emitted, Object
+   * @param {State} state - current input state.
+   * @return {?TapData} - null if the gesture is not to be emitted, Object
    *    with information otherwise. 
    */
   end(state) {

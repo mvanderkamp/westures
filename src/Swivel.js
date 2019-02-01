@@ -1,6 +1,5 @@
 /**
- * @file Rotate.js
- * Contains the Rotate class
+ * @file Contains the Rotate class.
  */
 
 'use strict';
@@ -13,10 +12,32 @@ const defaults = Object.freeze({
 });
 
 /**
+ * @typedef SwivelData
+ * @type {Object}
+ * @property {Number} delta - In radians, the change in angle since last emit.
+ * @property {Point2D} pivot - The pivot point.
+ * @property {Number} pivot.x - x coordinate of pivot.
+ * @property {Number} pivot.y - y coordinate of pivot.
+ * @property {Point2D} point - The current location of the input point.
+ * @property {Number} point.x - x coordinate of point.
+ * @property {Number} point.y - y coordinate of point.
+ */
+
+/**
  * A Swivel is a single input rotating around a fixed point. The fixed point is
  * determined by the input's location at its 'start' phase.
  */
 class Swivel extends Gesture {
+  /**
+   * Constructor for the Swivel class.
+   *
+   * @param {Object} [options]
+   * @param {Number} [options.deadzoneRadius=10] - The radius in pixels around
+   *    the start point in which to do nothing.
+   * @param {String} [options.enableKey=undefined] - One of 'altKey', 'ctrlKey',
+   *    'metaKey', or 'shiftKey'. If set, gesture will only be recognized while
+   *    this key is down.
+   */
   constructor(options = {}) {
     super('swivel');
 
@@ -41,6 +62,10 @@ class Swivel extends Gesture {
 
   /**
    * Event hook for the start of a Swivel gesture.
+   *
+   * @private
+   * @param {State} state - current input state.
+   * @return {undefined}
    */
   start(state) {
     if (!this.enabled(state.event)) return null;
@@ -55,6 +80,9 @@ class Swivel extends Gesture {
 
   /**
    * Event hook for the move of a Swivel gesture.
+   *
+   * @param {State} state - current input state.
+   * @return {?SwivelData} - null if the gesture is not recognized.
    */
   move(state) {
     if (state.active.length !== REQUIRED_INPUTS) return null;

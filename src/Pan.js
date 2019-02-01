@@ -1,6 +1,5 @@
 /**
- * @file Pan.js
- * Contains the Pan class
+ * @file Contains the Pan class.
  */
 
 'use strict';
@@ -11,29 +10,32 @@ const DEFAULT_MIN_THRESHOLD = 1;
 const REQUIRED_INPUTS = 1;
 
 /**
- * A Pan is defined as a normal movement in any direction on a screen.
+ * @typedef PanData
+ * @type {Object}
+ * @property {Point2D} change - The change vector from the last emit.
+ * @property {Number} change.x - movement along x axis.
+ * @property {Number} change.y - movement along y axis.
+ * @property {Point2D} point - The centroid of the currently active points.
+ * @property {Number} point.x - x coordinate of centroid.
+ * @property {Number} point.y - y coordinate of centroid.
+ */
+
+/**
+ * A Pan is defined as a normal movement in any direction. 
  *
- * @class Pan
+ * @extends Gesture 
  */
 class Pan extends Gesture {
   /**
    * Constructor function for the Pan class.
    *
-   * @param {Object} [options] - The options object.
-   * @param {Number} [options.threshold=1] - The minimum number of pixels the
-   *    input has to move to trigger this gesture.
-   * @param {String} [options.muteKey] - One of the keys reported by touch input
-   *    events. If this key is pressed, this gesture will be muted.
+   * @param {Object} [options]
+   * @param {String} [options.muteKey=undefined] - If this key is pressed, this
+   *    gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',
+   *    'shiftKey', or 'metaKey'.
    */
   constructor(options = {}) {
     super('pan');
-
-    /**
-     * The minimum amount in pixels the pan must move until it is fired.
-     *
-     * @type {Number}
-     */
-    this.threshold = options.threshold || DEFAULT_MIN_THRESHOLD;
 
     /**
      * Don't emit any data if this key is pressed.
@@ -43,29 +45,37 @@ class Pan extends Gesture {
     this.muteKey = options.muteKey;
   }
 
+  /**
+   * Resets the gesture's progress by saving the current centroid of the active
+   * inputs. To be called whenever the number of inputs changes.
+   *
+   * @private
+   * @param {State} state - The state object received by a hook.
+   */
   initialize(state) {
     const progress = state.active[0].getProgressOfGesture(this.id);
     progress.lastEmitted = state.centroid;
   }
 
   /**
-   * Event hook for the start of a Pan gesture. Records the current centroid of
+   * Event hook for the start of a Pan. Records the current centroid of
    * the inputs.
    *
-   * @param {State} input status object
+   * @private
+   * @param {State} state - current input state.
+   * @return {undefined}
    */
   start(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
     this.initialize(state);
   }
-  /* start */
 
   /**
-   * move() - Event hook for the move of a gesture.  
+   * Event hook for the move of a Pan.
    *
-   * @param {State} input status object
-   *
-   * @return {Object} The change in position and the current position.
+   * @param {State} state - current input state.
+   * @return {?PanData} `null` if the gesture is muted by the muteKey,
+   *    otherwise returns a data object.
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -81,20 +91,19 @@ class Pan extends Gesture {
 
     return { change, point };
   }
-  /* move*/
 
   /**
-   * end() - Event hook for the end of a gesture. 
+   * Event hook for the end of a Pan. Records the current centroid of
+   * the inputs.
    *
-   * @param {State} input status object
-   *
-   * @return {null} 
+   * @private
+   * @param {State} state - current input state.
+   * @return {undefined} 
    */
   end(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
     this.initialize(state);
   }
-  /* end*/
 }
 
 module.exports = Pan;

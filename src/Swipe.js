@@ -1,6 +1,5 @@
 /**
- * @file Swipe.js
- * Contains the Swipe class
+ * @file Contains the Swipe class.
  */
 
 'use strict';
@@ -8,15 +7,22 @@
 const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
-// const ESCAPE_VELOCITY = 4.5;
 const PROGRESS_STACK_SIZE = 5;
+
+/**
+ * @typedef SwipeData
+ * @type {Object}
+ * @property {Number} velocity - The velocity of the swipe.
+ * @property {Number} direction - In radians, the direction of the swipe.
+ * @property {Point2D} point - The point at which the swipe ended.
+ * @property {Number} point.x - x coordinate of point.
+ * @property {Number} point.y - y coordinate of point.
+ */
 
 /**
  * A swipe is defined as input(s) moving in the same direction in an relatively
  * increasing velocity and leaving the screen at some point before it drops
  * below it's escape velocity.
- *
- * @class Swipe
  */
 class Swipe extends Gesture {
   /**
@@ -30,9 +36,9 @@ class Swipe extends Gesture {
    * Event hook for the move of a gesture. Captures an input's x/y coordinates
    * and the time of it's event on a stack.
    *
-   * @param {State} input status object
-   *
-   * @return {null} - Swipe does not emit from a move.
+   * @private
+   * @param {State} state - current input state.
+   * @return {undefined}
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -53,15 +59,12 @@ class Swipe extends Gesture {
 
     return null;
   }
-  /* move*/
 
   /**
    * Determines if the input's history validates a swipe motion.
    *
-   * @param {State} input status object
-   *
-   * @return {null|Object} - null if the gesture is not to be emitted, Object
-   *    with information otherwise.
+   * @param {State} state - current input state.
+   * @return {?SwipeData} - null if the gesture is not recognized.
    */
   end(state) {
     const ended = state.getInputsInPhase('end');
@@ -87,15 +90,17 @@ class Swipe extends Gesture {
     const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc);
 
     return {
-      x: point.x,
-      y: point.y,
+      point,
       velocity,
       direction,
     };
   }
-  /* end*/
 }
 
+/*
+ * Local helper function for calculating the velocity between two timestamped
+ * points.
+ */
 function calc_velocity(start, end) {
   const distance = end.point.distanceTo(start.point);
   const time = end.time - start.time;
