@@ -4,7 +4,6 @@ node_modules/
 bower_components/
 .idea/
 playground/
-docs/
 yarn-error.log
 examples/
 dist/index.html
