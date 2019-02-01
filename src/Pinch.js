@@ -21,6 +21,9 @@ const DEFAULT_MIN_INPUTS = 2;
 
 /**
  * A Pinch is defined as two or more inputs moving either together or apart.
+ *
+ * @extends Gesture 
+ * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  */
 class Pinch extends Gesture {
   /**

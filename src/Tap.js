@@ -22,6 +22,9 @@ const defaults = Object.freeze({
 
 /**
  * A Tap is defined as a touchstart to touchend event in quick succession.
+ *
+ * @extends Gesture 
+ * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  */
 class Tap extends Gesture {
   /**

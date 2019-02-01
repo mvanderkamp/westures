@@ -26,6 +26,9 @@ const defaults = Object.freeze({
 /**
  * A Swivel is a single input rotating around a fixed point. The fixed point is
  * determined by the input's location at its 'start' phase.
+ *
+ * @extends Gesture 
+ * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  */
 class Swivel extends Gesture {
   /**

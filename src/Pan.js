@@ -24,11 +24,10 @@ const REQUIRED_INPUTS = 1;
  * A Pan is defined as a normal movement in any direction. 
  *
  * @extends Gesture 
+ * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  */
 class Pan extends Gesture {
   /**
-   * Constructor function for the Pan class.
-   *
    * @param {Object} [options]
    * @param {String} [options.muteKey=undefined] - If this key is pressed, this
    *    gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',

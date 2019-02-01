@@ -19,6 +19,9 @@ const REQUIRED_INPUTS = 2;
 
 /**
  * A Rotate is defined as two inputs moving with a changing angle between them.
+ *
+ * @extends Gesture 
+ * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  */
 class Rotate extends Gesture {
   /**

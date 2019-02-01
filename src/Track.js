@@ -18,6 +18,9 @@ const { Gesture } = require('westures-core');
 /**
  * A Track gesture forwards a list of active points and their centroid on each
  * of the selected phases.
+ *
+ * @extends Gesture 
+ * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  */
 class Track extends Gesture {
   /**

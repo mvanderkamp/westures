@@ -14,8 +14,13 @@ const Tap     = require('./src/Tap.js');
 const Track   = require('./src/Track.js');
 
 /**
- * The global API interface for Westures. Contains a constructor for the Region
- * Object, and constructors for each predefined Gesture.
+ * The global API interface for Westures. Contains the {@link 
+ * https://mvanderkamp.github.io/westures-core/Region.html Region} class, a
+ * {@link https://mvanderkamp.github.io/westures-core/Point2D.html Point2D}
+ * class, the {@link https://mvanderkamp.github.io/westures-core/Gesture.html
+ * Gesture} interface, and the following predefined gestures: {@link Pan},
+ * {@link Pinch}, {@link Rotate}, {@link Swipe}, {@link Swivel}, {@link Tap},
+ * {@link Track}.
  *
  * @module westures
  */

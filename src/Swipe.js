@@ -23,6 +23,9 @@ const PROGRESS_STACK_SIZE = 5;
  * A swipe is defined as input(s) moving in the same direction in an relatively
  * increasing velocity and leaving the screen at some point before it drops
  * below it's escape velocity.
+ *
+ * @extends Gesture 
+ * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  */
 class Swipe extends Gesture {
   /**
