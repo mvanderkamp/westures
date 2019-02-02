@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
-    <title>JSDoc: Source: src/Pinch.js</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <title>src/Pinch.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
 
-<div id="main">
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
-    <h1 class="page-title">Source: src/Pinch.js</h1>
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-westures.html">westures</a></li></ul><h3>Classes</h3><ul><li><a href="Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Pan.html#move">move</a></li></ul></li><li><a href="Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Pinch.html#move">move</a></li></ul></li><li><a href="Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Rotate.html#move">move</a></li></ul></li><li><a href="Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Swipe.html#end">end</a></li></ul></li><li><a href="Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Swivel.html#move">move</a></li></ul></li><li><a href="Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Tap.html#end">end</a></li></ul></li><li><a href="Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Track.html#start">start</a></li><li data-type='method' style='display: none;'><a href="Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="Track.html#end">end</a></li></ul></li><li><a href="Binding.html">Binding</a></li><li><a href="Gesture.html">Gesture</a></li><li><a href="Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Input.html#getProgressOfGesture">getProgressOfGesture</a></li><li data-type='method' style='display: none;'><a href="Input.html#totalDistance">totalDistance</a></li></ul></li><li><a href="Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#totalDistanceTo">totalDistanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#.midpoint">midpoint</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#.sum">sum</a></li></ul></li><li><a href="PointerData.html">PointerData</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PointerData.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="PointerData.html#distanceTo">distanceTo</a></li></ul></li><li><a href="Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Region.html#bind">bind</a></li><li data-type='method' style='display: none;'><a href="Region.html#unbind">unbind</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="State.html#getInputsNotInPhase">getInputsNotInPhase</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#PanData">PanData</a></li><li><a href="global.html#PinchData">PinchData</a></li><li><a href="global.html#RotateData">RotateData</a></li><li><a href="global.html#SwipeData">SwipeData</a></li><li><a href="global.html#SwivelData">SwivelData</a></li><li><a href="global.html#TapData">TapData</a></li><li><a href="global.html#TrackData">TrackData</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">src/Pinch.js</h1>
+    
 
     
 
@@ -26,8 +43,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file Contains the abstract Pinch class.
+            <pre class="prettyprint source linenums"><code>/*
+ * Contains the abstract Pinch class.
  */
 
 'use strict';
@@ -39,26 +56,29 @@ const DEFAULT_MIN_INPUTS = 2;
 /**
  * @typedef PinchData
  * @type {Object}
- * @property {Number} distance - The average distance from an active input to
+ * @property {number} distance - The average distance from an active input to
  *    the centroid.
- * @property {Number} change - The change in distance since last emit.
+ * @property {number} change - The change in distance since last emit.
  * @property {Point2D} midpoint - The centroid of the currently active points.
- * @property {Number} midpoint.x - x coordinate of centroid.
- * @property {Number} midpoint.y - y coordinate of centroid.
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
  */
 
 /**
  * A Pinch is defined as two or more inputs moving either together or apart.
  *
  * @extends Gesture 
- * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see PinchData
  */
 class Pinch extends Gesture {
   /**
    * Constructor function for the Pinch class.
    *
    * @param {Object} [options]
-   * @param {Number} [options.minInputs=2] The minimum number of inputs that
+   * @param {number} [options.minInputs=2] The minimum number of inputs that
    *    must be active for a Pinch to be recognized.
    */
   constructor(options = {}) {
@@ -68,7 +88,7 @@ class Pinch extends Gesture {
      * The minimum number of inputs that must be active for a Pinch to be
      * recognized.
      *
-     * @type {Number}
+     * @type {number}
      */
     this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
   }
@@ -103,7 +123,7 @@ class Pinch extends Gesture {
    * Event hook for the move of a Pinch.
    *
    * @param {State} state - current input state.
-   * @return {?PinchData} - null if not recognized.
+   * @return {?PinchData} &lt;tt>null&lt;/tt> if not recognized.
    */
   move(state) {
     if (state.active.length &lt; this.minInputs) return null;
@@ -142,19 +162,27 @@ module.exports = Pinch;
 
 
 
+    
+    
 </div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-westures.html">westures</a></li></ul><h3>Classes</h3><ul><li><a href="Pan.html">Pan</a></li><li><a href="Pinch.html">Pinch</a></li><li><a href="Rotate.html">Rotate</a></li><li><a href="Swipe.html">Swipe</a></li><li><a href="Swivel.html">Swivel</a></li><li><a href="Tap.html">Tap</a></li><li><a href="Track.html">Track</a></li></ul><h3><a href="global.html">Global</a></h3>
-</nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Feb 01 2019 14:13:29 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Feb 02 2019 13:41:20 GMT-0600 (Central Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/jquery-3.1.1.min.js"></script>
+
+<script src="scripts/search.js"></script>
+
+
+<script src="scripts/collapse.js"></script>
+
+
+
 </body>
 </html>

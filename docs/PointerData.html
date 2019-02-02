@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Tap - Documentation</title>
+    <title>PointerData - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -33,7 +33,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Tap</h1>
+    <h1 class="page-title">PointerData</h1>
     
 
     
@@ -46,10 +46,11 @@
 <header>
     
         <h2>
-        Tap
+        PointerData
         </h2>
         
-            <div class="class-description">A Tap is defined as a touchstart to touchend event in quick succession.</div>
+            <div class="class-description">Low-level storage of pointer data based on incoming data from an interaction
+event.</div>
         
     
 </header>
@@ -64,7 +65,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Tap"><span class="type-signature"></span>new Tap<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="PointerData"><span class="type-signature"></span>new PointerData<span class="signature">(event, identifier)</span><span class="type-signature"></span></h4>
 
     
 
@@ -76,7 +77,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Tap.js.html">src/Tap.js</a>, <a href="src_Tap.js.html#line34">line 34</a>
+        <a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a>, <a href="node_modules_westures-core_src_PointerData.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -107,13 +108,6 @@
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="global.html#TapData">TapData</a></li>
-        </ul>
-    </dd>
-    
 
     
 </dl>
@@ -121,10 +115,6 @@
 
 
 
-
-<div class="description">
-    Constructor function for the Tap class.
-</div>
 
 
 
@@ -149,8 +139,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -163,63 +151,30 @@
 
         <tr>
             
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>event</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Event</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">The options object.
-                <h6>Properties</h6>
-                
+            <td class="description last">The event object being wrapped.</td>
+        </tr>
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>minDelay</code></td>
+                <td class="name"><code>identifier</code></td>
             
 
             <td class="type">
@@ -232,153 +187,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                    <code>0</code>
-                
-                </td>
-            
 
-            <td class="description last">The minimum delay between a
-   touchstart and touchend can be configured in milliseconds.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>maxDelay</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>300</code>
-                
-                </td>
-            
-
-            <td class="description last">The maximum delay between a
-   touchstart and touchend can be configured in milliseconds.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>numInputs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>1</code>
-                
-                </td>
-            
-
-            <td class="description last">Number of inputs for Tap gesture.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>tolerance</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>10</code>
-                
-                </td>
-            
-
-            <td class="description last">The tolerance in pixels a user can
-   move.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last">The index of touch if applicable</td>
         </tr>
 
     
@@ -405,17 +217,6 @@
     
 
     
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="Gesture.html">Gesture</a></li>
-    </ul>
-
-
-    
 
     
 
@@ -430,7 +231,7 @@
 
         
             
-<h4 class="name" id="minDelay"><span class="type-signature"></span>minDelay<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="originalEvent"><span class="type-signature"></span>originalEvent<span class="type-signature"> :Event</span></h4>
 
 
 
@@ -441,7 +242,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Tap.js.html">src/Tap.js</a>, <a href="src_Tap.js.html#line58">line 58</a>
+        <a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a>, <a href="node_modules_westures-core_src_PointerData.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -481,10 +282,158 @@
 
 
 <div class="description">
-    The minimum amount between a touchstart and a touchend can be configured
-in milliseconds. The minimum delay starts to count down when the expected
-number of inputs are on the screen, and ends when ALL inputs are off the
-screen.
+    The original event object.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Event</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :String|null</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a>, <a href="node_modules_westures-core_src_PointerData.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The type or 'phase' of this batch of pointer data. 'start' or 'move' or
+'end'.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+|
+
+<span class="param-type">null</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="time"><span class="type-signature"></span>time<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a>, <a href="node_modules_westures-core_src_PointerData.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The timestamp of the event in milliseconds elapsed since January 1, 1970,
+00:00:00 UTC.
 </div>
 
 
@@ -506,7 +455,7 @@ screen.
 
         
             
-<h4 class="name" id="maxDelay"><span class="type-signature"></span>maxDelay<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="point"><span class="type-signature"></span>point<span class="type-signature"> :<a href="Point2D.html">Point2D</a></span></h4>
 
 
 
@@ -517,7 +466,7 @@ screen.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Tap.js.html">src/Tap.js</a>, <a href="src_Tap.js.html#line68">line 68</a>
+        <a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a>, <a href="node_modules_westures-core_src_PointerData.js.html#line51">line 51</a>
     </li></ul></dd>
     
 
@@ -557,10 +506,7 @@ screen.
 
 
 <div class="description">
-    The maximum delay between a touchstart and touchend can be configured in
-milliseconds. The maximum delay starts to count down when the expected
-number of inputs are on the screen, and ends when ALL inputs are off the
-screen.
+    The (x,y) coordinate of the event, wrapped in a Point2D.
 </div>
 
 
@@ -569,298 +515,7 @@ screen.
     <ul>
         <li>
             
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="numInputs"><span class="type-signature"></span>numInputs<span class="type-signature"> :number</span></h4>
-
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Tap.js.html">src/Tap.js</a>, <a href="src_Tap.js.html#line76">line 76</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    The number of inputs to trigger a Tap can be variable, and the maximum
-number being a factor of the browser.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="tolerance"><span class="type-signature"></span>tolerance<span class="type-signature"> :number</span></h4>
-
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Tap.js.html">src/Tap.js</a>, <a href="src_Tap.js.html#line84">line 84</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    A move tolerance in pixels allows some slop between a user's start to end
-events. This allows the Tap gesture to be triggered more easily.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="ended"><span class="type-signature"></span>ended<span class="type-signature"></span></h4>
-
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Tap.js.html">src/Tap.js</a>, <a href="src_Tap.js.html#line89">line 89</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    An array of inputs that have ended recently.
-</div>
-
-
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="id"><span class="type-signature"></span>id<span class="type-signature"> :string</span></h4>
-
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a>, <a href="node_modules_westures-core_src_Gesture.js.html#line32">line 32</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-    <dt class="inherited-from">Inherited From:</dt>
-    <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Gesture.html#id">Gesture#id</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    The unique identifier for each gesture. This allows for distinctions
-across instances of Gestures that are created on the fly (e.g.
-gesture-tap-1, gesture-tap-2).
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
+<span class="param-type"><a href="Point2D.html">Point2D</a></span>
 
 
         </li>
@@ -882,7 +537,7 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    <h4 class="name" id="end"><span class="type-signature"></span>end<span class="signature">(state)</span><span class="type-signature"> &rarr; (nullable) {<a href="global.html#TapData">TapData</a>}</span></h4>
+    <h4 class="name" id="angleTo"><span class="type-signature"></span>angleTo<span class="signature">(pdata)</span><span class="type-signature"> &rarr; {number}</span></h4>
 
     
 
@@ -894,7 +549,7 @@ gesture-tap-1, gesture-tap-2).
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Tap.js.html">src/Tap.js</a>, <a href="src_Tap.js.html#line100">line 100</a>
+        <a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a>, <a href="node_modules_westures-core_src_PointerData.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -904,11 +559,6 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        Gesture#end
-    </li></ul></dd>
     
 
     
@@ -939,8 +589,7 @@ gesture-tap-1, gesture-tap-2).
 
 
 <div class="description">
-    Event hook for the end of a gesture.  Determines if this the tap event can
-be fired if the delay and tolerance constraints are met.
+    Calculates the angle between this event and the given event.
 </div>
 
 
@@ -978,13 +627,13 @@ be fired if the delay and tolerance constraints are met.
 
         <tr>
             
-                <td class="name"><code>state</code></td>
+                <td class="name"><code>pdata</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="State.html">State</a></span>
+<span class="param-type"><a href="PointerData.html">PointerData</a></span>
 
 
             
@@ -994,7 +643,7 @@ be fired if the delay and tolerance constraints are met.
 
             
 
-            <td class="description last">current input state.</td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -1018,8 +667,8 @@ be fired if the delay and tolerance constraints are met.
 
         
 <div class="param-desc">
-    <tt>null</tt> if the gesture is not to be emitted,
-   Object with information otherwise.
+    Radians measurement between this event and the given
+   event's points.
 </div>
 
 
@@ -1030,7 +679,163 @@ be fired if the delay and tolerance constraints are met.
     </dt>
     <dd>
         
-<span class="param-type"><a href="global.html#TapData">TapData</a></span>
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="distanceTo"><span class="type-signature"></span>distanceTo<span class="signature">(pdata)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a>, <a href="node_modules_westures-core_src_PointerData.js.html#line72">line 72</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Calculates the distance between two PointerDatas.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pdata</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="PointerData.html">PointerData</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The distance between the two points, a.k.a. the
+   hypoteneuse.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
 
 
     </dd>

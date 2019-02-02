@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
-    <title>JSDoc: Source: src/Track.js</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <title>src/Track.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
 
-<div id="main">
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
-    <h1 class="page-title">Source: src/Track.js</h1>
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-westures.html">westures</a></li></ul><h3>Classes</h3><ul><li><a href="Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Pan.html#move">move</a></li></ul></li><li><a href="Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Pinch.html#move">move</a></li></ul></li><li><a href="Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Rotate.html#move">move</a></li></ul></li><li><a href="Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Swipe.html#end">end</a></li></ul></li><li><a href="Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Swivel.html#move">move</a></li></ul></li><li><a href="Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Tap.html#end">end</a></li></ul></li><li><a href="Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Track.html#start">start</a></li><li data-type='method' style='display: none;'><a href="Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="Track.html#end">end</a></li></ul></li><li><a href="Binding.html">Binding</a></li><li><a href="Gesture.html">Gesture</a></li><li><a href="Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Input.html#getProgressOfGesture">getProgressOfGesture</a></li><li data-type='method' style='display: none;'><a href="Input.html#totalDistance">totalDistance</a></li></ul></li><li><a href="Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#totalDistanceTo">totalDistanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#.midpoint">midpoint</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#.sum">sum</a></li></ul></li><li><a href="PointerData.html">PointerData</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PointerData.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="PointerData.html#distanceTo">distanceTo</a></li></ul></li><li><a href="Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Region.html#bind">bind</a></li><li data-type='method' style='display: none;'><a href="Region.html#unbind">unbind</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="State.html#getInputsNotInPhase">getInputsNotInPhase</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#PanData">PanData</a></li><li><a href="global.html#PinchData">PinchData</a></li><li><a href="global.html#RotateData">RotateData</a></li><li><a href="global.html#SwipeData">SwipeData</a></li><li><a href="global.html#SwivelData">SwivelData</a></li><li><a href="global.html#TapData">TapData</a></li><li><a href="global.html#TrackData">TrackData</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">src/Track.js</h1>
+    
 
     
 
@@ -26,8 +43,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file Contains the Track class.
+            <pre class="prettyprint source linenums"><code>/*
+ * Contains the Track class.
  */
 
 'use strict';
@@ -39,8 +56,11 @@ const { Gesture } = require('westures-core');
  * @type {Object}
  * @property {Point2D[]} active - Points currently in 'start' or 'move' phase.
  * @property {Point2D} centroid - centroid of currently active points.
- * @property {Number} centroid.x - x coordinate of centroid.
- * @property {Number} centroid.y - y coordinate of centroid.
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
  */
 
 /**
@@ -48,14 +68,14 @@ const { Gesture } = require('westures-core');
  * of the selected phases.
  *
  * @extends Gesture 
- * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see TrackData
  */
 class Track extends Gesture {
   /**
    * Constructor for the Track class.
    *
-   * @param {String[]} [phases] Phases to recognize. Entries can be any or all
-   *    of 'start', 'move', and 'end'.
+   * @param {string[]} [phases=[]] Phases to recognize. Entries can be any or
+   *    all of 'start', 'move', and 'end'.
    */
   constructor(phases = []) {
     super('track');
@@ -77,7 +97,7 @@ class Track extends Gesture {
    * Event hook for the start of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} - null if not recognized.
+   * @return {?TrackData} &lt;tt>null&lt;/tt> if not recognized.
    */
   start(state) {
     if (this.trackStart) return this.data(state);
@@ -87,7 +107,7 @@ class Track extends Gesture {
    * Event hook for the move of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} - null if not recognized.
+   * @return {?TrackData} &lt;tt>null&lt;/tt> if not recognized.
    */
   move(state) {
     if (this.trackMove) return this.data(state);
@@ -97,7 +117,7 @@ class Track extends Gesture {
    * Event hook for the end of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} - null if not recognized.
+   * @return {?TrackData} &lt;tt>null&lt;/tt> if not recognized.
    */
   end(state) {
     if (this.trackEnd) return this.data(state);
@@ -113,19 +133,27 @@ module.exports = Track;
 
 
 
+    
+    
 </div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-westures.html">westures</a></li></ul><h3>Classes</h3><ul><li><a href="Pan.html">Pan</a></li><li><a href="Pinch.html">Pinch</a></li><li><a href="Rotate.html">Rotate</a></li><li><a href="Swipe.html">Swipe</a></li><li><a href="Swivel.html">Swivel</a></li><li><a href="Tap.html">Tap</a></li><li><a href="Track.html">Track</a></li></ul><h3><a href="global.html">Global</a></h3>
-</nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Feb 01 2019 14:13:29 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Feb 02 2019 13:41:20 GMT-0600 (Central Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/jquery-3.1.1.min.js"></script>
+
+<script src="scripts/search.js"></script>
+
+
+<script src="scripts/collapse.js"></script>
+
+
+
 </body>
 </html>
