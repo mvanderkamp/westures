@@ -28,14 +28,21 @@ __NOTE:__ _This readme is still under construction!_
 
 ## Overview
 
-There are five gestures defined in this module:
+There are seven gestures defined in this module:
 
-- _Tap_: Single finger taps have been tested, multi-finger have not yet.
-- _Pinch_: Two or more fingers, reports the distance and change in distance.
-- _Pan_: Single finger sliding around the screen.
-- _Rotate_: Two fingers, reports change in angle and midpoint.
-- _Swipe_: Single finger sliding very quickly across the screen. Emits at end
-  only.
+- _Tap_: Single or multi-finger taps.
+- _Pinch_: Two or more fingers move together or apart.
+- _Pan_: One or more fingers sliding around the screen.
+- _Rotate_: Two fingers or more fingers rotating around each other.
+- _Swipe_: Single finger sliding very quickly across the screen.
+- _Swivel_: Single finger rotating around a fixed pivot point.
+- _Track_: Track the contact points of all active pointers.
+
+See the [documentation](https://mvanderkamp.github.io/westures/) for more
+information about each gesture.
+
+Note that all x,y positions are obtained from the corresponding `clientX` and
+`clientY` properties of the input event.
 
 ## Basic Usage
 
@@ -106,9 +113,13 @@ efficient as possible.
 For example, a simple way to implement a 'Tap' gesture would be as follows:
 
 ```javascript
-const { Gesture } = require('westures');
+const { Gesture } = require('westures-core');
 
 class Tap extends Gesture {
+  constructor() {
+    super('tap');
+  }
+
   end(state) {
     const {x,y} = state.getInputsInPhase('end')[0].current.point;
     return {x,y};
@@ -116,19 +127,89 @@ class Tap extends Gesture {
 }
 ```
 
+There are problems with this example, so I don't recommend using it as an actual
+Tap gesture, but it gives you the basic idea.
+
 The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.
 
+For information about what data is accessible via the State object, see the full
+documentation [here](https://mvanderkamp.github.io/westures-core/index.html).
+Note that his documentation was generated with `jsdoc`.
+
+### Storing the "progress" of a Gesture
+
+One of the key facilities made available via the `state` object that a hook
+receives is the ability to store intermediate progress on a per-gesture and
+per-input basis. This is done via the `getProgressOfGesture` method on any given
+input. 
+
+Here is a simple Pan example, where we keep track of what data was last emitted
+using this progress capability.
+
+```javascript
+const { Gesture } = require('westures-core');
+
+class Pan extends Gesture {
+  constructor() {
+    super('pan');
+  }
+
+  start(state) {
+    const progress = state.active[0].getProgressOfGesture(this.id);
+    progress.lastEmit = state.centroid;
+  }
+
+  move(state) {
+    const progress = state.active[0].getProgressOfGesture(this.id);
+    const change = state.centroid.minus(progress.lastEmit);
+    progress.lastEmit = state.centroid;
+    return {
+      change,
+      centroid: state.centroid,
+    };
+  }
+
+  end(state) {
+    const progress = state.active[0].getProgressOfGesture(this.id);
+    progress.lastEmit = state.centroid;
+  }
+}
+```
+
+In fact, this example is very close to the Pan implementation that is included
+in the `westures` module.
+
+### Data Passed to Handlers
+
+As you can see from above, it is the gesture which decides when data gets passed
+to handlers, and for the most part what that data will be. Note though that a
+few propertiess will get added to the outgoing data object before the handler is
+called. Those properties are:
+
+Name  | Type   | Value
+------|--------|-------
+event | Event  | The input event which caused the gesture to be recognized
+phase | String | 'start', 'move', or 'end'
+type  | String | The name of the gesture as specified by its designer.
+
 ## Changes From ZingTouch
+
 The fundamental idea of ZingTouch, the three-phase hook structure, remains more
 or less the same. Most of the changes have to do with streamlining and
 simplifying the code such that it is easier to use and has a wider range of
-capabilities. Specifically:
+capabilities. The most significant of these is full simultaneous multi-touch
+gesture support. Beyond that, here are some spefic changes:
 
-- Split project in two: `westures` and `westures-core`. This is so that the core
-  functionality is available without having to also include the sample gestures
-  that are included in the main `westures` module.
 - Reorganized and simplified code structure.
+  - The arbiter-interpreter-dispatcher scheme has been significantly simplified.
+    - There is no arbiter. instead the Region class has an 'arbitrate' function.
+    - There is no interpreter. Instead the Binding class has an 'evaluateHook'
+      function.
+    - There is no dispatcher. The handlers are called directly.
+  - Fewer levels of code and fewer attempts to ram multiple types of
+    functionality into a single function. I've tried to keep all functions clear
+    and simple.
 - Creation and use of a Point2D class.
 - Redesigned technique for handling inputs allows continuous use of touches.
   ZingTouch had a tendency to stop responding to touches if some gesture ended,
