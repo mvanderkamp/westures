@@ -1,4 +1,4 @@
-/**
+/*
  * Test file for the westures index.
  */
 
@@ -6,7 +6,6 @@
 
 const Westures = require('../index.js');
 
-/** @test {Westures} */
 describe('Westures', function() {
   test('should be instantiated', function() {
     expect(Westures).toBeTruthy();
