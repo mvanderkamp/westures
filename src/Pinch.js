@@ -1,5 +1,5 @@
-/**
- * @file Contains the abstract Pinch class.
+/*
+ * Contains the abstract Pinch class.
  */
 
 'use strict';
@@ -11,26 +11,29 @@ const DEFAULT_MIN_INPUTS = 2;
 /**
  * @typedef PinchData
  * @type {Object}
- * @property {Number} distance - The average distance from an active input to
+ * @property {number} distance - The average distance from an active input to
  *    the centroid.
- * @property {Number} change - The change in distance since last emit.
+ * @property {number} change - The change in distance since last emit.
  * @property {Point2D} midpoint - The centroid of the currently active points.
- * @property {Number} midpoint.x - x coordinate of centroid.
- * @property {Number} midpoint.y - y coordinate of centroid.
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
  */
 
 /**
  * A Pinch is defined as two or more inputs moving either together or apart.
  *
  * @extends Gesture 
- * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see PinchData
  */
 class Pinch extends Gesture {
   /**
    * Constructor function for the Pinch class.
    *
    * @param {Object} [options]
-   * @param {Number} [options.minInputs=2] The minimum number of inputs that
+   * @param {number} [options.minInputs=2] The minimum number of inputs that
    *    must be active for a Pinch to be recognized.
    */
   constructor(options = {}) {
@@ -40,7 +43,7 @@ class Pinch extends Gesture {
      * The minimum number of inputs that must be active for a Pinch to be
      * recognized.
      *
-     * @type {Number}
+     * @type {number}
      */
     this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
   }
@@ -75,7 +78,7 @@ class Pinch extends Gesture {
    * Event hook for the move of a Pinch.
    *
    * @param {State} state - current input state.
-   * @return {?PinchData} - null if not recognized.
+   * @return {?PinchData} <tt>null</tt> if not recognized.
    */
   move(state) {
     if (state.active.length < this.minInputs) return null;

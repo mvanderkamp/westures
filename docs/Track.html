@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
-    <title>JSDoc: Class: Track</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <title>Track - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
 
-<div id="main">
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
-    <h1 class="page-title">Class: Track</h1>
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-westures.html">westures</a></li></ul><h3>Classes</h3><ul><li><a href="Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Pan.html#move">move</a></li></ul></li><li><a href="Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Pinch.html#move">move</a></li></ul></li><li><a href="Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Rotate.html#move">move</a></li></ul></li><li><a href="Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Swipe.html#end">end</a></li></ul></li><li><a href="Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Swivel.html#move">move</a></li></ul></li><li><a href="Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Tap.html#end">end</a></li></ul></li><li><a href="Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Track.html#start">start</a></li><li data-type='method' style='display: none;'><a href="Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="Track.html#end">end</a></li></ul></li><li><a href="Binding.html">Binding</a></li><li><a href="Gesture.html">Gesture</a></li><li><a href="Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Input.html#getProgressOfGesture">getProgressOfGesture</a></li><li data-type='method' style='display: none;'><a href="Input.html#totalDistance">totalDistance</a></li></ul></li><li><a href="Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#totalDistanceTo">totalDistanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#.midpoint">midpoint</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#.sum">sum</a></li></ul></li><li><a href="PointerData.html">PointerData</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PointerData.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="PointerData.html#distanceTo">distanceTo</a></li></ul></li><li><a href="Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Region.html#bind">bind</a></li><li data-type='method' style='display: none;'><a href="Region.html#unbind">unbind</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="State.html#getInputsNotInPhase">getInputsNotInPhase</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#PanData">PanData</a></li><li><a href="global.html#PinchData">PinchData</a></li><li><a href="global.html#RotateData">RotateData</a></li><li><a href="global.html#SwipeData">SwipeData</a></li><li><a href="global.html#SwivelData">SwivelData</a></li><li><a href="global.html#TapData">TapData</a></li><li><a href="global.html#TrackData">TrackData</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Track</h1>
+    
 
     
 
@@ -28,7 +45,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Track<span class="signature">(phases<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2>
+        Track
+        </h2>
         
             <div class="class-description">A Track gesture forwards a list of active points and their centroid on each
 of the selected phases.</div>
@@ -37,25 +56,78 @@ of the selected phases.</div>
 </header>
 
 <article>
-    <div class="container-overview">
     
+        <div class="container-overview">
         
+            
 
     
     <h2>Constructor</h2>
     
 
-    
     <h4 class="name" id="Track"><span class="type-signature"></span>new Track<span class="signature">(phases<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line28">line 28</a>
+    </li></ul></dd>
     
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="global.html#TrackData">TrackData</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
 
 
 
 <div class="description">
     Constructor for the Track class.
 </div>
+
+
 
 
 
@@ -82,6 +154,8 @@ of the selected phases.</div>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -98,7 +172,7 @@ of the selected phases.</div>
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;String></span>
+<span class="param-type">Array.&lt;string></span>
 
 
             
@@ -117,9 +191,15 @@ of the selected phases.</div>
             
 
             
+                <td class="default">
+                
+                    <code>[]</code>
+                
+                </td>
+            
 
-            <td class="description last">Phases to recognize. Entries can be any or all
-   of 'start', 'move', and 'end'.</td>
+            <td class="description last">Phases to recognize. Entries can be any or
+   all of 'start', 'move', and 'end'.</td>
         </tr>
 
     
@@ -131,72 +211,19 @@ of the selected phases.</div>
 
 
 
-<dl class="details">
 
+
+
+
+
+
+
+
+
+
+        
+        </div>
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line25">line 25</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://mvanderkamp.github.io/westures-core/Gesture.html">Gesture</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
 
     
         <h3 class="subsection-title">Extends</h3>
@@ -205,7 +232,7 @@ of the selected phases.</div>
 
 
     <ul>
-        <li>Gesture</li>
+        <li><a href="Gesture.html">Gesture</a></li>
     </ul>
 
 
@@ -215,12 +242,94 @@ of the selected phases.</div>
 
     
 
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="id"><span class="type-signature"></span>id<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a>, <a href="node_modules_westures-core_src_Gesture.js.html#line32">line 32</a>
+    </li></ul></dd>
     
 
     
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Gesture.html#id">Gesture#id</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The unique identifier for each gesture. This allows for distinctions
+across instances of Gestures that are created on the fly (e.g.
+gesture-tap-1, gesture-tap-2).
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
     
 
     
@@ -231,325 +340,59 @@ of the selected phases.</div>
 
     
 
-    
-    <h4 class="name" id="end"><span class="type-signature"></span>end<span class="signature">(state)</span><span class="type-signature"> &rarr; (nullable) {<a href="global.html#TrackData">TrackData</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Event hook for the end of a Track gesture.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">State</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">current input state.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line74">line 74</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - null if not recognized.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="global.html#TrackData">TrackData</a></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="move"><span class="type-signature"></span>move<span class="signature">(state)</span><span class="type-signature"> &rarr; (nullable) {<a href="global.html#TrackData">TrackData</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Event hook for the move of a Track gesture.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">State</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">current input state.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line64">line 64</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - null if not recognized.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="global.html#TrackData">TrackData</a></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id="start"><span class="type-signature"></span>start<span class="signature">(state)</span><span class="type-signature"> &rarr; (nullable) {<a href="global.html#TrackData">TrackData</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line57">line 57</a>
+    </li></ul></dd>
     
 
     
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        Gesture#start
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
 
 
 
@@ -565,6 +408,8 @@ of the selected phases.</div>
 
 
 
+
+
     <h5>Parameters:</h5>
     
 
@@ -596,7 +441,7 @@ of the selected phases.</div>
             <td class="type">
             
                 
-<span class="param-type">State</span>
+<span class="param-type"><a href="State.html">State</a></span>
 
 
             
@@ -618,36 +463,56 @@ of the selected phases.</div>
 
 
 
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <tt>null</tt> if not recognized.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="global.html#TrackData">TrackData</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="move"><span class="type-signature"></span>move<span class="signature">(state)</span><span class="type-signature"> &rarr; (nullable) {<a href="global.html#TrackData">TrackData</a>}</span></h4>
+
+    
+
+
+
+
 <dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line54">line 54</a>
+        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line67">line 67</a>
     </li></ul></dd>
     
 
@@ -656,7 +521,103 @@ of the selected phases.</div>
     
 
     
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        Gesture#move
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 </dl>
+
+
+
+
+
+<div class="description">
+    Event hook for the move of a Track gesture.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="State.html">State</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">current input state.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -674,12 +635,12 @@ of the selected phases.</div>
 
         
 <div class="param-desc">
-    - null if not recognized.
+    <tt>null</tt> if not recognized.
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -694,7 +655,164 @@ of the selected phases.</div>
     
 
 
+        
+            
 
+    
+
+    <h4 class="name" id="end"><span class="type-signature"></span>end<span class="signature">(state)</span><span class="type-signature"> &rarr; (nullable) {<a href="global.html#TrackData">TrackData</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line77">line 77</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        Gesture#end
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Event hook for the end of a Track gesture.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="State.html">State</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">current input state.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <tt>null</tt> if not recognized.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="global.html#TrackData">TrackData</a></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
         
@@ -710,19 +828,27 @@ of the selected phases.</div>
 
 
 
+    
+    
 </div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-westures.html">westures</a></li></ul><h3>Classes</h3><ul><li><a href="Pan.html">Pan</a></li><li><a href="Pinch.html">Pinch</a></li><li><a href="Rotate.html">Rotate</a></li><li><a href="Swipe.html">Swipe</a></li><li><a href="Swivel.html">Swivel</a></li><li><a href="Tap.html">Tap</a></li><li><a href="Track.html">Track</a></li></ul><h3><a href="global.html">Global</a></h3>
-</nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Feb 01 2019 14:13:29 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Feb 02 2019 13:41:20 GMT-0600 (Central Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/jquery-3.1.1.min.js"></script>
+
+<script src="scripts/search.js"></script>
+
+
+<script src="scripts/collapse.js"></script>
+
+
+
 </body>
 </html>

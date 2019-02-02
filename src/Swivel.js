@@ -1,5 +1,5 @@
-/**
- * @file Contains the Rotate class.
+/*
+ * Contains the Rotate class.
  */
 
 'use strict';
@@ -14,13 +14,14 @@ const defaults = Object.freeze({
 /**
  * @typedef SwivelData
  * @type {Object}
- * @property {Number} delta - In radians, the change in angle since last emit.
+ * @property {number} delta - In radians, the change in angle since last emit.
  * @property {Point2D} pivot - The pivot point.
- * @property {Number} pivot.x - x coordinate of pivot.
- * @property {Number} pivot.y - y coordinate of pivot.
  * @property {Point2D} point - The current location of the input point.
- * @property {Number} point.x - x coordinate of point.
- * @property {Number} point.y - y coordinate of point.
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
  */
 
 /**
@@ -28,16 +29,16 @@ const defaults = Object.freeze({
  * determined by the input's location at its 'start' phase.
  *
  * @extends Gesture 
- * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see SwivelData
  */
 class Swivel extends Gesture {
   /**
    * Constructor for the Swivel class.
    *
    * @param {Object} [options]
-   * @param {Number} [options.deadzoneRadius=10] - The radius in pixels around
+   * @param {number} [options.deadzoneRadius=10] - The radius in pixels around
    *    the start point in which to do nothing.
-   * @param {String} [options.enableKey=undefined] - One of 'altKey', 'ctrlKey',
+   * @param {string} [options.enableKey=undefined] - One of 'altKey', 'ctrlKey',
    *    'metaKey', or 'shiftKey'. If set, gesture will only be recognized while
    *    this key is down.
    */
@@ -58,6 +59,10 @@ class Swivel extends Gesture {
 
   /**
    * Returns whether this gesture is currently enabled.
+   *
+   * @private
+   * @param {Event} event - The state's current input event.
+   * @return {boolean} true if the gesture is enabled, false otherwise.
    */
   enabled(event) {
     return !this.enableKey || event[this.enableKey];
@@ -85,7 +90,7 @@ class Swivel extends Gesture {
    * Event hook for the move of a Swivel gesture.
    *
    * @param {State} state - current input state.
-   * @return {?SwivelData} - null if the gesture is not recognized.
+   * @return {?SwivelData} <tt>null</tt> if the gesture is not recognized.
    */
   move(state) {
     if (state.active.length !== REQUIRED_INPUTS) return null;

@@ -21,21 +21,23 @@
   "scripts": {
     "bundle": "browserify 'index.js' --standalone westures --outfile 'bundle.js'",
     "test": "jest",
-    "docs": "jsdoc src index.js -c .jsdocrc.json"
+    "docs": "jsdoc -c .jsdocrc.json"
   },
   "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "repository": {
     "type": "git",
     "url": "https://github.com/mvanderkamp/westures"
   },
+  "homepage": "https://mvanderkamp.github.io/westures/",
   "license": "MIT",
   "devDependencies": {
     "browserify": "^16.2.3",
-    "eslint": "^5.12.1",
+    "docdash": "^1.0.2",
+    "eslint": "^5.13.0",
     "jest": "^23.6.0",
     "jsdoc": "^3.5.5"
   },
   "dependencies": {
-    "westures-core": "^0.4.0"
+    "westures-core": "^0.4.2"
   }
 }

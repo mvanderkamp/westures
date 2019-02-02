@@ -1,5 +1,4 @@
-/**
- * @file Tap.js
+/*
  * Tests Tap class
  */
 
@@ -7,7 +6,6 @@
 
 const Tap = require('../src/Tap.js');
 
-/** @test {Tap} */
 describe('Tap', function() {
   test('should be instantiated', function() {
     expect(Tap).toBeTruthy();

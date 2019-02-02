@@ -1,5 +1,5 @@
-/**
- * @file Contains the Swipe class.
+/*
+ * Contains the Swipe class.
  */
 
 'use strict';
@@ -12,11 +12,14 @@ const PROGRESS_STACK_SIZE = 5;
 /**
  * @typedef SwipeData
  * @type {Object}
- * @property {Number} velocity - The velocity of the swipe.
- * @property {Number} direction - In radians, the direction of the swipe.
+ * @property {number} velocity - The velocity of the swipe.
+ * @property {number} direction - In radians, the direction of the swipe.
  * @property {Point2D} point - The point at which the swipe ended.
- * @property {Number} point.x - x coordinate of point.
- * @property {Number} point.y - y coordinate of point.
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
  */
 
 /**
@@ -25,7 +28,7 @@ const PROGRESS_STACK_SIZE = 5;
  * below it's escape velocity.
  *
  * @extends Gesture 
- * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see SwipeData
  */
 class Swipe extends Gesture {
   /**
@@ -67,7 +70,7 @@ class Swipe extends Gesture {
    * Determines if the input's history validates a swipe motion.
    *
    * @param {State} state - current input state.
-   * @return {?SwipeData} - null if the gesture is not recognized.
+   * @return {?SwipeData} <tt>null</tt> if the gesture is not recognized.
    */
   end(state) {
     const ended = state.getInputsInPhase('end');

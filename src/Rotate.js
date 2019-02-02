@@ -1,5 +1,5 @@
-/**
- * @file Contains the Rotate class.
+/*
+ * Contains the Rotate class.
  */
 
 'use strict';
@@ -11,17 +11,20 @@ const REQUIRED_INPUTS = 2;
 /**
  * @typedef RotateData
  * @type {Object}
- * @property {Number} delta - In radians, the change in angle since last emit.
+ * @property {number} delta - In radians, the change in angle since last emit.
  * @property {Point2D} pivot - The centroid of the currently active points.
- * @property {Number} pivot.x - x coordinate of centroid.
- * @property {Number} pivot.y - y coordinate of centroid.
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
  */
 
 /**
  * A Rotate is defined as two inputs moving with a changing angle between them.
  *
  * @extends Gesture 
- * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see RotateData
  */
 class Rotate extends Gesture {
   /**
@@ -66,7 +69,7 @@ class Rotate extends Gesture {
    * Event hook for the move of a Rotate gesture.
    *
    * @param {State} state - current input state.
-   * @return {?RotateData} - null if this event did not occur
+   * @return {?RotateData} <tt>null</tt> if this event did not occur
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -89,11 +92,17 @@ class Rotate extends Gesture {
   }
 }
 
-/*
+const PI2 = 2 * Math.PI;
+
+/**
  * Helper function to regulate angular differences, so they don't jump from 0 to
  * 2*PI or vice versa.
+ *
+ * @private
+ * @param {number} a - Angle in radians.
+ * @param {number} b - Angle in radians.
+ * @return {number} c, given by: c = a - b such that || < PI
  */
-const PI2 = 2 * Math.PI;
 function angularMinus(a, b = 0) {
   let diff = a - b;
   if (diff < -Math.PI) {

@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
-    <title>JSDoc: Module: westures</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <title>westures - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
 
-<div id="main">
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
-    <h1 class="page-title">Module: westures</h1>
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-westures.html">westures</a></li></ul><h3>Classes</h3><ul><li><a href="Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Pan.html#move">move</a></li></ul></li><li><a href="Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Pinch.html#move">move</a></li></ul></li><li><a href="Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Rotate.html#move">move</a></li></ul></li><li><a href="Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Swipe.html#end">end</a></li></ul></li><li><a href="Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Swivel.html#move">move</a></li></ul></li><li><a href="Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Tap.html#end">end</a></li></ul></li><li><a href="Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Track.html#start">start</a></li><li data-type='method' style='display: none;'><a href="Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="Track.html#end">end</a></li></ul></li><li><a href="Binding.html">Binding</a></li><li><a href="Gesture.html">Gesture</a></li><li><a href="Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Input.html#getProgressOfGesture">getProgressOfGesture</a></li><li data-type='method' style='display: none;'><a href="Input.html#totalDistance">totalDistance</a></li></ul></li><li><a href="Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#totalDistanceTo">totalDistanceTo</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#.midpoint">midpoint</a></li><li data-type='method' style='display: none;'><a href="Point2D.html#.sum">sum</a></li></ul></li><li><a href="PointerData.html">PointerData</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PointerData.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="PointerData.html#distanceTo">distanceTo</a></li></ul></li><li><a href="Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Region.html#bind">bind</a></li><li data-type='method' style='display: none;'><a href="Region.html#unbind">unbind</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="State.html#getInputsNotInPhase">getInputsNotInPhase</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#PanData">PanData</a></li><li><a href="global.html#PinchData">PinchData</a></li><li><a href="global.html#RotateData">RotateData</a></li><li><a href="global.html#SwipeData">SwipeData</a></li><li><a href="global.html#SwivelData">SwivelData</a></li><li><a href="global.html#TapData">TapData</a></li><li><a href="global.html#TrackData">TrackData</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">westures</h1>
+    
 
     
 
@@ -35,29 +52,16 @@
 </header>
 
 <article>
-    <div class="container-overview">
     
-        
-            <div class="description">The global API interface for Westures. Contains the <a href="https://mvanderkamp.github.io/westures-core/Region.html">Region</a> class, a
-<a href="https://mvanderkamp.github.io/westures-core/Point2D.html">Point2D</a>
-class, the <a href="https://mvanderkamp.github.io/westures-core/Gesture.html">Gesture</a> interface, and the following predefined gestures: <a href="Pan.html">Pan</a>,
-<a href="Pinch.html">Pinch</a>, <a href="Rotate.html">Rotate</a>, <a href="Swipe.html">Swipe</a>, <a href="Swivel.html">Swivel</a>, <a href="Tap.html">Tap</a>,
-<a href="Track.html">Track</a>.</div>
-        
-
+        <div class="container-overview">
         
             
+                <div class="description">The API interface for Westures. Contains the <a href="Region.html">Region</a> class, a <a href="Point2D.html">Point2D</a> class, the <a href="Gesture.html">Gesture</a> interface, and the following predefined
+gestures: <a href="Pan.html">Pan</a>, <a href="Pinch.html">Pinch</a>, <a href="Rotate.html">Rotate</a>, <a href="Swipe.html">Swipe</a>, <a href="Swivel.html">Swivel</a>, <a href="Tap.html">Tap</a>, <a href="Track.html">Track</a>.</div>
+            
 
-
-
-
-
-
-
-
-
-
-
+            
+                
 
 
 
@@ -65,34 +69,34 @@ class, the <a href="https://mvanderkamp.github.io/westures-core/Gesture.html">Ge
 <dl class="details">
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line16">line 16</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line1">line 1</a>
     </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 
     
@@ -119,9 +123,51 @@ class, the <a href="https://mvanderkamp.github.io/westures-core/Gesture.html">Ge
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+            
         
+        </div>
     
-    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".Gesture"><span class="type-signature">(static) </span>Gesture<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
 
     
 
@@ -135,6 +181,608 @@ class, the <a href="https://mvanderkamp.github.io/westures-core/Gesture.html">Ge
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Gesture.html">Gesture</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Point2D"><span class="type-signature">(static) </span>Point2D<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Point2D.html">Point2D</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Region"><span class="type-signature">(static) </span>Region<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Region.html">Region</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Pan"><span class="type-signature">(static) </span>Pan<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line25">line 25</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Pan.html">Pan</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Pinch"><span class="type-signature">(static) </span>Pinch<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Pinch.html">Pinch</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Rotate"><span class="type-signature">(static) </span>Rotate<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Rotate.html">Rotate</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Swipe"><span class="type-signature">(static) </span>Swipe<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Swipe.html">Swipe</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Swivel"><span class="type-signature">(static) </span>Swivel<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Swivel.html">Swivel</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Tap"><span class="type-signature">(static) </span>Tap<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Tap.html">Tap</a>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Track"><span class="type-signature">(static) </span>Track<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line31">line 31</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <a href="Track.html">Track</a>
+</div>
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -149,19 +797,27 @@ class, the <a href="https://mvanderkamp.github.io/westures-core/Gesture.html">Ge
 
 
 
+    
+    
 </div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-westures.html">westures</a></li></ul><h3>Classes</h3><ul><li><a href="Pan.html">Pan</a></li><li><a href="Pinch.html">Pinch</a></li><li><a href="Rotate.html">Rotate</a></li><li><a href="Swipe.html">Swipe</a></li><li><a href="Swivel.html">Swivel</a></li><li><a href="Tap.html">Tap</a></li><li><a href="Track.html">Track</a></li></ul><h3><a href="global.html">Global</a></h3>
-</nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Feb 01 2019 14:13:29 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Feb 02 2019 13:41:20 GMT-0600 (Central Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/jquery-3.1.1.min.js"></script>
+
+<script src="scripts/search.js"></script>
+
+
+<script src="scripts/collapse.js"></script>
+
+
+
 </body>
 </html>
