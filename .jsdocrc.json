@@ -11,8 +11,7 @@
       "readme.md", 
       "src", 
       "index.js", 
-      "node_modules/westures-core/src",
-      "node_modules/westures-core/index.js"
+      "node_modules/westures-core/src"
     ],
     "includePattern": ".js$"
   },
