@@ -1,4 +1,4 @@
-/**
+/*
  * Contains the Tap class.
  */
 
@@ -16,15 +16,19 @@ const defaults = Object.freeze({
 /**
  * @typedef TapData
  * @type {Object}
- * @property {Number} x - x coordinate of tap point.
- * @property {Number} y - y coordinate of tap point.
+ * @property {number} x - x coordinate of tap point.
+ * @property {number} y - y coordinate of tap point.
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
  */
 
 /**
  * A Tap is defined as a touchstart to touchend event in quick succession.
  *
  * @extends Gesture 
- * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  * @see TapData
  */
 class Tap extends Gesture {
@@ -32,12 +36,12 @@ class Tap extends Gesture {
    * Constructor function for the Tap class.
    *
    * @param {Object} [options] - The options object.
-   * @param {Number} [options.minDelay=0] - The minimum delay between a
+   * @param {number} [options.minDelay=0] - The minimum delay between a
    *    touchstart and touchend can be configured in milliseconds.
-   * @param {Number} [options.maxDelay=300] - The maximum delay between a
+   * @param {number} [options.maxDelay=300] - The maximum delay between a
    *    touchstart and touchend can be configured in milliseconds.
-   * @param {Number} [options.numInputs=1] - Number of inputs for Tap gesture.
-   * @param {Number} [options.tolerance=10] - The tolerance in pixels a user can
+   * @param {number} [options.numInputs=1] - Number of inputs for Tap gesture.
+   * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
    *    move.
    */
   constructor(options = {}) {
@@ -49,7 +53,7 @@ class Tap extends Gesture {
      * number of inputs are on the screen, and ends when ALL inputs are off the
      * screen.  
      *
-     * @type {Number}
+     * @type {number}
      */
     this.minDelay = options.minDelay || defaults.MIN_DELAY_MS;
 
@@ -59,7 +63,7 @@ class Tap extends Gesture {
      * number of inputs are on the screen, and ends when ALL inputs are off the
      * screen.
      *
-     * @type {Number}
+     * @type {number}
      */
     this.maxDelay = options.maxDelay || defaults.MAX_DELAY_MS;
 
@@ -67,7 +71,7 @@ class Tap extends Gesture {
      * The number of inputs to trigger a Tap can be variable, and the maximum
      * number being a factor of the browser.
      *
-     * @type {Number}
+     * @type {number}
      */
     this.numInputs = options.numInputs || defaults.NUM_INPUTS;
 
@@ -90,8 +94,8 @@ class Tap extends Gesture {
    * be fired if the delay and tolerance constraints are met. 
    *
    * @param {State} state - current input state.
-   * @return {?TapData} - null if the gesture is not to be emitted, Object
-   *    with information otherwise. 
+   * @return {?TapData} <tt>null</tt> if the gesture is not to be emitted,
+   *    Object with information otherwise. 
    */
   end(state) {
     const now = Date.now();

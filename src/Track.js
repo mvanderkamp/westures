@@ -1,4 +1,4 @@
-/**
+/*
  * Contains the Track class.
  */
 
@@ -11,8 +11,11 @@ const { Gesture } = require('westures-core');
  * @type {Object}
  * @property {Point2D[]} active - Points currently in 'start' or 'move' phase.
  * @property {Point2D} centroid - centroid of currently active points.
- * @property {Number} centroid.x - x coordinate of centroid.
- * @property {Number} centroid.y - y coordinate of centroid.
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
  */
 
 /**
@@ -20,14 +23,13 @@ const { Gesture } = require('westures-core');
  * of the selected phases.
  *
  * @extends Gesture 
- * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
  * @see TrackData
  */
 class Track extends Gesture {
   /**
    * Constructor for the Track class.
    *
-   * @param {String[]} [phases=[]] Phases to recognize. Entries can be any or
+   * @param {string[]} [phases=[]] Phases to recognize. Entries can be any or
    *    all of 'start', 'move', and 'end'.
    */
   constructor(phases = []) {
@@ -50,7 +52,7 @@ class Track extends Gesture {
    * Event hook for the start of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} - null if not recognized.
+   * @return {?TrackData} <tt>null</tt> if not recognized.
    */
   start(state) {
     if (this.trackStart) return this.data(state);
@@ -60,7 +62,7 @@ class Track extends Gesture {
    * Event hook for the move of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} - null if not recognized.
+   * @return {?TrackData} <tt>null</tt> if not recognized.
    */
   move(state) {
     if (this.trackMove) return this.data(state);
@@ -70,7 +72,7 @@ class Track extends Gesture {
    * Event hook for the end of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} - null if not recognized.
+   * @return {?TrackData} <tt>null</tt> if not recognized.
    */
   end(state) {
     if (this.trackEnd) return this.data(state);
