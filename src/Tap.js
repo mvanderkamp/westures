@@ -1,5 +1,5 @@
 /**
- * @file Contains the Tap class.
+ * Contains the Tap class.
  */
 
 'use strict';
@@ -25,6 +25,7 @@ const defaults = Object.freeze({
  *
  * @extends Gesture 
  * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see TapData
  */
 class Tap extends Gesture {
   /**
@@ -83,7 +84,6 @@ class Tap extends Gesture {
      */
     this.ended = [];
   }
-  /* constructor*/
 
   /**
    * Event hook for the end of a gesture.  Determines if this the tap event can
@@ -111,7 +111,6 @@ class Tap extends Gesture {
     const { x, y } = Point2D.midpoint( this.ended.map( i => i.current.point ) );
     return { x, y };
   }
-  /* end*/
 }
 
 module.exports = Tap;

@@ -1,5 +1,5 @@
 /**
- * @file Contains the Pan class.
+ * Contains the Pan class.
  */
 
 'use strict';
@@ -10,7 +10,9 @@ const DEFAULT_MIN_THRESHOLD = 1;
 const REQUIRED_INPUTS = 1;
 
 /**
- * @typedef PanData
+ * Data returned when a Pan is recognized.
+ *
+ * @typedef Pan~PanData
  * @type {Object}
  * @property {Point2D} change - The change vector from the last emit.
  * @property {Number} change.x - movement along x axis.
@@ -25,6 +27,7 @@ const REQUIRED_INPUTS = 1;
  *
  * @extends Gesture 
  * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see PanData
  */
 class Pan extends Gesture {
   /**

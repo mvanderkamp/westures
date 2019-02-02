@@ -1,5 +1,5 @@
 /**
- * @file Contains the abstract Pinch class.
+ * Contains the abstract Pinch class.
  */
 
 'use strict';
@@ -24,6 +24,7 @@ const DEFAULT_MIN_INPUTS = 2;
  *
  * @extends Gesture 
  * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see PinchData
  */
 class Pinch extends Gesture {
   /**

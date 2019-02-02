@@ -1,5 +1,5 @@
 /**
- * @file Contains the Swipe class.
+ * Contains the Swipe class.
  */
 
 'use strict';
@@ -26,6 +26,7 @@ const PROGRESS_STACK_SIZE = 5;
  *
  * @extends Gesture 
  * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see SwipeData
  */
 class Swipe extends Gesture {
   /**

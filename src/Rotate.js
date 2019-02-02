@@ -1,5 +1,5 @@
 /**
- * @file Contains the Rotate class.
+ * Contains the Rotate class.
  */
 
 'use strict';
@@ -22,6 +22,7 @@ const REQUIRED_INPUTS = 2;
  *
  * @extends Gesture 
  * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see RotateData
  */
 class Rotate extends Gesture {
   /**
@@ -89,11 +90,17 @@ class Rotate extends Gesture {
   }
 }
 
-/*
+const PI2 = 2 * Math.PI;
+
+/**
  * Helper function to regulate angular differences, so they don't jump from 0 to
  * 2*PI or vice versa.
+ *
+ * @private
+ * @param {Number} a - Angle in radians.
+ * @param {Number} b - Angle in radians.
+ * @return {Number} c, given by: c = a - b such that || < PI
  */
-const PI2 = 2 * Math.PI;
 function angularMinus(a, b = 0) {
   let diff = a - b;
   if (diff < -Math.PI) {

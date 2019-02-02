@@ -1,5 +1,5 @@
 /**
- * @file Contains the Rotate class.
+ * Contains the Rotate class.
  */
 
 'use strict';
@@ -29,6 +29,7 @@ const defaults = Object.freeze({
  *
  * @extends Gesture 
  * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see SwivelData
  */
 class Swivel extends Gesture {
   /**
@@ -58,6 +59,10 @@ class Swivel extends Gesture {
 
   /**
    * Returns whether this gesture is currently enabled.
+   *
+   * @private
+   * @param {Event} event - The state's current input event.
+   * @return {Boolean} true if the gesture is enabled, false otherwise.
    */
   enabled(event) {
     return !this.enableKey || event[this.enableKey];

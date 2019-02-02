@@ -1,5 +1,5 @@
 /**
- * @file Contains the Track class.
+ * Contains the Track class.
  */
 
 'use strict';
@@ -21,13 +21,14 @@ const { Gesture } = require('westures-core');
  *
  * @extends Gesture 
  * @see {@link https://mvanderkamp.github.io/westures-core/Gesture.html Gesture}
+ * @see TrackData
  */
 class Track extends Gesture {
   /**
    * Constructor for the Track class.
    *
-   * @param {String[]} [phases] Phases to recognize. Entries can be any or all
-   *    of 'start', 'move', and 'end'.
+   * @param {String[]} [phases=[]] Phases to recognize. Entries can be any or
+   *    all of 'start', 'move', and 'end'.
    */
   constructor(phases = []) {
     super('track');
