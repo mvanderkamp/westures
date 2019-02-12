@@ -23,8 +23,9 @@
   },
   "scripts": {
     "bundle": "browserify 'index.js' --standalone westures --outfile 'bundle.js'",
-    "test": "jest",
-    "docs": "jsdoc -c .jsdocrc.json"
+    "docs": "jsdoc -c .jsdocrc.json",
+    "lint": "eslint src",
+    "test": "jest"
   },
   "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "repository": {
