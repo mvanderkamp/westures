@@ -12,6 +12,9 @@
     "swivel",
     "track",
     "simultaneous",
+    "touch",
+    "mouse",
+    "pointer",
     "multitouch"
   ],
   "main": "index.js",
