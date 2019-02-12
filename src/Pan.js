@@ -13,8 +13,9 @@ const REQUIRED_INPUTS = 1;
  *
  * @typedef PanData
  * @type {Object}
- * @property {Point2D} change - The change vector from the last emit.
- * @property {Point2D} point - The centroid of the currently active points.
+ * @property {westures.Point2D} change - The change vector from the last emit.
+ * @property {westures.Point2D} point - The centroid of the currently active
+ *    points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.

@@ -9,10 +9,13 @@ const { Gesture } = require('westures-core');
 const REQUIRED_INPUTS = 2;
 
 /**
+ * Data returned when a Rotate is recognized.
+ *
  * @typedef RotateData
  * @type {Object}
  * @property {number} delta - In radians, the change in angle since last emit.
- * @property {Point2D} pivot - The centroid of the currently active points.
+ * @property {westures.Point2D} pivot - The centroid of the currently active
+ *    points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.

@@ -9,12 +9,15 @@ const { Gesture } = require('westures-core');
 const DEFAULT_MIN_INPUTS = 2;
 
 /**
+ * Data returned when a Pinch is recognized.
+ *
  * @typedef PinchData
  * @type {Object}
  * @property {number} distance - The average distance from an active input to
  *    the centroid.
  * @property {number} change - The change in distance since last emit.
- * @property {Point2D} midpoint - The centroid of the currently active points.
+ * @property {westures.Point2D} midpoint - The centroid of the currently active
+ *    points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.

@@ -12,11 +12,13 @@ const defaults = Object.freeze({
 });
 
 /**
+ * Data returned when a Swivel is recognized.
+ *
  * @typedef SwivelData
  * @type {Object}
  * @property {number} delta - In radians, the change in angle since last emit.
- * @property {Point2D} pivot - The pivot point.
- * @property {Point2D} point - The current location of the input point.
+ * @property {westures.Point2D} pivot - The pivot point.
+ * @property {westures.Point2D} point - The current location of the input point.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.

@@ -14,6 +14,8 @@ const defaults = Object.freeze({
 });
 
 /**
+ * Data returned when a Tap is recognized.
+ *
  * @typedef TapData
  * @type {Object}
  * @property {number} x - x coordinate of tap point.
