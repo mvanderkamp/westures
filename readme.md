@@ -113,7 +113,7 @@ efficient as possible.
 For example, a simple way to implement a 'Tap' gesture would be as follows:
 
 ```javascript
-const { Gesture } = require('westures-core');
+const { Gesture } = require('westures');
 
 class Tap extends Gesture {
   constructor() {
@@ -148,7 +148,7 @@ Here is a simple Pan example, where we keep track of what data was last emitted
 using this progress capability.
 
 ```javascript
-const { Gesture } = require('westures-core');
+const { Gesture } = require('westures');
 
 class Pan extends Gesture {
   constructor() {
