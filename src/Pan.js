@@ -25,9 +25,9 @@ const REQUIRED_INPUTS = 1;
  */
 
 /**
- * A Pan is defined as a normal movement in any direction. 
+ * A Pan is defined as a normal movement in any direction.
  *
- * @extends westures.Gesture 
+ * @extends westures.Gesture
  * @see ReturnTypes.PanData
  * @memberof westures
  */
@@ -71,8 +71,9 @@ class Pan extends Gesture {
    * @return {undefined}
    */
   start(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.initialize(state);
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.initialize(state);
+    }
   }
 
   /**
@@ -103,11 +104,12 @@ class Pan extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined} 
+   * @return {undefined}
    */
   end(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.initialize(state);
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.initialize(state);
+    }
   }
 }
 

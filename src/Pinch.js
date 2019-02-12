@@ -27,7 +27,7 @@ const DEFAULT_MIN_INPUTS = 2;
 /**
  * A Pinch is defined as two or more inputs moving either together or apart.
  *
- * @extends westures.Gesture 
+ * @extends westures.Gesture
  * @see ReturnTypes.PinchData
  * @memberof westures
  */
@@ -74,8 +74,9 @@ class Pinch extends Gesture {
    * @return {undefined}
    */
   start(state) {
-    if (state.active.length < this.minInputs) return null;
-    this.initializeProgress(state);
+    if (state.active.length >= this.minInputs) {
+      this.initializeProgress(state);
+    }
   }
 
   /**
@@ -107,8 +108,9 @@ class Pinch extends Gesture {
    * @return {undefined}
    */
   end(state) {
-    if (state.active.length < this.minInputs) return null;
-    this.initializeProgress(state);
+    if (state.active.length >= this.minInputs) {
+      this.initializeProgress(state);
+    }
   }
 }
 

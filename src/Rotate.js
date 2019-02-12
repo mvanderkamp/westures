@@ -22,10 +22,31 @@ const REQUIRED_INPUTS = 2;
  * @memberof ReturnTypes
  */
 
+const PI2 = 2 * Math.PI;
+
+/**
+ * Helper function to regulate angular differences, so they don't jump from 0 to
+ * 2*PI or vice versa.
+ *
+ * @private
+ * @param {number} a - Angle in radians.
+ * @param {number} b - Angle in radians.
+ * @return {number} c, given by: c = a - b such that || < PI
+ */
+function angularMinus(a, b = 0) {
+  let diff = a - b;
+  if (diff < -Math.PI) {
+    diff += PI2;
+  } else if (diff > Math.PI) {
+    diff -= PI2;
+  }
+  return diff;
+}
+
 /**
  * A Rotate is defined as two inputs moving with a changing angle between them.
  *
- * @extends westures.Gesture 
+ * @extends westures.Gesture
  * @see ReturnTypes.RotateData
  * @memberof westures
  */
@@ -45,7 +66,7 @@ class Rotate extends Gesture {
    */
   getAngle(state) {
     let angle = 0;
-    state.active.forEach( i => {
+    state.active.forEach(i => {
       const progress = i.getProgressOfGesture(this.id);
       const currentAngle = state.centroid.angleTo(i.current.point);
       angle += angularMinus(currentAngle, progress.previousAngle);
@@ -62,8 +83,9 @@ class Rotate extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.getAngle(state);
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.getAngle(state);
+    }
   }
 
   /**
@@ -87,30 +109,10 @@ class Rotate extends Gesture {
    * @param {State} state - current input state.
    */
   end(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.getAngle(state);
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.getAngle(state);
+    }
   }
-}
-
-const PI2 = 2 * Math.PI;
-
-/**
- * Helper function to regulate angular differences, so they don't jump from 0 to
- * 2*PI or vice versa.
- *
- * @private
- * @param {number} a - Angle in radians.
- * @param {number} b - Angle in radians.
- * @return {number} c, given by: c = a - b such that || < PI
- */
-function angularMinus(a, b = 0) {
-  let diff = a - b;
-  if (diff < -Math.PI) {
-    diff += PI2;
-  } else if (diff > Math.PI) {
-    diff -= PI2;
-  }
-  return diff;
 }
 
 module.exports = Rotate;

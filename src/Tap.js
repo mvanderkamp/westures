@@ -7,9 +7,9 @@
 const { Gesture, Point2D } = require('westures-core');
 
 const defaults = Object.freeze({
-  MIN_DELAY_MS: 0,
-  MAX_DELAY_MS: 300,
-  NUM_INPUTS: 1,
+  MIN_DELAY_MS:      0,
+  MAX_DELAY_MS:      300,
+  NUM_INPUTS:        1,
   MOVE_PX_TOLERANCE: 10,
 });
 
@@ -30,7 +30,7 @@ const defaults = Object.freeze({
 /**
  * A Tap is defined as a touchstart to touchend event in quick succession.
  *
- * @extends westures.Gesture 
+ * @extends westures.Gesture
  * @see ReturnTypes.TapData
  * @memberof westures
  */
@@ -54,7 +54,7 @@ class Tap extends Gesture {
      * The minimum amount between a touchstart and a touchend can be configured
      * in milliseconds. The minimum delay starts to count down when the expected
      * number of inputs are on the screen, and ends when ALL inputs are off the
-     * screen.  
+     * screen.
      *
      * @private
      * @type {number}
@@ -101,28 +101,28 @@ class Tap extends Gesture {
 
   /**
    * Event hook for the end of a gesture.  Determines if this the tap event can
-   * be fired if the delay and tolerance constraints are met. 
+   * be fired if the delay and tolerance constraints are met.
    *
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TapData} <tt>null</tt> if the gesture is not to be
-   * emitted, Object with information otherwise. 
+   * emitted, Object with information otherwise.
    */
   end(state) {
     const now = Date.now();
 
     this.ended = this.ended.concat(state.getInputsInPhase('end'))
-      .filter( i => {
+      .filter(i => {
         const tdiff = now - i.startTime;
         return tdiff <= this.maxDelay && tdiff >= this.minDelay;
       });
 
     if (this.ended.length === 0 ||
-        this.ended.length !== this.numInputs || 
-        !this.ended.every( i => i.totalDistance() <= this.tolerance)) {
+        this.ended.length !== this.numInputs ||
+        !this.ended.every(i => i.totalDistance() <= this.tolerance)) {
       return null;
     }
 
-    const { x, y } = Point2D.midpoint( this.ended.map( i => i.current.point ) );
+    const { x, y } = Point2D.midpoint(this.ended.map(i => i.current.point));
     return { x, y };
   }
 }

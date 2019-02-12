@@ -25,11 +25,32 @@ const PROGRESS_STACK_SIZE = 5;
  */
 
 /**
+ * Local helper function for calculating the velocity between two timestamped
+ * points.
+ *
+ * @private
+ *
+ * @param {object} start
+ * @param {westures.Point2D} start.point
+ * @param {number} start.time
+ * @param {object} end
+ * @param {westures.Point2D} end.point
+ * @param {number} end.time
+ *
+ * @return {number} velocity from start to end point.
+ */
+function calc_velocity(start, end) {
+  const distance = end.point.distanceTo(start.point);
+  const time = end.time - start.time;
+  return distance / time;
+}
+
+/**
  * A swipe is defined as input(s) moving in the same direction in an relatively
  * increasing velocity and leaving the screen at some point before it drops
  * below it's escape velocity.
  *
- * @extends westures.Gesture 
+ * @extends westures.Gesture
  * @see ReturnTypes.SwipeData
  * @memberof westures
  */
@@ -51,12 +72,12 @@ class Swipe extends Gesture {
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
 
-    state.active.forEach( input => {
+    state.active.forEach(input => {
       const progress = input.getProgressOfGesture(this.id);
       if (!progress.moves) progress.moves = [];
 
       progress.moves.push({
-        time: Date.now(),
+        time:  Date.now(),
         point: input.current.point,
       });
 
@@ -96,7 +117,9 @@ class Swipe extends Gesture {
     }
     direction /= vlim;
 
-    const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc);
+    const velocity = velos.reduce((acc, cur) => {
+      return cur > acc ? cur : acc;
+    });
 
     return {
       point,
@@ -104,27 +127,6 @@ class Swipe extends Gesture {
       direction,
     };
   }
-}
-
-/**
- * Local helper function for calculating the velocity between two timestamped
- * points.
- *
- * @private
- *
- * @param {object} start
- * @param {westures.Point2D} start.point
- * @param {number} start.time
- * @param {object} end
- * @param {westures.Point2D} end.point
- * @param {number} end.time
- *
- * @return {number} velocity from start to end point.
- */
-function calc_velocity(start, end) {
-  const distance = end.point.distanceTo(start.point);
-  const time = end.time - start.time;
-  return distance / time;
 }
 
 module.exports = Swipe;

@@ -24,7 +24,7 @@ const { Gesture } = require('westures-core');
  * A Track gesture forwards a list of active points and their centroid on each
  * of the selected phases.
  *
- * @extends westures.Gesture 
+ * @extends westures.Gesture
  * @see TrackData
  * @memberof westures
  */
@@ -48,7 +48,7 @@ class Track extends Gesture {
    * @return {TrackData}
    */
   data({ activePoints, centroid }) {
-    return { active: activePoints, centroid }; 
+    return { active: activePoints, centroid };
   }
 
   /**
@@ -58,7 +58,7 @@ class Track extends Gesture {
    * @return {?TrackData} <tt>null</tt> if not recognized.
    */
   start(state) {
-    if (this.trackStart) return this.data(state);
+    return this.trackStart ? this.data(state) : null;
   }
 
   /**
@@ -68,7 +68,7 @@ class Track extends Gesture {
    * @return {?TrackData} <tt>null</tt> if not recognized.
    */
   move(state) {
-    if (this.trackMove) return this.data(state);
+    return this.trackMove ? this.data(state) : null;
   }
 
   /**
@@ -78,7 +78,7 @@ class Track extends Gesture {
    * @return {?TrackData} <tt>null</tt> if not recognized.
    */
   end(state) {
-    if (this.trackEnd) return this.data(state);
+    return this.trackEnd ? this.data(state) : null;
   }
 }
 

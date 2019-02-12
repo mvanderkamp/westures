@@ -30,7 +30,7 @@ const defaults = Object.freeze({
  * A Swivel is a single input rotating around a fixed point. The fixed point is
  * determined by the input's location at its 'start' phase.
  *
- * @extends westures.Gesture 
+ * @extends westures.Gesture
  * @see ReturnTypes.SwivelData
  * @memberof westures
  */
@@ -93,6 +93,8 @@ class Swivel extends Gesture {
     const progress = started[0].getProgressOfGesture(this.id);
     progress.pivot = started[0].current.point;
     progress.previousAngle = 0;
+
+    return null;
   }
 
   /**
@@ -124,13 +126,13 @@ class Swivel extends Gesture {
 
       if (pivot.distanceTo(point) <= this.deadzoneRadius) {
         return null;
-      } else {
-        return { delta, pivot, point };
       }
-    } else {
-      // CTRL key was released, therefore pivot point is now invalid.
-      delete progress.pivot;
+      return { delta, pivot, point };
     }
+
+    // CTRL key was released, therefore pivot point is now invalid.
+    delete progress.pivot;
+    return null;
   }
 }
 
