@@ -7,23 +7,29 @@
 const { Gesture } = require('westures-core');
 
 /**
+ * Data returned when a Track is recognized.
+ *
  * @typedef TrackData
  * @type {Object}
- * @property {Point2D[]} active - Points currently in 'start' or 'move' phase.
- * @property {Point2D} centroid - centroid of currently active points.
+ * @property {westures.Point2D[]} active - Points currently in 'start' or 'move'
+ *    phase.
+ * @property {westures.Point2D} centroid - centroid of currently active points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Track gesture forwards a list of active points and their centroid on each
  * of the selected phases.
  *
- * @extends Gesture 
- * @see TrackData
+ * @extends westures.Gesture
+ * @see ReturnTypes.TrackData
+ * @memberof westures
  */
 class Track extends Gesture {
   /**
@@ -42,40 +48,40 @@ class Track extends Gesture {
   /**
    * @private
    * @param {State} state - current input state.
-   * @return {TrackData}
+   * @return {ReturnTypes.TrackData}
    */
   data({ activePoints, centroid }) {
-    return { active: activePoints, centroid }; 
+    return { active: activePoints, centroid };
   }
 
   /**
    * Event hook for the start of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} <tt>null</tt> if not recognized.
+   * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
   start(state) {
-    if (this.trackStart) return this.data(state);
+    return this.trackStart ? this.data(state) : null;
   }
 
   /**
    * Event hook for the move of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} <tt>null</tt> if not recognized.
+   * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
   move(state) {
-    if (this.trackMove) return this.data(state);
+    return this.trackMove ? this.data(state) : null;
   }
 
   /**
    * Event hook for the end of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} <tt>null</tt> if not recognized.
+   * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
   end(state) {
-    if (this.trackEnd) return this.data(state);
+    return this.trackEnd ? this.data(state) : null;
   }
 }
 

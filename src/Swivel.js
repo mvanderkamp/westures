@@ -12,24 +12,29 @@ const defaults = Object.freeze({
 });
 
 /**
+ * Data returned when a Swivel is recognized.
+ *
  * @typedef SwivelData
  * @type {Object}
  * @property {number} delta - In radians, the change in angle since last emit.
- * @property {Point2D} pivot - The pivot point.
- * @property {Point2D} point - The current location of the input point.
+ * @property {westures.Point2D} pivot - The pivot point.
+ * @property {westures.Point2D} point - The current location of the input point.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Swivel is a single input rotating around a fixed point. The fixed point is
  * determined by the input's location at its 'start' phase.
  *
- * @extends Gesture 
- * @see SwivelData
+ * @extends westures.Gesture
+ * @see ReturnTypes.SwivelData
+ * @memberof westures
  */
 class Swivel extends Gesture {
   /**
@@ -47,12 +52,18 @@ class Swivel extends Gesture {
 
     /**
      * The radius around the start point in which to do nothing.
+     *
+     * @private
+     * @type {number}
      */
     this.deadzoneRadius = options.deadzoneRadius || defaults.deadzoneRadius;
 
     /**
      * If this is set, gesture will only respond to events where this property
      * is truthy. Should be one of 'ctrlKey', 'altKey', or 'shiftKey'.
+     *
+     * @private
+     * @type {string}
      */
     this.enableKey = options.enableKey;
   }
@@ -84,13 +95,16 @@ class Swivel extends Gesture {
     const progress = started[0].getProgressOfGesture(this.id);
     progress.pivot = started[0].current.point;
     progress.previousAngle = 0;
+
+    return null;
   }
 
   /**
    * Event hook for the move of a Swivel gesture.
    *
    * @param {State} state - current input state.
-   * @return {?SwivelData} <tt>null</tt> if the gesture is not recognized.
+   * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
+   * recognized.
    */
   move(state) {
     if (state.active.length !== REQUIRED_INPUTS) return null;
@@ -114,13 +128,13 @@ class Swivel extends Gesture {
 
       if (pivot.distanceTo(point) <= this.deadzoneRadius) {
         return null;
-      } else {
-        return { delta, pivot, point };
       }
-    } else {
-      // CTRL key was released, therefore pivot point is now invalid.
-      delete progress.pivot;
+      return { delta, pivot, point };
     }
+
+    // CTRL key was released, therefore pivot point is now invalid.
+    delete progress.pivot;
+    return null;
   }
 }
 

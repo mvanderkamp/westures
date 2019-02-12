@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: src/Swipe.js | westures</title>
+    <title>Class: Region | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -49,147 +47,143 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
- * Contains the Swipe class.
- */
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="westures.html">westures</a>.</span>Region<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-'use strict';
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-const { Gesture } = require('westures-core');
+<dt>
+    
+        <h4 class="name" id="Region">
+            
+                new <span class="type-signature"></span>Region<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="index.js.html">index.js</a></code>,
+                <code><a href="index.js.html#line53">line 53</a></code>
+            </div>
+            
+        </h4>
 
-const REQUIRED_INPUTS = 1;
-const PROGRESS_STACK_SIZE = 5;
+        
+    
+</dt>
+<dd>
 
-/**
- * Data returned when a Swipe is recognized.
- *
- * @typedef SwipeData
- * @type {Object}
- * @property {number} velocity - The velocity of the swipe.
- * @property {number} direction - In radians, the direction of the swipe.
- * @property {westures.Point2D} point - The point at which the swipe ended.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
- *
- * @memberof ReturnTypes
- */
+    
+    <div class="description">
+        The Region class, which is the entry point for the Westures system, through
+which you bind handlers with gestures and elements.
+    </div>
+    
 
-/**
- * Local helper function for calculating the velocity between two timestamped
- * points.
- *
- * @private
- *
- * @param {object} start
- * @param {westures.Point2D} start.point
- * @param {number} start.time
- * @param {object} end
- * @param {westures.Point2D} end.point
- * @param {number} end.time
- *
- * @return {number} velocity from start to end point.
- */
-function calc_velocity(start, end) {
-  const distance = end.point.distanceTo(start.point);
-  const time = end.time - start.time;
-  return distance / time;
-}
+    
 
-/**
- * A swipe is defined as input(s) moving in the same direction in an relatively
- * increasing velocity and leaving the screen at some point before it drops
- * below it's escape velocity.
- *
- * @extends westures.Gesture
- * @see ReturnTypes.SwipeData
- * @memberof westures
- */
-class Swipe extends Gesture {
-  /**
-   * Constructor function for the Swipe class.
-   */
-  constructor() {
-    super('swipe');
-  }
+    
 
-  /**
-   * Event hook for the move of a gesture. Captures an input's x/y coordinates
-   * and the time of it's event on a stack.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
-  move(state) {
-    if (state.active.length &lt; REQUIRED_INPUTS) return null;
+    
 
-    state.active.forEach(input => {
-      const progress = input.getProgressOfGesture(this.id);
-      if (!progress.moves) progress.moves = [];
+    
 
-      progress.moves.push({
-        time:  Date.now(),
-        point: input.current.point,
-      });
+    
 
-      while (progress.moves.length > PROGRESS_STACK_SIZE) {
-        progress.moves.shift();
-      }
-    });
+    
 
-    return null;
-  }
+    
 
-  /**
-   * Determines if the input's history validates a swipe motion.
-   *
-   * @param {State} state - current input state.
-   * @return {?ReturnTypes.SwipeData} &lt;tt>null&lt;/tt> if the gesture is not
-   * recognized.
-   */
-  end(state) {
-    const ended = state.getInputsInPhase('end');
+    
 
-    if (ended.length !== REQUIRED_INPUTS) return null;
+    
 
-    const progress = ended[0].getProgressOfGesture(this.id);
-    if (!progress.moves || progress.moves.length &lt; PROGRESS_STACK_SIZE) {
-      return null;
-    }
-    const moves = progress.moves;
+    
 
-    const vlim = PROGRESS_STACK_SIZE - 1;
-    const point = moves[vlim].point;
-    const velos = [];
-    let direction = 0;
-    for (let i = 0; i &lt; vlim; ++i) {
-      velos[i] = calc_velocity(moves[i], moves[i + 1]);
-      direction += moves[i].point.angleTo(point);
-    }
-    direction /= vlim;
+    
 
-    const velocity = velos.reduce((acc, cur) => {
-      return cur > acc ? cur : acc;
-    });
 
-    return {
-      point,
-      velocity,
-      direction,
-    };
-  }
-}
+<dl class="details">
 
-module.exports = Swipe;
+    
 
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://mvanderkamp.github.io/westures-core/westures-core.Region.html"> westures-core.Region</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -206,7 +200,7 @@ module.exports = Swipe;
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = '_sub'.replace(/"/g, '_');
+        var id = 'westures.Region_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

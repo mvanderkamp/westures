@@ -6,7 +6,6 @@
 
 const { Gesture } = require('westures-core');
 
-const DEFAULT_MIN_THRESHOLD = 1;
 const REQUIRED_INPUTS = 1;
 
 /**
@@ -14,20 +13,24 @@ const REQUIRED_INPUTS = 1;
  *
  * @typedef PanData
  * @type {Object}
- * @property {Point2D} change - The change vector from the last emit.
- * @property {Point2D} point - The centroid of the currently active points.
+ * @property {westures.Point2D} change - The change vector from the last emit.
+ * @property {westures.Point2D} point - The centroid of the currently active
+ *    points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
- * A Pan is defined as a normal movement in any direction. 
+ * A Pan is defined as a normal movement in any direction.
  *
- * @extends Gesture 
- * @see PanData
+ * @extends westures.Gesture
+ * @see ReturnTypes.PanData
+ * @memberof westures
  */
 class Pan extends Gesture {
   /**
@@ -42,6 +45,7 @@ class Pan extends Gesture {
     /**
      * Don't emit any data if this key is pressed.
      *
+     * @private
      * @type {string}
      */
     this.muteKey = options.muteKey;
@@ -68,16 +72,17 @@ class Pan extends Gesture {
    * @return {undefined}
    */
   start(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.initialize(state);
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.initialize(state);
+    }
   }
 
   /**
    * Event hook for the move of a Pan.
    *
    * @param {State} state - current input state.
-   * @return {?PanData} <tt>null</tt> if the gesture was muted or otherwise not
-   *    recognized.
+   * @return {?ReturnTypes.PanData} <tt>null</tt> if the gesture was muted or
+   * otherwise not recognized.
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -100,11 +105,12 @@ class Pan extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined} 
+   * @return {undefined}
    */
   end(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.initialize(state);
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.initialize(state);
+    }
   }
 }
 

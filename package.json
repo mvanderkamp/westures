@@ -1,6 +1,6 @@
 {
   "name": "westures",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A library for multitouch, simultaneous gestures.",
   "keywords": [
     "gesture",
@@ -12,6 +12,9 @@
     "swivel",
     "track",
     "simultaneous",
+    "touch",
+    "mouse",
+    "pointer",
     "multitouch"
   ],
   "main": "index.js",
@@ -20,8 +23,9 @@
   },
   "scripts": {
     "bundle": "browserify 'index.js' --standalone westures --outfile 'bundle.js'",
-    "test": "jest",
-    "docs": "jsdoc -c .jsdocrc.json"
+    "docs": "jsdoc -c .jsdocrc.json",
+    "lint": "eslint src",
+    "test": "jest"
   },
   "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "repository": {
@@ -32,12 +36,12 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "^16.2.3",
-    "docdash": "^1.0.2",
     "eslint": "^5.13.0",
     "jest": "^23.6.0",
-    "jsdoc": "^3.5.5"
+    "jsdoc": "^3.5.5",
+    "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
-    "westures-core": "^0.4.2"
+    "westures-core": "^0.4.4"
   }
 }

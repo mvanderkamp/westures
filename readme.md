@@ -30,13 +30,13 @@ __NOTE:__ _This readme is still under construction!_
 
 There are seven gestures defined in this module:
 
-- _Tap_: Single or multi-finger taps.
-- _Pinch_: Two or more fingers move together or apart.
-- _Pan_: One or more fingers sliding around the screen.
-- _Rotate_: Two fingers or more fingers rotating around each other.
-- _Swipe_: Single finger sliding very quickly across the screen.
-- _Swivel_: Single finger rotating around a fixed pivot point.
-- _Track_: Track the contact points of all active pointers.
+- _Tap:_ Single or multi-finger taps.
+- _Pinch:_ Two or more fingers move together or apart.
+- _Pan:_ One or more fingers sliding around the screen.
+- _Rotate:_ Two fingers or more fingers rotating around each other.
+- _Swipe:_ Single finger sliding very quickly across the screen.
+- _Swivel:_ Single finger rotating around a fixed pivot point.
+- _Track:_ Track the contact points of all active pointers.
 
 See the [documentation](https://mvanderkamp.github.io/westures/) for more
 information about each gesture.
@@ -113,7 +113,7 @@ efficient as possible.
 For example, a simple way to implement a 'Tap' gesture would be as follows:
 
 ```javascript
-const { Gesture } = require('westures-core');
+const { Gesture } = require('westures');
 
 class Tap extends Gesture {
   constructor() {
@@ -148,7 +148,7 @@ Here is a simple Pan example, where we keep track of what data was last emitted
 using this progress capability.
 
 ```javascript
-const { Gesture } = require('westures-core');
+const { Gesture } = require('westures');
 
 class Pan extends Gesture {
   constructor() {

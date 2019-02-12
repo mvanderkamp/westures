@@ -1,16 +1,17 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.westures = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /**
- * The API interface for Westures. Contains the {@link Region} class, a {@link
- * Point2D} class, the {@link Gesture} interface, and the following predefined
- * gestures: {@link Pan}, {@link Pinch}, {@link Rotate}, {@link Swipe}, {@link
- * Swivel}, {@link Tap}, {@link Track}.
+ * The API interface for Westures. Defines a number of gestures on top of the
+ * engine provided by {@link
+ * https://mvanderkamp.github.io/westures-core/index.html|westures-core}.
  *
- * @module westures 
+ * @namespace westures 
  */
 
 'use strict';
 
 const { Gesture, Point2D, Region } = require('westures-core');
+// const { Gesture, Point2D, Region } = require('../westures-core');
+
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
 const Rotate  = require('./src/Rotate.js');
@@ -20,17 +21,58 @@ const Tap     = require('./src/Tap.js');
 const Track   = require('./src/Track.js');
 
 module.exports = {
-  /** {@link Gesture} */  Gesture,
-  /** {@link Point2D} */  Point2D,
-  /** {@link Region} */   Region,
-  /** {@link Pan} */      Pan,
-  /** {@link Pinch} */    Pinch,
-  /** {@link Rotate} */   Rotate,
-  /** {@link Swipe} */    Swipe,
-  /** {@link Swivel} */   Swivel,
-  /** {@link Tap} */      Tap,
-  /** {@link Track} */    Track,
+  Gesture,
+  Point2D,
+  Region,
+  Pan,
+  Pinch,
+  Rotate,
+  Swipe,
+  Swivel,
+  Tap,
+  Track,
 };
+
+/**
+ * Here are the return "types" of the gestures that are included in this
+ * package.
+ *
+ * @namespace ReturnTypes
+ */
+
+/**
+ * The base Gesture class which all other classes extend.
+ *
+ * @see {@link
+ * https://mvanderkamp.github.io/westures-core/westures-core.Gesture.html|
+ * westures-core.Gesture}
+ *
+ * @class Gesture
+ * @memberof westures
+ */
+
+/**
+ * The Region class, which is the entry point for the Westures system, through
+ * which you bind handlers with gestures and elements.
+ *
+ * @see {@link
+ * https://mvanderkamp.github.io/westures-core/westures-core.Region.html|
+ * westures-core.Region}
+ *
+ * @class Region
+ * @memberof westures
+ */
+
+/**
+ * Provides some basic operations on two-dimensional points.
+ *
+ * @see {@link
+ * https://mvanderkamp.github.io/westures-core/westures-core.Point2D.html|
+ * westures-core.Point2D}
+ *
+ * @class Point2D
+ * @memberof westures
+ */
 
 
 },{"./src/Pan.js":11,"./src/Pinch.js":12,"./src/Rotate.js":13,"./src/Swipe.js":14,"./src/Swivel.js":15,"./src/Tap.js":16,"./src/Track.js":17,"westures-core":2}],2:[function(require,module,exports){
@@ -39,18 +81,13 @@ module.exports = {
  * {@link Region} and the generic {@link Gesture} class for user gestures to
  * implement, as well as the {@link Point2D} class, which may be useful.
  *
- * @module westures-core
+ * @namespace westures-core
  */
 
 'use strict';
 
-/** {@link Region} */
 const Region  = require('./src/Region.js');
-
-/** {@link Point2D} */
 const Point2D = require('./src/Point2D.js');
-
-/** {@link Gesture} */
 const Gesture = require('./src/Gesture.js');
 
 module.exports = {
@@ -70,13 +107,15 @@ module.exports = {
 /**
  * A Binding associates a gesture with an element and a handler function that
  * will be called when the gesture is recognized.
+ *
+ * @private
  */
 class Binding {
   /**
    * Constructor function for the Binding class.
    *
    * @param {Element} element - The element to which to associate the gesture.
-   * @param {Gesture} gesture - A instance of the Gesture type.
+   * @param {westures-core.Gesture} gesture - A instance of the Gesture type.
    * @param {Function} handler - The function handler to execute when a gesture
    *    is recognized on the associated element.
    */
@@ -111,10 +150,10 @@ class Binding {
    * Evalutes the given gesture hook, and dispatches any data that is produced.
    *
    * @private
-   * @param {string} hook - which gesture hook to call, must be one of 'start', 
+   *
+   * @param {string} hook - which gesture hook to call, must be one of 'start',
    *    'move', or 'end'.
    * @param {State} state - The current State instance.
-   * @return {undefined}
    */
   evaluateHook(hook, state) {
     const data = this.gesture[hook](state);
@@ -141,18 +180,25 @@ let nextGestureNum = 0;
 
 /**
  * The Gesture class that all gestures inherit from.
+ *
+ * @memberof westures-core
  */
 class Gesture {
   /**
    * Constructor function for the Gesture class.
+   *
+   * @param {string} type - The name of the gesture.
    */
   constructor(type) {
+    if (typeof type !== 'string') {
+      throw new TypeError('Gestures require a string type');
+    }
+
     /**
-     * The type or name of the gesture. (e.g. 'pan' or 'tap' or 'pinch').
+     * The name of the gesture. (e.g. 'pan' or 'tap' or 'pinch').
      *
      * @type {string}
      */
-    if (typeof type === 'undefined') throw 'Gestures require a type!';
     this.type = type;
 
     /**
@@ -166,39 +212,39 @@ class Gesture {
   }
 
   /**
-   * Event hook for the start of a gesture.
+   * Event hook for the start phase of a gesture.
    *
-   * @private
    * @param {State} state - The input state object of the current region.
+   *
    * @return {?Object} Gesture is considered recognized if an Object is
    *    returned.
    */
-  start(state) {
-    return void state;
+  start() {
+    return null;
   }
 
   /**
-   * Event hook for the move of a gesture.
+   * Event hook for the move phase of a gesture.
    *
-   * @private
    * @param {State} state - The input state object of the current region.
+   *
    * @return {?Object} Gesture is considered recognized if an Object is
    *    returned.
    */
-  move(state) {
-    return void state;
+  move() {
+    return null;
   }
 
   /**
-   * Event hook for the move of a gesture.
+   * Event hook for the end phase of a gesture.
    *
-   * @private
    * @param {State} state - The input state object of the current region.
+   *
    * @return {?Object} Gesture is considered recognized if an Object is
    *    returned.
    */
-  end(state) {
-    return void state;
+  end() {
+    return null;
   }
 }
 
@@ -215,9 +261,46 @@ module.exports = Gesture;
 const PointerData = require('./PointerData.js');
 
 /**
+ * In case event.composedPath() is not available.
+ *
+ * @private
+ *
+ * @param {Event} event
+ *
+ * @return {Element[]} The elements along the composed path of the event.
+ */
+function getPropagationPath(event) {
+  if (typeof event.composedPath === 'function') {
+    return event.composedPath();
+  }
+
+  const path = [];
+  for (let node = event.target; node !== document; node = node.parentNode) {
+    path.push(node);
+  }
+  path.push(document);
+  path.push(window);
+
+  return path;
+}
+
+/**
+ * A WeakSet is used so that references will be garbage collected when the
+ * element they point to is removed from the page.
+ *
+ * @private
+ * @return {WeakSet.<Element>} The Elements in the path of the given event.
+ */
+function getElementsInPath(event) {
+  return new WeakSet(getPropagationPath(event));
+}
+
+/**
  * Tracks a single input and contains information about the current, previous,
  * and initial events. Contains the progress of each Input and its associated
  * gestures.
+ *
+ * @hideconstructor
  */
 class Input {
   /**
@@ -283,7 +366,7 @@ class Input {
   /**
    * The phase of the input: 'start' or 'move' or 'end'
    *
-   * @type {string} 
+   * @type {string}
    */
   get phase() { return this.current.type; }
 
@@ -296,6 +379,7 @@ class Input {
 
   /**
    * @param {string} id - The ID of the gesture whose progress is sought.
+   *
    * @return {Object} The progress of the gesture.
    */
   getProgressOfGesture(id) {
@@ -319,8 +403,8 @@ class Input {
    * out the old previous data.
    *
    * @private
+   *
    * @param {Event} event - The event object to wrap with a PointerData.
-   * @return {undefined}
    */
   update(event) {
     this.previous = this.current;
@@ -332,46 +416,15 @@ class Input {
    * was dispatched.
    *
    * @private
+   *
    * @param {Element} element
-   * @return {boolean} true if the PointerData occurred inside the element,
-   *    false otherwise.
+   *
+   * @return {boolean} true if the Input began inside the element, false
+   *    otherwise.
    */
   wasInitiallyInside(element) {
     return this.initialElements.has(element);
   }
-}
-
-/**
- * A WeakSet is used so that references will be garbage collected when the
- * element they point to is removed from the page.
- *
- * @private
- * @return {WeakSet.<Element>} The Elements in the path of the given event.
- */
-function getElementsInPath(event) {
-  return new WeakSet(getPropagationPath(event));
-}
-
-/**
- * In case event.composedPath() is not available.
- *
- * @private
- * @param {Event} event
- * @return {Element[]} The elements along the composed path of the event.
- */
-function getPropagationPath(event) {
-  if (typeof event.composedPath === 'function') {
-    return event.composedPath();
-  } 
-
-  const path = [];
-  for (let node = event.target; node !== document; node = node.parentNode) {
-    path.push(node);
-  }
-  path.push(document);
-  path.push(window);
-
-  return path;
 }
 
 module.exports = Input;
@@ -389,6 +442,7 @@ module.exports = Input;
  * Normalizes window events to be either of type start, move, or end.
  *
  * @private
+ * @enum {string}
  */
 const PHASE = Object.freeze({
   mousedown:   'start',
@@ -417,13 +471,15 @@ module.exports = PHASE;
 /**
  * The Point2D class stores and operates on 2-dimensional points, represented as
  * x and y coordinates.
+ *
+ * @memberof westures-core
  */
 class Point2D {
   /**
    * Constructor function for the Point2D class.
    *
-   * @param {number} x - The x coordinate of the point.
-   * @param {number} y - The y coordinate of the point.
+   * @param {number} [ x=0 ] - The x coordinate of the point.
+   * @param {number} [ y=0 ] - The y coordinate of the point.
    */
   constructor(x = 0, y = 0) {
     /**
@@ -444,9 +500,11 @@ class Point2D {
   /**
    * Calculates the angle between this point and the given point.
    *
-   * @param {Point2D} point - Projected point for calculating the angle.
-   * @return {number} Radians along the unit circle where the projected point
-   *    lies.
+   * @param {westures-core.Point2D} point - Projected point for calculating the
+   * angle.
+   *
+   * @return {number} Radians along the unit circle where the projected
+   * point lies.
    */
   angleTo(point) {
     return Math.atan2(point.y - this.y, point.x - this.x);
@@ -456,8 +514,8 @@ class Point2D {
    * Determine the average distance from this point to the provided array of
    * points.
    *
-   * @param {Point2D[]} points - the Point2D objects to calculate the average
-   *    distance to.
+   * @param {westures-core.Point2D[]} points - the Point2D objects to calculate
+   *    the average distance to.
    * @return {number} The average distance from this point to the provided
    *    points.
    */
@@ -468,7 +526,7 @@ class Point2D {
   /**
    * Clone this point.
    *
-   * @return {Point2D} A new Point2D, identical to this point.
+   * @return {westures-core.Point2D} A new Point2D, identical to this point.
    */
   clone() {
     return new Point2D(this.x, this.y);
@@ -477,9 +535,11 @@ class Point2D {
   /**
    * Calculates the distance between two points.
    *
-   * @param {Point2D} point - Point to which the distance is calculated.
+   * @param {westures-core.Point2D} point - Point to which the distance is
+   * calculated.
+   *
    * @return {number} The distance between the two points, a.k.a. the
-   *    hypoteneuse. 
+   *    hypoteneuse.
    */
   distanceTo(point) {
     return Math.hypot(point.x - this.x, point.y - this.y);
@@ -488,8 +548,10 @@ class Point2D {
   /**
    * Subtract the given point from this point.
    *
-   * @param {Point2D} point - Point to subtract from this point.
-   * @return {Point2D} A new Point2D, which is the result of (this - point).
+   * @param {westures-core.Point2D} point - Point to subtract from this point.
+   *
+   * @return {westures-core.Point2D} A new Point2D, which is the result of (this
+   * - point).
    */
   minus(point) {
     return new Point2D(
@@ -501,8 +563,10 @@ class Point2D {
   /**
    * Return the summation of this point to the given point.
    *
-   * @param {Point2D} point - Point to add to this point.
-   * @return {Point2D} A new Point2D, which is the addition of the two points.
+   * @param {westures-core.Point2D} point - Point to add to this point.
+   *
+   * @return {westures-core.Point2D} A new Point2D, which is the addition of the
+   * two points.
    */
   plus(point) {
     return new Point2D(
@@ -514,26 +578,28 @@ class Point2D {
   /**
    * Calculates the total distance from this point to an array of points.
    *
-   * @param {Point2D[]} points - The array of Point2D objects to calculate the
-   *    total distance to.
+   * @param {westures-core.Point2D[]} points - The array of Point2D objects to
+   *    calculate the total distance to.
+   *
    * @return {number} The total distance from this point to the provided points.
    */
   totalDistanceTo(points = []) {
-    return points.reduce( (d, p) => d + this.distanceTo(p), 0);
+    return points.reduce((d, p) => d + this.distanceTo(p), 0);
   }
 
   /**
    * Calculates the midpoint of a list of points.
    *
-   * @param {Point2D[]} points - The array of Point2D objects for which to
-   *    calculate the midpoint
-   * @return {Point2D} The midpoint of the provided points.
+   * @param {westures-core.Point2D[]} points - The array of Point2D objects for
+   *    which to calculate the midpoint
+   *
+   * @return {westures-core.Point2D} The midpoint of the provided points.
    */
   static midpoint(points = []) {
     if (points.length === 0) return null;
 
     const total = Point2D.sum(points);
-    return new Point2D (
+    return new Point2D(
       total.x / points.length,
       total.y / points.length,
     );
@@ -542,11 +608,13 @@ class Point2D {
   /**
    * Calculates the sum of the given points.
    *
-   * @param {Point2D[]} points - The Point2D objects to sum up.
-   * @return {Point2D} A new Point2D representing the sum of the given points.
+   * @param {westures-core.Point2D[]} points - The Point2D objects to sum up.
+   *
+   * @return {westures-core.Point2D} A new Point2D representing the sum of the
+   * given points.
    */
   static sum(points = []) {
-    return points.reduce( (total, pt) => total.plus(pt), new Point2D(0,0) );
+    return points.reduce((total, pt) => total.plus(pt), new Point2D(0, 0));
   }
 }
 
@@ -564,8 +632,24 @@ const Point2D = require('./Point2D.js');
 const PHASE   = require('./PHASE.js');
 
 /**
+ * @private
+ * @return {Event} The Event object which corresponds to the given identifier.
+ *    Contains clientX, clientY values.
+ */
+function getEventObject(event, identifier) {
+  if (event.changedTouches) {
+    return Array.from(event.changedTouches).find(t => {
+      return t.identifier === identifier;
+    });
+  }
+  return event;
+}
+
+/**
  * Low-level storage of pointer data based on incoming data from an interaction
  * event.
+ *
+ * @hideconstructor
  */
 class PointerData {
   /**
@@ -586,14 +670,14 @@ class PointerData {
      * The type or 'phase' of this batch of pointer data. 'start' or 'move' or
      * 'end'.
      *
-     * @type {( String | null )}
+     * @type {string}
      */
-    this.type = PHASE[ event.type ];
+    this.type = PHASE[event.type];
 
     /**
      * The timestamp of the event in milliseconds elapsed since January 1, 1970,
      * 00:00:00 UTC.
-     * 
+     *
      * @type {number}
      */
     this.time = Date.now();
@@ -602,7 +686,7 @@ class PointerData {
     /**
      * The (x,y) coordinate of the event, wrapped in a Point2D.
      *
-     * @type {Point2D}
+     * @type {westures-core.Point2D}
      */
     this.point = new Point2D(eventObj.clientX, eventObj.clientY);
   }
@@ -611,6 +695,7 @@ class PointerData {
    * Calculates the angle between this event and the given event.
    *
    * @param {PointerData} pdata
+   *
    * @return {number} Radians measurement between this event and the given
    *    event's points.
    */
@@ -622,26 +707,13 @@ class PointerData {
    * Calculates the distance between two PointerDatas.
    *
    * @param {PointerData} pdata
+   *
    * @return {number} The distance between the two points, a.k.a. the
-   *    hypoteneuse. 
+   *    hypoteneuse.
    */
   distanceTo(pdata) {
     return this.point.distanceTo(pdata.point);
   }
-}
-
-/**
- * @private
- * @return {Event} The Event object which corresponds to the given identifier.
- *    Contains clientX, clientY values.
- */
-function getEventObject(event, identifier) {
-  if (event.changedTouches) {
-    return Array.from(event.changedTouches).find( t => {
-      return t.identifier === identifier;
-    });
-  } 
-  return event;
 }
 
 module.exports = PointerData;
@@ -676,9 +748,11 @@ const TOUCH_EVENTS = [
   'touchend',
 ];
 
-/** 
+/**
  * Allows the user to specify the control region which will listen for user
  * input events.
+ *
+ * @memberof westures-core
  */
 class Region {
   /**
@@ -719,7 +793,7 @@ class Region {
     /**
      * Whether the default browser functionality should be disabled. This option
      * should most likely be ignored. Here there by dragons if set to false.
-     *   
+     *
      * @private
      * @type {boolean}
      */
@@ -742,7 +816,6 @@ class Region {
    * events to the region's element.
    *
    * @private
-   * @return {undefined}
    */
   activate() {
     /*
@@ -773,10 +846,10 @@ class Region {
 
     // Bind detected browser events to the region element.
     const arbiter = this.arbitrate.bind(this);
-    eventNames.forEach( eventName => {
+    eventNames.forEach(eventName => {
       this.element.addEventListener(eventName, arbiter, {
         capture: this.capture,
-        once: false,
+        once:    false,
         passive: false,
       });
     });
@@ -790,15 +863,14 @@ class Region {
    *
    * @private
    * @param {Event} event - The event emitted from the window object.
-   * @return {undefined}
    */
   arbitrate(event) {
     if (this.preventDefault) event.preventDefault();
 
     this.state.updateAllInputs(event, this.element);
 
-    this.retrieveBindingsByInitialPos().forEach( binding => {
-      binding.evaluateHook(PHASE[ event.type ], this.state);
+    this.retrieveBindingsByInitialPos().forEach(binding => {
+      binding.evaluateHook(PHASE[event.type], this.state);
     });
 
     this.state.clearEndedInputs();
@@ -808,24 +880,25 @@ class Region {
    * Bind an element to a gesture with multiple function signatures.
    *
    * @param {Element} element - The element object.
-   * @param {Gesture} gesture - Gesture type with which to bind.
+   * @param {westures-core.Gesture} gesture - Gesture type with which to bind.
    * @param {Function} handler - The function to execute when a gesture is
    *    recognized.
-   * @return {undefined}
    */
   bind(element, gesture, handler) {
-    this.bindings.push( new Binding(element, gesture, handler) );
+    this.bindings.push(new Binding(element, gesture, handler));
   }
 
   /**
    * Retrieves Bindings by their associated element.
    *
    * @private
+   *
    * @param {Element} element - The element for which to find bindings.
+   *
    * @return {Binding[]} Bindings to which the element is bound.
    */
   retrieveBindingsByElement(element) {
-    return this.bindings.filter( b => b.element === element );
+    return this.bindings.filter(b => b.element === element);
   }
 
   /**
@@ -837,9 +910,9 @@ class Region {
    * @return {Binding[]} Bindings in which an active input began.
    */
   retrieveBindingsByInitialPos() {
-    return this.bindings.filter( 
-      b => this.state.someInputWasInitiallyInside(b.element)
-    );
+    return this.bindings.filter(b => {
+      return this.state.someInputWasInitiallyInside(b.element);
+    });
   }
 
   /**
@@ -847,16 +920,17 @@ class Region {
    * is specified.
    *
    * @param {Element} element - The element to unbind.
-   * @param {Gesture} [ gesture ] - The gesture to unbind. If undefined, will
-   *    unbind all Bindings associated with the given element.
+   * @param {westures-core.Gesture} [ gesture ] - The gesture to unbind. If
+   * undefined, will unbind all Bindings associated with the given element.
+   *
    * @return {Binding[]} Bindings that were unbound to the element.
    */
   unbind(element, gesture) {
-    let bindings = this.retrieveBindingsByElement(element);
-    let unbound = [];
+    const bindings = this.retrieveBindingsByElement(element);
+    const unbound = [];
 
-    bindings.forEach( b => {
-      if (gesture == undefined || b.gesture === gesture) {
+    bindings.forEach(b => {
+      if (gesture == null || b.gesture === gesture) {
         this.bindings.splice(this.bindings.indexOf(b), 1);
         unbound.push(b);
       }
@@ -880,9 +954,37 @@ const Input   = require('./Input.js');
 const PHASE   = require('./PHASE.js');
 const Point2D = require('./Point2D.js');
 
+const symbols = Object.freeze({
+  inputs: Symbol.for('inputs'),
+});
+
+/*
+ * Set of helper functions for updating inputs based on type of input.
+ * Must be called with a bound 'this', via bind(), or call(), or apply().
+ *
+ * @private
+ */
+const update_fns = {
+  TouchEvent: function TouchEvent(event) {
+    Array.from(event.changedTouches).forEach(touch => {
+      this.updateInput(event, touch.identifier);
+    });
+  },
+
+  PointerEvent: function PointerEvent(event) {
+    this.updateInput(event, event.pointerId);
+  },
+
+  MouseEvent: function MouseEvent(event) {
+    this.updateInput(event, event.button);
+  },
+};
+
 /**
  * Keeps track of currently active and ending input points on the interactive
  * surface.
+ *
+ * @hideconstructor
  */
 class State {
   /**
@@ -893,13 +995,13 @@ class State {
      * Keeps track of the current Input objects.
      *
      * @private
-     * @type {Object}
+     * @type {Map}
      */
-    this._inputs_obj = {};
+    this[symbols.inputs] = new Map();
 
     /**
      * All currently valid inputs, including those that have ended.
-     * 
+     *
      * @type {Input[]}
      */
     this.inputs = [];
@@ -916,14 +1018,14 @@ class State {
      * The array of latest point data for the currently active inputs, sourced
      * from this.active.
      *
-     * @type {Point2D[]}
+     * @type {westures-core.Point2D[]}
      */
     this.activePoints = [];
 
     /**
      * The centroid of the currently active points.
      *
-     * @type {Point2D}
+     * @type {westures-core.Point2D}
      */
     this.centroid = {};
 
@@ -939,52 +1041,55 @@ class State {
    * Deletes all inputs that are in the 'end' phase.
    *
    * @private
-   * @return {undefined}
    */
   clearEndedInputs() {
-    for (let k in this._inputs_obj) {
-      if (this._inputs_obj[k].phase === 'end') delete this._inputs_obj[k];
-    }
+    this[symbols.inputs].forEach((v, k) => {
+      if (v.phase === 'end') this[symbols.inputs].delete(k);
+    });
   }
 
   /**
    * @param {string} phase - One of 'start', 'move', or 'end'.
+   *
    * @return {Input[]} Inputs in the given phase.
    */
   getInputsInPhase(phase) {
-    return this.inputs.filter( i => i.phase === phase );
+    return this.inputs.filter(i => i.phase === phase);
   }
 
   /**
    * @param {string} phase - One of 'start', 'move', or 'end'.
+   *
    * @return {Input[]} Inputs <b>not</b> in the given phase.
    */
   getInputsNotInPhase(phase) {
-    return this.inputs.filter( i => i.phase !== phase );
+    return this.inputs.filter(i => i.phase !== phase);
   }
 
   /**
    * @private
+   *
    * @param {Element} element - The Element to test.
+   *
    * @return {boolean} True if some input was initially inside the element.
    */
   someInputWasInitiallyInside(element) {
-    return this.inputs.some( i => i.wasInitiallyInside(element) );
+    return this.inputs.some(i => i.wasInitiallyInside(element));
   }
 
   /**
    * Update the input with the given identifier using the given event.
    *
    * @private
+   *
    * @param {Event} event - The event being captured.
    * @param {number} identifier - The identifier of the input to update.
-   * @return {undefined}
    */
   updateInput(event, identifier) {
-    if (PHASE[ event.type ] === 'start') {
-      this._inputs_obj[identifier] = new Input(event, identifier);
-    } else if (this._inputs_obj[identifier]) {
-      this._inputs_obj[identifier].update(event);
+    if (PHASE[event.type] === 'start') {
+      this[symbols.inputs].set(identifier, new Input(event, identifier));
+    } else if (this[symbols.inputs].has(identifier)) {
+      this[symbols.inputs].get(identifier).update(event);
     }
   }
 
@@ -992,40 +1097,17 @@ class State {
    * Updates the inputs with new information based upon a new event being fired.
    *
    * @private
-   * @param {Event} event - The event being captured. 
-   * @return {undefined}
+   * @param {Event} event - The event being captured.
    */
   updateAllInputs(event) {
     update_fns[event.constructor.name].call(this, event);
-    this.inputs = Object.values(this._inputs_obj);
+    this.inputs = Array.from(this[symbols.inputs].values());
     this.active = this.getInputsNotInPhase('end');
-    this.activePoints = this.active.map( i => i.current.point );
-    this.centroid = Point2D.midpoint( this.activePoints );
+    this.activePoints = this.active.map(i => i.current.point);
+    this.centroid = Point2D.midpoint(this.activePoints);
     this.event = event;
   }
 }
-
-/*
- * Set of helper functions for updating inputs based on type of input.
- * Must be called with a bound 'this', via bind(), or call(), or apply().
- * 
- * @private
- */
-const update_fns = {
-  TouchEvent: function(event) {
-    Array.from(event.changedTouches).forEach( touch => {
-      this.updateInput(event, touch.identifier);
-    });
-  },
-
-  PointerEvent: function(event) {
-    this.updateInput(event, event.pointerId);
-  },
-
-  MouseEvent: function(event) {
-    this.updateInput(event, event.button);
-  },
-};
 
 module.exports = State;
 
@@ -1039,7 +1121,6 @@ module.exports = State;
 
 const { Gesture } = require('westures-core');
 
-const DEFAULT_MIN_THRESHOLD = 1;
 const REQUIRED_INPUTS = 1;
 
 /**
@@ -1047,20 +1128,24 @@ const REQUIRED_INPUTS = 1;
  *
  * @typedef PanData
  * @type {Object}
- * @property {Point2D} change - The change vector from the last emit.
- * @property {Point2D} point - The centroid of the currently active points.
+ * @property {westures.Point2D} change - The change vector from the last emit.
+ * @property {westures.Point2D} point - The centroid of the currently active
+ *    points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
- * A Pan is defined as a normal movement in any direction. 
+ * A Pan is defined as a normal movement in any direction.
  *
- * @extends Gesture 
- * @see PanData
+ * @extends westures.Gesture
+ * @see ReturnTypes.PanData
+ * @memberof westures
  */
 class Pan extends Gesture {
   /**
@@ -1075,6 +1160,7 @@ class Pan extends Gesture {
     /**
      * Don't emit any data if this key is pressed.
      *
+     * @private
      * @type {string}
      */
     this.muteKey = options.muteKey;
@@ -1101,16 +1187,17 @@ class Pan extends Gesture {
    * @return {undefined}
    */
   start(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.initialize(state);
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.initialize(state);
+    }
   }
 
   /**
    * Event hook for the move of a Pan.
    *
    * @param {State} state - current input state.
-   * @return {?PanData} <tt>null</tt> if the gesture was muted or otherwise not
-   *    recognized.
+   * @return {?ReturnTypes.PanData} <tt>null</tt> if the gesture was muted or
+   * otherwise not recognized.
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -1133,11 +1220,12 @@ class Pan extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined} 
+   * @return {undefined}
    */
   end(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.initialize(state);
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.initialize(state);
+    }
   }
 }
 
@@ -1156,24 +1244,30 @@ const { Gesture } = require('westures-core');
 const DEFAULT_MIN_INPUTS = 2;
 
 /**
+ * Data returned when a Pinch is recognized.
+ *
  * @typedef PinchData
  * @type {Object}
  * @property {number} distance - The average distance from an active input to
  *    the centroid.
  * @property {number} change - The change in distance since last emit.
- * @property {Point2D} midpoint - The centroid of the currently active points.
+ * @property {westures.Point2D} midpoint - The centroid of the currently active
+ *    points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Pinch is defined as two or more inputs moving either together or apart.
  *
- * @extends Gesture 
- * @see PinchData
+ * @extends westures.Gesture
+ * @see ReturnTypes.PinchData
+ * @memberof westures
  */
 class Pinch extends Gesture {
   /**
@@ -1190,6 +1284,7 @@ class Pinch extends Gesture {
      * The minimum number of inputs that must be active for a Pinch to be
      * recognized.
      *
+     * @private
      * @type {number}
      */
     this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
@@ -1217,15 +1312,16 @@ class Pinch extends Gesture {
    * @return {undefined}
    */
   start(state) {
-    if (state.active.length < this.minInputs) return null;
-    this.initializeProgress(state);
+    if (state.active.length >= this.minInputs) {
+      this.initializeProgress(state);
+    }
   }
 
   /**
    * Event hook for the move of a Pinch.
    *
    * @param {State} state - current input state.
-   * @return {?PinchData} <tt>null</tt> if not recognized.
+   * @return {?ReturnTypes.PinchData} <tt>null</tt> if not recognized.
    */
   move(state) {
     if (state.active.length < this.minInputs) return null;
@@ -1250,8 +1346,9 @@ class Pinch extends Gesture {
    * @return {undefined}
    */
   end(state) {
-    if (state.active.length < this.minInputs) return null;
-    this.initializeProgress(state);
+    if (state.active.length >= this.minInputs) {
+      this.initializeProgress(state);
+    }
   }
 }
 
@@ -1270,88 +1367,21 @@ const { Gesture } = require('westures-core');
 const REQUIRED_INPUTS = 2;
 
 /**
+ * Data returned when a Rotate is recognized.
+ *
  * @typedef RotateData
  * @type {Object}
  * @property {number} delta - In radians, the change in angle since last emit.
- * @property {Point2D} pivot - The centroid of the currently active points.
+ * @property {westures.Point2D} pivot - The centroid of the currently active
+ *    points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
- */
-
-/**
- * A Rotate is defined as two inputs moving with a changing angle between them.
  *
- * @extends Gesture 
- * @see RotateData
+ * @memberof ReturnTypes
  */
-class Rotate extends Gesture {
-  /**
-   * Constructor function for the Rotate class.
-   */
-  constructor() {
-    super('rotate');
-  }
-
-  /**
-   * Store individual angle progress on each input, return average angle change.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {null}
-   */
-  getAngle(state) {
-    let angle = 0;
-    state.active.forEach( i => {
-      const progress = i.getProgressOfGesture(this.id);
-      const currentAngle = state.centroid.angleTo(i.current.point);
-      angle += angularMinus(currentAngle, progress.previousAngle);
-      progress.previousAngle = currentAngle;
-    });
-    angle /= (state.active.length);
-    return angle;
-  }
-
-  /**
-   * Event hook for the start of a gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {undefined}
-   */
-  start(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.getAngle(state);
-  }
-
-  /**
-   * Event hook for the move of a Rotate gesture.
-   *
-   * @param {State} state - current input state.
-   * @return {?RotateData} <tt>null</tt> if this event did not occur
-   */
-  move(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    return {
-      pivot: state.centroid,
-      delta: this.getAngle(state),
-    };
-  }
-
-  /**
-   * Event hook for the end of a gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {undefined}
-   */
-  end(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
-    this.getAngle(state);
-  }
-}
 
 const PI2 = 2 * Math.PI;
 
@@ -1374,6 +1404,78 @@ function angularMinus(a, b = 0) {
   return diff;
 }
 
+/**
+ * A Rotate is defined as two inputs moving with a changing angle between them.
+ *
+ * @extends westures.Gesture
+ * @see ReturnTypes.RotateData
+ * @memberof westures
+ */
+class Rotate extends Gesture {
+  /**
+   * Constructor function for the Rotate class.
+   */
+  constructor() {
+    super('rotate');
+  }
+
+  /**
+   * Store individual angle progress on each input, return average angle change.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  getAngle(state) {
+    let angle = 0;
+    state.active.forEach(i => {
+      const progress = i.getProgressOfGesture(this.id);
+      const currentAngle = state.centroid.angleTo(i.current.point);
+      angle += angularMinus(currentAngle, progress.previousAngle);
+      progress.previousAngle = currentAngle;
+    });
+    angle /= (state.active.length);
+    return angle;
+  }
+
+  /**
+   * Event hook for the start of a gesture.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  start(state) {
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.getAngle(state);
+    }
+  }
+
+  /**
+   * Event hook for the move of a Rotate gesture.
+   *
+   * @param {State} state - current input state.
+   * @return {?ReturnTypes.RotateData} <tt>null</tt> if this event did not occur
+   */
+  move(state) {
+    if (state.active.length < REQUIRED_INPUTS) return null;
+    return {
+      pivot: state.centroid,
+      delta: this.getAngle(state),
+    };
+  }
+
+  /**
+   * Event hook for the end of a gesture.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  end(state) {
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.getAngle(state);
+    }
+  }
+}
+
 module.exports = Rotate;
 
 
@@ -1390,25 +1492,51 @@ const REQUIRED_INPUTS = 1;
 const PROGRESS_STACK_SIZE = 5;
 
 /**
+ * Data returned when a Swipe is recognized.
+ *
  * @typedef SwipeData
  * @type {Object}
  * @property {number} velocity - The velocity of the swipe.
  * @property {number} direction - In radians, the direction of the swipe.
- * @property {Point2D} point - The point at which the swipe ended.
+ * @property {westures.Point2D} point - The point at which the swipe ended.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
+
+/**
+ * Local helper function for calculating the velocity between two timestamped
+ * points.
+ *
+ * @private
+ *
+ * @param {object} start
+ * @param {westures.Point2D} start.point
+ * @param {number} start.time
+ * @param {object} end
+ * @param {westures.Point2D} end.point
+ * @param {number} end.time
+ *
+ * @return {number} velocity from start to end point.
+ */
+function calc_velocity(start, end) {
+  const distance = end.point.distanceTo(start.point);
+  const time = end.time - start.time;
+  return distance / time;
+}
 
 /**
  * A swipe is defined as input(s) moving in the same direction in an relatively
  * increasing velocity and leaving the screen at some point before it drops
  * below it's escape velocity.
  *
- * @extends Gesture 
- * @see SwipeData
+ * @extends westures.Gesture
+ * @see ReturnTypes.SwipeData
+ * @memberof westures
  */
 class Swipe extends Gesture {
   /**
@@ -1424,17 +1552,16 @@ class Swipe extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
 
-    state.active.forEach( input => {
+    state.active.forEach(input => {
       const progress = input.getProgressOfGesture(this.id);
       if (!progress.moves) progress.moves = [];
 
       progress.moves.push({
-        time: Date.now(),
+        time:  Date.now(),
         point: input.current.point,
       });
 
@@ -1450,7 +1577,8 @@ class Swipe extends Gesture {
    * Determines if the input's history validates a swipe motion.
    *
    * @param {State} state - current input state.
-   * @return {?SwipeData} <tt>null</tt> if the gesture is not recognized.
+   * @return {?ReturnTypes.SwipeData} <tt>null</tt> if the gesture is not
+   * recognized.
    */
   end(state) {
     const ended = state.getInputsInPhase('end');
@@ -1473,7 +1601,9 @@ class Swipe extends Gesture {
     }
     direction /= vlim;
 
-    const velocity = velos.reduce((acc,cur) => cur > acc ? cur : acc);
+    const velocity = velos.reduce((acc, cur) => {
+      return cur > acc ? cur : acc;
+    });
 
     return {
       point,
@@ -1481,16 +1611,6 @@ class Swipe extends Gesture {
       direction,
     };
   }
-}
-
-/*
- * Local helper function for calculating the velocity between two timestamped
- * points.
- */
-function calc_velocity(start, end) {
-  const distance = end.point.distanceTo(start.point);
-  const time = end.time - start.time;
-  return distance / time;
 }
 
 module.exports = Swipe;
@@ -1511,24 +1631,29 @@ const defaults = Object.freeze({
 });
 
 /**
+ * Data returned when a Swivel is recognized.
+ *
  * @typedef SwivelData
  * @type {Object}
  * @property {number} delta - In radians, the change in angle since last emit.
- * @property {Point2D} pivot - The pivot point.
- * @property {Point2D} point - The current location of the input point.
+ * @property {westures.Point2D} pivot - The pivot point.
+ * @property {westures.Point2D} point - The current location of the input point.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Swivel is a single input rotating around a fixed point. The fixed point is
  * determined by the input's location at its 'start' phase.
  *
- * @extends Gesture 
- * @see SwivelData
+ * @extends westures.Gesture
+ * @see ReturnTypes.SwivelData
+ * @memberof westures
  */
 class Swivel extends Gesture {
   /**
@@ -1546,12 +1671,18 @@ class Swivel extends Gesture {
 
     /**
      * The radius around the start point in which to do nothing.
+     *
+     * @private
+     * @type {number}
      */
     this.deadzoneRadius = options.deadzoneRadius || defaults.deadzoneRadius;
 
     /**
      * If this is set, gesture will only respond to events where this property
      * is truthy. Should be one of 'ctrlKey', 'altKey', or 'shiftKey'.
+     *
+     * @private
+     * @type {string}
      */
     this.enableKey = options.enableKey;
   }
@@ -1583,13 +1714,16 @@ class Swivel extends Gesture {
     const progress = started[0].getProgressOfGesture(this.id);
     progress.pivot = started[0].current.point;
     progress.previousAngle = 0;
+
+    return null;
   }
 
   /**
    * Event hook for the move of a Swivel gesture.
    *
    * @param {State} state - current input state.
-   * @return {?SwivelData} <tt>null</tt> if the gesture is not recognized.
+   * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
+   * recognized.
    */
   move(state) {
     if (state.active.length !== REQUIRED_INPUTS) return null;
@@ -1613,13 +1747,13 @@ class Swivel extends Gesture {
 
       if (pivot.distanceTo(point) <= this.deadzoneRadius) {
         return null;
-      } else {
-        return { delta, pivot, point };
       }
-    } else {
-      // CTRL key was released, therefore pivot point is now invalid.
-      delete progress.pivot;
+      return { delta, pivot, point };
     }
+
+    // CTRL key was released, therefore pivot point is now invalid.
+    delete progress.pivot;
+    return null;
   }
 }
 
@@ -1636,13 +1770,15 @@ module.exports = Swivel;
 const { Gesture, Point2D } = require('westures-core');
 
 const defaults = Object.freeze({
-  MIN_DELAY_MS: 0,
-  MAX_DELAY_MS: 300,
-  NUM_INPUTS: 1,
+  MIN_DELAY_MS:      0,
+  MAX_DELAY_MS:      300,
+  NUM_INPUTS:        1,
   MOVE_PX_TOLERANCE: 10,
 });
 
 /**
+ * Data returned when a Tap is recognized.
+ *
  * @typedef TapData
  * @type {Object}
  * @property {number} x - x coordinate of tap point.
@@ -1652,13 +1788,16 @@ const defaults = Object.freeze({
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Tap is defined as a touchstart to touchend event in quick succession.
  *
- * @extends Gesture 
- * @see TapData
+ * @extends westures.Gesture
+ * @see ReturnTypes.TapData
+ * @memberof westures
  */
 class Tap extends Gesture {
   /**
@@ -1680,8 +1819,9 @@ class Tap extends Gesture {
      * The minimum amount between a touchstart and a touchend can be configured
      * in milliseconds. The minimum delay starts to count down when the expected
      * number of inputs are on the screen, and ends when ALL inputs are off the
-     * screen.  
+     * screen.
      *
+     * @private
      * @type {number}
      */
     this.minDelay = options.minDelay || defaults.MIN_DELAY_MS;
@@ -1692,6 +1832,7 @@ class Tap extends Gesture {
      * number of inputs are on the screen, and ends when ALL inputs are off the
      * screen.
      *
+     * @private
      * @type {number}
      */
     this.maxDelay = options.maxDelay || defaults.MAX_DELAY_MS;
@@ -1700,6 +1841,7 @@ class Tap extends Gesture {
      * The number of inputs to trigger a Tap can be variable, and the maximum
      * number being a factor of the browser.
      *
+     * @private
      * @type {number}
      */
     this.numInputs = options.numInputs || defaults.NUM_INPUTS;
@@ -1708,40 +1850,44 @@ class Tap extends Gesture {
      * A move tolerance in pixels allows some slop between a user's start to end
      * events. This allows the Tap gesture to be triggered more easily.
      *
+     * @private
      * @type {number}
      */
     this.tolerance = options.tolerance || defaults.MOVE_PX_TOLERANCE;
 
     /**
      * An array of inputs that have ended recently.
+     *
+     * @private
+     * @type {Input[]}
      */
     this.ended = [];
   }
 
   /**
    * Event hook for the end of a gesture.  Determines if this the tap event can
-   * be fired if the delay and tolerance constraints are met. 
+   * be fired if the delay and tolerance constraints are met.
    *
    * @param {State} state - current input state.
-   * @return {?TapData} <tt>null</tt> if the gesture is not to be emitted,
-   *    Object with information otherwise. 
+   * @return {?ReturnTypes.TapData} <tt>null</tt> if the gesture is not to be
+   * emitted, Object with information otherwise.
    */
   end(state) {
     const now = Date.now();
 
     this.ended = this.ended.concat(state.getInputsInPhase('end'))
-      .filter( i => {
+      .filter(i => {
         const tdiff = now - i.startTime;
         return tdiff <= this.maxDelay && tdiff >= this.minDelay;
       });
 
     if (this.ended.length === 0 ||
-        this.ended.length !== this.numInputs || 
-        !this.ended.every( i => i.totalDistance() <= this.tolerance)) {
+        this.ended.length !== this.numInputs ||
+        !this.ended.every(i => i.totalDistance() <= this.tolerance)) {
       return null;
     }
 
-    const { x, y } = Point2D.midpoint( this.ended.map( i => i.current.point ) );
+    const { x, y } = Point2D.midpoint(this.ended.map(i => i.current.point));
     return { x, y };
   }
 }
@@ -1759,23 +1905,29 @@ module.exports = Tap;
 const { Gesture } = require('westures-core');
 
 /**
+ * Data returned when a Track is recognized.
+ *
  * @typedef TrackData
  * @type {Object}
- * @property {Point2D[]} active - Points currently in 'start' or 'move' phase.
- * @property {Point2D} centroid - centroid of currently active points.
+ * @property {westures.Point2D[]} active - Points currently in 'start' or 'move'
+ *    phase.
+ * @property {westures.Point2D} centroid - centroid of currently active points.
  * @property {Event} event - The input event which caused the gesture to be
  *    recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Track gesture forwards a list of active points and their centroid on each
  * of the selected phases.
  *
- * @extends Gesture 
- * @see TrackData
+ * @extends westures.Gesture
+ * @see ReturnTypes.TrackData
+ * @memberof westures
  */
 class Track extends Gesture {
   /**
@@ -1794,40 +1946,40 @@ class Track extends Gesture {
   /**
    * @private
    * @param {State} state - current input state.
-   * @return {TrackData}
+   * @return {ReturnTypes.TrackData}
    */
   data({ activePoints, centroid }) {
-    return { active: activePoints, centroid }; 
+    return { active: activePoints, centroid };
   }
 
   /**
    * Event hook for the start of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} <tt>null</tt> if not recognized.
+   * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
   start(state) {
-    if (this.trackStart) return this.data(state);
+    return this.trackStart ? this.data(state) : null;
   }
 
   /**
    * Event hook for the move of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} <tt>null</tt> if not recognized.
+   * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
   move(state) {
-    if (this.trackMove) return this.data(state);
+    return this.trackMove ? this.data(state) : null;
   }
 
   /**
    * Event hook for the end of a Track gesture.
    *
    * @param {State} state - current input state.
-   * @return {?TrackData} <tt>null</tt> if not recognized.
+   * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
   end(state) {
-    if (this.trackEnd) return this.data(state);
+    return this.trackEnd ? this.data(state) : null;
   }
 }
 
