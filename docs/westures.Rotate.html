@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: src/Rotate.js | westures</title>
+    <title>Class: Rotate | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -49,129 +47,319 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
- * Contains the Rotate class.
- */
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="westures.html">westures</a>.</span>Rotate<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">A Rotate is defined as two inputs moving with a changing angle between them.</div>
+        
+    
+</header>
 
-'use strict';
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-const { Gesture } = require('westures-core');
+<dt>
+    
+        <h4 class="name" id="Rotate">
+            
+                new <span class="type-signature"></span>Rotate<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_Rotate.js.html">src/Rotate.js</a></code>,
+                <code><a href="src_Rotate.js.html#line32">line 32</a></code>
+            </div>
+            
+        </h4>
 
-const REQUIRED_INPUTS = 2;
+        
+    
+</dt>
+<dd>
 
-/**
- * @typedef RotateData
- * @type {Object}
- * @property {number} delta - In radians, the change in angle since last emit.
- * @property {Point2D} pivot - The centroid of the currently active points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
- *
- * @memberof ReturnTypes
- */
+    
+    <div class="description">
+        Constructor function for the Rotate class.
+    </div>
+    
 
-/**
- * A Rotate is defined as two inputs moving with a changing angle between them.
- *
- * @extends westures.Gesture 
- * @see ReturnTypes.RotateData
- * @memberof westures
- */
-class Rotate extends Gesture {
-  /**
-   * Constructor function for the Rotate class.
-   */
-  constructor() {
-    super('rotate');
-  }
+    
 
-  /**
-   * Store individual angle progress on each input, return average angle change.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
-  getAngle(state) {
-    let angle = 0;
-    state.active.forEach( i => {
-      const progress = i.getProgressOfGesture(this.id);
-      const currentAngle = state.centroid.angleTo(i.current.point);
-      angle += angularMinus(currentAngle, progress.previousAngle);
-      progress.previousAngle = currentAngle;
-    });
-    angle /= (state.active.length);
-    return angle;
-  }
+    
 
-  /**
-   * Event hook for the start of a gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
-  start(state) {
-    if (state.active.length &lt; REQUIRED_INPUTS) return null;
-    this.getAngle(state);
-  }
+    
 
-  /**
-   * Event hook for the move of a Rotate gesture.
-   *
-   * @param {State} state - current input state.
-   * @return {?ReturnTypes.RotateData} &lt;tt>null&lt;/tt> if this event did not occur
-   */
-  move(state) {
-    if (state.active.length &lt; REQUIRED_INPUTS) return null;
-    return {
-      pivot: state.centroid,
-      delta: this.getAngle(state),
-    };
-  }
+    
 
-  /**
-   * Event hook for the end of a gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
-  end(state) {
-    if (state.active.length &lt; REQUIRED_INPUTS) return null;
-    this.getAngle(state);
-  }
-}
+    
 
-const PI2 = 2 * Math.PI;
+    
 
-/**
- * Helper function to regulate angular differences, so they don't jump from 0 to
- * 2*PI or vice versa.
- *
- * @private
- * @param {number} a - Angle in radians.
- * @param {number} b - Angle in radians.
- * @return {number} c, given by: c = a - b such that || &lt; PI
- */
-function angularMinus(a, b = 0) {
-  let diff = a - b;
-  if (diff &lt; -Math.PI) {
-    diff += PI2;
-  } else if (diff > Math.PI) {
-    diff -= PI2;
-  }
-  return diff;
-}
+    
 
-module.exports = Rotate;
+    
 
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+        </div>
+    
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="westures.Gesture.html">westures.Gesture</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="move">
+            
+                <span class="type-signature"></span>move<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {<a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_Rotate.js.html">src/Rotate.js</a></code>,
+                <code><a href="src_Rotate.js.html#line75">line 75</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Event hook for the move of a Rotate gesture.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">State</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">current input state.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a></span>
+
+
+
+
+
+- <tt>null</tt> if this event did not occur
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -188,7 +376,7 @@ module.exports = Rotate;
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = '_sub'.replace(/"/g, '_');
+        var id = 'westures.Rotate_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
