@@ -16,14 +16,17 @@ const { Gesture } = require('westures-core');
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Track gesture forwards a list of active points and their centroid on each
  * of the selected phases.
  *
- * @extends Gesture 
+ * @extends westures.Gesture 
  * @see TrackData
+ * @memberof westures
  */
 class Track extends Gesture {
   /**

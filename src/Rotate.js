@@ -18,13 +18,16 @@ const REQUIRED_INPUTS = 2;
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Rotate is defined as two inputs moving with a changing angle between them.
  *
- * @extends Gesture 
- * @see RotateData
+ * @extends westures.Gesture 
+ * @see ReturnTypes.RotateData
+ * @memberof westures
  */
 class Rotate extends Gesture {
   /**
@@ -39,7 +42,6 @@ class Rotate extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {null}
    */
   getAngle(state) {
     let angle = 0;
@@ -58,7 +60,6 @@ class Rotate extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   start(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -69,7 +70,7 @@ class Rotate extends Gesture {
    * Event hook for the move of a Rotate gesture.
    *
    * @param {State} state - current input state.
-   * @return {?RotateData} <tt>null</tt> if this event did not occur
+   * @return {?ReturnTypes.RotateData} <tt>null</tt> if this event did not occur
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -84,7 +85,6 @@ class Rotate extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   end(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;

@@ -6,7 +6,6 @@
 
 const { Gesture } = require('westures-core');
 
-const DEFAULT_MIN_THRESHOLD = 1;
 const REQUIRED_INPUTS = 1;
 
 /**
@@ -21,13 +20,16 @@ const REQUIRED_INPUTS = 1;
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Pan is defined as a normal movement in any direction. 
  *
- * @extends Gesture 
- * @see PanData
+ * @extends westures.Gesture 
+ * @see ReturnTypes.PanData
+ * @memberof westures
  */
 class Pan extends Gesture {
   /**
@@ -42,6 +44,7 @@ class Pan extends Gesture {
     /**
      * Don't emit any data if this key is pressed.
      *
+     * @private
      * @type {string}
      */
     this.muteKey = options.muteKey;
@@ -76,8 +79,8 @@ class Pan extends Gesture {
    * Event hook for the move of a Pan.
    *
    * @param {State} state - current input state.
-   * @return {?PanData} <tt>null</tt> if the gesture was muted or otherwise not
-   *    recognized.
+   * @return {?ReturnTypes.PanData} <tt>null</tt> if the gesture was muted or
+   * otherwise not recognized.
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;

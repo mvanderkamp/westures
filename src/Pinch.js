@@ -20,13 +20,16 @@ const DEFAULT_MIN_INPUTS = 2;
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Pinch is defined as two or more inputs moving either together or apart.
  *
- * @extends Gesture 
- * @see PinchData
+ * @extends westures.Gesture 
+ * @see ReturnTypes.PinchData
+ * @memberof westures
  */
 class Pinch extends Gesture {
   /**
@@ -43,6 +46,7 @@ class Pinch extends Gesture {
      * The minimum number of inputs that must be active for a Pinch to be
      * recognized.
      *
+     * @private
      * @type {number}
      */
     this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
@@ -78,7 +82,7 @@ class Pinch extends Gesture {
    * Event hook for the move of a Pinch.
    *
    * @param {State} state - current input state.
-   * @return {?PinchData} <tt>null</tt> if not recognized.
+   * @return {?ReturnTypes.PinchData} <tt>null</tt> if not recognized.
    */
   move(state) {
     if (state.active.length < this.minInputs) return null;

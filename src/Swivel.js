@@ -22,14 +22,17 @@ const defaults = Object.freeze({
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
  * A Swivel is a single input rotating around a fixed point. The fixed point is
  * determined by the input's location at its 'start' phase.
  *
- * @extends Gesture 
- * @see SwivelData
+ * @extends westures.Gesture 
+ * @see ReturnTypes.SwivelData
+ * @memberof westures
  */
 class Swivel extends Gesture {
   /**
@@ -47,12 +50,18 @@ class Swivel extends Gesture {
 
     /**
      * The radius around the start point in which to do nothing.
+     *
+     * @private
+     * @type {number}
      */
     this.deadzoneRadius = options.deadzoneRadius || defaults.deadzoneRadius;
 
     /**
      * If this is set, gesture will only respond to events where this property
      * is truthy. Should be one of 'ctrlKey', 'altKey', or 'shiftKey'.
+     *
+     * @private
+     * @type {string}
      */
     this.enableKey = options.enableKey;
   }
@@ -90,7 +99,8 @@ class Swivel extends Gesture {
    * Event hook for the move of a Swivel gesture.
    *
    * @param {State} state - current input state.
-   * @return {?SwivelData} <tt>null</tt> if the gesture is not recognized.
+   * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
+   * recognized.
    */
   move(state) {
     if (state.active.length !== REQUIRED_INPUTS) return null;

@@ -20,6 +20,8 @@ const PROGRESS_STACK_SIZE = 5;
  * @property {string} phase - 'start', 'move', or 'end'.
  * @property {string} type - The name of the gesture as specified by its
  *    designer.
+ *
+ * @memberof ReturnTypes
  */
 
 /**
@@ -27,8 +29,9 @@ const PROGRESS_STACK_SIZE = 5;
  * increasing velocity and leaving the screen at some point before it drops
  * below it's escape velocity.
  *
- * @extends Gesture 
- * @see SwipeData
+ * @extends westures.Gesture 
+ * @see ReturnTypes.SwipeData
+ * @memberof westures
  */
 class Swipe extends Gesture {
   /**
@@ -44,7 +47,6 @@ class Swipe extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
@@ -70,7 +72,8 @@ class Swipe extends Gesture {
    * Determines if the input's history validates a swipe motion.
    *
    * @param {State} state - current input state.
-   * @return {?SwipeData} <tt>null</tt> if the gesture is not recognized.
+   * @return {?ReturnTypes.SwipeData} <tt>null</tt> if the gesture is not
+   * recognized.
    */
   end(state) {
     const ended = state.getInputsInPhase('end');
@@ -103,9 +106,20 @@ class Swipe extends Gesture {
   }
 }
 
-/*
+/**
  * Local helper function for calculating the velocity between two timestamped
  * points.
+ *
+ * @private
+ *
+ * @param {object} start
+ * @param {westures.Point2D} start.point
+ * @param {number} start.time
+ * @param {object} end
+ * @param {westures.Point2D} end.point
+ * @param {number} end.time
+ *
+ * @return {number} velocity from start to end point.
  */
 function calc_velocity(start, end) {
   const distance = end.point.distanceTo(start.point);
