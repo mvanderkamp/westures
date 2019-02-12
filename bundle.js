@@ -190,14 +190,15 @@ class Gesture {
    * @param {string} type - The name of the gesture.
    */
   constructor(type) {
-    /**
-     * The type or name of the gesture. (e.g. 'pan' or 'tap' or 'pinch').
-     *
-     * @type {string}
-     */
     if (typeof type !== 'string') {
       throw new TypeError('Gestures require a string type');
     }
+
+    /**
+     * The name of the gesture. (e.g. 'pan' or 'tap' or 'pinch').
+     *
+     * @type {string}
+     */
     this.type = type;
 
     /**
@@ -211,9 +212,7 @@ class Gesture {
   }
 
   /**
-   * Event hook for the start of a gesture.
-   *
-   * @private
+   * Event hook for the start phase of a gesture.
    *
    * @param {State} state - The input state object of the current region.
    *
@@ -225,9 +224,7 @@ class Gesture {
   }
 
   /**
-   * Event hook for the move of a gesture.
-   *
-   * @private
+   * Event hook for the move phase of a gesture.
    *
    * @param {State} state - The input state object of the current region.
    *
@@ -239,9 +236,7 @@ class Gesture {
   }
 
   /**
-   * Event hook for the move of a gesture.
-   *
-   * @private
+   * Event hook for the end phase of a gesture.
    *
    * @param {State} state - The input state object of the current region.
    *
@@ -269,7 +264,9 @@ const PointerData = require('./PointerData.js');
  * In case event.composedPath() is not available.
  *
  * @private
+ *
  * @param {Event} event
+ *
  * @return {Element[]} The elements along the composed path of the event.
  */
 function getPropagationPath(event) {
@@ -422,8 +419,8 @@ class Input {
    *
    * @param {Element} element
    *
-   * @return {boolean} true if the PointerData occurred inside the element,
-   *    false otherwise.
+   * @return {boolean} true if the Input began inside the element, false
+   *    otherwise.
    */
   wasInitiallyInside(element) {
     return this.initialElements.has(element);
