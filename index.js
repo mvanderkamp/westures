@@ -73,3 +73,17 @@ module.exports = {
  * @memberof westures
  */
 
+/**
+ * The base data that is included for all emitted gestures.
+ *
+ * @typedef {Object} BaseData
+ *
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
+ * @property {Element} target - The bound target of the gesture.
+ *
+ * @memberof ReturnTypes
+ */
