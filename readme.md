@@ -1,5 +1,9 @@
 # westures 
 
+[![Maintainability](
+https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
+](https://codeclimate.com/github/mvanderkamp/westures/maintainability)
+
 Westures is intended to be a lightweight JavaScript gesture detection library.
 Whether it achieves that goal at this point is... yet to be determined.
 
