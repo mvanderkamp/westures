@@ -142,11 +142,11 @@ class Swivel extends Gesture {
       if (progress.active) {
         output = this.calculateOutput(progress, input);
       } else {
-        // enableKey was just pressed again.
+        // The enableKey was just pressed again.
         this.restart(progress, input);
       }
     } else {
-      // enableKey was released, therefore pivot point is now invalid.
+      // The enableKey was released, therefore pivot point is now invalid.
       progress.active = false;
     }
 
