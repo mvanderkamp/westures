@@ -11,18 +11,14 @@ const DEFAULT_MIN_INPUTS = 2;
 /**
  * Data returned when a Pinch is recognized.
  *
- * @typedef PinchData
- * @type {Object}
+ * @typedef {Object} PinchData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} distance - The average distance from an active input to
  *    the centroid.
  * @property {number} change - The change in distance since last emit.
  * @property {westures.Point2D} midpoint - The centroid of the currently active
  *    points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -61,7 +57,6 @@ class Pinch extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   initializeProgress(state) {
     const distance = state.centroid.averageDistanceTo(state.activePoints);
@@ -74,7 +69,6 @@ class Pinch extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   start(state) {
     if (state.active.length >= this.minInputs) {
@@ -108,7 +102,6 @@ class Pinch extends Gesture {
    *
    * @private
    * @param {State} input status object
-   * @return {undefined}
    */
   end(state) {
     if (state.active.length >= this.minInputs) {

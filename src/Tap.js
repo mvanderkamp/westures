@@ -16,15 +16,11 @@ const defaults = Object.freeze({
 /**
  * Data returned when a Tap is recognized.
  *
- * @typedef TapData
- * @type {Object}
+ * @typedef {Object} TapData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} x - x coordinate of tap point.
  * @property {number} y - y coordinate of tap point.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */

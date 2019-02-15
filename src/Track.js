@@ -9,16 +9,12 @@ const { Gesture } = require('westures-core');
 /**
  * Data returned when a Track is recognized.
  *
- * @typedef TrackData
- * @type {Object}
+ * @typedef {Object} TrackData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {westures.Point2D[]} active - Points currently in 'start' or 'move'
  *    phase.
  * @property {westures.Point2D} centroid - centroid of currently active points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */

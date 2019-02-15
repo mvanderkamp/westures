@@ -11,16 +11,12 @@ const REQUIRED_INPUTS = 2;
 /**
  * Data returned when a Rotate is recognized.
  *
- * @typedef RotateData
- * @type {Object}
+ * @typedef {Object} RotateData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} delta - In radians, the change in angle since last emit.
  * @property {westures.Point2D} pivot - The centroid of the currently active
  *    points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
