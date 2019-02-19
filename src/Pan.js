@@ -11,16 +11,12 @@ const REQUIRED_INPUTS = 1;
 /**
  * Data returned when a Pan is recognized.
  *
- * @typedef PanData
- * @type {Object}
+ * @typedef {Object} PanData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {westures.Point2D} change - The change vector from the last emit.
  * @property {westures.Point2D} point - The centroid of the currently active
  *    points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -69,7 +65,6 @@ class Pan extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   start(state) {
     if (state.active.length >= REQUIRED_INPUTS) {
@@ -105,7 +100,6 @@ class Pan extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   end(state) {
     if (state.active.length >= REQUIRED_INPUTS) {

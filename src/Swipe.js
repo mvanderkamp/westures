@@ -12,16 +12,12 @@ const PROGRESS_STACK_SIZE = 5;
 /**
  * Data returned when a Swipe is recognized.
  *
- * @typedef SwipeData
- * @type {Object}
+ * @typedef {Object} SwipeData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} velocity - The velocity of the swipe.
  * @property {number} direction - In radians, the direction of the swipe.
  * @property {westures.Point2D} point - The point at which the swipe ended.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */

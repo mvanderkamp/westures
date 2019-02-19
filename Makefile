@@ -11,7 +11,7 @@ fix:
 
 bundle:
 	npx browserify 'index.js' \
-		--standalone westures-core \
+		--standalone westures \
 		--outfile 'bundle.js';
 
 docs:

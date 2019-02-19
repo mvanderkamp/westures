@@ -1,9 +1,15 @@
 # westures 
 
+[![Maintainability](
+https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
+](https://codeclimate.com/github/mvanderkamp/westures/maintainability)
+
 Westures is intended to be a lightweight JavaScript gesture detection library.
 Whether it achieves that goal at this point is... yet to be determined.
 
-This module includes `westures-core` as well as a base set of gestures.
+This module includes
+[westures-core](https://mvanderkamp.github.io/westures-core/) as well as a base
+set of gestures.
 
 Westures is a fork of [ZingTouch](https://github.com/zingchart/zingtouch).
 
@@ -25,6 +31,7 @@ __NOTE:__ _This readme is still under construction!_
 - [Basic Usage](#basic-usage)
 - [Implementing Custom Gestures](#implementing-custom-gestures)
 - [What's Changed](#changes-from-zingtouch)
+- [Links](#links)
 
 ## Overview
 
@@ -55,8 +62,8 @@ const wes = require('westures');
 ### Declaring a Region
 
 First, decide what region should listen for events. If you want elements to
-continue responding to input events from the `move` and `end` phases even if the
-pointer moves outside the element, you should use an region that contains the
+continue to respond to input events from the `move` and `end` phases even if the
+pointer moves outside the element, you should use a region that contains the
 element. This can even be the window object if you want these events to fire
 event if the pointer goes outside the browser window.
 
@@ -67,10 +74,10 @@ const region = new wes.Region(window);
 ```
 
 Of course, if you have lots of interactable elements on your page, you may want
-to consider using smaller elements as binding regions, or even the interactable
-element itself.
+to consider using smaller elements as regions, or event the interactable element
+itself. Test it out in any case, and see what works better for you.
 
-For example, if you have a canvas element with id `draw-stuff` that you want to
+For example, if you have a canvas element with id `draw-struff` that you want to
 interact with, you could do:
 
 ```javascript
@@ -79,11 +86,19 @@ const region = new wes.Region(document.querySelector('#draw-stuff'));
 
 ### Binding an element within a Region
 
-Suppose you have a div (id 'pannable') within which you want to detect a Pan
-gesture. Your handler is called `panner`.
+When you add a gesture to a region, you need to provide a handler as well as an
+Element along with the gesture. The gesture will only be recognized when the
+first pointer to interact with the region was inside the given Element.
+Therefore unless you want to try something fancy the gesture element should
+probably be contained inside the region element. It could even be the region
+element.
+
+Now for an example. Suppose you have a div (id 'pannable') within which you want
+to detect a Pan gesture (assume that such a gesture is available). Your handler
+is called `panner`.
 
 ```javascript
-region.bind(document.querySelector('#pannable'), new wes.Pan(), panner);
+region.addGesture(document.querySelector('#pannable'), new Pan(), panner);
 ```
 
 The `panner` function will now be called whenever a Pan hook returns non-null
@@ -134,7 +149,7 @@ The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.
 
 For information about what data is accessible via the State object, see the full
-documentation [here](https://mvanderkamp.github.io/westures-core/index.html).
+documentation [here](https://mvanderkamp.github.io/westures-core/State.html).
 Note that his documentation was generated with `jsdoc`.
 
 ### Storing the "progress" of a Gesture
@@ -187,11 +202,12 @@ to handlers, and for the most part what that data will be. Note though that a
 few propertiess will get added to the outgoing data object before the handler is
 called. Those properties are:
 
-Name  | Type   | Value
-------|--------|-------
-event | Event  | The input event which caused the gesture to be recognized
-phase | String | 'start', 'move', or 'end'
-type  | String | The name of the gesture as specified by its designer.
+Name   | Type    | Value
+-------|---------|-------
+event  | Event   | The input event which caused the gesture to be recognized
+phase  | String  | 'start', 'move', or 'end'
+type   | String  | The name of the gesture as specified by its designer.
+target | Element | The Element that is associated with the recognized gesture.
 
 ## Changes From ZingTouch
 
@@ -222,5 +238,19 @@ gesture support. Beyond that, here are some spefic changes:
 - Simplified handler interaction. As the handlers are called directly instead of
   as the callback for an event, the parameters do not need to be wrapped up
   inside the 'details' property of an event object.
+- Renamed 'bind' to 'addGesture' and 'unbind' to 'removeGestures'.
 
+## Links
+
+### westures
+
+- [npm](https://www.npmjs.com/package/westures)
+- [github](https://github.com/mvanderkamp/westures)
+- [documentation](https://mvanderkamp.github.io/westures/)
+
+### westures-core
+
+- [npm](https://www.npmjs.com/package/westures-core)
+- [github](https://github.com/mvanderkamp/westures-core)
+- [documentation](https://mvanderkamp.github.io/westures-core/)
 

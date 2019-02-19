@@ -10,7 +10,6 @@
 'use strict';
 
 const { Gesture, Point2D, Region } = require('westures-core');
-// const { Gesture, Point2D, Region } = require('../westures-core');
 
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
@@ -74,6 +73,20 @@ module.exports = {
  * @memberof westures
  */
 
+/**
+ * The base data that is included for all emitted gestures.
+ *
+ * @typedef {Object} BaseData
+ *
+ * @property {Event} event - The input event which caused the gesture to be
+ *    recognized.
+ * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} type - The name of the gesture as specified by its
+ *    designer.
+ * @property {Element} target - The bound target of the gesture.
+ *
+ * @memberof ReturnTypes
+ */
 
 },{"./src/Pan.js":11,"./src/Pinch.js":12,"./src/Rotate.js":13,"./src/Swipe.js":14,"./src/Swivel.js":15,"./src/Tap.js":16,"./src/Track.js":17,"westures-core":2}],2:[function(require,module,exports){
 /**
@@ -161,6 +174,7 @@ class Binding {
       data.phase = hook;
       data.event = state.event;
       data.type = this.gesture.type;
+      data.target = this.element;
       this.handler(data);
     }
   }
@@ -500,7 +514,7 @@ class Point2D {
   /**
    * Calculates the angle between this point and the given point.
    *
-   * @param {westures-core.Point2D} point - Projected point for calculating the
+   * @param {!westures-core.Point2D} point - Projected point for calculating the
    * angle.
    *
    * @return {number} Radians along the unit circle where the projected
@@ -514,12 +528,13 @@ class Point2D {
    * Determine the average distance from this point to the provided array of
    * points.
    *
-   * @param {westures-core.Point2D[]} points - the Point2D objects to calculate
+   * @param {!westures-core.Point2D[]} points - the Point2D objects to calculate
    *    the average distance to.
+   *
    * @return {number} The average distance from this point to the provided
    *    points.
    */
-  averageDistanceTo(points = []) {
+  averageDistanceTo(points) {
     return this.totalDistanceTo(points) / points.length;
   }
 
@@ -535,7 +550,7 @@ class Point2D {
   /**
    * Calculates the distance between two points.
    *
-   * @param {westures-core.Point2D} point - Point to which the distance is
+   * @param {!westures-core.Point2D} point - Point to which the distance is
    * calculated.
    *
    * @return {number} The distance between the two points, a.k.a. the
@@ -548,7 +563,7 @@ class Point2D {
   /**
    * Subtract the given point from this point.
    *
-   * @param {westures-core.Point2D} point - Point to subtract from this point.
+   * @param {!westures-core.Point2D} point - Point to subtract from this point.
    *
    * @return {westures-core.Point2D} A new Point2D, which is the result of (this
    * - point).
@@ -563,7 +578,7 @@ class Point2D {
   /**
    * Return the summation of this point to the given point.
    *
-   * @param {westures-core.Point2D} point - Point to add to this point.
+   * @param {!westures-core.Point2D} point - Point to add to this point.
    *
    * @return {westures-core.Point2D} A new Point2D, which is the addition of the
    * two points.
@@ -578,12 +593,12 @@ class Point2D {
   /**
    * Calculates the total distance from this point to an array of points.
    *
-   * @param {westures-core.Point2D[]} points - The array of Point2D objects to
+   * @param {!westures-core.Point2D[]} points - The array of Point2D objects to
    *    calculate the total distance to.
    *
    * @return {number} The total distance from this point to the provided points.
    */
-  totalDistanceTo(points = []) {
+  totalDistanceTo(points) {
     return points.reduce((d, p) => d + this.distanceTo(p), 0);
   }
 
@@ -775,6 +790,22 @@ class Region {
     this.bindings = [];
 
     /**
+     * The list of active bindings for the current input session.
+     *
+     * @private
+     * @type {Binding[]}
+     */
+    this.activeBindings = [];
+
+    /**
+     * Whether an input session is currently active.
+     *
+     * @private
+     * @type {boolean}
+     */
+    this.isWaiting = true;
+
+    /**
      * The element being bound to.
      *
      * @private
@@ -821,8 +852,9 @@ class Region {
     /*
      * Having to listen to both mouse and touch events is annoying, but
      * necessary due to conflicting standards and browser implementations.
-     * Pointer is a fallback instead of the primary because it lacks useful
-     * properties such as 'ctrlKey' and 'altKey'.
+     * Pointer is a fallback for now instead of the primary, until I figure out
+     * all the details to do with pointer-events and touch-action and their
+     * cross browser compatibility.
      *
      * Listening to both mouse and touch comes with the difficulty that
      * preventDefault() must be called to prevent both events from iterating
@@ -856,6 +888,32 @@ class Region {
   }
 
   /**
+   * Selects the bindings that are active for the current input sequence.
+   *
+   * @private
+   */
+  updateBindings() {
+    if (this.isWaiting && this.state.inputs.length > 0) {
+      const input = this.state.inputs[0];
+      this.activeBindings = this.bindings.filter(b => {
+        return input.wasInitiallyInside(b.element);
+      });
+      this.isWaiting = false;
+    }
+  }
+
+  /**
+   * Evaluates whether the current input session has completed.
+   *
+   * @private
+   */
+  pruneBindings() {
+    if (this.state.hasNoActiveInputs()) {
+      this.isWaiting = true;
+    }
+  }
+
+  /**
    * All input events flow through this function. It makes sure that the input
    * state is maintained, determines which bindings to analyze based on the
    * initial position of the inputs, calls the relevant gesture hooks, and
@@ -865,26 +923,30 @@ class Region {
    * @param {Event} event - The event emitted from the window object.
    */
   arbitrate(event) {
-    if (this.preventDefault) event.preventDefault();
-
     this.state.updateAllInputs(event, this.element);
+    this.updateBindings();
 
-    this.retrieveBindingsByInitialPos().forEach(binding => {
-      binding.evaluateHook(PHASE[event.type], this.state);
-    });
+    if (this.activeBindings.length > 0) {
+      if (this.preventDefault) event.preventDefault();
+
+      this.activeBindings.forEach(binding => {
+        binding.evaluateHook(PHASE[event.type], this.state);
+      });
+    }
 
     this.state.clearEndedInputs();
+    this.pruneBindings();
   }
 
   /**
-   * Bind an element to a gesture with multiple function signatures.
+   * Bind an element to a gesture with an associated handler.
    *
    * @param {Element} element - The element object.
    * @param {westures-core.Gesture} gesture - Gesture type with which to bind.
    * @param {Function} handler - The function to execute when a gesture is
    *    recognized.
    */
-  bind(element, gesture, handler) {
+  addGesture(element, gesture, handler) {
     this.bindings.push(new Binding(element, gesture, handler));
   }
 
@@ -897,22 +959,8 @@ class Region {
    *
    * @return {Binding[]} Bindings to which the element is bound.
    */
-  retrieveBindingsByElement(element) {
+  getBindingsByElement(element) {
     return this.bindings.filter(b => b.element === element);
-  }
-
-  /**
-   * Retrieves all bindings based upon the initial X/Y position of the inputs.
-   * e.g. if gesture started on the correct target element, but diverted away
-   * into the correct region, this would still be valid.
-   *
-   * @private
-   * @return {Binding[]} Bindings in which an active input began.
-   */
-  retrieveBindingsByInitialPos() {
-    return this.bindings.filter(b => {
-      return this.state.someInputWasInitiallyInside(b.element);
-    });
   }
 
   /**
@@ -922,21 +970,13 @@ class Region {
    * @param {Element} element - The element to unbind.
    * @param {westures-core.Gesture} [ gesture ] - The gesture to unbind. If
    * undefined, will unbind all Bindings associated with the given element.
-   *
-   * @return {Binding[]} Bindings that were unbound to the element.
    */
-  unbind(element, gesture) {
-    const bindings = this.retrieveBindingsByElement(element);
-    const unbound = [];
-
-    bindings.forEach(b => {
+  removeGestures(element, gesture) {
+    this.getBindingsByElement(element).forEach(b => {
       if (gesture == null || b.gesture === gesture) {
         this.bindings.splice(this.bindings.indexOf(b), 1);
-        unbound.push(b);
       }
     });
-
-    return unbound;
   }
 }
 
@@ -976,7 +1016,9 @@ const update_fns = {
   },
 
   MouseEvent: function MouseEvent(event) {
-    this.updateInput(event, event.button);
+    if (event.button === 0) {
+      this.updateInput(event, event.button);
+    }
   },
 };
 
@@ -1068,13 +1110,10 @@ class State {
 
   /**
    * @private
-   *
-   * @param {Element} element - The Element to test.
-   *
-   * @return {boolean} True if some input was initially inside the element.
+   * @return {boolean} True if there are no active inputs. False otherwise.
    */
-  someInputWasInitiallyInside(element) {
-    return this.inputs.some(i => i.wasInitiallyInside(element));
+  hasNoActiveInputs() {
+    return this[symbols.inputs].size === 0;
   }
 
   /**
@@ -1126,16 +1165,12 @@ const REQUIRED_INPUTS = 1;
 /**
  * Data returned when a Pan is recognized.
  *
- * @typedef PanData
- * @type {Object}
+ * @typedef {Object} PanData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {westures.Point2D} change - The change vector from the last emit.
  * @property {westures.Point2D} point - The centroid of the currently active
  *    points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -1184,7 +1219,6 @@ class Pan extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   start(state) {
     if (state.active.length >= REQUIRED_INPUTS) {
@@ -1220,7 +1254,6 @@ class Pan extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   end(state) {
     if (state.active.length >= REQUIRED_INPUTS) {
@@ -1246,18 +1279,14 @@ const DEFAULT_MIN_INPUTS = 2;
 /**
  * Data returned when a Pinch is recognized.
  *
- * @typedef PinchData
- * @type {Object}
+ * @typedef {Object} PinchData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} distance - The average distance from an active input to
  *    the centroid.
  * @property {number} change - The change in distance since last emit.
  * @property {westures.Point2D} midpoint - The centroid of the currently active
  *    points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -1296,7 +1325,6 @@ class Pinch extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   initializeProgress(state) {
     const distance = state.centroid.averageDistanceTo(state.activePoints);
@@ -1309,7 +1337,6 @@ class Pinch extends Gesture {
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   start(state) {
     if (state.active.length >= this.minInputs) {
@@ -1343,7 +1370,6 @@ class Pinch extends Gesture {
    *
    * @private
    * @param {State} input status object
-   * @return {undefined}
    */
   end(state) {
     if (state.active.length >= this.minInputs) {
@@ -1369,16 +1395,12 @@ const REQUIRED_INPUTS = 2;
 /**
  * Data returned when a Rotate is recognized.
  *
- * @typedef RotateData
- * @type {Object}
+ * @typedef {Object} RotateData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} delta - In radians, the change in angle since last emit.
  * @property {westures.Point2D} pivot - The centroid of the currently active
  *    points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -1494,16 +1516,12 @@ const PROGRESS_STACK_SIZE = 5;
 /**
  * Data returned when a Swipe is recognized.
  *
- * @typedef SwipeData
- * @type {Object}
+ * @typedef {Object} SwipeData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} velocity - The velocity of the swipe.
  * @property {number} direction - In radians, the direction of the swipe.
  * @property {westures.Point2D} point - The point at which the swipe ended.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -1623,7 +1641,7 @@ module.exports = Swipe;
 
 'use strict';
 
-const { Gesture } = require('westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const defaults = Object.freeze({
@@ -1633,16 +1651,12 @@ const defaults = Object.freeze({
 /**
  * Data returned when a Swivel is recognized.
  *
- * @typedef SwivelData
- * @type {Object}
+ * @typedef {Object} SwivelData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} delta - In radians, the change in angle since last emit.
  * @property {westures.Point2D} pivot - The pivot point.
  * @property {westures.Point2D} point - The current location of the input point.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -1665,6 +1679,9 @@ class Swivel extends Gesture {
    * @param {string} [options.enableKey=undefined] - One of 'altKey', 'ctrlKey',
    *    'metaKey', or 'shiftKey'. If set, gesture will only be recognized while
    *    this key is down.
+   * @param {boolean} [options.pivotCenter] - If true, the swivel's pivot point
+   *    will be set to the center of the element. Otherwise, the pivot will be
+   *    the location of the first pointerdown/mousedown/touchstart.
    */
   constructor(options = {}) {
     super('swivel');
@@ -1685,6 +1702,15 @@ class Swivel extends Gesture {
      * @type {string}
      */
     this.enableKey = options.enableKey;
+
+    /**
+     * If this is set, the swivel will use the center of the element as its
+     * pivot point. Unreliable if the element is moved during a swivel gesture.
+     *
+     * @private
+     * @type {Element}
+     */
+    this.pivotCenter = options.pivotCenter;
   }
 
   /**
@@ -1699,22 +1725,59 @@ class Swivel extends Gesture {
   }
 
   /**
+   * Restart the given progress object using the given input object.
+   *
+   * @private
+   *
+   * @param {Object} progress - Progress object to restart.
+   * @param {Input} input - Input object to use for restarting progress.
+   */
+  restart(progress, input) {
+    progress.active = true;
+    if (this.pivotCenter) {
+      const rect = this.pivotCenter.getBoundingClientRect();
+      progress.pivot = new Point2D(
+        rect.x + (rect.width / 2),
+        rect.y + (rect.height / 2)
+      );
+    } else {
+      progress.pivot = input.current.point;
+    }
+    progress.previousAngle = 0;
+  }
+
+  /**
    * Event hook for the start of a Swivel gesture.
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   start(state) {
-    if (!this.enabled(state.event)) return null;
-
     const started = state.getInputsInPhase('start');
-    if (started.length !== REQUIRED_INPUTS) return null;
+    if (started.length === REQUIRED_INPUTS && this.enabled(state.event)) {
+      this.restart(started[0].getProgressOfGesture(this.id), started[0]);
+    }
+  }
 
-    const progress = started[0].getProgressOfGesture(this.id);
-    progress.pivot = started[0].current.point;
-    progress.previousAngle = 0;
+  /**
+   * Determine the data to emit. To be called once valid state for a swivel has
+   * been assured, except for deadzone.
+   *
+   * @private
+   *
+   * @param {Object} progress - Progress object to restart.
+   * @param {Input} input - Input object to use for restarting progress.
+   */
+  calculateOutput(progress, input) {
+    const point = input.current.point;
+    const pivot = progress.pivot;
+    const angle = pivot.angleTo(point);
+    const delta = angle - progress.previousAngle;
+    progress.previousAngle = angle;
 
+    if (pivot.distanceTo(point) > this.deadzoneRadius) {
+      return { delta, pivot, point };
+    }
     return null;
   }
 
@@ -1729,31 +1792,22 @@ class Swivel extends Gesture {
     if (state.active.length !== REQUIRED_INPUTS) return null;
 
     const input = state.active[0];
-
     const progress = input.getProgressOfGesture(this.id);
+    let output = null;
+
     if (this.enabled(state.event)) {
-      if (!progress.pivot) {
-        // Restart: enableKey was just pressed again.
-        progress.pivot = input.current.point;
-        progress.previousAngle = 0;
-        return null;
+      if (progress.active) {
+        output = this.calculateOutput(progress, input);
+      } else {
+        // The enableKey was just pressed again.
+        this.restart(progress, input);
       }
-
-      const point = input.current.point;
-      const pivot = progress.pivot;
-      const angle = pivot.angleTo(point);
-      const delta = angle - progress.previousAngle;
-      progress.previousAngle = angle;
-
-      if (pivot.distanceTo(point) <= this.deadzoneRadius) {
-        return null;
-      }
-      return { delta, pivot, point };
+    } else {
+      // The enableKey was released, therefore pivot point is now invalid.
+      progress.active = false;
     }
 
-    // CTRL key was released, therefore pivot point is now invalid.
-    delete progress.pivot;
-    return null;
+    return output;
   }
 }
 
@@ -1779,15 +1833,11 @@ const defaults = Object.freeze({
 /**
  * Data returned when a Tap is recognized.
  *
- * @typedef TapData
- * @type {Object}
+ * @typedef {Object} TapData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} x - x coordinate of tap point.
  * @property {number} y - y coordinate of tap point.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -1907,16 +1957,12 @@ const { Gesture } = require('westures-core');
 /**
  * Data returned when a Track is recognized.
  *
- * @typedef TrackData
- * @type {Object}
+ * @typedef {Object} TrackData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {westures.Point2D[]} active - Points currently in 'start' or 'move'
  *    phase.
  * @property {westures.Point2D} centroid - centroid of currently active points.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */

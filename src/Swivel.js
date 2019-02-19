@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture } = require('westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const defaults = Object.freeze({
@@ -14,16 +14,12 @@ const defaults = Object.freeze({
 /**
  * Data returned when a Swivel is recognized.
  *
- * @typedef SwivelData
- * @type {Object}
+ * @typedef {Object} SwivelData
+ * @mixes ReturnTypes.BaseData
+ *
  * @property {number} delta - In radians, the change in angle since last emit.
  * @property {westures.Point2D} pivot - The pivot point.
  * @property {westures.Point2D} point - The current location of the input point.
- * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
- * @property {string} type - The name of the gesture as specified by its
- *    designer.
  *
  * @memberof ReturnTypes
  */
@@ -46,6 +42,9 @@ class Swivel extends Gesture {
    * @param {string} [options.enableKey=undefined] - One of 'altKey', 'ctrlKey',
    *    'metaKey', or 'shiftKey'. If set, gesture will only be recognized while
    *    this key is down.
+   * @param {boolean} [options.pivotCenter] - If true, the swivel's pivot point
+   *    will be set to the center of the element. Otherwise, the pivot will be
+   *    the location of the first pointerdown/mousedown/touchstart.
    */
   constructor(options = {}) {
     super('swivel');
@@ -66,6 +65,15 @@ class Swivel extends Gesture {
      * @type {string}
      */
     this.enableKey = options.enableKey;
+
+    /**
+     * If this is set, the swivel will use the center of the element as its
+     * pivot point. Unreliable if the element is moved during a swivel gesture.
+     *
+     * @private
+     * @type {Element}
+     */
+    this.pivotCenter = options.pivotCenter;
   }
 
   /**
@@ -80,22 +88,59 @@ class Swivel extends Gesture {
   }
 
   /**
+   * Restart the given progress object using the given input object.
+   *
+   * @private
+   *
+   * @param {Object} progress - Progress object to restart.
+   * @param {Input} input - Input object to use for restarting progress.
+   */
+  restart(progress, input) {
+    progress.active = true;
+    if (this.pivotCenter) {
+      const rect = this.pivotCenter.getBoundingClientRect();
+      progress.pivot = new Point2D(
+        rect.x + (rect.width / 2),
+        rect.y + (rect.height / 2)
+      );
+    } else {
+      progress.pivot = input.current.point;
+    }
+    progress.previousAngle = 0;
+  }
+
+  /**
    * Event hook for the start of a Swivel gesture.
    *
    * @private
    * @param {State} state - current input state.
-   * @return {undefined}
    */
   start(state) {
-    if (!this.enabled(state.event)) return null;
-
     const started = state.getInputsInPhase('start');
-    if (started.length !== REQUIRED_INPUTS) return null;
+    if (started.length === REQUIRED_INPUTS && this.enabled(state.event)) {
+      this.restart(started[0].getProgressOfGesture(this.id), started[0]);
+    }
+  }
 
-    const progress = started[0].getProgressOfGesture(this.id);
-    progress.pivot = started[0].current.point;
-    progress.previousAngle = 0;
+  /**
+   * Determine the data to emit. To be called once valid state for a swivel has
+   * been assured, except for deadzone.
+   *
+   * @private
+   *
+   * @param {Object} progress - Progress object to restart.
+   * @param {Input} input - Input object to use for restarting progress.
+   */
+  calculateOutput(progress, input) {
+    const point = input.current.point;
+    const pivot = progress.pivot;
+    const angle = pivot.angleTo(point);
+    const delta = angle - progress.previousAngle;
+    progress.previousAngle = angle;
 
+    if (pivot.distanceTo(point) > this.deadzoneRadius) {
+      return { delta, pivot, point };
+    }
     return null;
   }
 
@@ -110,31 +155,22 @@ class Swivel extends Gesture {
     if (state.active.length !== REQUIRED_INPUTS) return null;
 
     const input = state.active[0];
-
     const progress = input.getProgressOfGesture(this.id);
+    let output = null;
+
     if (this.enabled(state.event)) {
-      if (!progress.pivot) {
-        // Restart: enableKey was just pressed again.
-        progress.pivot = input.current.point;
-        progress.previousAngle = 0;
-        return null;
+      if (progress.active) {
+        output = this.calculateOutput(progress, input);
+      } else {
+        // The enableKey was just pressed again.
+        this.restart(progress, input);
       }
-
-      const point = input.current.point;
-      const pivot = progress.pivot;
-      const angle = pivot.angleTo(point);
-      const delta = angle - progress.previousAngle;
-      progress.previousAngle = angle;
-
-      if (pivot.distanceTo(point) <= this.deadzoneRadius) {
-        return null;
-      }
-      return { delta, pivot, point };
+    } else {
+      // The enableKey was released, therefore pivot point is now invalid.
+      progress.active = false;
     }
 
-    // CTRL key was released, therefore pivot point is now invalid.
-    delete progress.pivot;
-    return null;
+    return output;
   }
 }
 
