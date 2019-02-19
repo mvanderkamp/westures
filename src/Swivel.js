@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture } = require('westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const defaults = Object.freeze({
@@ -42,6 +42,9 @@ class Swivel extends Gesture {
    * @param {string} [options.enableKey=undefined] - One of 'altKey', 'ctrlKey',
    *    'metaKey', or 'shiftKey'. If set, gesture will only be recognized while
    *    this key is down.
+   * @param {boolean} [options.pivotCenter] - If true, the swivel's pivot point
+   *    will be set to the center of the element. Otherwise, the pivot will be
+   *    the location of the first pointerdown/mousedown/touchstart.
    */
   constructor(options = {}) {
     super('swivel');
@@ -62,6 +65,15 @@ class Swivel extends Gesture {
      * @type {string}
      */
     this.enableKey = options.enableKey;
+
+    /**
+     * If this is set, the swivel will use the center of the element as its
+     * pivot point. Unreliable if the element is moved during a swivel gesture.
+     *
+     * @private
+     * @type {Element}
+     */
+    this.pivotCenter = options.pivotCenter;
   }
 
   /**
@@ -85,7 +97,15 @@ class Swivel extends Gesture {
    */
   restart(progress, input) {
     progress.active = true;
-    progress.pivot = input.current.point;
+    if (this.pivotCenter) {
+      const rect = this.pivotCenter.getBoundingClientRect();
+      progress.pivot = new Point2D(
+        rect.x + (rect.width / 2),
+        rect.y + (rect.height / 2)
+      );
+    } else {
+      progress.pivot = input.current.point;
+    }
     progress.previousAngle = 0;
   }
 
