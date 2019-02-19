@@ -9,7 +9,6 @@
 'use strict';
 
 const { Gesture, Point2D, Region } = require('westures-core');
-// const { Gesture, Point2D, Region } = require('../westures-core');
 
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
