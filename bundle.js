@@ -1740,10 +1740,11 @@ class Swivel extends Gesture {
         rect.x + (rect.width / 2),
         rect.y + (rect.height / 2)
       );
+      progress.previousAngle = progress.pivot.angleTo(input.current.point);
     } else {
       progress.pivot = input.current.point;
+      progress.previousAngle = 0;
     }
-    progress.previousAngle = 0;
   }
 
   /**

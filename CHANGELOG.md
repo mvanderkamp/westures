@@ -2,7 +2,13 @@
 
 ## Releases
 
+- [0.5.2](#0.5.2)
 - [0.5.0](#0.5.0)
+
+## 0.5.2
+
+- Fix bug in Swivel when using the `pivotCenter` option. Initial angle wasn't
+  being set correctly, causing jumps when initiating a Swivel.
 
 ## 0.5.0
 
