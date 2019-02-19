@@ -6,7 +6,7 @@
     "destination": "docs",
     "mainpagetitle": "Home | Westures Documentation",
     "package": "package.json",
-    "readme": "readme.md",
+    "readme": "README.md",
     "recurse": true,
     "template": "node_modules/tui-jsdoc-template"
   },
