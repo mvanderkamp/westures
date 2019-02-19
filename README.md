@@ -11,6 +11,10 @@ This module includes
 [westures-core](https://mvanderkamp.github.io/westures-core/) as well as a base
 set of gestures.
 
+Visit this page for an example of the system in action: [Westures Example](
+https://mvanderkamp.github.io/westures-example/). Note that this is best viewed
+on a touch device.
+
 Westures is a fork of [ZingTouch](https://github.com/zingchart/zingtouch).
 
 ## Advisory
