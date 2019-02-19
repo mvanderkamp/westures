@@ -36,8 +36,8 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "^16.2.3",
-    "eslint": "^5.13.0",
-    "jest": "^23.6.0",
+    "eslint": "^5.14.1",
+    "jest": "^24.1.0",
     "jsdoc": "^3.5.5",
     "tui-jsdoc-template": "^1.2.2"
   },
