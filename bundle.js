@@ -1679,9 +1679,9 @@ class Swivel extends Gesture {
    * @param {string} [options.enableKey=undefined] - One of 'altKey', 'ctrlKey',
    *    'metaKey', or 'shiftKey'. If set, gesture will only be recognized while
    *    this key is down.
-   * @param {boolean} [options.pivotCenter] - If true, the swivel's pivot point
-   *    will be set to the center of the element. Otherwise, the pivot will be
-   *    the location of the first pointerdown/mousedown/touchstart.
+   * @param {Element} [options.pivotCenter] - If set, the swivel's pivot point
+   *    will be set to the center of the given pivotCenter element. Otherwise,
+   *    the pivot will be the location of the first contact point.
    */
   constructor(options = {}) {
     super('swivel');
