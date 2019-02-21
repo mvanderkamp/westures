@@ -1845,6 +1845,20 @@ class Swivel extends Gesture {
 
     return output;
   }
+
+  /**
+   * Event hook for the end of a Swivel.
+   *
+   * @param {State} state - current input state.
+   * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
+   * recognized.
+   */
+  end(state) {
+    const active = state.active;
+    if (active.length === REQUIRED_INPUTS && this.enabled(state.event)) {
+      this.restart(active[0].getProgressOfGesture(this.id), active[0]);
+    }
+  }
 }
 
 module.exports = Swivel;
