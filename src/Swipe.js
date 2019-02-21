@@ -26,6 +26,8 @@ const PROGRESS_STACK_SIZE = 5;
  * Calculates the angle of movement along a series of moves.
  *
  * @private
+ * @see {@link https://en.wikipedia.org/wiki/Mean_of_circular_quantities}
+ *
  * @param {{time: number, point: module:westures-core.Point2D}} moves - The
  * moves list to process.
  * @param {number} vlim - The number of moves to process.
@@ -63,29 +65,26 @@ function calc_angle(moves, vlim) {
  */
 function velocity(start, end) {
   const distance = end.point.distanceTo(start.point);
-  const time = end.time - start.time;
+  const time = end.time - start.time + 1;
   return distance / time;
 }
 
 /**
- * Calculates the maximum veloctiy of movement through a series of moves.
+ * Calculates the veloctiy of movement through a series of moves.
  *
  * @private
  * @param {{time: number, point: module:westures-core.Point2D}} moves - The
  * moves list to process.
  * @param {number} vlim - The number of moves to process.
  *
- * @return {number} The maximum velocity of the moves.
+ * @return {number} The velocity of the moves.
  */
 function calc_velocity(moves, vlim) {
-  const velos = [];
+  let sum = 0;
   for (let i = 0; i < vlim; ++i) {
-    velos[i] = velocity(moves[i], moves[i + 1]);
+    sum += velocity(moves[i], moves[i + 1]);
   }
-
-  return velos.reduce((acc, cur) => {
-    return cur > acc ? cur : acc;
-  });
+  return sum / vlim;
 }
 
 /**
@@ -113,7 +112,7 @@ class Swipe extends Gesture {
    * @param {State} state - current input state.
    */
   move(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
+    if (state.active.length !== REQUIRED_INPUTS) return null;
 
     state.active.forEach(input => {
       const progress = input.getProgressOfGesture(this.id);
