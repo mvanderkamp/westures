@@ -1527,6 +1527,30 @@ const PROGRESS_STACK_SIZE = 5;
  */
 
 /**
+ * Calculates the angle of movement along a series of moves.
+ *
+ * @private
+ * @param {{time: number, point: module:westures-core.Point2D}} moves - The
+ * moves list to process.
+ * @param {number} vlim - The number of moves to process.
+ *
+ * @return {number} The angle of the movement.
+ */
+function calc_angle(moves, vlim) {
+  const point = moves[vlim].point;
+  let sin = 0;
+  let cos = 0;
+  for (let i = 0; i < vlim; ++i) {
+    const angle = moves[i].point.angleTo(point);
+    sin += Math.sin(angle);
+    cos += Math.cos(angle);
+  }
+  sin /= vlim;
+  cos /= vlim;
+  return Math.atan2(sin, cos);
+}
+
+/**
  * Local helper function for calculating the velocity between two timestamped
  * points.
  *
@@ -1541,10 +1565,31 @@ const PROGRESS_STACK_SIZE = 5;
  *
  * @return {number} velocity from start to end point.
  */
-function calc_velocity(start, end) {
+function velocity(start, end) {
   const distance = end.point.distanceTo(start.point);
   const time = end.time - start.time;
   return distance / time;
+}
+
+/**
+ * Calculates the maximum veloctiy of movement through a series of moves.
+ *
+ * @private
+ * @param {{time: number, point: module:westures-core.Point2D}} moves - The
+ * moves list to process.
+ * @param {number} vlim - The number of moves to process.
+ *
+ * @return {number} The maximum velocity of the moves.
+ */
+function calc_velocity(moves, vlim) {
+  const velos = [];
+  for (let i = 0; i < vlim; ++i) {
+    velos[i] = velocity(moves[i], moves[i + 1]);
+  }
+
+  return velos.reduce((acc, cur) => {
+    return cur > acc ? cur : acc;
+  });
 }
 
 /**
@@ -1604,24 +1649,15 @@ class Swipe extends Gesture {
     if (ended.length !== REQUIRED_INPUTS) return null;
 
     const progress = ended[0].getProgressOfGesture(this.id);
-    if (!progress.moves || progress.moves.length < PROGRESS_STACK_SIZE) {
+    const moves = progress.moves;
+    if (!moves || moves.length < PROGRESS_STACK_SIZE) {
       return null;
     }
-    const moves = progress.moves;
 
     const vlim = PROGRESS_STACK_SIZE - 1;
     const point = moves[vlim].point;
-    const velos = [];
-    let direction = 0;
-    for (let i = 0; i < vlim; ++i) {
-      velos[i] = calc_velocity(moves[i], moves[i + 1]);
-      direction += moves[i].point.angleTo(point);
-    }
-    direction /= vlim;
-
-    const velocity = velos.reduce((acc, cur) => {
-      return cur > acc ? cur : acc;
-    });
+    const velocity = calc_velocity(moves, vlim);
+    const direction = calc_angle(moves, vlim);
 
     return {
       point,
