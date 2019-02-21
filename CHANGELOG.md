@@ -2,8 +2,19 @@
 
 ## Releases
 
+- [0.5.3](#0.5.3)
 - [0.5.2](#0.5.2)
 - [0.5.0](#0.5.0)
+
+## 0.5.3
+
+- Fix buggy Swivel results caused by >1 active inputs.
+- Fix bugs in Swipe:
+    - Erroneous acceptance of >1 inputs.
+    - Velocity going to infinity in some cases (division by 0)
+    - Direction calculation could produce errors, switched to using a more
+      common mathematical approach.
+- Normalize Swipe a bit by taking average velocity instead of max. 
 
 ## 0.5.2
 
