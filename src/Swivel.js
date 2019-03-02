@@ -92,21 +92,33 @@ class Swivel extends Gesture {
    *
    * @private
    *
-   * @param {Object} progress - Progress object to restart.
    * @param {Input} input - Input object to use for restarting progress.
    */
-  restart(progress, input) {
+  restart(input) {
+    const progress = input.getProgressOfGesture(this.id);
     progress.active = true;
     if (this.pivotCenter) {
       const rect = this.pivotCenter.getBoundingClientRect();
       progress.pivot = new Point2D(
-        rect.x + (rect.width / 2),
-        rect.y + (rect.height / 2)
+        rect.left + (rect.width / 2),
+        rect.top + (rect.height / 2)
       );
       progress.previousAngle = progress.pivot.angleTo(input.current.point);
     } else {
       progress.pivot = input.current.point;
       progress.previousAngle = 0;
+    }
+  }
+
+  /**
+   * Refresh the gesture.
+   *
+   * @param {module:westures.Input[]} inputs - Input list to process.
+   * @param {Event} event - The event triggering this refresh.
+   */
+  refresh(inputs, event) {
+    if (inputs.length === REQUIRED_INPUTS && this.enabled(event)) {
+      this.restart(inputs[0]);
     }
   }
 
@@ -117,10 +129,7 @@ class Swivel extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    const started = state.getInputsInPhase('start');
-    if (started.length === REQUIRED_INPUTS && this.enabled(state.event)) {
-      this.restart(started[0].getProgressOfGesture(this.id), started[0]);
-    }
+    this.refresh(state.getInputsInPhase('start'), state.event);
   }
 
   /**
@@ -164,7 +173,7 @@ class Swivel extends Gesture {
         output = this.calculateOutput(progress, input);
       } else {
         // The enableKey was just pressed again.
-        this.restart(progress, input);
+        this.refresh(state.active, state.event);
       }
     } else {
       // The enableKey was released, therefore pivot point is now invalid.
@@ -178,14 +187,18 @@ class Swivel extends Gesture {
    * Event hook for the end of a Swivel.
    *
    * @param {State} state - current input state.
-   * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
-   * recognized.
    */
   end(state) {
-    const active = state.active;
-    if (active.length === REQUIRED_INPUTS && this.enabled(state.event)) {
-      this.restart(active[0].getProgressOfGesture(this.id), active[0]);
-    }
+    this.refresh(state.active, state.event);
+  }
+
+  /**
+   * Event hook for the cancel of a Swivel.
+   *
+   * @param {State} state - current input state.
+   */
+  cancel(state) {
+    this.end(state);
   }
 }
 
