@@ -1571,7 +1571,7 @@ module.exports = Rotate;
 const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
-const PROGRESS_STACK_SIZE = 10;
+const PROGRESS_STACK_SIZE = 7;
 
 /**
  * Data returned when a Swipe is recognized.
@@ -1681,7 +1681,7 @@ class Swipe extends Gesture {
      *
      * @type {ReturnTypes.SwipeData}
      */
-    this.emittable = null;
+    this.saved = null;
   }
 
   /**
@@ -1713,12 +1713,7 @@ class Swipe extends Gesture {
    */
   end(state) {
     if (this.moves.length < PROGRESS_STACK_SIZE) {
-      if (state.active.length > 0) {
-        return null;
-      }
-      const data = this.emittable;
-      this.emittable = null;
-      return data;
+      return this.emitSaved(state);
     }
 
     const vlim = PROGRESS_STACK_SIZE - 1;
@@ -1729,12 +1724,29 @@ class Swipe extends Gesture {
 
     const result = { point, velocity, direction };
     if (state.active.length > 0) {
-      this.emittable = result;
+      this.saved = result;
       return null;
     }
 
-    this.emittable = null;
+    this.saved = null;
     return result;
+  }
+
+  /**
+   * Emits current saved data if appropriate.
+   *
+   * @param {State} state - current input state.
+   */
+  emitSaved(state) {
+    this.moves = [];
+
+    if (state.active.length > 0) {
+      return null;
+    }
+
+    const data = this.saved;
+    this.saved = null;
+    return data;
   }
 
   /**
@@ -1744,7 +1756,7 @@ class Swipe extends Gesture {
    */
   cancel() {
     this.moves = [];
-    this.emittable = null;
+    this.saved = null;
   }
 }
 
