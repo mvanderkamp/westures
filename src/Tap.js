@@ -109,19 +109,17 @@ class Tap extends Gesture {
     const now = Date.now();
 
     this.ended = this.ended.concat(state.getInputsInPhase('end'))
-      .filter(i => {
-        const tdiff = now - i.startTime;
+      .filter(input => {
+        const tdiff = now - input.startTime;
         return tdiff <= this.maxDelay && tdiff >= this.minDelay;
       });
 
-    if (this.ended.length === 0 ||
-        this.ended.length !== this.numInputs ||
-        !this.ended.every(i => i.totalDistance() <= this.tolerance)) {
+    if (this.ended.length !== this.numInputs ||
+        this.ended.some(i => i.totalDistance() > this.tolerance)) {
       return null;
     }
 
-    const { x, y } = Point2D.midpoint(this.ended.map(i => i.current.point));
-    return { x, y };
+    return Point2D.midpoint(this.ended.map(i => i.current.point));
   }
 }
 
