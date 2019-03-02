@@ -7,7 +7,7 @@
 const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
-const PROGRESS_STACK_SIZE = 5;
+const PROGRESS_STACK_SIZE = 10;
 
 /**
  * Data returned when a Swipe is recognized.
@@ -80,11 +80,12 @@ function velocity(start, end) {
  * @return {number} The velocity of the moves.
  */
 function calc_velocity(moves, vlim) {
-  let sum = 0;
+  let max = 0;
   for (let i = 0; i < vlim; ++i) {
-    sum += velocity(moves[i], moves[i + 1]);
+    const current = velocity(moves[i], moves[i + 1]);
+    if (current > max) max = current;
   }
-  return sum / vlim;
+  return max;
 }
 
 /**
@@ -102,6 +103,21 @@ class Swipe extends Gesture {
    */
   constructor() {
     super('swipe');
+
+    /**
+     * Moves list.
+     *
+     * @private
+     * @type {object[]}
+     */
+    this.moves = [];
+
+    /**
+     * Data to emit when all points have ended.
+     *
+     * @type {ReturnTypes.SwipeData}
+     */
+    this.emittable = null;
   }
 
   /**
@@ -112,23 +128,16 @@ class Swipe extends Gesture {
    * @param {State} state - current input state.
    */
   move(state) {
-    if (state.active.length !== REQUIRED_INPUTS) return null;
-
-    state.active.forEach(input => {
-      const progress = input.getProgressOfGesture(this.id);
-      if (!progress.moves) progress.moves = [];
-
-      progress.moves.push({
+    if (state.active.length >= REQUIRED_INPUTS) {
+      this.moves.push({
         time:  Date.now(),
-        point: input.current.point,
+        point: state.centroid,
       });
 
-      while (progress.moves.length > PROGRESS_STACK_SIZE) {
-        progress.moves.shift();
+      while (this.moves.length > PROGRESS_STACK_SIZE) {
+        this.moves.shift();
       }
-    });
-
-    return null;
+    }
   }
 
   /**
@@ -139,26 +148,39 @@ class Swipe extends Gesture {
    * recognized.
    */
   end(state) {
-    const ended = state.getInputsInPhase('end');
-
-    if (ended.length !== REQUIRED_INPUTS) return null;
-
-    const progress = ended[0].getProgressOfGesture(this.id);
-    const moves = progress.moves;
-    if (!moves || moves.length < PROGRESS_STACK_SIZE) {
-      return null;
+    if (this.moves.length < PROGRESS_STACK_SIZE) {
+      if (state.active.length > 0) {
+        return null;
+      }
+      const data = this.emittable;
+      this.emittable = null;
+      return data;
     }
 
     const vlim = PROGRESS_STACK_SIZE - 1;
-    const point = moves[vlim].point;
-    const velocity = calc_velocity(moves, vlim);
-    const direction = calc_angle(moves, vlim);
+    const point = this.moves[vlim].point;
+    const velocity = calc_velocity(this.moves, vlim);
+    const direction = calc_angle(this.moves, vlim);
+    this.moves = [];
 
-    return {
-      point,
-      velocity,
-      direction,
-    };
+    const result = { point, velocity, direction };
+    if (state.active.length > 0) {
+      this.emittable = result;
+      return null;
+    }
+
+    this.emittable = null;
+    return result;
+  }
+
+  /**
+   * Event hook for the cancel phase of a Swipe.
+   *
+   * @param {State} state - current input state.
+   */
+  cancel() {
+    this.moves = [];
+    this.emittable = null;
   }
 }
 
