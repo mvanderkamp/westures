@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dyatko/arkit/master/schema.json",
+  "components": [
+    {
+      "type": "Entry",
+      "patterns": ["index.js"]
+    },
+    {
+      "type": "Component",
+      "patterns": ["src/**/*.js"],
+      "excludePatterns": ["**/__tests__/**", "**/*-test.js"]
+    }
+  ],
+  "output": {
+    "path": "arkit.svg",
+    "groups": [
+      {
+        "first": true,
+        "components": ["Entry"],
+        "patterns":  ["index.js"]
+      },
+      {
+        "components": ["Component", "Entry"]
+      }
+    ]
+  }
+}
