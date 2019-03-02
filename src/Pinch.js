@@ -58,10 +58,12 @@ class Pinch extends Gesture {
    * @private
    * @param {State} state - current input state.
    */
-  initializeProgress(state) {
-    const distance = state.centroid.averageDistanceTo(state.activePoints);
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    progress.previousDistance = distance;
+  refresh(state) {
+    if (state.active.length >= this.minInputs) {
+      const distance = state.centroid.averageDistanceTo(state.activePoints);
+      const progress = state.active[0].getProgressOfGesture(this.id);
+      progress.previousDistance = distance;
+    }
   }
 
   /**
@@ -71,9 +73,7 @@ class Pinch extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    if (state.active.length >= this.minInputs) {
-      this.initializeProgress(state);
-    }
+    this.refresh(state);
   }
 
   /**
@@ -104,9 +104,17 @@ class Pinch extends Gesture {
    * @param {State} input status object
    */
   end(state) {
-    if (state.active.length >= this.minInputs) {
-      this.initializeProgress(state);
-    }
+    this.refresh(state);
+  }
+
+  /**
+   * Event hook for the cancel of a Pinch.
+   *
+   * @private
+   * @param {State} input status object
+   */
+  cancel(state) {
+    this.end(state);
   }
 }
 

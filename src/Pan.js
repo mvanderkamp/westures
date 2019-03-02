@@ -54,9 +54,11 @@ class Pan extends Gesture {
    * @private
    * @param {State} state - The state object received by a hook.
    */
-  initialize(state) {
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    progress.lastEmitted = state.centroid;
+  refresh(state) {
+    if (state.active.length >= REQUIRED_INPUTS) {
+      const progress = state.active[0].getProgressOfGesture(this.id);
+      progress.lastEmitted = state.centroid;
+    }
   }
 
   /**
@@ -67,9 +69,7 @@ class Pan extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    if (state.active.length >= REQUIRED_INPUTS) {
-      this.initialize(state);
-    }
+    this.refresh(state);
   }
 
   /**
@@ -81,8 +81,9 @@ class Pan extends Gesture {
    */
   move(state) {
     if (state.active.length < REQUIRED_INPUTS) return null;
+
     if (this.muteKey && state.event[this.muteKey]) {
-      this.initialize(state);
+      this.refresh(state);
       return null;
     }
 
@@ -102,9 +103,18 @@ class Pan extends Gesture {
    * @param {State} state - current input state.
    */
   end(state) {
-    if (state.active.length >= REQUIRED_INPUTS) {
-      this.initialize(state);
-    }
+    this.refresh(state);
+  }
+
+  /**
+   * Event hook for the cancel of a Pan. Resets the current centroid of
+   * the inputs.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  cancel(state) {
+    this.end(state);
   }
 }
 

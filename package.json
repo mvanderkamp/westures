@@ -1,6 +1,6 @@
 {
   "name": "westures",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Simultaneous multitouch gestures.",
   "keywords": [
     "gesture",
@@ -29,13 +29,14 @@
   "homepage": "https://mvanderkamp.github.io/westures/",
   "license": "MIT",
   "devDependencies": {
+    "arkit": "^1.1.2",
     "browserify": "^16.2.3",
-    "eslint": "^5.14.1",
+    "eslint": "^5.15.0",
     "jest": "^24.1.0",
     "jsdoc": "^3.5.5",
     "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
-    "westures-core": "^0.5.1"
+    "westures-core": "^0.5.2"
   }
 }

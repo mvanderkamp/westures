@@ -2,9 +2,21 @@
 
 ## Releases
 
-- [0.5.3](#0.5.3)
-- [0.5.2](#0.5.2)
-- [0.5.0](#0.5.0)
+- [0.5.4](#054)
+- [0.5.3](#053)
+- [0.5.2](#052)
+- [0.5.0](#050)
+
+## 0.5.4
+
+- Add 'cancel' phase support for touchcancel and pointercancel.
+    - For most gestures, will probably be the same as 'end', but it must be
+      different for gestures that emit on 'end'.
+- Add a 'blur' listener to window to reset the state when the window loses
+  focus.
+- Fix Swivel bug in Edge: Edge doesn't provide 'x' and 'y' fields with
+  'getBoundingClientRect', so use 'left' and 'top' instead.
+- Make Swipes work for multitouch.
 
 ## 0.5.3
 
