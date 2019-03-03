@@ -8,7 +8,7 @@ const { Gesture, Point2D } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const defaults = Object.freeze({
-  deadzoneRadius: 10,
+  deadzoneRadius: 15,
 });
 
 /**
@@ -168,6 +168,11 @@ class Swivel extends Gesture {
     const pivot = this.pivot;
     const angle = pivot.angleTo(point);
     const delta = angle - this.previous;
+
+    /*
+     * Updating the previous angle regardless of emit prevents sudden flips when
+     * the user exits the deadzone circle.
+     */
     this.previous = angle;
 
     if (pivot.distanceTo(point) > this.deadzoneRadius) {

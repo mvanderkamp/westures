@@ -1817,7 +1817,7 @@ const { Gesture, Point2D } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const defaults = Object.freeze({
-  deadzoneRadius: 10,
+  deadzoneRadius: 15,
 });
 
 /**
