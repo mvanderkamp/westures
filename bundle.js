@@ -1236,6 +1236,14 @@ class Pan extends Gesture {
      * @type {string}
      */
     this.muteKey = options.muteKey;
+
+    /**
+     * The previous point location.
+     *
+     * @private
+     * @type {module:westures.Point2D}
+     */
+    this.previous = null;
   }
 
   /**
@@ -1247,8 +1255,7 @@ class Pan extends Gesture {
    */
   refresh(state) {
     if (state.active.length >= REQUIRED_INPUTS) {
-      const progress = state.active[0].getProgressOfGesture(this.id);
-      progress.lastEmitted = state.centroid;
+      this.previous = state.centroid;
     }
   }
 
@@ -1271,17 +1278,18 @@ class Pan extends Gesture {
    * otherwise not recognized.
    */
   move(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
+    if (state.active.length < REQUIRED_INPUTS) {
+      return null;
+    }
 
     if (this.muteKey && state.event[this.muteKey]) {
       this.refresh(state);
       return null;
     }
 
-    const progress = state.active[0].getProgressOfGesture(this.id);
     const point = state.centroid;
-    const change = point.minus(progress.lastEmitted);
-    progress.lastEmitted = point;
+    const change = point.minus(this.previous);
+    this.previous = point;
 
     return { change, point };
   }
@@ -1305,7 +1313,7 @@ class Pan extends Gesture {
    * @param {State} state - current input state.
    */
   cancel(state) {
-    this.end(state);
+    this.refresh(state);
   }
 }
 
@@ -1364,6 +1372,14 @@ class Pinch extends Gesture {
      * @type {number}
      */
     this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
+
+    /**
+     * The previous distance.
+     *
+     * @private
+     * @type {number}
+     */
+    this.previous = 0;
   }
 
   /**
@@ -1376,8 +1392,7 @@ class Pinch extends Gesture {
   refresh(state) {
     if (state.active.length >= this.minInputs) {
       const distance = state.centroid.averageDistanceTo(state.activePoints);
-      const progress = state.active[0].getProgressOfGesture(this.id);
-      progress.previousDistance = distance;
+      this.previous = distance;
     }
   }
 
@@ -1400,16 +1415,12 @@ class Pinch extends Gesture {
   move(state) {
     if (state.active.length < this.minInputs) return null;
 
-    const distance = state.centroid.averageDistanceTo(state.activePoints);
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    const change = distance / progress.previousDistance;
-    progress.previousDistance = distance;
+    const midpoint = state.centroid;
+    const distance = midpoint.averageDistanceTo(state.activePoints);
+    const change = distance / this.previous;
+    this.previous = distance;
 
-    return {
-      distance,
-      midpoint: state.centroid,
-      change,
-    };
+    return { distance, midpoint, change };
   }
 
   /**
@@ -1429,7 +1440,7 @@ class Pinch extends Gesture {
    * @param {State} input status object
    */
   cancel(state) {
-    this.end(state);
+    this.refresh(state);
   }
 }
 
@@ -1572,6 +1583,7 @@ const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
 const PROGRESS_STACK_SIZE = 7;
+const MS_THRESHOLD = 300;
 
 /**
  * Data returned when a Swipe is recognized.
@@ -1582,6 +1594,7 @@ const PROGRESS_STACK_SIZE = 7;
  * @property {number} velocity - The velocity of the swipe.
  * @property {number} direction - In radians, the direction of the swipe.
  * @property {westures.Point2D} point - The point at which the swipe ended.
+ * @property {number} time - The epoch time, in ms, when the swipe ended.
  *
  * @memberof ReturnTypes
  */
@@ -1590,6 +1603,8 @@ const PROGRESS_STACK_SIZE = 7;
  * Calculates the angle of movement along a series of moves.
  *
  * @private
+ * @inner
+ * @memberof module:westures.Swipe
  * @see {@link https://en.wikipedia.org/wiki/Mean_of_circular_quantities}
  *
  * @param {{time: number, point: module:westures-core.Point2D}} moves - The
@@ -1617,6 +1632,8 @@ function calc_angle(moves, vlim) {
  * points.
  *
  * @private
+ * @inner
+ * @memberof module:westures.Swipe
  *
  * @param {object} start
  * @param {westures.Point2D} start.point
@@ -1637,6 +1654,9 @@ function velocity(start, end) {
  * Calculates the veloctiy of movement through a series of moves.
  *
  * @private
+ * @inner
+ * @memberof module:westures.Swipe
+ *
  * @param {{time: number, point: module:westures-core.Point2D}} moves - The
  * moves list to process.
  * @param {number} vlim - The number of moves to process.
@@ -1679,6 +1699,7 @@ class Swipe extends Gesture {
     /**
      * Data to emit when all points have ended.
      *
+     * @private
      * @type {ReturnTypes.SwipeData}
      */
     this.saved = null;
@@ -1698,8 +1719,8 @@ class Swipe extends Gesture {
         point: state.centroid,
       });
 
-      while (this.moves.length > PROGRESS_STACK_SIZE) {
-        this.moves.shift();
+      if (this.moves.length > PROGRESS_STACK_SIZE) {
+        this.moves.splice(0, this.moves.length - PROGRESS_STACK_SIZE);
       }
     }
   }
@@ -1712,51 +1733,54 @@ class Swipe extends Gesture {
    * recognized.
    */
   end(state) {
-    if (this.moves.length < PROGRESS_STACK_SIZE) {
-      return this.emitSaved(state);
-    }
-
-    const vlim = PROGRESS_STACK_SIZE - 1;
-    const point = this.moves[vlim].point;
-    const velocity = calc_velocity(this.moves, vlim);
-    const direction = calc_angle(this.moves, vlim);
+    const result = this.getResult();
     this.moves = [];
 
-    const result = { point, velocity, direction };
     if (state.active.length > 0) {
       this.saved = result;
       return null;
     }
 
     this.saved = null;
-    return result;
-  }
-
-  /**
-   * Emits current saved data if appropriate.
-   *
-   * @param {State} state - current input state.
-   */
-  emitSaved(state) {
-    this.moves = [];
-
-    if (state.active.length > 0) {
-      return null;
-    }
-
-    const data = this.saved;
-    this.saved = null;
-    return data;
+    return this.validate(result);
   }
 
   /**
    * Event hook for the cancel phase of a Swipe.
    *
+   * @private
    * @param {State} state - current input state.
    */
   cancel() {
     this.moves = [];
     this.saved = null;
+  }
+
+  /**
+   * Get the swipe result.
+   *
+   * @private
+   */
+  getResult() {
+    if (this.moves.length < PROGRESS_STACK_SIZE) {
+      return this.saved;
+    }
+    const vlim = PROGRESS_STACK_SIZE - 1;
+    const { point, time } = this.moves[vlim];
+    const velocity = calc_velocity(this.moves, vlim);
+    const direction = calc_angle(this.moves, vlim);
+    return { point, velocity, direction, time };
+  }
+
+  /**
+   * Validates that an emit should occur with the given data.
+   *
+   * @private
+   * @param {?ReturnTypes.SwipeData} data
+   */
+  validate(data) {
+    if (data == null) return null;
+    return (Date.now() - data.time > MS_THRESHOLD) ? null : data;
   }
 }
 
@@ -1840,6 +1864,30 @@ class Swivel extends Gesture {
      * @type {Element}
      */
     this.pivotCenter = options.pivotCenter;
+
+    /**
+     * The pivot point of the swivel.
+     *
+     * @private
+     * @type {module:westures.Point2D}
+     */
+    this.pivot = null;
+
+    /**
+     * The previous angle.
+     *
+     * @private
+     * @type {number}
+     */
+    this.previous = 0;
+
+    /**
+     * Whether the swivel is active.
+     *
+     * @private
+     * @type {boolean}
+     */
+    this.isActive = false;
   }
 
   /**
@@ -1857,34 +1905,33 @@ class Swivel extends Gesture {
    * Restart the given progress object using the given input object.
    *
    * @private
-   *
-   * @param {Input} input - Input object to use for restarting progress.
+   * @param {State} state - current input state.
    */
-  restart(input) {
-    const progress = input.getProgressOfGesture(this.id);
-    progress.active = true;
+  restart(state) {
+    this.isActive = true;
     if (this.pivotCenter) {
       const rect = this.pivotCenter.getBoundingClientRect();
-      progress.pivot = new Point2D(
+      this.pivot = new Point2D(
         rect.left + (rect.width / 2),
         rect.top + (rect.height / 2)
       );
-      progress.previousAngle = progress.pivot.angleTo(input.current.point);
+      this.previous = this.pivot.angleTo(state.centroid);
     } else {
-      progress.pivot = input.current.point;
-      progress.previousAngle = 0;
+      this.pivot = state.centroid;
+      this.previous = 0;
     }
   }
 
   /**
    * Refresh the gesture.
    *
+   * @private
    * @param {module:westures.Input[]} inputs - Input list to process.
-   * @param {Event} event - The event triggering this refresh.
+   * @param {State} state - current input state.
    */
-  refresh(inputs, event) {
-    if (inputs.length === REQUIRED_INPUTS && this.enabled(event)) {
-      this.restart(inputs[0]);
+  refresh(inputs, state) {
+    if (inputs.length === REQUIRED_INPUTS && this.enabled(state.event)) {
+      this.restart(state);
     }
   }
 
@@ -1895,7 +1942,7 @@ class Swivel extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    this.refresh(state.getInputsInPhase('start'), state.event);
+    this.refresh(state.getInputsInPhase('start'), state);
   }
 
   /**
@@ -1903,16 +1950,15 @@ class Swivel extends Gesture {
    * been assured, except for deadzone.
    *
    * @private
-   *
-   * @param {Object} progress - Progress object to restart.
-   * @param {Input} input - Input object to use for restarting progress.
+   * @param {State} state - current input state.
+   * @return {?Returns.SwivelData} Data to emit.
    */
-  calculateOutput(progress, input) {
-    const point = input.current.point;
-    const pivot = progress.pivot;
+  calculateOutput(state) {
+    const point = state.centroid;
+    const pivot = this.pivot;
     const angle = pivot.angleTo(point);
-    const delta = angle - progress.previousAngle;
-    progress.previousAngle = angle;
+    const delta = angle - this.previous;
+    this.previous = angle;
 
     if (pivot.distanceTo(point) > this.deadzoneRadius) {
       return { delta, pivot, point };
@@ -1930,20 +1976,17 @@ class Swivel extends Gesture {
   move(state) {
     if (state.active.length !== REQUIRED_INPUTS) return null;
 
-    const input = state.active[0];
-    const progress = input.getProgressOfGesture(this.id);
     let output = null;
-
     if (this.enabled(state.event)) {
-      if (progress.active) {
-        output = this.calculateOutput(progress, input);
+      if (this.isActive) {
+        output = this.calculateOutput(state);
       } else {
         // The enableKey was just pressed again.
-        this.refresh(state.active, state.event);
+        this.refresh(state.active, state);
       }
     } else {
       // The enableKey was released, therefore pivot point is now invalid.
-      progress.active = false;
+      this.isActive = false;
     }
 
     return output;
@@ -1952,15 +1995,17 @@ class Swivel extends Gesture {
   /**
    * Event hook for the end of a Swivel.
    *
+   * @private
    * @param {State} state - current input state.
    */
   end(state) {
-    this.refresh(state.active, state.event);
+    this.refresh(state.active, state);
   }
 
   /**
    * Event hook for the cancel of a Swivel.
    *
+   * @private
    * @param {State} state - current input state.
    */
   cancel(state) {
