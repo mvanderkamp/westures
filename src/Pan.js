@@ -45,6 +45,14 @@ class Pan extends Gesture {
      * @type {string}
      */
     this.muteKey = options.muteKey;
+
+    /**
+     * The previous point location.
+     *
+     * @private
+     * @type {module:westures.Point2D}
+     */
+    this.previous = null;
   }
 
   /**
@@ -56,8 +64,7 @@ class Pan extends Gesture {
    */
   refresh(state) {
     if (state.active.length >= REQUIRED_INPUTS) {
-      const progress = state.active[0].getProgressOfGesture(this.id);
-      progress.lastEmitted = state.centroid;
+      this.previous = state.centroid;
     }
   }
 
@@ -80,17 +87,18 @@ class Pan extends Gesture {
    * otherwise not recognized.
    */
   move(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
+    if (state.active.length < REQUIRED_INPUTS) {
+      return null;
+    }
 
     if (this.muteKey && state.event[this.muteKey]) {
       this.refresh(state);
       return null;
     }
 
-    const progress = state.active[0].getProgressOfGesture(this.id);
     const point = state.centroid;
-    const change = point.minus(progress.lastEmitted);
-    progress.lastEmitted = point;
+    const change = point.minus(this.previous);
+    this.previous = point;
 
     return { change, point };
   }
@@ -114,7 +122,7 @@ class Pan extends Gesture {
    * @param {State} state - current input state.
    */
   cancel(state) {
-    this.end(state);
+    this.refresh(state);
   }
 }
 
