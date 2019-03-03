@@ -1706,6 +1706,26 @@ class Swipe extends Gesture {
   }
 
   /**
+   * Refresh the swipe state.
+   *
+   * @private
+   */
+  refresh() {
+    this.moves = [];
+    this.saved = null;
+  }
+
+  /**
+   * Event hook for the start of a gesture. Resets the swipe state.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  start() {
+    this.refresh();
+  }
+
+  /**
    * Event hook for the move of a gesture. Captures an input's x/y coordinates
    * and the time of it's event on a stack.
    *
@@ -1752,8 +1772,7 @@ class Swipe extends Gesture {
    * @param {State} state - current input state.
    */
   cancel() {
-    this.moves = [];
-    this.saved = null;
+    this.refresh();
   }
 
   /**
