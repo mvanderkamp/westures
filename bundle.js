@@ -1977,6 +1977,11 @@ class Swivel extends Gesture {
     const pivot = this.pivot;
     const angle = pivot.angleTo(point);
     const delta = angle - this.previous;
+
+    /*
+     * Updating the previous angle regardless of emit prevents sudden flips when
+     * the user exits the deadzone circle.
+     */
     this.previous = angle;
 
     if (pivot.distanceTo(point) > this.deadzoneRadius) {
@@ -2157,7 +2162,9 @@ class Tap extends Gesture {
       return null;
     }
 
-    return Point2D.midpoint(this.ended.map(i => i.current.point));
+    const result = Point2D.midpoint(this.ended.map(i => i.current.point));
+    this.ended = [];
+    return result;
   }
 }
 
