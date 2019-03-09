@@ -7,7 +7,8 @@
 const { Gesture } = require('westures-core');
 
 const REQUIRED_INPUTS = 1;
-const PROGRESS_STACK_SIZE = 10;
+const PROGRESS_STACK_SIZE = 7;
+const MS_THRESHOLD = 300;
 
 /**
  * Data returned when a Swipe is recognized.
@@ -18,6 +19,7 @@ const PROGRESS_STACK_SIZE = 10;
  * @property {number} velocity - The velocity of the swipe.
  * @property {number} direction - In radians, the direction of the swipe.
  * @property {westures.Point2D} point - The point at which the swipe ended.
+ * @property {number} time - The epoch time, in ms, when the swipe ended.
  *
  * @memberof ReturnTypes
  */
@@ -26,6 +28,8 @@ const PROGRESS_STACK_SIZE = 10;
  * Calculates the angle of movement along a series of moves.
  *
  * @private
+ * @inner
+ * @memberof module:westures.Swipe
  * @see {@link https://en.wikipedia.org/wiki/Mean_of_circular_quantities}
  *
  * @param {{time: number, point: module:westures-core.Point2D}} moves - The
@@ -53,6 +57,8 @@ function calc_angle(moves, vlim) {
  * points.
  *
  * @private
+ * @inner
+ * @memberof module:westures.Swipe
  *
  * @param {object} start
  * @param {westures.Point2D} start.point
@@ -73,6 +79,9 @@ function velocity(start, end) {
  * Calculates the veloctiy of movement through a series of moves.
  *
  * @private
+ * @inner
+ * @memberof module:westures.Swipe
+ *
  * @param {{time: number, point: module:westures-core.Point2D}} moves - The
  * moves list to process.
  * @param {number} vlim - The number of moves to process.
@@ -115,9 +124,30 @@ class Swipe extends Gesture {
     /**
      * Data to emit when all points have ended.
      *
+     * @private
      * @type {ReturnTypes.SwipeData}
      */
-    this.emittable = null;
+    this.saved = null;
+  }
+
+  /**
+   * Refresh the swipe state.
+   *
+   * @private
+   */
+  refresh() {
+    this.moves = [];
+    this.saved = null;
+  }
+
+  /**
+   * Event hook for the start of a gesture. Resets the swipe state.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  start() {
+    this.refresh();
   }
 
   /**
@@ -134,8 +164,8 @@ class Swipe extends Gesture {
         point: state.centroid,
       });
 
-      while (this.moves.length > PROGRESS_STACK_SIZE) {
-        this.moves.shift();
+      if (this.moves.length > PROGRESS_STACK_SIZE) {
+        this.moves.splice(0, this.moves.length - PROGRESS_STACK_SIZE);
       }
     }
   }
@@ -148,39 +178,53 @@ class Swipe extends Gesture {
    * recognized.
    */
   end(state) {
-    if (this.moves.length < PROGRESS_STACK_SIZE) {
-      if (state.active.length > 0) {
-        return null;
-      }
-      const data = this.emittable;
-      this.emittable = null;
-      return data;
-    }
-
-    const vlim = PROGRESS_STACK_SIZE - 1;
-    const point = this.moves[vlim].point;
-    const velocity = calc_velocity(this.moves, vlim);
-    const direction = calc_angle(this.moves, vlim);
+    const result = this.getResult();
     this.moves = [];
 
-    const result = { point, velocity, direction };
     if (state.active.length > 0) {
-      this.emittable = result;
+      this.saved = result;
       return null;
     }
 
-    this.emittable = null;
-    return result;
+    this.saved = null;
+    return this.validate(result);
   }
 
   /**
    * Event hook for the cancel phase of a Swipe.
    *
+   * @private
    * @param {State} state - current input state.
    */
   cancel() {
-    this.moves = [];
-    this.emittable = null;
+    this.refresh();
+  }
+
+  /**
+   * Get the swipe result.
+   *
+   * @private
+   */
+  getResult() {
+    if (this.moves.length < PROGRESS_STACK_SIZE) {
+      return this.saved;
+    }
+    const vlim = PROGRESS_STACK_SIZE - 1;
+    const { point, time } = this.moves[vlim];
+    const velocity = calc_velocity(this.moves, vlim);
+    const direction = calc_angle(this.moves, vlim);
+    return { point, velocity, direction, time };
+  }
+
+  /**
+   * Validates that an emit should occur with the given data.
+   *
+   * @private
+   * @param {?ReturnTypes.SwipeData} data
+   */
+  validate(data) {
+    if (data == null) return null;
+    return (Date.now() - data.time > MS_THRESHOLD) ? null : data;
   }
 }
 

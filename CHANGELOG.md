@@ -2,10 +2,29 @@
 
 ## Releases
 
+- [0.6.0](#060)
 - [0.5.4](#054)
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.6.0
+
+- Fix Tap bug preventing rapid taps.
+    - 'ended' list wasn't being cleared on an emit, preventing further emits if
+      taps came in rapid succession.
+- Expand default deadzone radius of Swivel.
+- Fix bugs in Swipe:
+    - Make sure swipe state is reset on 'start' and after 'end' phases.
+    - Prevent delayed emits if the user stops suddenly and doesn't move again
+      before releasing the pointer.
+- [BREAKING CHANGE] Use inner fields instead of input progress.
+    - Breaking because you can't reuse some of the Gesture objects the way you
+      could previously.
+    - Slightly more efficient, therefore preferable overall.
+    - Rotate still uses input progress so that angle changes can be tracked on a
+      per-input basis, which is more responsive than anything else I've tried so
+      far.
 
 ## 0.5.4
 

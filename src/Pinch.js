@@ -49,6 +49,14 @@ class Pinch extends Gesture {
      * @type {number}
      */
     this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
+
+    /**
+     * The previous distance.
+     *
+     * @private
+     * @type {number}
+     */
+    this.previous = 0;
   }
 
   /**
@@ -61,8 +69,7 @@ class Pinch extends Gesture {
   refresh(state) {
     if (state.active.length >= this.minInputs) {
       const distance = state.centroid.averageDistanceTo(state.activePoints);
-      const progress = state.active[0].getProgressOfGesture(this.id);
-      progress.previousDistance = distance;
+      this.previous = distance;
     }
   }
 
@@ -85,16 +92,12 @@ class Pinch extends Gesture {
   move(state) {
     if (state.active.length < this.minInputs) return null;
 
-    const distance = state.centroid.averageDistanceTo(state.activePoints);
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    const change = distance / progress.previousDistance;
-    progress.previousDistance = distance;
+    const midpoint = state.centroid;
+    const distance = midpoint.averageDistanceTo(state.activePoints);
+    const change = distance / this.previous;
+    this.previous = distance;
 
-    return {
-      distance,
-      midpoint: state.centroid,
-      change,
-    };
+    return { distance, midpoint, change };
   }
 
   /**
@@ -114,7 +117,7 @@ class Pinch extends Gesture {
    * @param {State} input status object
    */
   cancel(state) {
-    this.end(state);
+    this.refresh(state);
   }
 }
 

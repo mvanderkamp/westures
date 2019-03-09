@@ -119,7 +119,9 @@ class Tap extends Gesture {
       return null;
     }
 
-    return Point2D.midpoint(this.ended.map(i => i.current.point));
+    const result = Point2D.midpoint(this.ended.map(i => i.current.point));
+    this.ended = [];
+    return result;
   }
 }
 
