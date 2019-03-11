@@ -2,11 +2,29 @@
 
 ## Releases
 
+- [0.6.1](#061)
 - [0.6.0](#060)
 - [0.5.4](#054)
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.6.1
+
+- Treat 'touchcancel' and 'pointercancel' the same way as 'blur'.
+    - This is an unfortunate hack, necessitated by an apparent bug in Chrome,
+      wherein only the _first_ (primary?) pointer will receive a 'cancel' event.
+      The other's are cancelled, but no event is emitted. Their IDs are reused
+      for subsequent pointers, making gesture state recoverable, but this is
+      still not a good situation.
+    - The downside is that this workaround means that if any single pointer is
+      cancelled, _all_ of the pointers are treated as cancelled. I don't have
+      enough in depth knowledge to say for sure, but I suspect that this doesn't
+      have to be the case. If I have time soon I'll post a ticket to Chrome, at
+      the very least to find out if this is actually a bug (my read of the spec
+      tells me that it is).
+    - The upside is that this should be pretty fail-safe, when combined with the
+      'blur' listener on the window.
 
 ## 0.6.0
 
