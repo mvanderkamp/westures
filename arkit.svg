@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="112px" preserveAspectRatio="none" style="width:503px;height:112px;" version="1.1" viewBox="0 0 503 112" width="503px" zoomAndPan="magnify"><defs/><g><!--entity index--><rect fill="#F8F8F8" height="36.8984" rx="2" ry="2" style="stroke: #000000; stroke-width: 1.0;" width="57" x="222" y="8"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="37" x="232" y="32.0068">index</text><!--entity Pan--><rect fill="#F8F8F8" height="36.8984" rx="2" ry="2" style="stroke: #000000; stroke-width: 1.0;" width="43" x="6" y="65"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="23" x="16" y="89.0068">Pan</text><!--entity Pinch--><rect fill="#F8F8F8" height="36.8984" rx="2" ry="2" style="stroke: #000000; stroke-width: 1.0;" width="53" x="69" y="65"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="33" x="79" y="89.0068">Pinch</text><!--entity Rotate--><rect fill="#F8F8F8" height="36.8984" rx="2" ry="2" style="stroke: #000000; stroke-width: 1.0;" width="61" x="142" y="65"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="41" x="152" y="89.0068">Rotate</text><!--entity Swipe--><rect fill="#F8F8F8" height="36.8984" rx="2" ry="2" style="stroke: #000000; stroke-width: 1.0;" width="55" x="223" y="65"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="35" x="233" y="89.0068">Swipe</text><!--entity Swivel--><rect fill="#F8F8F8" height="36.8984" rx="2" ry="2" style="stroke: #000000; stroke-width: 1.0;" width="57" x="298" y="65"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="308" y="89.0068">Swivel</text><!--entity Tap--><rect fill="#F8F8F8" height="36.8984" rx="2" ry="2" style="stroke: #000000; stroke-width: 1.0;" width="43" x="375" y="65"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="23" x="385" y="89.0068">Tap</text><!--entity Track--><rect fill="#F8F8F8" height="36.8984" rx="2" ry="2" style="stroke: #000000; stroke-width: 1.0;" width="54" x="438.5" y="65"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="34" x="448.5" y="89.0068">Track</text><!--link index to Pan--><path d="M221.9988,29.1598 C183.7467,33.408 114.1705,43.5373 58.5,65 C56.9211,65.6087 55.3304,66.2948 53.7479,67.0352 " fill="none" id="index-Pan" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="49.0454,69.3962,58.8833,68.9325,53.5138,67.1526,55.2937,61.7831,49.0454,69.3962" style="stroke: #383838; stroke-width: 2.0;"/><!--link index to Pinch--><path d="M221.6592,34.408 C197.2638,41.4326 161.578,52.5025 131.5,65 C129.9426,65.6471 128.3608,66.3355 126.7729,67.0517 " fill="none" id="index-Pinch" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="122.009,69.2704,131.8563,69.0967,126.5415,67.1594,128.4788,61.8446,122.009,69.2704" style="stroke: #383838; stroke-width: 2.0;"/><!--link index to Rotate--><path d="M224.9599,45.1639 C217.6123,50.5333 209.5382,56.4336 201.9735,61.9617 " fill="none" id="index-Rotate" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="197.8311,64.9888,207.4577,62.9082,201.868,62.0387,202.7375,56.4491,197.8311,64.9888" style="stroke: #383838; stroke-width: 2.0;"/><!--link index to Swipe--><path d="M250.5,45.1639 C250.5,49.8373 250.5,54.9128 250.5,59.7951 " fill="none" id="index-Swipe" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="250.5,64.9888,254.5,55.9888,250.5,59.9888,246.5,55.9888,250.5,64.9888" style="stroke: #383838; stroke-width: 2.0;"/><!--link index to Swivel--><path d="M275.3852,45.1639 C282.5444,50.5333 290.4115,56.4336 297.7823,61.9617 " fill="none" id="index-Swivel" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="301.8184,64.9888,297.0184,56.3888,297.8184,61.9888,292.2184,62.7888,301.8184,64.9888" style="stroke: #383838; stroke-width: 2.0;"/><!--link index to Tap--><path d="M279.0357,34.1931 C302.7116,41.0125 336.9919,51.9067 365.5,65 C367.0378,65.7063 368.596,66.4694 370.1533,67.2694 " fill="none" id="index-Tap" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="374.8008,69.7606,368.7584,61.9831,370.394,67.3984,364.9788,69.034,374.8008,69.7606" style="stroke: #383838; stroke-width: 2.0;"/><!--link index to Track--><path d="M279.1589,30.4322 C314.8475,35.8402 377.3501,47.0025 428.5,65 C430.2275,65.6079 431.978,66.2782 433.7298,66.9925 " fill="none" id="index-Track" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="438.3547,68.9733,431.6565,61.7529,433.7585,67.0047,428.5067,69.1068,438.3547,68.9733" style="stroke: #383838; stroke-width: 2.0;"/><script type="text/plantuml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="107px" preserveAspectRatio="none" style="width:483px;height:107px;" version="1.1" viewBox="0 0 483 107" width="483px" zoomAndPan="magnify"><defs/><g><!--entity _index--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="53" x="212.5" y="8"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="33" x="222.5" y="30.0059">index</text><!--entity _Pan--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="40" x="6" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="20" x="16" y="84.0059">Pan</text><!--entity _Pinch--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="49" x="66.5" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="29" x="76.5" y="84.0059">Pinch</text><!--entity _Rotate--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="57" x="135.5" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="37" x="145.5" y="84.0059">Rotate</text><!--entity _Swipe--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="53" x="212.5" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="33" x="222.5" y="84.0059">Swipe</text><!--entity _Swivel--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="54" x="286" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="34" x="296" y="84.0059">Swivel</text><!--entity _Tap--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="41" x="360.5" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="21" x="370.5" y="84.0059">Tap</text><!--entity _Track--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="50" x="422" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="30" x="432" y="84.0059">Track</text><!--link _index to _Pan--><path d="M212.2126,27.7326 C175.8966,32.0341 109.4408,42.0357 56,62 C54.2721,62.6455 52.5255,63.3819 50.7898,64.178 " fill="none" id="_index-_Pan" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="46.2409,66.4031,56.0831,66.0416,50.7324,64.2061,52.5679,58.8553,46.2409,66.4031" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Pinch--><path d="M212.3346,32.4225 C188.9699,39.2159 154.2683,50.0122 125,62 C123.4732,62.6253 121.9204,63.2907 120.3612,63.9822 " fill="none" id="_index-_Pinch" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="115.6839,66.1217,125.5322,66.0152,120.2307,64.0417,122.2042,58.7403,115.6839,66.1217" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Rotate--><path d="M215.2695,42.0859 C207.8827,47.4044 199.6682,53.3189 192.0172,58.8276 " fill="none" id="_index-_Rotate" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="187.8335,61.8399,197.4745,59.8273,191.8912,58.9184,192.8001,53.335,187.8335,61.8399" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Swipe--><path d="M239,42.0859 C239,46.715 239,51.7956 239,56.6671 " fill="none" id="_index-_Swipe" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="239,61.8399,243,52.8399,239,56.8399,235,52.8399,239,61.8399" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Swivel--><path d="M262.4141,42.0859 C269.7024,47.4044 277.8074,53.3189 285.3563,58.8276 " fill="none" id="_index-_Swivel" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="289.4843,61.8399,284.5721,53.3035,285.4454,58.8925,279.8563,59.7658,289.4843,61.8399" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Tap--><path d="M265.5152,32.373 C288.3221,39.0588 321.8897,49.7263 350,62 C351.8985,62.8289 353.8353,63.7348 355.7671,64.6829 " fill="none" id="_index-_Tap" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="360.2458,66.9553,354.03,59.3157,355.787,64.6928,350.4099,66.4498,360.2458,66.9553" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Track--><path d="M265.6212,28.6488 C300.0599,33.829 361.6113,44.6603 412,62 C413.5969,62.5495 415.2157,63.1538 416.8369,63.797 " fill="none" id="_index-_Track" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="421.6881,65.8272,414.9298,58.663,417.0757,63.8971,411.8416,66.0429,421.6881,65.8272" style="stroke: #383838; stroke-width: 2.0;"/><script type="text/plantuml"><![CDATA[
 @startuml
 
 scale max 1920 width
@@ -9,7 +9,7 @@ skinparam shadowing false
 skinparam nodesep 20
 skinparam ranksep 20
 skinparam defaultFontName Tahoma
-skinparam defaultFontSize 14
+skinparam defaultFontSize 12
 skinparam roundCorner 4
 skinparam dpi 150
 skinparam arrowThickness 0.7
@@ -21,29 +21,33 @@ skinparam usecase {
 }
 
 skinparam rectangle {
-  borderThickness 1
+  borderThickness 0.8
+}
+
+skinparam component {
+  borderThickness 1.2
 }
 
 
-rectangle "<b>index</b>" as index
-rectangle "Pan" as Pan
-rectangle "Pinch" as Pinch
-rectangle "Rotate" as Rotate
-rectangle "Swipe" as Swipe
-rectangle "Swivel" as Swivel
-rectangle "Tap" as Tap
-rectangle "Track" as Track
+rectangle "<b>index</b>" as _index
+rectangle "Pan" as _Pan
+rectangle "Pinch" as _Pinch
+rectangle "Rotate" as _Rotate
+rectangle "Swipe" as _Swipe
+rectangle "Swivel" as _Swivel
+rectangle "Tap" as _Tap
+rectangle "Track" as _Track
 
-index ==> Pan
-index ==> Pinch
-index ==> Rotate
-index ==> Swipe
-index ==> Swivel
-index ==> Tap
-index ==> Track
+_index ==> _Pan
+_index ==> _Pinch
+_index ==> _Rotate
+_index ==> _Swipe
+_index ==> _Swivel
+_index ==> _Tap
+_index ==> _Track
 
 @enduml
 
 
-' https://arkit.herokuapp.com/svg/UDfjaqbpuaWGXU_w5HLzwHCs4fkPw7OqYx10PaSWSt4KfP9KIAeIjQY0YVdlmzBTbcVwL2_VbyfyaH7w8IJaKcMfOGW4KmmoU0Hcswe2JG8P6vBbG3AmOrAo30I4OoG9evVkXD0SSfY1Z566Oiuo32HNk4H430Ec2Or025DH9fG5ME0SMDMIoI5D_cS6E8GgbGD6vGHULgnWp3BuvuObEMDWriiZcQ91Zt6AEIZxGKw0sIZlWPmplOe9IYWM0bGVMYMOGvJ02A-8J74d9H7DC9KWnQ4qZA-iW6cfLmcCeC3WRmDSpiO3pCjJwnSt_1tLClwv3BZU5D8eBH_ej_V7EURrE-EZvykttJEX0Jv-UzmzVm5GW5jLxfX1UWENzvDDA8hluAhAQC4abFZ6xh8CbvhaTtPJ_q45Jd-nYop35SnlvF9-ildbmdTmLOPnom--Vt--1IvLjvGVzSza7yOzpgVw6k73k6ukLVTrFp0DRZ_1Ln1BcOk_7XyXJuXyY35dYO9v_e1OzYYAwD7hXtjuQjXPNktvoRcm49aiOhF_alaXKlCNs-hMAvksfpHtwiTzvu0EridJi3lEPiVsQFrUMSzJHdbZsDMY5iMlrjQfRpUdB76eZUUrmw8nT9tegUedRTUXM6dKSxO-vsgwEDlRgkNkPzwaNZyiF1U-MluE3_pME7Vya6NpQknchU4IERfuHwj8e7Qir3vRzyO7JCnEgr6aupOPR0WaBGRtMgpfo2pO95yss-cwQAMELuElEnRYq3Itwm4QPjcYssmvBXe74PiHpxQVEhl5woXoqXacPoNS9sIgHj-qmtHI3EoGL9nan9k1VYDztTITj3ieDkxHuoCqEcxt_EW7_VuXhI5yp9CJPwRvjedVEtQ_ykA5WxNLtz5njUAxsxtQJQEXLnjrMbhrGtC_ZmV27vp3vGujUnOgD3oVka8ldsgwxGpNasBQRS_EgfD7Rd6C0-44K-NdxcJfv70kxNdIN0ttRy54MmkTJ6ksgluBmYEscG00
+' View and edit on https://arkit.herokuapp.com
 ]]></script></g></svg>
