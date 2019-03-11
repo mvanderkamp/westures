@@ -29,7 +29,7 @@
   "homepage": "https://mvanderkamp.github.io/westures/",
   "license": "MIT",
   "devDependencies": {
-    "arkit": "^1.2.7",
+    "arkit": "^1.3.2",
     "browserify": "^16.2.3",
     "eslint": "^5.15.1",
     "jest": "^24.3.0",
@@ -37,6 +37,6 @@
     "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
-    "westures-core": "^0.5.2"
+    "westures-core": "^0.5.3"
   }
 }
