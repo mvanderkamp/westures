@@ -55,6 +55,22 @@ class Rotate extends Gesture {
    */
   constructor() {
     super('rotate');
+
+    /**
+     * Track the previously emitted rotation angle.
+     *
+     * @private
+     * @type {number[]}
+     */
+    this.previousAngles = [];
+
+    /**
+     * Stage the emitted data once.
+     *
+     * @private
+     * @type {ReturnTypes.RotateData}
+     */
+    this.stagedEmit = null;
   }
 
   /**
@@ -67,14 +83,29 @@ class Rotate extends Gesture {
     if (state.active.length < REQUIRED_INPUTS) return null;
 
     let angle = 0;
-    state.active.forEach(i => {
-      const progress = i.getProgressOfGesture(this.id);
-      const currentAngle = state.centroid.angleTo(i.current.point);
-      angle += angularMinus(currentAngle, progress.previousAngle);
-      progress.previousAngle = currentAngle;
+    const stagedAngles = [];
+
+    state.active.forEach((input, idx) => {
+      const currentAngle = state.centroid.angleTo(input.current.point);
+      angle += angularMinus(currentAngle, this.previousAngles[idx]);
+      stagedAngles[idx] = currentAngle;
     });
+
     angle /= (state.active.length);
+    this.previousAngles = stagedAngles;
     return angle;
+  }
+
+  /**
+   * Restart the gesture;
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  restart(state) {
+    this.previousAngles = [];
+    this.stagedEmit = null;
+    this.getAngle(state);
   }
 
   /**
@@ -84,7 +115,7 @@ class Rotate extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    this.getAngle(state);
+    this.restart(state);
   }
 
   /**
@@ -95,7 +126,10 @@ class Rotate extends Gesture {
    */
   move(state) {
     const delta = this.getAngle(state);
-    return delta ? { pivot: state.centroid, delta } : null;
+    if (delta) {
+      return this.smooth({ pivot: state.centroid, delta });
+    }
+    return null;
   }
 
   /**
@@ -105,7 +139,7 @@ class Rotate extends Gesture {
    * @param {State} state - current input state.
    */
   end(state) {
-    this.getAngle(state);
+    this.restart(state);
   }
 
   /**
@@ -115,7 +149,30 @@ class Rotate extends Gesture {
    * @param {State} state - current input state.
    */
   cancel(state) {
-    this.getAngle(state);
+    this.restart(state);
+  }
+
+  /**
+   * Smooth out the outgoing data.
+   *
+   * @private
+   * @param {ReturnTypes.RotateData} next
+   *
+   * @return {?ReturnTypes.RotateData}
+   */
+  smooth(next) {
+    let result = null;
+
+    if (this.stagedEmit) {
+      if (Math.sign(this.stagedEmit.delta) === Math.sign(next.delta)) {
+        result = this.stagedEmit;
+      } else {
+        next.delta += this.stagedEmit.delta;
+      }
+    }
+
+    this.stagedEmit = next;
+    return result;
   }
 }
 

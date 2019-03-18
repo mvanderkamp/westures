@@ -57,6 +57,14 @@ class Pinch extends Gesture {
      * @type {number}
      */
     this.previous = 0;
+
+    /**
+     * Stage the emitted data once.
+     *
+     * @private
+     * @type {ReturnTypes.RotateData}
+     */
+    this.stagedEmit = null;
   }
 
   /**
@@ -66,11 +74,12 @@ class Pinch extends Gesture {
    * @private
    * @param {State} state - current input state.
    */
-  refresh(state) {
+  restart(state) {
     if (state.active.length >= this.minInputs) {
       const distance = state.centroid.averageDistanceTo(state.activePoints);
       this.previous = distance;
     }
+    this.stagedEmit = null;
   }
 
   /**
@@ -80,7 +89,7 @@ class Pinch extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    this.refresh(state);
+    this.restart(state);
   }
 
   /**
@@ -95,9 +104,11 @@ class Pinch extends Gesture {
     const midpoint = state.centroid;
     const distance = midpoint.averageDistanceTo(state.activePoints);
     const change = distance / this.previous;
-    this.previous = distance;
 
-    return { distance, midpoint, change };
+    if (change === 1) return null;
+
+    this.previous = distance;
+    return this.smooth({ distance, midpoint, change });
   }
 
   /**
@@ -107,7 +118,7 @@ class Pinch extends Gesture {
    * @param {State} input status object
    */
   end(state) {
-    this.refresh(state);
+    this.restart(state);
   }
 
   /**
@@ -117,7 +128,32 @@ class Pinch extends Gesture {
    * @param {State} input status object
    */
   cancel(state) {
-    this.refresh(state);
+    this.restart(state);
+  }
+
+  /**
+   * Smooth out the outgoing data.
+   *
+   * @private
+   * @param {ReturnTypes.PinchData} next
+   *
+   * @return {?ReturnTypes.PinchData}
+   */
+  smooth(next) {
+    let result = null;
+
+    if (this.stagedEmit) {
+      const odiff = this.stagedEmit.change - 1;
+      const ndiff = next.change - 1;
+      if (Math.sign(odiff) === Math.sign(ndiff)) {
+        result = this.stagedEmit;
+      } else {
+        next.change += odiff;
+      }
+    }
+
+    this.stagedEmit = next;
+    return result;
   }
 }
 
