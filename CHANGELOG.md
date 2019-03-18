@@ -2,6 +2,7 @@
 
 ## Releases
 
+- [0.6.3](#063)
 - [0.6.2](#062)
 - [0.6.1](#061)
 - [0.6.0](#060)
@@ -9,6 +10,14 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.6.3
+
+- Switch to simple average for Pinch and Rotate smoothing
+    - This makes the smoothing more general, ensures a 60fps update rate is
+      maintained, and generally has a nicer feel to it.
+    - Downside is that there will be a bit of drift, but that's why this setting
+      is optional!
 
 ## 0.6.2
 
