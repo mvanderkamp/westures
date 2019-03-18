@@ -53,6 +53,14 @@ class Pan extends Gesture {
      * @type {module:westures.Point2D}
      */
     this.previous = null;
+
+    /**
+     * Stage the emitted data once.
+     *
+     * @private
+     * @type {ReturnTypes.RotateData}
+     */
+    this.stagedEmit = null;
   }
 
   /**
@@ -62,10 +70,11 @@ class Pan extends Gesture {
    * @private
    * @param {State} state - The state object received by a hook.
    */
-  refresh(state) {
+  restart(state) {
     if (state.active.length >= REQUIRED_INPUTS) {
       this.previous = state.centroid;
     }
+    this.stagedEmit = null;
   }
 
   /**
@@ -76,7 +85,7 @@ class Pan extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    this.refresh(state);
+    this.restart(state);
   }
 
   /**
@@ -92,14 +101,14 @@ class Pan extends Gesture {
     }
 
     if (this.muteKey && state.event[this.muteKey]) {
-      this.refresh(state);
+      this.restart(state);
       return null;
     }
 
     const point = state.centroid;
     const change = point.minus(this.previous);
-    this.previous = point;
 
+    this.previous = point;
     return { change, point };
   }
 
@@ -111,7 +120,7 @@ class Pan extends Gesture {
    * @param {State} state - current input state.
    */
   end(state) {
-    this.refresh(state);
+    this.restart(state);
   }
 
   /**
@@ -122,7 +131,7 @@ class Pan extends Gesture {
    * @param {State} state - current input state.
    */
   cancel(state) {
-    this.refresh(state);
+    this.restart(state);
   }
 }
 

@@ -1,50 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="107px" preserveAspectRatio="none" style="width:483px;height:107px;" version="1.1" viewBox="0 0 483 107" width="483px" zoomAndPan="magnify"><defs/><g><!--entity _index--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="53" x="212.5" y="8"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="33" x="222.5" y="30.0059">index</text><!--entity _Pan--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="40" x="6" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="20" x="16" y="84.0059">Pan</text><!--entity _Pinch--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="49" x="66.5" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="29" x="76.5" y="84.0059">Pinch</text><!--entity _Rotate--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="57" x="135.5" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="37" x="145.5" y="84.0059">Rotate</text><!--entity _Swipe--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="53" x="212.5" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="33" x="222.5" y="84.0059">Swipe</text><!--entity _Swivel--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="54" x="286" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="34" x="296" y="84.0059">Swivel</text><!--entity _Tap--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="41" x="360.5" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="21" x="370.5" y="84.0059">Tap</text><!--entity _Track--><rect fill="#F8F8F8" height="34.4844" rx="2" ry="2" style="stroke: #000000; stroke-width: 0.8;" width="50" x="422" y="62"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="30" x="432" y="84.0059">Track</text><!--link _index to _Pan--><path d="M212.2126,27.7326 C175.8966,32.0341 109.4408,42.0357 56,62 C54.2721,62.6455 52.5255,63.3819 50.7898,64.178 " fill="none" id="_index-_Pan" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="46.2409,66.4031,56.0831,66.0416,50.7324,64.2061,52.5679,58.8553,46.2409,66.4031" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Pinch--><path d="M212.3346,32.4225 C188.9699,39.2159 154.2683,50.0122 125,62 C123.4732,62.6253 121.9204,63.2907 120.3612,63.9822 " fill="none" id="_index-_Pinch" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="115.6839,66.1217,125.5322,66.0152,120.2307,64.0417,122.2042,58.7403,115.6839,66.1217" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Rotate--><path d="M215.2695,42.0859 C207.8827,47.4044 199.6682,53.3189 192.0172,58.8276 " fill="none" id="_index-_Rotate" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="187.8335,61.8399,197.4745,59.8273,191.8912,58.9184,192.8001,53.335,187.8335,61.8399" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Swipe--><path d="M239,42.0859 C239,46.715 239,51.7956 239,56.6671 " fill="none" id="_index-_Swipe" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="239,61.8399,243,52.8399,239,56.8399,235,52.8399,239,61.8399" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Swivel--><path d="M262.4141,42.0859 C269.7024,47.4044 277.8074,53.3189 285.3563,58.8276 " fill="none" id="_index-_Swivel" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="289.4843,61.8399,284.5721,53.3035,285.4454,58.8925,279.8563,59.7658,289.4843,61.8399" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Tap--><path d="M265.5152,32.373 C288.3221,39.0588 321.8897,49.7263 350,62 C351.8985,62.8289 353.8353,63.7348 355.7671,64.6829 " fill="none" id="_index-_Tap" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="360.2458,66.9553,354.03,59.3157,355.787,64.6928,350.4099,66.4498,360.2458,66.9553" style="stroke: #383838; stroke-width: 2.0;"/><!--link _index to _Track--><path d="M265.6212,28.6488 C300.0599,33.829 361.6113,44.6603 412,62 C413.5969,62.5495 415.2157,63.1538 416.8369,63.797 " fill="none" id="_index-_Track" style="stroke: #383838; stroke-width: 2.0;"/><polygon fill="#383838" points="421.6881,65.8272,414.9298,58.663,417.0757,63.8971,411.8416,66.0429,421.6881,65.8272" style="stroke: #383838; stroke-width: 2.0;"/><script type="text/plantuml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="68px" preserveAspectRatio="none" style="width:505px;height:68px;" version="1.1" viewBox="0 0 505 68" width="505px" zoomAndPan="magnify"><defs/><g><ellipse cx="33.7487" cy="44.242" fill="#F8F8F8" rx="27.7487" ry="13.242" style="stroke: #383838; stroke-width: 0.5;"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="35" x="16.2487" y="47.9842">index</text><ellipse cx="476.3492" cy="44.242" fill="#F8F8F8" rx="17.8492" ry="13.242" style="stroke: #383838; stroke-width: 0.5;"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="21" x="465.8492" y="47.9842">Pan</text><ellipse cx="420.4203" cy="44.242" fill="#F8F8F8" rx="24.9203" ry="13.242" style="stroke: #383838; stroke-width: 0.5;"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="31" x="404.9203" y="47.9842">Pinch</text><ellipse cx="353.663" cy="44.242" fill="#F8F8F8" rx="29.163" ry="13.242" style="stroke: #383838; stroke-width: 0.5;"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="37" x="335.163" y="47.9842">Rotate</text><ellipse cx="284.5416" cy="44.242" fill="#F8F8F8" rx="27.0416" ry="13.242" style="stroke: #383838; stroke-width: 0.5;"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="34" x="267.5416" y="47.9842">Swipe</text><ellipse cx="215.4558" cy="44.242" fill="#F8F8F8" rx="28.4558" ry="13.242" style="stroke: #383838; stroke-width: 0.5;"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="36" x="197.4558" y="47.9842">Swivel</text><ellipse cx="155.3492" cy="44.242" fill="#F8F8F8" rx="17.8492" ry="13.242" style="stroke: #383838; stroke-width: 0.5;"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="21" x="144.8492" y="47.9842">Tap</text><ellipse cx="99.4203" cy="44.242" fill="#F8F8F8" rx="24.9203" ry="13.242" style="stroke: #383838; stroke-width: 0.5;"/><text fill="#000000" font-family="Tahoma, sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="31" x="83.9203" y="47.9842">Track</text><!--link <b>index</b> to Pan--><path d="M47.5478,32.6609 C55.1818,27.2292 65.0723,21.3063 75,18.5 C114.668,7.2867 407.251,4.4357 446,18.5 C452.184,20.7445 457.991,24.8524 462.844,29.1251 " fill="none" id="&lt;b&gt;index&lt;/b&gt;-Pan" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="466.684,32.7156,462.841,23.6474,463.0315,29.3011,457.3778,29.4915,466.684,32.7156" style="stroke: #000000; stroke-width: 1.0;"/><!--link <b>index</b> to Pinch--><path d="M47.5478,32.6609 C55.1818,27.2292 65.0723,21.3063 75,18.5 C107.932,9.1909 350.292,8.4328 383,18.5 C390.459,20.7958 397.764,25.1368 403.916,29.5951 " fill="none" id="&lt;b&gt;index&lt;/b&gt;-Pinch" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="407.978,32.6767,403.2245,24.0509,403.9943,29.6551,398.39,30.4249,407.978,32.6767" style="stroke: #000000; stroke-width: 1.0;"/><!--link <b>index</b> to Rotate--><path d="M47.5478,32.6609 C55.1818,27.2292 65.0723,21.3063 75,18.5 C125.681,4.1736 261.319,4.1736 312,18.5 C319.934,20.7428 327.844,24.9761 334.598,29.3583 " fill="none" id="&lt;b&gt;index&lt;/b&gt;-Rotate" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="339.075,32.3934,333.87,24.0323,334.9364,29.5877,329.3809,30.6541,339.075,32.3934" style="stroke: #000000; stroke-width: 1.0;"/><!--link <b>index</b> to Swipe--><path d="M47.5478,32.6609 C55.1818,27.2292 65.0723,21.3063 75,18.5 C111.139,8.2841 207.917,8.0866 244,18.5 C251.913,20.7837 259.77,25.1221 266.429,29.5816 " fill="none" id="&lt;b&gt;index&lt;/b&gt;-Swipe" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="270.833,32.6645,265.7535,24.2265,266.7368,29.7973,261.166,30.7805,270.833,32.6645" style="stroke: #000000; stroke-width: 1.0;"/><!--link <b>index</b> to Swivel--><path d="M47.5478,32.6609 C55.1818,27.2292 65.0723,21.3063 75,18.5 C117.341,6.5311 131.659,6.5311 174,18.5 C182.221,20.824 190.417,25.2853 197.327,29.835 " fill="none" id="&lt;b&gt;index&lt;/b&gt;-Swivel" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="201.452,32.6609,196.2877,24.2746,197.3271,29.8351,191.7665,30.8745,201.452,32.6609" style="stroke: #000000; stroke-width: 1.0;"/><!--link <b>index</b> to Tap--><path d="M47.5478,32.6609 C55.1818,27.2292 65.0723,21.3063 75,18.5 C96.3843,12.4551 104.1112,10.9182 125,18.5 C131.184,20.7445 136.991,24.8524 141.844,29.1251 " fill="none" id="&lt;b&gt;index&lt;/b&gt;-Tap" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="145.684,32.7156,141.841,23.6474,142.0315,29.3011,136.3778,29.4915,145.684,32.7156" style="stroke: #000000; stroke-width: 1.0;"/><!--link <b>index</b> to Track--><path d="M61.0859,44 C63.6994,44 66.3129,44 68.9263,44 " fill="none" id="&lt;b&gt;index&lt;/b&gt;-Track" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="74.2908,44,65.2908,40,69.2908,44,65.2908,48,74.2908,44" style="stroke: #000000; stroke-width: 1.0;"/><script type="text/plantuml"><![CDATA[
 @startuml
 
 scale max 1920 width
 top to bottom direction
 
+skinparam nodesep 13
+skinparam ranksep 25
 skinparam monochrome true
 skinparam shadowing false
-skinparam nodesep 20
-skinparam ranksep 20
 skinparam defaultFontName Tahoma
 skinparam defaultFontSize 12
 skinparam roundCorner 4
 skinparam dpi 150
-skinparam arrowThickness 0.7
+skinparam arrowColor black
+skinparam arrowThickness 0.55
 skinparam packageTitleAlignment left
 
 skinparam usecase {
-  borderThickness 0.4
-  fontSize 12
+  borderThickness 0.5
 }
 
 skinparam rectangle {
-  borderThickness 0.8
+  borderThickness 0.5
 }
 
 skinparam component {
-  borderThickness 1.2
+  borderThickness 1
 }
 
 
-rectangle "<b>index</b>" as _index
-rectangle "Pan" as _Pan
-rectangle "Pinch" as _Pinch
-rectangle "Rotate" as _Rotate
-rectangle "Swipe" as _Swipe
-rectangle "Swivel" as _Swivel
-rectangle "Tap" as _Tap
-rectangle "Track" as _Track
+(<b>index</b>)
+(Pan)
+(Pinch)
+(Rotate)
+(Swipe)
+(Swivel)
+(Tap)
+(Track)
 
-_index ==> _Pan
-_index ==> _Pinch
-_index ==> _Rotate
-_index ==> _Swipe
-_index ==> _Swivel
-_index ==> _Tap
-_index ==> _Track
+(<b>index</b>) -[thickness=1]> (Pan)
+(<b>index</b>) -[thickness=1]> (Pinch)
+(<b>index</b>) -[thickness=1]> (Rotate)
+(<b>index</b>) -[thickness=1]> (Swipe)
+(<b>index</b>) -[thickness=1]> (Swivel)
+(<b>index</b>) -[thickness=1]> (Tap)
+(<b>index</b>) -[thickness=1]> (Track)
 
 @enduml
 
