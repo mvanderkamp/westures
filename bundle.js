@@ -1349,8 +1349,6 @@ module.exports = Pan;
 
 const { Gesture } = require('westures-core');
 
-const DEFAULT_MIN_INPUTS = 2;
-
 /**
  * Data returned when a Pinch is recognized.
  *
@@ -1375,14 +1373,15 @@ const DEFAULT_MIN_INPUTS = 2;
  */
 class Pinch extends Gesture {
   /**
-   * Constructor function for the Pinch class.
-   *
    * @param {Object} [options]
    * @param {number} [options.minInputs=2] The minimum number of inputs that
-   *    must be active for a Pinch to be recognized.
+   * must be active for a Pinch to be recognized.
+   * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
+   * emitted data.
    */
   constructor(options = {}) {
     super('pinch');
+    const settings = { ...Pinch.DEFAULTS, ...options };
 
     /**
      * The minimum number of inputs that must be active for a Pinch to be
@@ -1391,7 +1390,20 @@ class Pinch extends Gesture {
      * @private
      * @type {number}
      */
-    this.minInputs = options.minInputs || DEFAULT_MIN_INPUTS;
+    this.minInputs = settings.minInputs;
+
+    /**
+     * The function through which emits are passed.
+     *
+     * @private
+     * @type {function}
+     */
+    this.emit = null;
+    if (settings.smoothing) {
+      this.emit = this.smooth.bind(this);
+    } else {
+      this.emit = data => data;
+    }
 
     /**
      * The previous distance.
@@ -1448,10 +1460,8 @@ class Pinch extends Gesture {
     const distance = midpoint.averageDistanceTo(state.activePoints);
     const change = distance / this.previous;
 
-    if (change === 1) return null;
-
     this.previous = distance;
-    return this.smooth({ distance, midpoint, change });
+    return this.emit({ distance, midpoint, change });
   }
 
   /**
@@ -1500,6 +1510,11 @@ class Pinch extends Gesture {
   }
 }
 
+Pinch.DEFAULTS = Object.freeze({
+  minInputs: 2,
+  smoothing: true,
+});
+
 module.exports = Pinch;
 
 
@@ -1511,8 +1526,6 @@ module.exports = Pinch;
 'use strict';
 
 const { Gesture } = require('westures-core');
-
-const REQUIRED_INPUTS = 2;
 
 /**
  * Data returned when a Rotate is recognized.
@@ -1557,10 +1570,37 @@ function angularMinus(a, b = 0) {
  */
 class Rotate extends Gesture {
   /**
-   * Constructor function for the Rotate class.
+   * @param {Object} [options]
+   * @param {number} [options.minInputs=2] The minimum number of inputs that
+   * must be active for a Rotate to be recognized.
+   * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
+   * emitted data.
    */
-  constructor() {
+  constructor(options = {}) {
     super('rotate');
+    const settings = { ...Rotate.DEFAULTS, ...options };
+
+    /**
+     * The minimum number of inputs that must be active for a Pinch to be
+     * recognized.
+     *
+     * @private
+     * @type {number}
+     */
+    this.minInputs = settings.minInputs;
+
+    /**
+     * The function through which emits are passed.
+     *
+     * @private
+     * @type {function}
+     */
+    this.emit = null;
+    if (settings.smoothing) {
+      this.emit = this.smooth.bind(this);
+    } else {
+      this.emit = data => data;
+    }
 
     /**
      * Track the previously emitted rotation angle.
@@ -1586,7 +1626,7 @@ class Rotate extends Gesture {
    * @param {State} state - current input state.
    */
   getAngle(state) {
-    if (state.active.length < REQUIRED_INPUTS) return null;
+    if (state.active.length < this.minInputs) return null;
 
     let angle = 0;
     const stagedAngles = [];
@@ -1633,7 +1673,7 @@ class Rotate extends Gesture {
   move(state) {
     const delta = this.getAngle(state);
     if (delta) {
-      return this.smooth({ pivot: state.centroid, delta });
+      return this.emit({ pivot: state.centroid, delta });
     }
     return null;
   }
@@ -1681,6 +1721,11 @@ class Rotate extends Gesture {
     return result;
   }
 }
+
+Rotate.DEFAULTS = Object.freeze({
+  minInputs: 2,
+  smoothing: true,
+});
 
 module.exports = Rotate;
 
