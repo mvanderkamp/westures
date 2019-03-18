@@ -243,11 +243,10 @@ class Rotate extends Gesture {
     let result = null;
 
     if (this.stagedEmit) {
-      if (Math.sign(this.stagedEmit.delta) === Math.sign(next.delta)) {
-        result = this.stagedEmit;
-      } else {
-        next.delta += this.stagedEmit.delta;
-      }
+      result = this.stagedEmit;
+      const avg = (result.delta + next.delta) / 2;
+      result.delta = avg;
+      next.delta = avg;
     }
 
     this.stagedEmit = next;

@@ -207,13 +207,10 @@ class Pinch extends Gesture {
     let result = null;
 
     if (this.stagedEmit) {
-      const odiff = this.stagedEmit.change - 1;
-      const ndiff = next.change - 1;
-      if (Math.sign(odiff) === Math.sign(ndiff)) {
-        result = this.stagedEmit;
-      } else {
-        next.change += odiff;
-      }
+      result = this.stagedEmit;
+      const avg = (result.change + next.change) / 2;
+      result.change = avg;
+      next.change = avg;
     }
 
     this.stagedEmit = next;
