@@ -150,9 +150,9 @@ class Rotate extends Gesture {
    * @return {?ReturnTypes.RotateData} <tt>null</tt> if this event did not occur
    */
   move(state) {
-    const delta = this.getAngle(state);
-    if (delta) {
-      return this.emit({ pivot: state.centroid, delta });
+    const rotation = this.getAngle(state);
+    if (rotation) {
+      return this.emit({ rotation });
     }
     return null;
   }
@@ -190,9 +190,9 @@ class Rotate extends Gesture {
 
     if (this.stagedEmit) {
       result = this.stagedEmit;
-      const avg = (result.delta + next.delta) / 2;
-      result.delta = avg;
-      next.delta = avg;
+      const avg = (result.rotation + next.rotation) / 2;
+      result.rotation = avg;
+      next.rotation = avg;
     }
 
     this.stagedEmit = next;
