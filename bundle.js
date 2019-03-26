@@ -2084,8 +2084,6 @@ module.exports = State;
 
 const { Gesture, Point2D, Smoothable } = require('../../westures-core');
 
-const REQUIRED_INPUTS = 1;
-
 /**
  * Data returned when a Pan is recognized.
  *
@@ -2116,6 +2114,7 @@ class Pan extends Smoothable(Gesture) {
    */
   constructor(options = {}) {
     super('pan', options);
+    const settings = { ...Pan.DEFAULTS, ...options };
 
     /**
      * Don't emit any data if this key is pressed.
@@ -2123,7 +2122,16 @@ class Pan extends Smoothable(Gesture) {
      * @private
      * @type {string}
      */
-    this.muteKey = options.muteKey;
+    this.muteKey = settings.muteKey;
+
+    /**
+     * The minimum number of inputs that must be active for a Pinch to be
+     * recognized.
+     *
+     * @private
+     * @type {number}
+     */
+    this.minInputs = settings.minInputs;
 
     /**
      * The previous point location.
@@ -2142,7 +2150,7 @@ class Pan extends Smoothable(Gesture) {
    * @param {State} state - The state object received by a hook.
    */
   restart(state) {
-    if (state.active.length >= REQUIRED_INPUTS) {
+    if (state.active.length >= this.minInputs) {
       this.previous = state.centroid;
     }
     super.restart();
@@ -2167,7 +2175,7 @@ class Pan extends Smoothable(Gesture) {
    * otherwise not recognized.
    */
   move(state) {
-    if (state.active.length < REQUIRED_INPUTS) {
+    if (state.active.length < this.minInputs) {
       return null;
     }
 
@@ -2216,6 +2224,11 @@ class Pan extends Smoothable(Gesture) {
     );
   }
 }
+
+Pan.DEFAULTS = Object.freeze({
+  minInputs: 1,
+  smoothing: false,
+});
 
 module.exports = Pan;
 
@@ -2359,41 +2372,6 @@ module.exports = Pinch;
 
 const { Gesture, Smoothable } = require('../../westures-core');
 const angularMinus = require('./angularMinus.js');
-
-/**
- * Data returned when a Rotate is recognized.
- *
- * @typedef {Object} RotateData
- * @mixes ReturnTypes.BaseData
- *
- * @property {number} rotation - In radians, the change in angle since last
- * emit.
- * @property {westures.Point2D} pivot - The centroid of the currently
- * active points.
- *
- * @memberof ReturnTypes
- */
-
-// const PI2 = 2 * Math.PI;
-
-/**
- * Helper function to regulate angular differences, so they don't jump from 0 to
- * 2*PI or vice versa.
- *
- * @private
- * @param {number} a - Angle in radians.
- * @param {number} b - Angle in radians.
- * @return {number} c, given by: c = a - b such that || < PI
- */
-// function angularMinus(a, b = 0) {
-//   let diff = a - b;
-//   if (diff < -Math.PI) {
-//     diff += PI2;
-//   } else if (diff > Math.PI) {
-//     diff -= PI2;
-//   }
-//   return diff;
-// }
 
 /**
  * A Rotate is defined as two inputs moving with a changing angle between them.
