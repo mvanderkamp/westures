@@ -9,7 +9,7 @@
 'use strict';
 
 // const { Gesture, Point2D, Region } = require('westures-core');
-const { Gesture, Point2D, Region } = require('../westures-core');
+const { Gesture, Point2D, Region, Smoothable } = require('../westures-core');
 
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
@@ -23,6 +23,7 @@ module.exports = {
   Gesture,
   Point2D,
   Region,
+  Smoothable,
   Pan,
   Pinch,
   Rotate,
@@ -74,15 +75,30 @@ module.exports = {
  */
 
 /**
+ * Allows the enabling of smoothing on Gestures that use this mixin.
+ *
+ * @see {@link
+ * https://mvanderkamp.github.io/westures-core/westures-core.Smoothable.html|
+ * westures-core.Smoothable}
+ *
+ * @mixin Smoothable
+ * @memberof westures
+ */
+
+/**
  * The base data that is included for all emitted gestures.
  *
  * @typedef {Object} BaseData
  *
+ * @property {westures-core.Point2D} centroid - The centroid of the input
+ * points.
  * @property {Event} event - The input event which caused the gesture to be
- *    recognized.
+ * recognized.
  * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {number} radius - The distance of the furthest input to the
+ * centroid.
  * @property {string} type - The name of the gesture as specified by its
- *    designer.
+ * designer.
  * @property {Element} target - The bound target of the gesture.
  *
  * @memberof ReturnTypes
