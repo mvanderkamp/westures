@@ -6,8 +6,6 @@
 
 const { Gesture, Point2D, Smoothable } = require('../../westures-core');
 
-const REQUIRED_INPUTS = 1;
-
 /**
  * Data returned when a Pan is recognized.
  *
@@ -38,6 +36,7 @@ class Pan extends Smoothable(Gesture) {
    */
   constructor(options = {}) {
     super('pan', options);
+    const settings = { ...Pan.DEFAULTS, ...options };
 
     /**
      * Don't emit any data if this key is pressed.
@@ -45,7 +44,16 @@ class Pan extends Smoothable(Gesture) {
      * @private
      * @type {string}
      */
-    this.muteKey = options.muteKey;
+    this.muteKey = settings.muteKey;
+
+    /**
+     * The minimum number of inputs that must be active for a Pinch to be
+     * recognized.
+     *
+     * @private
+     * @type {number}
+     */
+    this.minInputs = settings.minInputs;
 
     /**
      * The previous point location.
@@ -64,7 +72,7 @@ class Pan extends Smoothable(Gesture) {
    * @param {State} state - The state object received by a hook.
    */
   restart(state) {
-    if (state.active.length >= REQUIRED_INPUTS) {
+    if (state.active.length >= this.minInputs) {
       this.previous = state.centroid;
     }
     super.restart();
@@ -89,7 +97,7 @@ class Pan extends Smoothable(Gesture) {
    * otherwise not recognized.
    */
   move(state) {
-    if (state.active.length < REQUIRED_INPUTS) {
+    if (state.active.length < this.minInputs) {
       return null;
     }
 
@@ -138,6 +146,11 @@ class Pan extends Smoothable(Gesture) {
     );
   }
 }
+
+Pan.DEFAULTS = Object.freeze({
+  minInputs: 1,
+  smoothing: false,
+});
 
 module.exports = Pan;
 
