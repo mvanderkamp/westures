@@ -1266,7 +1266,7 @@ module.exports = State;
 'use strict';
 
 // const { Gesture, Point2D, Region } = require('westures-core');
-const { Gesture, Point2D, Region } = require('../westures-core');
+const { Gesture, Point2D, Region, Smoothable } = require('../westures-core');
 
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
@@ -1280,6 +1280,7 @@ module.exports = {
   Gesture,
   Point2D,
   Region,
+  Smoothable,
   Pan,
   Pinch,
   Rotate,
