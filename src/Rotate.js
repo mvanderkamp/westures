@@ -8,41 +8,6 @@ const { Gesture, Smoothable } = require('../../westures-core');
 const angularMinus = require('./angularMinus.js');
 
 /**
- * Data returned when a Rotate is recognized.
- *
- * @typedef {Object} RotateData
- * @mixes ReturnTypes.BaseData
- *
- * @property {number} rotation - In radians, the change in angle since last
- * emit.
- * @property {westures.Point2D} pivot - The centroid of the currently
- * active points.
- *
- * @memberof ReturnTypes
- */
-
-// const PI2 = 2 * Math.PI;
-
-/**
- * Helper function to regulate angular differences, so they don't jump from 0 to
- * 2*PI or vice versa.
- *
- * @private
- * @param {number} a - Angle in radians.
- * @param {number} b - Angle in radians.
- * @return {number} c, given by: c = a - b such that || < PI
- */
-// function angularMinus(a, b = 0) {
-//   let diff = a - b;
-//   if (diff < -Math.PI) {
-//     diff += PI2;
-//   } else if (diff > Math.PI) {
-//     diff -= PI2;
-//   }
-//   return diff;
-// }
-
-/**
  * A Rotate is defined as two inputs moving with a changing angle between them.
  *
  * @extends westures.Gesture
