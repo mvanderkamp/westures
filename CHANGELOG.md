@@ -23,6 +23,10 @@
 - Change names of emitted data properties to be more idiomatic. 'rotation' for
   Rotate and Swivel instead of delta, 'scale' for Pinch and 'translation' for
   Pan instead of change.
+- Point2D#midpoint was renamed to Point2D#centroid
+- centroid and radius were added to base data for emits.
+- Preference is now given to data from the gesture over base data in the case of
+  property name collisions.
 
 ## 0.6.3
 
