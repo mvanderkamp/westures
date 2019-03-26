@@ -2405,7 +2405,7 @@ class Tap extends Gesture {
       return null;
     }
 
-    const centroid = Point2D.midpoint(this.ended.map(i => i.current.point));
+    const centroid = Point2D.centroid(this.ended.map(i => i.current.point));
     this.ended = [];
     return { centroid, ...centroid };
   }
