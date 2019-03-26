@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture, Smoothable } = require('../../westures-core');
+const { Gesture, Smoothable } = require('westures-core');
 
 /**
  * Data returned when a Pinch is recognized.
@@ -14,9 +14,8 @@ const { Gesture, Smoothable } = require('../../westures-core');
  *
  * @property {number} distance - The average distance from an active input to
  *    the centroid.
- * @property {number} change - The change in distance since last emit.
- * @property {westures.Point2D} midpoint - The centroid of the currently active
- *    points.
+ * @property {number} scale - The proportional change in distance since last
+ * emit.
  *
  * @memberof ReturnTypes
  */

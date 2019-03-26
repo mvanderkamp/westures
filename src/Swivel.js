@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture, Point2D, Smoothable } = require('../../westures-core');
+const { Gesture, Point2D, Smoothable } = require('westures-core');
 const angularMinus = require('./angularMinus.js');
 
 /**

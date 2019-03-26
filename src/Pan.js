@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture, Point2D, Smoothable } = require('../../westures-core');
+const { Gesture, Point2D, Smoothable } = require('westures-core');
 
 /**
  * Data returned when a Pan is recognized.
@@ -12,9 +12,8 @@ const { Gesture, Point2D, Smoothable } = require('../../westures-core');
  * @typedef {Object} PanData
  * @mixes ReturnTypes.BaseData
  *
- * @property {westures.Point2D} change - The change vector from the last emit.
- * @property {westures.Point2D} point - The centroid of the currently active
- *    points.
+ * @property {westures.Point2D} translation - The change vector from the last
+ * emit.
  *
  * @memberof ReturnTypes
  */

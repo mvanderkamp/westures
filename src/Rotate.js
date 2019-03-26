@@ -4,8 +4,20 @@
 
 'use strict';
 
-const { Gesture, Smoothable } = require('../../westures-core');
+const { Gesture, Smoothable } = require('westures-core');
 const angularMinus = require('./angularMinus.js');
+
+/**
+ * Data returned when a Rotate is recognized.
+ *
+ * @typedef {Object} RotateData
+ * @mixes ReturnTypes.BaseData
+ *
+ * @property {number} rotation - In radians, the change in angle since last
+ * emit.
+ *
+ * @memberof ReturnTypes
+ */
 
 /**
  * A Rotate is defined as two inputs moving with a changing angle between them.
