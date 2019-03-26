@@ -2,6 +2,7 @@
 
 ## Releases
 
+- [0.7.0](#070)
 - [0.6.3](#063)
 - [0.6.2](#062)
 - [0.6.1](#061)
@@ -10,6 +11,18 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.7.0
+
+- Use new Smoothable mixin from `westures-core` for Pan, Pinch, Rotate, and
+  Swivel. Set smoothing as enabled by default, except in Pan (may enable
+  later...)
+- Place the `angularMinus` function into its own file, so that it can be used by
+  both Rotate and Swivel.
+- Make Swivel multitouch-capable.
+- Change names of emitted data properties to be more idiomatic. 'rotation' for
+  Rotate and Swivel instead of delta, 'scale' for Pinch and 'translation' for
+  Pan instead of change.
 
 ## 0.6.3
 
