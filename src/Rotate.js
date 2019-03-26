@@ -4,7 +4,8 @@
 
 'use strict';
 
-const { Gesture } = require('westures-core');
+const { Gesture, Smoothable } = require('../../westures-core');
+const angularMinus = require('./angularMinus.js');
 
 /**
  * Data returned when a Rotate is recognized.
@@ -12,14 +13,15 @@ const { Gesture } = require('westures-core');
  * @typedef {Object} RotateData
  * @mixes ReturnTypes.BaseData
  *
- * @property {number} delta - In radians, the change in angle since last emit.
- * @property {westures.Point2D} pivot - The centroid of the currently active
- *    points.
+ * @property {number} rotation - In radians, the change in angle since last
+ * emit.
+ * @property {westures.Point2D} pivot - The centroid of the currently
+ * active points.
  *
  * @memberof ReturnTypes
  */
 
-const PI2 = 2 * Math.PI;
+// const PI2 = 2 * Math.PI;
 
 /**
  * Helper function to regulate angular differences, so they don't jump from 0 to
@@ -30,24 +32,25 @@ const PI2 = 2 * Math.PI;
  * @param {number} b - Angle in radians.
  * @return {number} c, given by: c = a - b such that || < PI
  */
-function angularMinus(a, b = 0) {
-  let diff = a - b;
-  if (diff < -Math.PI) {
-    diff += PI2;
-  } else if (diff > Math.PI) {
-    diff -= PI2;
-  }
-  return diff;
-}
+// function angularMinus(a, b = 0) {
+//   let diff = a - b;
+//   if (diff < -Math.PI) {
+//     diff += PI2;
+//   } else if (diff > Math.PI) {
+//     diff -= PI2;
+//   }
+//   return diff;
+// }
 
 /**
  * A Rotate is defined as two inputs moving with a changing angle between them.
  *
  * @extends westures.Gesture
+ * @mixes westures.Smoothable
  * @see ReturnTypes.RotateData
  * @memberof westures
  */
-class Rotate extends Gesture {
+class Rotate extends Smoothable(Gesture) {
   /**
    * @param {Object} [options]
    * @param {number} [options.minInputs=2] The minimum number of inputs that
@@ -56,7 +59,7 @@ class Rotate extends Gesture {
    * emitted data.
    */
   constructor(options = {}) {
-    super('rotate');
+    super('rotate', options);
     const settings = { ...Rotate.DEFAULTS, ...options };
 
     /**
@@ -69,33 +72,12 @@ class Rotate extends Gesture {
     this.minInputs = settings.minInputs;
 
     /**
-     * The function through which emits are passed.
-     *
-     * @private
-     * @type {function}
-     */
-    this.emit = null;
-    if (settings.smoothing) {
-      this.emit = this.smooth.bind(this);
-    } else {
-      this.emit = data => data;
-    }
-
-    /**
      * Track the previously emitted rotation angle.
      *
      * @private
      * @type {number[]}
      */
     this.previousAngles = [];
-
-    /**
-     * Stage the emitted data once.
-     *
-     * @private
-     * @type {ReturnTypes.RotateData}
-     */
-    this.stagedEmit = null;
   }
 
   /**
@@ -129,8 +111,8 @@ class Rotate extends Gesture {
    */
   restart(state) {
     this.previousAngles = [];
-    this.stagedEmit = null;
     this.getAngle(state);
+    super.restart();
   }
 
   /**
@@ -152,7 +134,7 @@ class Rotate extends Gesture {
   move(state) {
     const rotation = this.getAngle(state);
     if (rotation) {
-      return this.emit({ rotation });
+      return this.emit({ rotation }, 'rotation');
     }
     return null;
   }
@@ -175,28 +157,6 @@ class Rotate extends Gesture {
    */
   cancel(state) {
     this.restart(state);
-  }
-
-  /**
-   * Smooth out the outgoing data.
-   *
-   * @private
-   * @param {ReturnTypes.RotateData} next
-   *
-   * @return {?ReturnTypes.RotateData}
-   */
-  smooth(next) {
-    let result = null;
-
-    if (this.stagedEmit) {
-      result = this.stagedEmit;
-      const avg = (result.rotation + next.rotation) / 2;
-      result.rotation = avg;
-      next.rotation = avg;
-    }
-
-    this.stagedEmit = next;
-    return result;
   }
 }
 

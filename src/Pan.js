@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture } = require('westures-core');
+const { Gesture, Point2D, Smoothable } = require('../../westures-core');
 
 const REQUIRED_INPUTS = 1;
 
@@ -25,10 +25,11 @@ const REQUIRED_INPUTS = 1;
  * A Pan is defined as a normal movement in any direction.
  *
  * @extends westures.Gesture
+ * @mixes westures.Smoothable
  * @see ReturnTypes.PanData
  * @memberof westures
  */
-class Pan extends Gesture {
+class Pan extends Smoothable(Gesture) {
   /**
    * @param {Object} [options]
    * @param {string} [options.muteKey=undefined] - If this key is pressed, this
@@ -36,7 +37,7 @@ class Pan extends Gesture {
    *    'shiftKey', or 'metaKey'.
    */
   constructor(options = {}) {
-    super('pan');
+    super('pan', options);
 
     /**
      * Don't emit any data if this key is pressed.
@@ -53,14 +54,6 @@ class Pan extends Gesture {
      * @type {module:westures.Point2D}
      */
     this.previous = null;
-
-    /**
-     * Stage the emitted data once.
-     *
-     * @private
-     * @type {ReturnTypes.RotateData}
-     */
-    this.stagedEmit = null;
   }
 
   /**
@@ -74,7 +67,7 @@ class Pan extends Gesture {
     if (state.active.length >= REQUIRED_INPUTS) {
       this.previous = state.centroid;
     }
-    this.stagedEmit = null;
+    super.restart();
   }
 
   /**
@@ -108,7 +101,7 @@ class Pan extends Gesture {
     const translation = state.centroid.minus(this.previous);
     this.previous = state.centroid;
 
-    return { translation };
+    return this.emit({ translation }, 'translation');
   }
 
   /**
@@ -131,6 +124,18 @@ class Pan extends Gesture {
    */
   cancel(state) {
     this.restart(state);
+  }
+
+  /*
+   * Averages out two points.
+   *
+   * @override
+   */
+  smoothingAverage(a, b) {
+    return new Point2D(
+      (a.x + b.x) / 2,
+      (a.y + b.y) / 2,
+    );
   }
 }
 
