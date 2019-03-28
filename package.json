@@ -28,8 +28,32 @@
   },
   "homepage": "https://mvanderkamp.github.io/westures/",
   "license": "MIT",
+  "browserify": {
+    "transform": [[
+      "babelify", {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "corejs": "3.x",
+              "targets": {
+                "edge": "40",
+                "firefox": "60",
+                "chrome": "67",
+                "safari": "11.1"
+              },
+              "useBuiltIns": "usage"
+            }
+          ]
+        ]
+      }
+    ]]
+  },
   "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
     "arkit": "^1.5.0",
+    "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "eslint": "^5.15.3",
     "jest": "^24.5.0",

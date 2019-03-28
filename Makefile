@@ -1,5 +1,5 @@
 
-.PHONY: core lint fix bundle tags docs
+.PHONY: core lint fix bundle tags docs 
 
 core: lint bundle docs tags
 
