@@ -2,6 +2,7 @@
 
 ## Releases
 
+- [0.7.1](#071)
 - [0.7.0](#070)
 - [0.6.3](#063)
 - [0.6.2](#062)
@@ -11,6 +12,11 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.7.1
+
+- Add `babelify` transform for `bundle.js`. Should add Edge support, and at the
+  very least opens up the possibility of expanding browser support a bit.
 
 ## 0.7.0
 
