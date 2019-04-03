@@ -53,13 +53,13 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "arkit": "^1.5.0",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "arkit": "^1.5.1",
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "eslint": "^5.16.0",
-    "jest": "^24.5.0",
+    "jest": "^24.7.0",
     "jsdoc": "^3.5.5",
     "tui-jsdoc-template": "^1.2.2"
   },
