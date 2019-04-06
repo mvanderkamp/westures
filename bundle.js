@@ -2562,16 +2562,15 @@ class Pan extends Smoothable(Gesture) {
    *    'shiftKey', or 'metaKey'.
    */
   constructor(options = {}) {
-    super('pan', options);
-
     const settings = _objectSpread({}, Pan.DEFAULTS, options);
+
+    super('pan', settings);
     /**
      * Don't emit any data if this key is pressed.
      *
      * @private
      * @type {string}
      */
-
 
     this.muteKey = settings.muteKey;
     /**
@@ -2684,7 +2683,7 @@ class Pan extends Smoothable(Gesture) {
 
 Pan.DEFAULTS = Object.freeze({
   minInputs: 1,
-  smoothing: false
+  smoothing: true
 });
 module.exports = Pan;
 
@@ -2733,9 +2732,9 @@ class Pinch extends Smoothable(Gesture) {
    * must be active for a Pinch to be recognized.
    */
   constructor(options = {}) {
-    super('pinch', options);
-
     const settings = _objectSpread({}, Pinch.DEFAULTS, options);
+
+    super('pinch', settings);
     /**
      * The minimum number of inputs that must be active for a Pinch to be
      * recognized.
@@ -2743,7 +2742,6 @@ class Pinch extends Smoothable(Gesture) {
      * @private
      * @type {number}
      */
-
 
     this.minInputs = settings.minInputs;
     /**
@@ -2879,9 +2877,9 @@ class Rotate extends Smoothable(Gesture) {
    * emitted data.
    */
   constructor(options = {}) {
-    super('rotate', options);
-
     const settings = _objectSpread({}, Rotate.DEFAULTS, options);
+
+    super('rotate', settings);
     /**
      * The minimum number of inputs that must be active for a Pinch to be
      * recognized.
@@ -2889,7 +2887,6 @@ class Rotate extends Smoothable(Gesture) {
      * @private
      * @type {number}
      */
-
 
     this.minInputs = settings.minInputs;
     /**
@@ -3314,16 +3311,15 @@ class Swivel extends Smoothable(Gesture) {
    * pivot will be the location of the first contact point.
    */
   constructor(options = {}) {
-    super('swivel', options);
-
     const settings = _objectSpread({}, Swivel.DEFAULTS, options);
+
+    super('swivel', settings);
     /**
      * The radius around the start point in which to do nothing.
      *
      * @private
      * @type {number}
      */
-
 
     this.deadzoneRadius = settings.deadzoneRadius;
     /**
