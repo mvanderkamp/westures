@@ -148,7 +148,7 @@ class Pan extends Smoothable(Gesture) {
 
 Pan.DEFAULTS = Object.freeze({
   minInputs: 1,
-  smoothing: false,
+  smoothing: true,
 });
 
 module.exports = Pan;
