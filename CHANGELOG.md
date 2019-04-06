@@ -2,6 +2,7 @@
 
 ## Releases
 
+- [0.7.2](#072)
 - [0.7.1](#071)
 - [0.7.0](#070)
 - [0.6.3](#063)
@@ -12,6 +13,12 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.7.2
+
+- Fix bug in gestures that used the Smoothable mixin which prevented their
+  default 'smoothing' setting from being used.
+- Turn on smoothing by default in Pan.
 
 ## 0.7.1
 
