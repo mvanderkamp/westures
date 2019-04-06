@@ -46,8 +46,8 @@ class Swivel extends Smoothable(Gesture) {
    * pivot will be the location of the first contact point.
    */
   constructor(options = {}) {
-    super('swivel', options);
     const settings = { ...Swivel.DEFAULTS, ...options };
+    super('swivel', settings);
 
     /**
      * The radius around the start point in which to do nothing.

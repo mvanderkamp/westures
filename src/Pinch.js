@@ -35,8 +35,8 @@ class Pinch extends Smoothable(Gesture) {
    * must be active for a Pinch to be recognized.
    */
   constructor(options = {}) {
-    super('pinch', options);
     const settings = { ...Pinch.DEFAULTS, ...options };
+    super('pinch', settings);
 
     /**
      * The minimum number of inputs that must be active for a Pinch to be

@@ -36,8 +36,8 @@ class Rotate extends Smoothable(Gesture) {
    * emitted data.
    */
   constructor(options = {}) {
-    super('rotate', options);
     const settings = { ...Rotate.DEFAULTS, ...options };
+    super('rotate', settings);
 
     /**
      * The minimum number of inputs that must be active for a Pinch to be

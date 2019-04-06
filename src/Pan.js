@@ -34,8 +34,8 @@ class Pan extends Smoothable(Gesture) {
    *    'shiftKey', or 'metaKey'.
    */
   constructor(options = {}) {
-    super('pan', options);
     const settings = { ...Pan.DEFAULTS, ...options };
+    super('pan', settings);
 
     /**
      * Don't emit any data if this key is pressed.
