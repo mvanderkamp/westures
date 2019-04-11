@@ -29,6 +29,25 @@ as well as a base set of gestures.
 
 Westures is a fork of [ZingTouch](https://github.com/zingchart/zingtouch).
 
+## Quick Example
+
+```javascript
+// Import the module.
+const wes = require('westures');
+
+// Declare a region.
+const region = new wes.Region(document.body);
+
+
+// Add a gesture to an element within the region.
+const pannable = document.querySelector('#pannable');
+region.addGesture(pannable, new wes.Pan(), (data) => {
+  // data.translation.x ...
+  // data.translation.y ...
+  // and so on, depending on the Gesture
+});
+```
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -95,7 +114,7 @@ to detect a Pan gesture (assume that such a gesture is available). Your handler
 is called `panner`.
 
 ```javascript
-region.addGesture(document.querySelector('#pannable'), new Pan(), panner);
+region.addGesture(document.querySelector('#pannable'), new wes.Pan(), panner);
 ```
 
 The `panner` function will now be called whenever a Pan hook returns non-null

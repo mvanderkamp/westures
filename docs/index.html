@@ -83,7 +83,21 @@ and transpilation yourself.</p>
 <a href="https://mvanderkamp.github.io/westures-core/">westures-core</a> 
 as well as a base set of gestures.</p>
 <p>Westures is a fork of <a href="https://github.com/zingchart/zingtouch">ZingTouch</a>.</p>
-<h2 id="table-of-contents">Table of Contents</h2>
+<h2 id="quick-example">Quick Example</h2>
+<pre class="prettyprint source lang-javascript"><code>// Import the module.
+const wes = require('westures');
+
+// Declare a region.
+const region = new wes.Region(document.body);
+
+
+// Add a gesture to an element within the region.
+const pannable = document.querySelector('#pannable');
+region.addGesture(pannable, new wes.Pan(), (data) => {
+  // data.translation.x ...
+  // data.translation.y ...
+  // and so on, depending on the Gesture
+});</code></pre><h2 id="table-of-contents">Table of Contents</h2>
 <ul>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#basic-usage">Basic Usage</a></li>
@@ -173,7 +187,7 @@ element.</p>
 <p>Now for an example. Suppose you have a div (id 'pannable') within which you want
 to detect a Pan gesture (assume that such a gesture is available). Your handler
 is called <code>panner</code>.</p>
-<pre class="prettyprint source lang-javascript"><code>region.addGesture(document.querySelector('#pannable'), new Pan(), panner);</code></pre><p>The <code>panner</code> function will now be called whenever a Pan hook returns non-null
+<pre class="prettyprint source lang-javascript"><code>region.addGesture(document.querySelector('#pannable'), new wes.Pan(), panner);</code></pre><p>The <code>panner</code> function will now be called whenever a Pan hook returns non-null
 data. The data returned by the hook will be available inside <code>panner</code> as such:</p>
 <pre class="prettyprint source lang-javascript"><code>function panner(data) {
   // data.x ...
