@@ -90,7 +90,6 @@ const wes = require('westures');
 // Declare a region.
 const region = new wes.Region(document.body);
 
-
 // Add a gesture to an element within the region.
 const pannable = document.querySelector('#pannable');
 region.addGesture(pannable, new wes.Pan(), (data) => {
@@ -195,9 +194,9 @@ data. The data returned by the hook will be available inside <code>panner</code>
   // and so on, depending on the Gesture
 }</code></pre><h2 id="implementing-custom-gestures">Implementing Custom Gestures</h2>
 <p>The core technique used by Westures (originally conceived for ZingTouch) is to
-process all user inputs and filter them through three key lifecycle phases:
-<code>start</code>, <code>move</code>, and <code>end</code>. Gestures are defined by how they respond to these
-phases.  To respond to the phases, a gesture extends the <code>Gesture</code> class
+process all user inputs and filter them through four key lifecycle phases:
+<code>start</code>, <code>move</code>, <code>end</code>, and <code>cancel</code>. Gestures are defined by how they respond
+to these phases. To respond to the phases, a gesture extends the <code>Gesture</code> class
 provided by this module and overrides the method (a.k.a. &quot;hook&quot;) corresponding
 to the name of the phase. </p>
 <p>The hook, when called, will receive the current State object of the region. To
@@ -212,51 +211,15 @@ class Tap extends Gesture {
   }
 
   end(state) {
-    const {x,y} = state.getInputsInPhase('end')[0].current.point;
-    return {x,y};
+    return state.getInputsInPhase('end')[0].current.point;
   }
-}</code></pre><p>There are problems with this example, so I don't recommend using it as an actual
-Tap gesture, but it gives you the basic idea.</p>
+}</code></pre><p>There are problems with this example, so it should not be used as an actual Tap
+gesture, it is just here to represent the basic idea of a custom gesture.</p>
 <p>The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.</p>
 <p>For information about what data is accessible via the State object, see the full
 documentation <a href="https://mvanderkamp.github.io/westures-core/State.html">here</a>.
 Note that his documentation was generated with <code>jsdoc</code>.</p>
-<h3 id="storing-the-progress-of-a-gesture">Storing the &quot;progress&quot; of a Gesture</h3>
-<p>One of the key facilities made available via the <code>state</code> object that a hook
-receives is the ability to store intermediate progress on a per-gesture and
-per-input basis. This is done via the <code>getProgressOfGesture</code> method on any given
-input. </p>
-<p>Here is a simple Pan example, where we keep track of what data was last emitted
-using this progress capability.</p>
-<pre class="prettyprint source lang-javascript"><code>const { Gesture } = require('westures');
-
-class Pan extends Gesture {
-  constructor() {
-    super('pan');
-  }
-
-  start(state) {
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    progress.lastEmit = state.centroid;
-  }
-
-  move(state) {
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    const change = state.centroid.minus(progress.lastEmit);
-    progress.lastEmit = state.centroid;
-    return {
-      change,
-      centroid: state.centroid,
-    };
-  }
-
-  end(state) {
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    progress.lastEmit = state.centroid;
-  }
-}</code></pre><p>In fact, this example is very close to the Pan implementation that is included
-in the <code>westures</code> module.</p>
 <h3 id="data-passed-to-handlers">Data Passed to Handlers</h3>
 <p>As you can see from above, it is the gesture which decides when data gets passed
 to handlers, and for the most part what that data will be. Note though that a
@@ -331,6 +294,7 @@ all that is really needed.</li>
 as the callback for an event, the parameters do not need to be wrapped up
 inside the 'details' property of an event object.</li>
 <li>Renamed 'bind' to 'addGesture' and 'unbind' to 'removeGestures'.</li>
+<li>Implemented a Smoothable mixin to be used for movement-based gestures.</li>
 </ul>
 <h2 id="advisory">Advisory</h2>
 <p>This is an alpha release of this project. It is very much still in development,

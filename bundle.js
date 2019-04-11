@@ -3643,18 +3643,20 @@ class Tap extends Gesture {
 
 
   end(state) {
-    const now = Date.now();
+    const now = Date.now(); // Save the recently ended inputs.
+
     this.ended = this.ended.concat(state.getInputsInPhase('end')).filter(input => {
       const tdiff = now - input.startTime;
       return tdiff <= this.maxDelay && tdiff >= this.minDelay;
-    });
+    }); // Validate the list of ended inputs.
 
     if (this.ended.length !== this.numInputs || this.ended.some(i => i.totalDistance() > this.tolerance)) {
       return null;
     }
 
     const centroid = Point2D.centroid(this.ended.map(i => i.current.point));
-    this.ended = [];
+    this.ended = []; // Critical! Used inputs need to be cleared!
+
     return _objectSpread({
       centroid
     }, centroid);

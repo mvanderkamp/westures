@@ -38,7 +38,6 @@ const wes = require('westures');
 // Declare a region.
 const region = new wes.Region(document.body);
 
-
 // Add a gesture to an element within the region.
 const pannable = document.querySelector('#pannable');
 region.addGesture(pannable, new wes.Pan(), (data) => {
@@ -131,9 +130,9 @@ function panner(data) {
 ## Implementing Custom Gestures
 
 The core technique used by Westures (originally conceived for ZingTouch) is to
-process all user inputs and filter them through three key lifecycle phases:
-`start`, `move`, and `end`. Gestures are defined by how they respond to these
-phases.  To respond to the phases, a gesture extends the `Gesture` class
+process all user inputs and filter them through four key lifecycle phases:
+`start`, `move`, `end`, and `cancel`. Gestures are defined by how they respond
+to these phases. To respond to the phases, a gesture extends the `Gesture` class
 provided by this module and overrides the method (a.k.a. "hook") corresponding
 to the name of the phase. 
 
@@ -152,14 +151,13 @@ class Tap extends Gesture {
   }
 
   end(state) {
-    const {x,y} = state.getInputsInPhase('end')[0].current.point;
-    return {x,y};
+    return state.getInputsInPhase('end')[0].current.point;
   }
 }
 ```
 
-There are problems with this example, so I don't recommend using it as an actual
-Tap gesture, but it gives you the basic idea.
+There are problems with this example, so it should not be used as an actual Tap
+gesture, it is just here to represent the basic idea of a custom gesture.
 
 The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.
@@ -167,49 +165,6 @@ forwarded to bound handlers when a non-null value is returned by a hook.
 For information about what data is accessible via the State object, see the full
 documentation [here](https://mvanderkamp.github.io/westures-core/State.html).
 Note that his documentation was generated with `jsdoc`.
-
-### Storing the "progress" of a Gesture
-
-One of the key facilities made available via the `state` object that a hook
-receives is the ability to store intermediate progress on a per-gesture and
-per-input basis. This is done via the `getProgressOfGesture` method on any given
-input. 
-
-Here is a simple Pan example, where we keep track of what data was last emitted
-using this progress capability.
-
-```javascript
-const { Gesture } = require('westures');
-
-class Pan extends Gesture {
-  constructor() {
-    super('pan');
-  }
-
-  start(state) {
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    progress.lastEmit = state.centroid;
-  }
-
-  move(state) {
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    const change = state.centroid.minus(progress.lastEmit);
-    progress.lastEmit = state.centroid;
-    return {
-      change,
-      centroid: state.centroid,
-    };
-  }
-
-  end(state) {
-    const progress = state.active[0].getProgressOfGesture(this.id);
-    progress.lastEmit = state.centroid;
-  }
-}
-```
-
-In fact, this example is very close to the Pan implementation that is included
-in the `westures` module.
 
 ### Data Passed to Handlers
 
@@ -256,6 +211,7 @@ gesture support. Beyond that, here are some specific changes:
   as the callback for an event, the parameters do not need to be wrapped up
   inside the 'details' property of an event object.
 - Renamed 'bind' to 'addGesture' and 'unbind' to 'removeGestures'.
+- Implemented a Smoothable mixin to be used for movement-based gestures.
 
 ## Advisory
 
