@@ -62,6 +62,7 @@
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
     "jsdoc": "^3.5.5",
+    "terser": "^3.17.0",
     "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
