@@ -4,11 +4,11 @@
 https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
 ](https://codeclimate.com/github/mvanderkamp/westures/maintainability)
 
-The goal of Westures is to be a robust JavaScript n-pointer multitouch gesture
-detection library. This means that each gesture should be capable of working
-seamlessly as touch points are added and removed, with no limit on the number of
-touch points, and with each touch point contributing to the gesture. It should
-also be capable of working across a wide range of devices.
+The goal of Westures is to be a robust n-pointer multitouch gesture detection
+library for JavaScript. This means that each gesture should be capable of
+working seamlessly as touch points are added and removed, with no limit on the
+number of touch points, and with each touch point contributing to the gesture.
+It should also be capable of working across a wide range of devices.
 
 Visit this page for an example of the system in action: [Westures Example](
 https://mvanderkamp.github.io/westures-example/). Note that this is best viewed
@@ -30,8 +30,6 @@ as well as a base set of gestures.
 Westures is a fork of [ZingTouch](https://github.com/zingchart/zingtouch).
 
 ## Table of Contents
-
-__NOTE:__ _This readme is still under construction!_
 
 - [Overview](#overview)
 - [Basic Usage](#basic-usage)
