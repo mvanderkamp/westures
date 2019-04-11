@@ -4,28 +4,30 @@
 https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
 ](https://codeclimate.com/github/mvanderkamp/westures/maintainability)
 
-Westures is intended to be a lightweight JavaScript gesture detection library.
-Whether it achieves that goal at this point is... yet to be determined.
-
-This module includes
-[westures-core](https://mvanderkamp.github.io/westures-core/) as well as a base
-set of gestures.
+The goal of Westures is to be a robust JavaScript n-pointer multitouch gesture
+detection library. This means that each gesture should be capable of working
+seamlessly as touch points are added and removed, with no limit on the number of
+touch points, and with each touch point contributing to the gesture. It should
+also be capable of working across a wide range of devices.
 
 Visit this page for an example of the system in action: [Westures Example](
 https://mvanderkamp.github.io/westures-example/). Note that this is best viewed
 on a touch device.
 
+The library aims to achieve its goals without using any dependencies except for
+its own core engine, yet maintain usability across the main modern browsers.
+Transpilation may be necessary for this last point to be achieved, as the
+library is written using many of the newer features of the JavaScript language.
+A transpiled bundle is provided, but the browser target list is arbitrary and
+the bundle (currently) includes a fair amount of bloat from Babel and
+Browserify. In most cases you will probably be better off performing bundling
+and transpilation yourself.
+
+This module includes
+[westures-core](https://mvanderkamp.github.io/westures-core/) 
+as well as a base set of gestures.
+
 Westures is a fork of [ZingTouch](https://github.com/zingchart/zingtouch).
-
-## Advisory
-
-This is an alpha release of this project. It is very much still in development,
-and has not been tested beyond a handful of devices using the latest versions of
-Chrome and Firefox. If you find a problem with it, please let me know.
-
-That said, please do give it a try, and if something breaks, please let me know!
-Or, even better, figure out why it broke, figure out a solution, and submit a
-pull request!
 
 ## Table of Contents
 
@@ -41,13 +43,15 @@ __NOTE:__ _This readme is still under construction!_
 
 There are seven gestures defined in this module:
 
-- _Tap:_ Single or multi-finger taps.
-- _Pinch:_ Two or more fingers move together or apart.
-- _Pan:_ One or more fingers sliding around the screen.
-- _Rotate:_ Two fingers or more fingers rotating around each other.
-- _Swipe:_ Single finger sliding very quickly across the screen.
-- _Swivel:_ Single finger rotating around a fixed pivot point.
-- _Track:_ Track the contact points of all active pointers.
+Name   | # of Inputs | Emit Phase | Description
+-------|-------------|------------|------------
+Tap    | 1+          | End        | Generic taps. Configure with options.
+Pinch  | 2+          | Move       | Inputs moving together or apart.
+Rotate | 2+          | Move       | Inputs rotating around each other.
+Pan    | 1+          | Move       | Inputs sliding around the screen.
+Swipe  | 1+          | End        | Inputs swiping the screen.
+Swivel | 1+          | Move       | Inputs rotating around a fixed pivot point.
+Track  | 1+          | All        | Track all active pointers.
 
 See the [documentation](https://mvanderkamp.github.io/westures/) for more
 information about each gesture.
@@ -243,6 +247,16 @@ gesture support. Beyond that, here are some spefic changes:
   as the callback for an event, the parameters do not need to be wrapped up
   inside the 'details' property of an event object.
 - Renamed 'bind' to 'addGesture' and 'unbind' to 'removeGestures'.
+
+## Advisory
+
+This is an alpha release of this project. It is very much still in development,
+and has not been tested beyond a handful of devices using the latest versions of
+Chrome and Firefox. If you find a problem with it, please let me know.
+
+That said, please do give it a try, and if something breaks, please let me know!
+Or, even better, figure out why it broke, figure out a solution, and submit a
+pull request!
 
 ## Links
 
