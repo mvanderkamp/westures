@@ -64,21 +64,25 @@
         <article class="readme"><h1 id="westures">westures</h1>
 <p><a href="https://codeclimate.com/github/mvanderkamp/westures/maintainability"><img src="https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability" alt="Maintainability">
 </a></p>
-<p>Westures is intended to be a lightweight JavaScript gesture detection library.
-Whether it achieves that goal at this point is... yet to be determined.</p>
-<p>This module includes
-<a href="https://mvanderkamp.github.io/westures-core/">westures-core</a> as well as a base
-set of gestures.</p>
+<p>The goal of Westures is to be a robust JavaScript n-pointer multitouch gesture
+detection library. This means that each gesture should be capable of working
+seamlessly as touch points are added and removed, with no limit on the number of
+touch points, and with each touch point contributing to the gesture. It should
+also be capable of working across a wide range of devices.</p>
 <p>Visit this page for an example of the system in action: <a href="https://mvanderkamp.github.io/westures-example/">Westures Example</a>. Note that this is best viewed
 on a touch device.</p>
+<p>The library aims to achieve its goals without using any dependencies except for
+its own core engine, yet maintain usability across the main modern browsers.
+Transpilation may be necessary for this last point to be achieved, as the
+library is written using many of the newer features of the JavaScript language.
+A transpiled bundle is provided, but the browser target list is arbitrary and
+the bundle (currently) includes a fair amount of bloat from Babel and
+Browserify. In most cases you will probably be better off performing bundling
+and transpilation yourself.</p>
+<p>This module includes
+<a href="https://mvanderkamp.github.io/westures-core/">westures-core</a> 
+as well as a base set of gestures.</p>
 <p>Westures is a fork of <a href="https://github.com/zingchart/zingtouch">ZingTouch</a>.</p>
-<h2 id="advisory">Advisory</h2>
-<p>This is an alpha release of this project. It is very much still in development,
-and has not been tested beyond a handful of devices using the latest versions of
-Chrome and Firefox. If you find a problem with it, please let me know.</p>
-<p>That said, please do give it a try, and if something breaks, please let me know!
-Or, even better, figure out why it broke, figure out a solution, and submit a
-pull request!</p>
 <h2 id="table-of-contents">Table of Contents</h2>
 <p><strong>NOTE:</strong> <em>This readme is still under construction!</em></p>
 <ul>
@@ -90,15 +94,60 @@ pull request!</p>
 </ul>
 <h2 id="overview">Overview</h2>
 <p>There are seven gestures defined in this module:</p>
-<ul>
-<li><em>Tap:</em> Single or multi-finger taps.</li>
-<li><em>Pinch:</em> Two or more fingers move together or apart.</li>
-<li><em>Pan:</em> One or more fingers sliding around the screen.</li>
-<li><em>Rotate:</em> Two fingers or more fingers rotating around each other.</li>
-<li><em>Swipe:</em> Single finger sliding very quickly across the screen.</li>
-<li><em>Swivel:</em> Single finger rotating around a fixed pivot point.</li>
-<li><em>Track:</em> Track the contact points of all active pointers.</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th># of Inputs</th>
+<th>Emit Phase</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tap</td>
+<td>1+</td>
+<td>End</td>
+<td>Generic taps. Configure with options.</td>
+</tr>
+<tr>
+<td>Pinch</td>
+<td>2+</td>
+<td>Move</td>
+<td>Inputs moving together or apart.</td>
+</tr>
+<tr>
+<td>Rotate</td>
+<td>2+</td>
+<td>Move</td>
+<td>Inputs rotating around each other.</td>
+</tr>
+<tr>
+<td>Pan</td>
+<td>1+</td>
+<td>Move</td>
+<td>Inputs sliding around the screen.</td>
+</tr>
+<tr>
+<td>Swipe</td>
+<td>1+</td>
+<td>End</td>
+<td>Inputs swiping the screen.</td>
+</tr>
+<tr>
+<td>Swivel</td>
+<td>1+</td>
+<td>Move</td>
+<td>Inputs rotating around a fixed pivot point.</td>
+</tr>
+<tr>
+<td>Track</td>
+<td>1+</td>
+<td>All</td>
+<td>Track all active pointers.</td>
+</tr>
+</tbody>
+</table>
 <p>See the <a href="https://mvanderkamp.github.io/westures/">documentation</a> for more
 information about each gesture.</p>
 <p>Note that all x,y positions are obtained from the corresponding <code>clientX</code> and
@@ -267,6 +316,13 @@ as the callback for an event, the parameters do not need to be wrapped up
 inside the 'details' property of an event object.</li>
 <li>Renamed 'bind' to 'addGesture' and 'unbind' to 'removeGestures'.</li>
 </ul>
+<h2 id="advisory">Advisory</h2>
+<p>This is an alpha release of this project. It is very much still in development,
+and has not been tested beyond a handful of devices using the latest versions of
+Chrome and Firefox. If you find a problem with it, please let me know.</p>
+<p>That said, please do give it a try, and if something breaks, please let me know!
+Or, even better, figure out why it broke, figure out a solution, and submit a
+pull request!</p>
 <h2 id="links">Links</h2>
 <h3 id="westures">westures</h3>
 <ul>
