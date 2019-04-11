@@ -154,18 +154,16 @@ information about each gesture.</p>
 <h2 id="basic-usage">Basic Usage</h2>
 <h3 id="importing-the-module">Importing the module</h3>
 <pre class="prettyprint source lang-javascript"><code>const wes = require('westures');</code></pre><h3 id="declaring-a-region">Declaring a Region</h3>
-<p>First, decide what region should listen for events. If you want elements to
-continue to respond to input events from the <code>move</code> and <code>end</code> phases even if the
-pointer moves outside the element, you should use a region that contains the
-element. This can even be the window object if you want these events to fire
-event if the pointer goes outside the browser window.</p>
-<p>For example:</p>
-<pre class="prettyprint source lang-javascript"><code>const region = new wes.Region(window);</code></pre><p>Of course, if you have lots of interactable elements on your page, you may want
-to consider using smaller elements as regions, or event the interactable element
-itself. Test it out in any case, and see what works better for you.</p>
-<p>For example, if you have a canvas element with id <code>draw-struff</code> that you want to
-interact with, you could do:</p>
-<pre class="prettyprint source lang-javascript"><code>const region = new wes.Region(document.querySelector('#draw-stuff'));</code></pre><h3 id="binding-an-element-within-a-region">Binding an element within a Region</h3>
+<p>First, decide what region should listen for events. This could be the
+interactable element itself, or a larger region (possibly containing many
+interactable elements). Behaviour may differ slightly based on the approach you
+take, as a Region will perform locking operations on its interactable elements
+and their bound gestures so as to limit interference between elements during
+gestures, and no such locking occurs between Regions.</p>
+<p>If you have lots of interactable elements on your page, you may find it
+convenient to use smaller elements as regions. Test it out in case, and see what
+works better for you.</p>
+<pre class="prettyprint source lang-javascript"><code>const region = new wes.Region(document.body);</code></pre><h3 id="binding-an-element-within-a-region">Binding an element within a Region</h3>
 <p>When you add a gesture to a region, you need to provide a handler as well as an
 Element along with the gesture. The gesture will only be recognized when the
 first pointer to interact with the region was inside the given Element.
@@ -260,6 +258,11 @@ called. Those properties are:</p>
 </thead>
 <tbody>
 <tr>
+<td>centroid</td>
+<td>Point2D</td>
+<td>The centroid of the input points.</td>
+</tr>
+<tr>
 <td>event</td>
 <td>Event</td>
 <td>The input event which caused the gesture to be recognized</td>
@@ -286,7 +289,7 @@ called. Those properties are:</p>
 or less the same. Most of the changes have to do with streamlining and
 simplifying the code such that it is easier to use and has a wider range of
 capabilities. The most significant of these is full simultaneous multi-touch
-gesture support. Beyond that, here are some spefic changes:</p>
+gesture support. Beyond that, here are some specific changes:</p>
 <ul>
 <li>Reorganized and simplified code structure.<ul>
 <li>The arbiter-interpreter-dispatcher scheme has been significantly simplified.<ul>

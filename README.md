@@ -67,29 +67,20 @@ const wes = require('westures');
 
 ### Declaring a Region
 
-First, decide what region should listen for events. If you want elements to
-continue to respond to input events from the `move` and `end` phases even if the
-pointer moves outside the element, you should use a region that contains the
-element. This can even be the window object if you want these events to fire
-event if the pointer goes outside the browser window.
+First, decide what region should listen for events. This could be the
+interactable element itself, or a larger region (possibly containing many
+interactable elements). Behaviour may differ slightly based on the approach you
+take, as a Region will perform locking operations on its interactable elements
+and their bound gestures so as to limit interference between elements during
+gestures, and no such locking occurs between Regions.
 
-For example:
-
-```javascript
-const region = new wes.Region(window);
-```
-
-Of course, if you have lots of interactable elements on your page, you may want
-to consider using smaller elements as regions, or event the interactable element
-itself. Test it out in any case, and see what works better for you.
-
-For example, if you have a canvas element with id `draw-struff` that you want to
-interact with, you could do:
+If you have lots of interactable elements on your page, you may find it
+convenient to use smaller elements as regions. Test it out in case, and see what
+works better for you.
 
 ```javascript
-const region = new wes.Region(document.querySelector('#draw-stuff'));
+const region = new wes.Region(document.body);
 ```
-
 ### Binding an element within a Region
 
 When you add a gesture to a region, you need to provide a handler as well as an
@@ -208,12 +199,13 @@ to handlers, and for the most part what that data will be. Note though that a
 few propertiess will get added to the outgoing data object before the handler is
 called. Those properties are:
 
-Name   | Type    | Value
--------|---------|-------
-event  | Event   | The input event which caused the gesture to be recognized
-phase  | String  | 'start', 'move', or 'end'
-type   | String  | The name of the gesture as specified by its designer.
-target | Element | The Element that is associated with the recognized gesture.
+Name     | Type    | Value
+---------|---------|-------
+centroid | Point2D | The centroid of the input points.
+event    | Event   | The input event which caused the gesture to be recognized
+phase    | String  | 'start', 'move', or 'end'
+type     | String  | The name of the gesture as specified by its designer.
+target   | Element | The Element that is associated with the recognized gesture.
 
 ## Changes From ZingTouch
 
@@ -221,7 +213,7 @@ The fundamental idea of ZingTouch, the three-phase hook structure, remains more
 or less the same. Most of the changes have to do with streamlining and
 simplifying the code such that it is easier to use and has a wider range of
 capabilities. The most significant of these is full simultaneous multi-touch
-gesture support. Beyond that, here are some spefic changes:
+gesture support. Beyond that, here are some specific changes:
 
 - Reorganized and simplified code structure.
   - The arbiter-interpreter-dispatcher scheme has been significantly simplified.
