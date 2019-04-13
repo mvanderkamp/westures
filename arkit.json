@@ -20,6 +20,10 @@
         "patterns":  ["index.js"]
       },
       {
+        "type": "Gestures",
+        "patterns": ["src/*.js"]
+      },
+      {
         "components": ["Component", "Entry"]
       }
     ]
