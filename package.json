@@ -1,13 +1,15 @@
 {
   "name": "westures",
   "version": "0.7.2",
-  "description": "Robust N-Pointer Multitouch Gestures for Modern Browsers",
+  "description": "Robust n-pointer multitouch gestures for modern browsers",
   "keywords": [
-    "gesture",
-    "tap",
+    "multitouch",
+    "gestures",
+    "pan",
     "pinch",
     "rotate",
-    "pan",
+    "tap",
+    "press",
     "swipe",
     "swivel",
     "track",
@@ -15,7 +17,9 @@
     "touch",
     "mouse",
     "pointer",
-    "multitouch"
+    "gesture",
+    "library",
+    "javascript"
   ],
   "main": "index.js",
   "directories": {
