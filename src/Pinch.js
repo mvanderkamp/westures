@@ -103,7 +103,7 @@ class Pinch extends Smoothable(Gesture) {
     const scale = distance / this.previous;
 
     this.previous = distance;
-    return this.emit({ distance, scale }, 'scale');
+    return this.smooth({ distance, scale }, 'scale');
   }
 
   /**

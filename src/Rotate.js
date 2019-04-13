@@ -111,7 +111,7 @@ class Rotate extends Smoothable(Gesture) {
   move(state) {
     const rotation = this.getAngle(state);
     if (rotation) {
-      return this.emit({ rotation }, 'rotation');
+      return this.smooth({ rotation }, 'rotation');
     }
     return null;
   }

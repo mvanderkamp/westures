@@ -203,7 +203,7 @@ class Swivel extends Smoothable(Gesture) {
     if (this.enabled(state.event)) {
       if (this.isActive) {
         const output = this.calculateOutput(state);
-        return output ? this.emit(output, 'rotation') : null;
+        return output ? this.smooth(output, 'rotation') : null;
       }
 
       // The enableKey was just pressed again.

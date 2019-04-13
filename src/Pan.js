@@ -117,7 +117,7 @@ class Pan extends Smoothable(Gesture) {
     const translation = state.centroid.minus(this.previous);
     this.previous = state.centroid;
 
-    return this.emit({ translation }, 'translation');
+    return this.smooth({ translation }, 'translation');
   }
 
   /**
