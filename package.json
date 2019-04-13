@@ -70,6 +70,6 @@
     "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
-    "westures-core": "^0.6.1"
+    "westures-core": "^0.6.2"
   }
 }
