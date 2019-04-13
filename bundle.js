@@ -2592,6 +2592,15 @@ class Pan extends Smoothable(Gesture) {
      */
 
     this.previous = null;
+    /*
+     * The "identity" value for this smoothable gesture.
+     *
+     * @private
+     * @override
+     * @type {module:westures.Point2D}
+     */
+
+    this.identity = new Point2D(0, 0);
   }
   /**
    * Resets the gesture's progress by saving the current centroid of the active
@@ -2754,6 +2763,15 @@ class Pinch extends Smoothable(Gesture) {
      */
 
     this.previous = 0;
+    /*
+     * The "identity" value for this smoothable gesture.
+     *
+     * @private
+     * @override
+     * @type {number}
+     */
+
+    this.identity = 1;
   }
   /**
    * Initializes the gesture progress and stores it in the first input for
