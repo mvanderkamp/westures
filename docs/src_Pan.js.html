@@ -112,7 +112,7 @@ class Pan extends Smoothable(Gesture) {
      * The previous point location.
      *
      * @private
-     * @type {module:westures.Point2D}
+     * @type {westures.Point2D}
      */
     this.previous = null;
 
@@ -121,7 +121,7 @@ class Pan extends Smoothable(Gesture) {
      *
      * @private
      * @override
-     * @type {module:westures.Point2D}
+     * @type {westures.Point2D}
      */
     this.identity = new Point2D(0, 0);
   }
@@ -171,7 +171,7 @@ class Pan extends Smoothable(Gesture) {
     const translation = state.centroid.minus(this.previous);
     this.previous = state.centroid;
 
-    return this.emit({ translation }, 'translation');
+    return this.smooth({ translation }, 'translation');
   }
 
   /**
