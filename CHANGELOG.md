@@ -2,6 +2,7 @@
 
 ## Releases
 
+- [0.7.3](#073)
 - [0.7.2](#072)
 - [0.7.1](#071)
 - [0.7.0](#070)
@@ -13,6 +14,21 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.7.3
+
+- [POSSIBLE BREAKING] But only for those who have implemented their own
+  Smoothable gesture with a non-zero identity value (e.g. Rotate has an identity
+  of 0, as that represents no change, and Pinch has an identity of 1, as that
+  represents no change). Such gestures will now need to declare their own
+  identity value *after* calling super() in the constructor.
+    - The smoothing algorithm used by the Smoothable mixin has been
+      simplified.  There is no delay to emits, as analysis of the data
+      revealed this really only occurred for the first emit. Instead a
+      simple rolling average is maintained.
+    - Additionally, note that `this.smooth(data, field)` must be called instead
+      of `this.emit(data, field)`
+- Add an experimental Press gesture.
 
 ## 0.7.2
 
