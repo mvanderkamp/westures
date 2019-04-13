@@ -12,6 +12,7 @@ const { Gesture, Point2D, Region, Smoothable } = require('westures-core');
 
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
+const Press   = require('./src/Press.js');
 const Rotate  = require('./src/Rotate.js');
 const Swipe   = require('./src/Swipe.js');
 const Swivel  = require('./src/Swivel.js');
@@ -25,6 +26,7 @@ module.exports = {
   Smoothable,
   Pan,
   Pinch,
+  Press,
   Rotate,
   Swipe,
   Swivel,
