@@ -29,10 +29,10 @@ const MS_THRESHOLD = 300;
  *
  * @private
  * @inner
- * @memberof module:westures.Swipe
+ * @memberof westures.Swipe
  * @see {@link https://en.wikipedia.org/wiki/Mean_of_circular_quantities}
  *
- * @param {{time: number, point: module:westures-core.Point2D}} moves - The
+ * @param {{time: number, point: westures-core.Point2D}} moves - The
  * moves list to process.
  * @param {number} vlim - The number of moves to process.
  *
@@ -58,7 +58,7 @@ function calc_angle(moves, vlim) {
  *
  * @private
  * @inner
- * @memberof module:westures.Swipe
+ * @memberof westures.Swipe
  *
  * @param {object} start
  * @param {westures.Point2D} start.point
@@ -80,10 +80,10 @@ function velocity(start, end) {
  *
  * @private
  * @inner
- * @memberof module:westures.Swipe
+ * @memberof westures.Swipe
  *
- * @param {{time: number, point: module:westures-core.Point2D}} moves - The
- * moves list to process.
+ * @param {{time: number, point: westures-core.Point2D}} moves - The moves list
+ * to process.
  * @param {number} vlim - The number of moves to process.
  *
  * @return {number} The velocity of the moves.

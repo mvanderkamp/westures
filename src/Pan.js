@@ -58,7 +58,7 @@ class Pan extends Smoothable(Gesture) {
      * The previous point location.
      *
      * @private
-     * @type {module:westures.Point2D}
+     * @type {westures.Point2D}
      */
     this.previous = null;
 
@@ -67,7 +67,7 @@ class Pan extends Smoothable(Gesture) {
      *
      * @private
      * @override
-     * @type {module:westures.Point2D}
+     * @type {westures.Point2D}
      */
     this.identity = new Point2D(0, 0);
   }

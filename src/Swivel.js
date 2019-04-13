@@ -88,7 +88,7 @@ class Swivel extends Smoothable(Gesture) {
      * The pivot point of the swivel.
      *
      * @private
-     * @type {module:westures.Point2D}
+     * @type {westures.Point2D}
      */
     this.pivot = null;
 
@@ -146,7 +146,7 @@ class Swivel extends Smoothable(Gesture) {
    * Refresh the gesture.
    *
    * @private
-   * @param {module:westures.Input[]} inputs - Input list to process.
+   * @param {westures.Input[]} inputs - Input list to process.
    * @param {State} state - current input state.
    */
   refresh(inputs, state) {
