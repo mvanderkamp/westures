@@ -64,8 +64,9 @@ const { Gesture } = require('westures-core');
  * Data returned when a Press is recognized.
  *
  * @typedef {Object} PressData
- * @mixes ReturnTypes.BaseData
  *
+ * @property {westures.Point2D} centroid - The current centroid of the input
+ * points.
  * @property {westures.Point2D} initial - The initial centroid of the input
  * points.
  * @property {number} distance - The total movement since initial contact.
@@ -195,9 +196,9 @@ class Press extends Gesture {
 }
 
 Press.DEFAULTS = Object.freeze({
-  DELAY_MS:   1000,
-  TOLERANCE:  10,
-  NUM_INPUTS: 1,
+  delay:     1000,
+  tolerance: 10,
+  numInputs: 1,
 });
 
 module.exports = Press;
