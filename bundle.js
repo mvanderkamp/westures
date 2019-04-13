@@ -19,6 +19,8 @@ const Pan = require('./src/Pan.js');
 
 const Pinch = require('./src/Pinch.js');
 
+const Press = require('./src/Press.js');
+
 const Rotate = require('./src/Rotate.js');
 
 const Swipe = require('./src/Swipe.js');
@@ -36,6 +38,7 @@ module.exports = {
   Smoothable,
   Pan,
   Pinch,
+  Press,
   Rotate,
   Swipe,
   Swivel,
@@ -99,11 +102,10 @@ module.exports = {
  *
  * @typedef {Object} BaseData
  *
- * @property {westures-core.Point2D} centroid - The centroid of the input
- * points.
+ * @property {westures.Point2D} centroid - The centroid of the input points.
  * @property {Event} event - The input event which caused the gesture to be
  * recognized.
- * @property {string} phase - 'start', 'move', or 'end'.
+ * @property {string} phase - 'start', 'move', 'end', or 'cancel'.
  * @property {number} radius - The distance of the furthest input to the
  * centroid.
  * @property {string} type - The name of the gesture as specified by its
@@ -113,7 +115,7 @@ module.exports = {
  * @memberof ReturnTypes
  */
 
-},{"./src/Pan.js":77,"./src/Pinch.js":78,"./src/Rotate.js":79,"./src/Swipe.js":80,"./src/Swivel.js":81,"./src/Tap.js":82,"./src/Track.js":83,"westures-core":67}],2:[function(require,module,exports){
+},{"./src/Pan.js":77,"./src/Pinch.js":78,"./src/Press.js":79,"./src/Rotate.js":80,"./src/Swipe.js":81,"./src/Swivel.js":82,"./src/Tap.js":83,"./src/Track.js":84,"westures-core":67}],2:[function(require,module,exports){
 var UNSCOPABLES = require('../internals/well-known-symbol')('unscopables');
 var create = require('../internals/object-create');
 var hide = require('../internals/hide');
@@ -2832,6 +2834,169 @@ module.exports = Pinch;
 
 },{"westures-core":67}],79:[function(require,module,exports){
 /*
+ * Contains the Press class.
+ */
+'use strict';
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+const {
+  Gesture
+} = require('westures-core');
+/**
+ * Data returned when a Press is recognized.
+ *
+ * @typedef {Object} PressData
+ * @mixes ReturnTypes.BaseData
+ *
+ * @property {westures.Point2D} initial - The initial centroid of the input
+ * points.
+ * @property {number} distance - The total movement since initial contact.
+ *
+ * @memberof ReturnTypes
+ */
+
+/**
+ * A Press is defined as one or more input points being held down.
+ *
+ * @extends westures.Gesture
+ * @see ReturnTypes.PressData
+ * @memberof westures
+ */
+
+
+class Press extends Gesture {
+  /**
+   * Constructor function for the Press class.
+   *
+   * @param {function} handler - A Press is unique in that the gesture needs to
+   * store the 'handler' callback directly, so it can be called asynchronously.
+   * @param {Object} [options] - The options object.
+   * @param {number} [options.delay=1000] - The delay before emitting, during
+   * which time the number of inputs must not change.
+   * @param {number} [options.numInputs=1] - Number of inputs for a Press
+   * gesture.
+   * @param {number} [options.tolerance=10] - The tolerance in pixels
+   * a user can move and still allow the gesture to emit.
+   */
+  constructor(handler, options = {}) {
+    super('press');
+
+    const settings = _objectSpread({}, Press.DEFAULTS, options);
+    /**
+     * The handler to trigger in case a Press is recognized.
+     *
+     * @private
+     * @type {function}
+     */
+
+
+    this.handler = handler;
+    /**
+     * The delay before emitting a press event, during which time the number of
+     * inputs must not change.
+     *
+     * @private
+     * @type {number}
+     */
+
+    this.delay = settings.delay;
+    /**
+     * The number of inputs that must be active for a Press to be recognized.
+     *
+     * @private
+     * @type {number}
+     */
+
+    this.numInputs = settings.numInputs;
+    /**
+     * A move tolerance in pixels allows some slop between a user's start to end
+     * events. This allows the Press gesture to be triggered more easily.
+     *
+     * @private
+     * @type {number}
+     */
+
+    this.tolerance = settings.tolerance;
+    /**
+     * The initial centroid.
+     *
+     * @private
+     * @type {westures.Point2D}
+     */
+
+    this.initial = null;
+    /**
+     * Saves the timeout callback reference in case it needs to be cleared for
+     * some reason.
+     *
+     * @private
+     * @type {number}
+     */
+
+    this.timeout = null;
+  }
+  /**
+   * Event hook for the start of a gesture. If the number of active inputs is
+   * correct, initializes the timeout.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+
+
+  start(state) {
+    if (state.active.length === this.numInputs) {
+      this.initial = state.centroid;
+      this.timeout = setTimeout(() => this.recognize(state), this.delay);
+    }
+  }
+  /**
+   * Recognize a Press.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+
+
+  recognize(state) {
+    const distance = this.initial.distanceTo(state.centroid);
+
+    if (distance <= this.tolerance) {
+      this.handler({
+        distance,
+        initial: this.initial,
+        centroid: state.centroid,
+        type: this.type
+      });
+    }
+  }
+  /**
+   * Event hook for the end of a gesture.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+
+
+  end() {
+    clearTimeout(this.timeout);
+    this.timeout = null;
+  }
+
+}
+
+Press.DEFAULTS = Object.freeze({
+  DELAY_MS: 1000,
+  TOLERANCE: 10,
+  NUM_INPUTS: 1
+});
+module.exports = Press;
+
+},{"westures-core":67}],80:[function(require,module,exports){
+/*
  * Contains the Rotate class.
  */
 'use strict';
@@ -2993,7 +3158,7 @@ Rotate.DEFAULTS = Object.freeze({
 });
 module.exports = Rotate;
 
-},{"./angularMinus.js":84,"westures-core":67}],80:[function(require,module,exports){
+},{"./angularMinus.js":85,"westures-core":67}],81:[function(require,module,exports){
 /*
  * Contains the Swipe class.
  */
@@ -3253,7 +3418,7 @@ class Swipe extends Gesture {
 
 module.exports = Swipe;
 
-},{"westures-core":67}],81:[function(require,module,exports){
+},{"westures-core":67}],82:[function(require,module,exports){
 /*
  * Contains the Rotate class.
  */
@@ -3527,7 +3692,7 @@ Swivel.DEFAULTS = Object.freeze({
 });
 module.exports = Swivel;
 
-},{"./angularMinus.js":84,"westures-core":67}],82:[function(require,module,exports){
+},{"./angularMinus.js":85,"westures-core":67}],83:[function(require,module,exports){
 /*
  * Contains the Tap class.
  */
@@ -3666,7 +3831,7 @@ class Tap extends Gesture {
 
 module.exports = Tap;
 
-},{"westures-core":67}],83:[function(require,module,exports){
+},{"westures-core":67}],84:[function(require,module,exports){
 /*
  * Contains the Track class.
  */
@@ -3779,7 +3944,7 @@ class Track extends Gesture {
 
 module.exports = Track;
 
-},{"core-js/modules/es.string.includes":64,"westures-core":67}],84:[function(require,module,exports){
+},{"core-js/modules/es.string.includes":64,"westures-core":67}],85:[function(require,module,exports){
 /*
  * Constains the angularMinus() function
  */

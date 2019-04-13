@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: Rotate | westures</title>
+    <title>Class: Press | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -53,9 +53,9 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>.</span>Rotate<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>.</span>Press<span class="signature">(handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A Rotate is defined as two inputs moving with a changing angle between them.</div>
+            <div class="class-description">A Press is defined as one or more input points being held down.</div>
         
     
 </header>
@@ -68,14 +68,14 @@
 
 <dt>
     
-        <h4 class="name" id="Rotate">
+        <h4 class="name" id="Press">
             
-                new <span class="type-signature"></span>Rotate<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Press<span class="signature">(handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
-                <code><a href="src_Rotate.js.html">src/Rotate.js</a></code>,
-                <code><a href="src_Rotate.js.html#line30">line 30</a></code>
+                <code><a href="src_Press.js.html">src/Press.js</a></code>,
+                <code><a href="src_Press.js.html#line29">line 29</a></code>
             </div>
             
         </h4>
@@ -85,6 +85,10 @@
 </dt>
 <dd>
 
+    
+    <div class="description">
+        Constructor function for the Press class.
+    </div>
     
 
     
@@ -121,6 +125,38 @@
 
         <tr>
             
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A Press is unique in that the gesture needs to
+store the 'handler' callback directly, so it can be called asynchronously.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>options</code></td>
             
 
@@ -147,7 +183,7 @@
 
             
 
-            <td class="description last">
+            <td class="description last">The options object.
                 <h6>Properties</h6>
                 
 <table class="params">
@@ -176,7 +212,7 @@
 
         <tr>
             
-                <td class="name"><code>minInputs</code></td>
+                <td class="name"><code>delay</code></td>
             
 
             <td class="type">
@@ -203,26 +239,26 @@
             
                 <td class="default">
                 
-                    2
+                    1000
                 
                 </td>
             
 
-            <td class="description last">The minimum number of inputs that
-must be active for a Rotate to be recognized.</td>
+            <td class="description last">The delay before emitting, during
+which time the number of inputs must not change.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>smoothing</code></td>
+                <td class="name"><code>numInputs</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">number</span>
 
 
             
@@ -243,13 +279,53 @@ must be active for a Rotate to be recognized.</td>
             
                 <td class="default">
                 
-                    true
+                    1
                 
                 </td>
             
 
-            <td class="description last">Whether to apply smoothing to
-emitted data.</td>
+            <td class="description last">Number of inputs for a Press
+gesture.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tolerance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    10
+                
+                </td>
+            
+
+            <td class="description last">The tolerance in pixels
+a user can move and still allow the gesture to emit.</td>
         </tr>
 
     
@@ -296,14 +372,6 @@ emitted data.</td>
     
 
     
-        <dt class="mixes">Mixes In:</dt>
-
-        <dd class="mixes"><ul>
-        
-            <li><a href="westures.Smoothable.html">westures.Smoothable</a></li>
-        
-        </ul></dd>
-    
 
     
 
@@ -321,7 +389,7 @@ emitted data.</td>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a></li>
+            <li><a href="ReturnTypes.html#.PressData">ReturnTypes.PressData</a></li>
         </ul>
     </dd>
     
@@ -364,170 +432,6 @@ emitted data.</td>
     
 
     
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id="move">
-            
-                <span class="type-signature"></span>move<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {<a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a>}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Rotate.js.html">src/Rotate.js</a></code>,
-                <code><a href="src_Rotate.js.html#line111">line 111</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Event hook for the move of a Rotate gesture.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">State</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">current input state.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type"><a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a></span>
-
-
-
-
-
-- <tt>null</tt> if this event did not occur
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            </dl>
-    
 
     
 
@@ -551,7 +455,7 @@ emitted data.</td>
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'westures.Rotate_sub'.replace(/"/g, '_');
+        var id = 'westures.Press_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

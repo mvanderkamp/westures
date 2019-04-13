@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: Rotate | westures</title>
+    <title>Source: src/Press.js | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -47,494 +49,162 @@
 
 
 
-
-<section>
-
-<header>
-    
-        <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>.</span>Rotate<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description">A Rotate is defined as two inputs moving with a changing angle between them.</div>
-        
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-
-<dt>
-    
-        <h4 class="name" id="Rotate">
-            
-                new <span class="type-signature"></span>Rotate<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Rotate.js.html">src/Rotate.js</a></code>,
-                <code><a href="src_Rotate.js.html#line30">line 30</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>minInputs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    2
-                
-                </td>
-            
-
-            <td class="description last">The minimum number of inputs that
-must be active for a Rotate to be recognized.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>smoothing</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-
-            <td class="description last">Whether to apply smoothing to
-emitted data.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <dt class="mixes">Mixes In:</dt>
-
-        <dd class="mixes"><ul>
-        
-            <li><a href="westures.Smoothable.html">westures.Smoothable</a></li>
-        
-        </ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-        
-        </div>
-    
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="westures.Gesture.html">westures.Gesture</a></li>
-    </ul>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id="move">
-            
-                <span class="type-signature"></span>move<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {<a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a>}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Rotate.js.html">src/Rotate.js</a></code>,
-                <code><a href="src_Rotate.js.html#line111">line 111</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Event hook for the move of a Rotate gesture.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">State</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">current input state.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type"><a href="ReturnTypes.html#.RotateData">ReturnTypes.RotateData</a></span>
-
-
-
-
-
-- <tt>null</tt> if this event did not occur
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            </dl>
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * Contains the Press class.
+ */
+
+'use strict';
+
+const { Gesture } = require('westures-core');
+
+/**
+ * Data returned when a Press is recognized.
+ *
+ * @typedef {Object} PressData
+ * @mixes ReturnTypes.BaseData
+ *
+ * @property {westures.Point2D} initial - The initial centroid of the input
+ * points.
+ * @property {number} distance - The total movement since initial contact.
+ *
+ * @memberof ReturnTypes
+ */
+
+/**
+ * A Press is defined as one or more input points being held down.
+ *
+ * @extends westures.Gesture
+ * @see ReturnTypes.PressData
+ * @memberof westures
+ */
+class Press extends Gesture {
+  /**
+   * Constructor function for the Press class.
+   *
+   * @param {function} handler - A Press is unique in that the gesture needs to
+   * store the 'handler' callback directly, so it can be called asynchronously.
+   * @param {Object} [options] - The options object.
+   * @param {number} [options.delay=1000] - The delay before emitting, during
+   * which time the number of inputs must not change.
+   * @param {number} [options.numInputs=1] - Number of inputs for a Press
+   * gesture.
+   * @param {number} [options.tolerance=10] - The tolerance in pixels
+   * a user can move and still allow the gesture to emit.
+   */
+  constructor(handler, options = {}) {
+    super('press');
+    const settings = { ...Press.DEFAULTS, ...options };
+
+    /**
+     * The handler to trigger in case a Press is recognized.
+     *
+     * @private
+     * @type {function}
+     */
+    this.handler = handler;
+
+    /**
+     * The delay before emitting a press event, during which time the number of
+     * inputs must not change.
+     *
+     * @private
+     * @type {number}
+     */
+    this.delay = settings.delay;
+
+    /**
+     * The number of inputs that must be active for a Press to be recognized.
+     *
+     * @private
+     * @type {number}
+     */
+    this.numInputs = settings.numInputs;
+
+    /**
+     * A move tolerance in pixels allows some slop between a user's start to end
+     * events. This allows the Press gesture to be triggered more easily.
+     *
+     * @private
+     * @type {number}
+     */
+    this.tolerance = settings.tolerance;
+
+    /**
+     * The initial centroid.
+     *
+     * @private
+     * @type {westures.Point2D}
+     */
+    this.initial = null;
+
+    /**
+     * Saves the timeout callback reference in case it needs to be cleared for
+     * some reason.
+     *
+     * @private
+     * @type {number}
+     */
+    this.timeout = null;
+  }
+
+  /**
+   * Event hook for the start of a gesture. If the number of active inputs is
+   * correct, initializes the timeout.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  start(state) {
+    if (state.active.length === this.numInputs) {
+      this.initial = state.centroid;
+      this.timeout = setTimeout(() => this.recognize(state), this.delay);
+    }
+  }
+
+  /**
+   * Recognize a Press.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  recognize(state) {
+    const distance = this.initial.distanceTo(state.centroid);
+    if (distance &lt;= this.tolerance) {
+      this.handler({
+        distance,
+        initial:  this.initial,
+        centroid: state.centroid,
+        type:     this.type,
+      });
+    }
+  }
+
+  /**
+   * Event hook for the end of a gesture.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  end() {
+    clearTimeout(this.timeout);
+    this.timeout = null;
+  }
+}
+
+Press.DEFAULTS = Object.freeze({
+  DELAY_MS:   1000,
+  TOLERANCE:  10,
+  NUM_INPUTS: 1,
+});
+
+module.exports = Press;
+
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -551,7 +221,7 @@ emitted data.</td>
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'westures.Rotate_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

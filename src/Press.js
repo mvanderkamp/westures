@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture, Point2D } = require('westures-core');
+const { Gesture } = require('westures-core');
 
 /**
  * Data returned when a Press is recognized.
@@ -129,12 +129,12 @@ class Press extends Gesture {
   }
 
   /**
-   * Event hook for the end of a gesture. 
+   * Event hook for the end of a gesture.
    *
    * @private
    * @param {State} state - current input state.
    */
-  end(state) {
+  end() {
     clearTimeout(this.timeout);
     this.timeout = null;
   }
