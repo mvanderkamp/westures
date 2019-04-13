@@ -61,6 +61,15 @@ class Pan extends Smoothable(Gesture) {
      * @type {module:westures.Point2D}
      */
     this.previous = null;
+
+    /*
+     * The "identity" value for this smoothable gesture.
+     *
+     * @private
+     * @override
+     * @type {module:westures.Point2D}
+     */
+    this.identity = new Point2D(0, 0);
   }
 
   /**

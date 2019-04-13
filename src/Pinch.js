@@ -54,6 +54,15 @@ class Pinch extends Smoothable(Gesture) {
      * @type {number}
      */
     this.previous = 0;
+
+    /*
+     * The "identity" value for this smoothable gesture.
+     *
+     * @private
+     * @override
+     * @type {number}
+     */
+    this.identity = 1;
   }
 
   /**
