@@ -3,6 +3,9 @@
 [![Maintainability](
 https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
 ](https://codeclimate.com/github/mvanderkamp/westures/maintainability)
+[![devDependencies Status](
+https://david-dm.org/mvanderkamp/westures/dev-status.svg)
+](https://david-dm.org/mvanderkamp/westures?type=dev)
 
 The goal of Westures is to be a robust n-pointer multitouch gesture detection
 library for JavaScript. This means that each gesture should be capable of
