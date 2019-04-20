@@ -1,5 +1,5 @@
 
-.PHONY: core lint fix bundle tags docs 
+.PHONY: core lint fix bundle tags docs min
 
 core: lint bundle docs tags
 
@@ -26,4 +26,10 @@ redoc:
 
 tags:
 	ctags -R src;
+
+min:
+	npx terser bundle.js \
+	--compress \
+	--mangle \
+	--output bundle.min.js;
 
