@@ -2,6 +2,7 @@
 
 ## Releases
 
+- [0.7.4](#074)
 - [0.7.3](#073)
 - [0.7.2](#072)
 - [0.7.1](#071)
@@ -14,6 +15,11 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.7.4
+
+- Add a check that ensures smoothing will only ever be applied on devices that
+  need it. That is, devices with 'coarse' pointers.
 
 ## 0.7.3
 
