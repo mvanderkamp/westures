@@ -26,21 +26,18 @@ const { Gesture } = require('westures-core');
  * @extends westures.Gesture
  * @see ReturnTypes.PressData
  * @memberof westures
+ *
+ * @param {function} handler - A Press is unique in that the gesture needs to
+ * store the 'handler' callback directly, so it can be called asynchronously.
+ * @param {Object} [options] - The options object.
+ * @param {number} [options.delay=1000] - The delay before emitting, during
+ * which time the number of inputs must not go below minInputs.
+ * @param {number} [options.minInputs=1] - Number of inputs for a Press
+ * gesture.
+ * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
+ * move and still allow the gesture to emit.
  */
 class Press extends Gesture {
-  /**
-   * Constructor function for the Press class.
-   *
-   * @param {function} handler - A Press is unique in that the gesture needs to
-   * store the 'handler' callback directly, so it can be called asynchronously.
-   * @param {Object} [options] - The options object.
-   * @param {number} [options.delay=1000] - The delay before emitting, during
-   * which time the number of inputs must not change.
-   * @param {number} [options.numInputs=1] - Number of inputs for a Press
-   * gesture.
-   * @param {number} [options.tolerance=10] - The tolerance in pixels
-   * a user can move and still allow the gesture to emit.
-   */
   constructor(handler, options = {}) {
     super('press');
     const settings = { ...Press.DEFAULTS, ...options };

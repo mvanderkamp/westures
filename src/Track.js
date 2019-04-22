@@ -26,14 +26,11 @@ const { Gesture } = require('westures-core');
  * @extends westures.Gesture
  * @see ReturnTypes.TrackData
  * @memberof westures
+ *
+ * @param {string[]} [phases=[]] Phases to recognize. Entries can be any or all
+ * of 'start', 'move', 'end', and 'cancel'.
  */
 class Track extends Gesture {
-  /**
-   * Constructor for the Track class.
-   *
-   * @param {string[]} [phases=[]] Phases to recognize. Entries can be any or
-   *    all of 'start', 'move', 'end', and 'cancel'.
-   */
   constructor(phases = []) {
     super('track');
     this.trackStart  = phases.includes('start');
@@ -54,6 +51,7 @@ class Track extends Gesture {
   /**
    * Event hook for the start of a Track gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
@@ -64,6 +62,7 @@ class Track extends Gesture {
   /**
    * Event hook for the move of a Track gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
@@ -74,6 +73,7 @@ class Track extends Gesture {
   /**
    * Event hook for the end of a Track gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
@@ -84,6 +84,7 @@ class Track extends Gesture {
   /**
    * Event hook for the cancel of a Track gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */

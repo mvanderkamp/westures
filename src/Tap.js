@@ -31,20 +31,17 @@ const defaults = Object.freeze({
  * @extends westures.Gesture
  * @see ReturnTypes.TapData
  * @memberof westures
+ *
+ * @param {Object} [options] - The options object.
+ * @param {number} [options.minDelay=0] - The minimum delay between a touchstart
+ * and touchend can be configured in milliseconds.
+ * @param {number} [options.maxDelay=300] - The maximum delay between a
+ * touchstart and touchend can be configured in milliseconds.
+ * @param {number} [options.numInputs=1] - Number of inputs for Tap gesture.
+ * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
+ * move.
  */
 class Tap extends Gesture {
-  /**
-   * Constructor function for the Tap class.
-   *
-   * @param {Object} [options] - The options object.
-   * @param {number} [options.minDelay=0] - The minimum delay between a
-   *    touchstart and touchend can be configured in milliseconds.
-   * @param {number} [options.maxDelay=300] - The maximum delay between a
-   *    touchstart and touchend can be configured in milliseconds.
-   * @param {number} [options.numInputs=1] - Number of inputs for Tap gesture.
-   * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
-   *    move.
-   */
   constructor(options = {}) {
     super('tap');
 
@@ -101,6 +98,7 @@ class Tap extends Gesture {
    * Event hook for the end of a gesture.  Determines if this the tap event can
    * be fired if the delay and tolerance constraints are met.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TapData} <tt>null</tt> if the gesture is not to be
    * emitted, Object with information otherwise.
@@ -117,7 +115,7 @@ class Tap extends Gesture {
 
     // Validate the list of ended inputs.
     if (this.ended.length !== this.numInputs ||
-        this.ended.some(i => i.totalDistance() > this.tolerance)) {
+      this.ended.some(i => i.totalDistance() > this.tolerance)) {
       return null;
     }
 

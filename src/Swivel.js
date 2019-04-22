@@ -28,23 +28,20 @@ const angularMinus = require('./angularMinus.js');
  * @mixes westures.Smoothable
  * @see ReturnTypes.SwivelData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {number} [options.deadzoneRadius=10] - The radius in pixels around the
+ * start point in which to do nothing.
+ * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
+ * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
+ * key is down.
+ * @param {number} [options.minInputs=1] - The minimum number of inputs that
+ * must be active for a Swivel to be recognized.
+ * @param {Element} [options.pivotCenter] - If set, the swivel's pivot point
+ * will be set to the center of the given pivotCenter element. Otherwise, the
+ * pivot will be the location of the first contact point.
  */
 class Swivel extends Smoothable(Gesture) {
-  /**
-   * Constructor for the Swivel class.
-   *
-   * @param {Object} [options]
-   * @param {number} [options.deadzoneRadius=10] - The radius in pixels around
-   * the start point in which to do nothing.
-   * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
-   * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while
-   * this key is down.
-   * @param {number} [options.minInputs=1] - The minimum number of inputs that
-   * must be active for a Swivel to be recognized.
-   * @param {Element} [options.pivotCenter] - If set, the swivel's pivot point
-   * will be set to the center of the given pivotCenter element. Otherwise, the
-   * pivot will be the location of the first contact point.
-   */
   constructor(options = {}) {
     const settings = { ...Swivel.DEFAULTS, ...options };
     super('swivel', settings);
@@ -193,6 +190,7 @@ class Swivel extends Smoothable(Gesture) {
   /**
    * Event hook for the move of a Swivel gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
    * recognized.
@@ -237,16 +235,12 @@ class Swivel extends Smoothable(Gesture) {
   }
 }
 
-/**
- * The default options for a Swivel gesture.
- */
 Swivel.DEFAULTS = Object.freeze({
   deadzoneRadius: 15,
   enableKey:      null,
   minInputs:      1,
   pivotCenter:    false,
 });
-
 
 module.exports = Swivel;
 

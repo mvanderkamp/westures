@@ -25,14 +25,13 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  * @mixes westures.Smoothable
  * @see ReturnTypes.PanData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {string} [options.muteKey=undefined] - If this key is pressed, this
+ * gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',
+ * 'shiftKey', or 'metaKey'.
  */
 class Pan extends Smoothable(Gesture) {
-  /**
-   * @param {Object} [options]
-   * @param {string} [options.muteKey=undefined] - If this key is pressed, this
-   *    gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',
-   *    'shiftKey', or 'metaKey'.
-   */
   constructor(options = {}) {
     const settings = { ...Pan.DEFAULTS, ...options };
     super('pan', settings);
@@ -100,6 +99,7 @@ class Pan extends Smoothable(Gesture) {
   /**
    * Event hook for the move of a Pan.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.PanData} <tt>null</tt> if the gesture was muted or
    * otherwise not recognized.

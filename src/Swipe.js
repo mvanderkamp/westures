@@ -32,8 +32,8 @@ const MS_THRESHOLD = 300;
  * @memberof westures.Swipe
  * @see {@link https://en.wikipedia.org/wiki/Mean_of_circular_quantities}
  *
- * @param {{time: number, point: westures-core.Point2D}} moves - The
- * moves list to process.
+ * @param {{time: number, point: westures-core.Point2D}} moves - The moves list
+ * to process.
  * @param {number} vlim - The number of moves to process.
  *
  * @return {number} The angle of the movement.
@@ -107,9 +107,6 @@ function calc_velocity(moves, vlim) {
  * @memberof westures
  */
 class Swipe extends Gesture {
-  /**
-   * Constructor function for the Swipe class.
-   */
   constructor() {
     super('swipe');
 
@@ -173,6 +170,7 @@ class Swipe extends Gesture {
   /**
    * Determines if the input's history validates a swipe motion.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.SwipeData} <tt>null</tt> if the gesture is not
    * recognized.

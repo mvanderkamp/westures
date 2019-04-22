@@ -26,15 +26,14 @@ const angularMinus = require('./angularMinus.js');
  * @mixes westures.Smoothable
  * @see ReturnTypes.RotateData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {number} [options.minInputs=2] The minimum number of inputs that must
+ * be active for a Rotate to be recognized.
+ * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
+ * emitted data.
  */
 class Rotate extends Smoothable(Gesture) {
-  /**
-   * @param {Object} [options]
-   * @param {number} [options.minInputs=2] The minimum number of inputs that
-   * must be active for a Rotate to be recognized.
-   * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
-   * emitted data.
-   */
   constructor(options = {}) {
     const settings = { ...Rotate.DEFAULTS, ...options };
     super('rotate', settings);
@@ -105,6 +104,7 @@ class Rotate extends Smoothable(Gesture) {
   /**
    * Event hook for the move of a Rotate gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.RotateData} <tt>null</tt> if this event did not occur
    */

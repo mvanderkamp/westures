@@ -27,13 +27,12 @@ const { Gesture, Smoothable } = require('westures-core');
  * @mixes westures.Smoothable
  * @see ReturnTypes.PinchData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {number} [options.minInputs=2] The minimum number of inputs that
+ * must be active for a Pinch to be recognized.
  */
 class Pinch extends Smoothable(Gesture) {
-  /**
-   * @param {Object} [options]
-   * @param {number} [options.minInputs=2] The minimum number of inputs that
-   * must be active for a Pinch to be recognized.
-   */
   constructor(options = {}) {
     const settings = { ...Pinch.DEFAULTS, ...options };
     super('pinch', settings);
@@ -93,6 +92,7 @@ class Pinch extends Smoothable(Gesture) {
   /**
    * Event hook for the move of a Pinch.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.PinchData} <tt>null</tt> if not recognized.
    */
