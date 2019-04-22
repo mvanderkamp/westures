@@ -2622,16 +2622,15 @@ const {
  * @mixes westures.Smoothable
  * @see ReturnTypes.PanData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {string} [options.muteKey=undefined] - If this key is pressed, this
+ * gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',
+ * 'shiftKey', or 'metaKey'.
  */
 
 
 class Pan extends Smoothable(Gesture) {
-  /**
-   * @param {Object} [options]
-   * @param {string} [options.muteKey=undefined] - If this key is pressed, this
-   *    gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',
-   *    'shiftKey', or 'metaKey'.
-   */
   constructor(options = {}) {
     const settings = _objectSpread({}, Pan.DEFAULTS, options);
 
@@ -2702,6 +2701,7 @@ class Pan extends Smoothable(Gesture) {
   /**
    * Event hook for the move of a Pan.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.PanData} <tt>null</tt> if the gesture was muted or
    * otherwise not recognized.
@@ -2802,15 +2802,14 @@ const {
  * @mixes westures.Smoothable
  * @see ReturnTypes.PinchData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {number} [options.minInputs=2] The minimum number of inputs that
+ * must be active for a Pinch to be recognized.
  */
 
 
 class Pinch extends Smoothable(Gesture) {
-  /**
-   * @param {Object} [options]
-   * @param {number} [options.minInputs=2] The minimum number of inputs that
-   * must be active for a Pinch to be recognized.
-   */
   constructor(options = {}) {
     const settings = _objectSpread({}, Pinch.DEFAULTS, options);
 
@@ -2873,6 +2872,7 @@ class Pinch extends Smoothable(Gesture) {
   /**
    * Event hook for the move of a Pinch.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.PinchData} <tt>null</tt> if not recognized.
    */
@@ -2930,7 +2930,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 const {
-  Gesture
+  Gesture,
+  Point2D
 } = require('westures-core');
 /**
  * Data returned when a Press is recognized.
@@ -2952,23 +2953,20 @@ const {
  * @extends westures.Gesture
  * @see ReturnTypes.PressData
  * @memberof westures
+ *
+ * @param {function} handler - A Press is unique in that the gesture needs to
+ * store the 'handler' callback directly, so it can be called asynchronously.
+ * @param {Object} [options] - The options object.
+ * @param {number} [options.delay=1000] - The delay before emitting, during
+ * which time the number of inputs must not go below minInputs.
+ * @param {number} [options.minInputs=1] - Number of inputs for a Press
+ * gesture.
+ * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
+ * move and still allow the gesture to emit.
  */
 
 
 class Press extends Gesture {
-  /**
-   * Constructor function for the Press class.
-   *
-   * @param {function} handler - A Press is unique in that the gesture needs to
-   * store the 'handler' callback directly, so it can be called asynchronously.
-   * @param {Object} [options] - The options object.
-   * @param {number} [options.delay=1000] - The delay before emitting, during
-   * which time the number of inputs must not change.
-   * @param {number} [options.numInputs=1] - Number of inputs for a Press
-   * gesture.
-   * @param {number} [options.tolerance=10] - The tolerance in pixels
-   * a user can move and still allow the gesture to emit.
-   */
   constructor(handler, options = {}) {
     super('press');
 
@@ -2992,13 +2990,14 @@ class Press extends Gesture {
 
     this.delay = settings.delay;
     /**
-     * The number of inputs that must be active for a Press to be recognized.
+     * The minimum number of inputs that must be active for a Press to be
+     * recognized.
      *
      * @private
      * @type {number}
      */
 
-    this.numInputs = settings.numInputs;
+    this.minInputs = settings.minInputs;
     /**
      * A move tolerance in pixels allows some slop between a user's start to end
      * events. This allows the Press gesture to be triggered more easily.
@@ -3036,7 +3035,7 @@ class Press extends Gesture {
 
 
   start(state) {
-    if (state.active.length === this.numInputs) {
+    if (state.active.length === this.minInputs) {
       this.initial = state.centroid;
       this.timeout = setTimeout(() => this.recognize(state), this.delay);
     }
@@ -3050,13 +3049,16 @@ class Press extends Gesture {
 
 
   recognize(state) {
-    const distance = this.initial.distanceTo(state.centroid);
+    const inputs = state.active.slice(0, this.minInputs);
+    const points = inputs.map(i => i.current.point);
+    const centroid = Point2D.centroid(points);
+    const distance = this.initial.distanceTo(centroid);
 
     if (distance <= this.tolerance) {
       this.handler({
         distance,
+        centroid,
         initial: this.initial,
-        centroid: state.centroid,
         type: this.type
       });
     }
@@ -3069,9 +3071,11 @@ class Press extends Gesture {
    */
 
 
-  end() {
-    clearTimeout(this.timeout);
-    this.timeout = null;
+  end(state) {
+    if (state.active.length < this.minInputs) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
   }
 
 }
@@ -3079,7 +3083,7 @@ class Press extends Gesture {
 Press.DEFAULTS = Object.freeze({
   delay: 1000,
   tolerance: 10,
-  numInputs: 1
+  minInputs: 1
 });
 module.exports = Press;
 
@@ -3118,17 +3122,16 @@ const angularMinus = require('./angularMinus.js');
  * @mixes westures.Smoothable
  * @see ReturnTypes.RotateData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {number} [options.minInputs=2] The minimum number of inputs that must
+ * be active for a Rotate to be recognized.
+ * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
+ * emitted data.
  */
 
 
 class Rotate extends Smoothable(Gesture) {
-  /**
-   * @param {Object} [options]
-   * @param {number} [options.minInputs=2] The minimum number of inputs that
-   * must be active for a Rotate to be recognized.
-   * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
-   * emitted data.
-   */
   constructor(options = {}) {
     const settings = _objectSpread({}, Rotate.DEFAULTS, options);
 
@@ -3199,6 +3202,7 @@ class Rotate extends Smoothable(Gesture) {
   /**
    * Event hook for the move of a Rotate gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.RotateData} <tt>null</tt> if this event did not occur
    */
@@ -3281,8 +3285,8 @@ const MS_THRESHOLD = 300;
  * @memberof westures.Swipe
  * @see {@link https://en.wikipedia.org/wiki/Mean_of_circular_quantities}
  *
- * @param {{time: number, point: westures-core.Point2D}} moves - The
- * moves list to process.
+ * @param {{time: number, point: westures-core.Point2D}} moves - The moves list
+ * to process.
  * @param {number} vlim - The number of moves to process.
  *
  * @return {number} The angle of the movement.
@@ -3364,9 +3368,6 @@ function calc_velocity(moves, vlim) {
 
 
 class Swipe extends Gesture {
-  /**
-   * Constructor function for the Swipe class.
-   */
   constructor() {
     super('swipe');
     /**
@@ -3432,6 +3433,7 @@ class Swipe extends Gesture {
   /**
    * Determines if the input's history validates a swipe motion.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.SwipeData} <tt>null</tt> if the gesture is not
    * recognized.
@@ -3544,25 +3546,22 @@ const angularMinus = require('./angularMinus.js');
  * @mixes westures.Smoothable
  * @see ReturnTypes.SwivelData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {number} [options.deadzoneRadius=10] - The radius in pixels around the
+ * start point in which to do nothing.
+ * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
+ * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
+ * key is down.
+ * @param {number} [options.minInputs=1] - The minimum number of inputs that
+ * must be active for a Swivel to be recognized.
+ * @param {Element} [options.pivotCenter] - If set, the swivel's pivot point
+ * will be set to the center of the given pivotCenter element. Otherwise, the
+ * pivot will be the location of the first contact point.
  */
 
 
 class Swivel extends Smoothable(Gesture) {
-  /**
-   * Constructor for the Swivel class.
-   *
-   * @param {Object} [options]
-   * @param {number} [options.deadzoneRadius=10] - The radius in pixels around
-   * the start point in which to do nothing.
-   * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
-   * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while
-   * this key is down.
-   * @param {number} [options.minInputs=1] - The minimum number of inputs that
-   * must be active for a Swivel to be recognized.
-   * @param {Element} [options.pivotCenter] - If set, the swivel's pivot point
-   * will be set to the center of the given pivotCenter element. Otherwise, the
-   * pivot will be the location of the first contact point.
-   */
   constructor(options = {}) {
     const settings = _objectSpread({}, Swivel.DEFAULTS, options);
 
@@ -3719,6 +3718,7 @@ class Swivel extends Smoothable(Gesture) {
   /**
    * Event hook for the move of a Swivel gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
    * recognized.
@@ -3767,10 +3767,6 @@ class Swivel extends Smoothable(Gesture) {
   }
 
 }
-/**
- * The default options for a Swivel gesture.
- */
-
 
 Swivel.DEFAULTS = Object.freeze({
   deadzoneRadius: 15,
@@ -3819,21 +3815,18 @@ const defaults = Object.freeze({
  * @extends westures.Gesture
  * @see ReturnTypes.TapData
  * @memberof westures
+ *
+ * @param {Object} [options] - The options object.
+ * @param {number} [options.minDelay=0] - The minimum delay between a touchstart
+ * and touchend can be configured in milliseconds.
+ * @param {number} [options.maxDelay=300] - The maximum delay between a
+ * touchstart and touchend can be configured in milliseconds.
+ * @param {number} [options.numInputs=1] - Number of inputs for Tap gesture.
+ * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
+ * move.
  */
 
 class Tap extends Gesture {
-  /**
-   * Constructor function for the Tap class.
-   *
-   * @param {Object} [options] - The options object.
-   * @param {number} [options.minDelay=0] - The minimum delay between a
-   *    touchstart and touchend can be configured in milliseconds.
-   * @param {number} [options.maxDelay=300] - The maximum delay between a
-   *    touchstart and touchend can be configured in milliseconds.
-   * @param {number} [options.numInputs=1] - Number of inputs for Tap gesture.
-   * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
-   *    move.
-   */
   constructor(options = {}) {
     super('tap');
     /**
@@ -3889,6 +3882,7 @@ class Tap extends Gesture {
    * Event hook for the end of a gesture.  Determines if this the tap event can
    * be fired if the delay and tolerance constraints are met.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TapData} <tt>null</tt> if the gesture is not to be
    * emitted, Object with information otherwise.
@@ -3950,16 +3944,13 @@ const {
  * @extends westures.Gesture
  * @see ReturnTypes.TrackData
  * @memberof westures
+ *
+ * @param {string[]} [phases=[]] Phases to recognize. Entries can be any or all
+ * of 'start', 'move', 'end', and 'cancel'.
  */
 
 
 class Track extends Gesture {
-  /**
-   * Constructor for the Track class.
-   *
-   * @param {string[]} [phases=[]] Phases to recognize. Entries can be any or
-   *    all of 'start', 'move', 'end', and 'cancel'.
-   */
   constructor(phases = []) {
     super('track');
     this.trackStart = phases.includes('start');
@@ -3986,6 +3977,7 @@ class Track extends Gesture {
   /**
    * Event hook for the start of a Track gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
@@ -3997,6 +3989,7 @@ class Track extends Gesture {
   /**
    * Event hook for the move of a Track gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
@@ -4008,6 +4001,7 @@ class Track extends Gesture {
   /**
    * Event hook for the end of a Track gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
@@ -4019,6 +4013,7 @@ class Track extends Gesture {
   /**
    * Event hook for the cancel of a Track gesture.
    *
+   * @private
    * @param {State} state - current input state.
    * @return {?ReturnTypes.TrackData} <tt>null</tt> if not recognized.
    */
