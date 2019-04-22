@@ -1,6 +1,6 @@
 {
   "name": "westures",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Robust n-pointer multitouch gestures for modern browsers",
   "keywords": [
     "multitouch",
