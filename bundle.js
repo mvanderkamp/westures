@@ -1260,7 +1260,10 @@ module.exports = {
  * A Binding associates a gesture with an element and a handler function that
  * will be called when the gesture is recognized.
  *
- * @private
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {westures-core.Gesture} gesture - A instance of the Gesture type.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
  */
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -1268,14 +1271,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 class Binding {
-  /**
-   * Constructor function for the Binding class.
-   *
-   * @param {Element} element - The element to which to associate the gesture.
-   * @param {westures-core.Gesture} gesture - A instance of the Gesture type.
-   * @param {Function} handler - The function handler to execute when a gesture
-   *    is recognized on the associated element.
-   */
   constructor(element, gesture, handler) {
     /**
      * The element to which to associate the gesture.
@@ -1344,14 +1339,11 @@ let nextGestureNum = 0;
  * cancel.
  *
  * @memberof westures-core
+ *
+ * @param {string} type - The name of the gesture.
  */
 
 class Gesture {
-  /**
-   * Constructor function for the Gesture class.
-   *
-   * @param {string} type - The name of the gesture.
-   */
   constructor(type) {
     if (typeof type !== 'string') {
       throw new TypeError('Gestures require a string type / name');
@@ -1487,19 +1479,14 @@ function getElementsInPath(event) {
  * and initial events. Contains the progress of each Input and its associated
  * gestures.
  *
- * @hideconstructor
+ * @param {(PointerEvent | MouseEvent | TouchEvent)} event - The input event
+ *    which will initialize this Input object.
+ * @param {number} identifier - The identifier for this input, so that it can
+ *    be located in subsequent Event objects.
  */
 
 
 class Input {
-  /**
-   * Constructor function for the Input class.
-   *
-   * @param {(PointerEvent | MouseEvent | TouchEvent)} event - The input event
-   *    which will initialize this Input object.
-   * @param {number} identifier - The identifier for this input, so that it can
-   *    be located in subsequent Event objects.
-   */
   constructor(event, identifier) {
     const currentData = new PointerData(event, identifier);
     /**
@@ -1670,15 +1657,12 @@ module.exports = PHASE;
  * x and y coordinates.
  *
  * @memberof westures-core
+ *
+ * @param {number} [ x=0 ] - The x coordinate of the point.
+ * @param {number} [ y=0 ] - The y coordinate of the point.
  */
 
 class Point2D {
-  /**
-   * Constructor function for the Point2D class.
-   *
-   * @param {number} [ x=0 ] - The x coordinate of the point.
-   * @param {number} [ y=0 ] - The y coordinate of the point.
-   */
   constructor(x = 0, y = 0) {
     /**
      * The x coordinate of the point.
@@ -1840,8 +1824,8 @@ const PHASE = require('./PHASE.js');
 
 function getEventObject(event, identifier) {
   if (event.changedTouches) {
-    return Array.from(event.changedTouches).find(t => {
-      return t.identifier === identifier;
+    return Array.from(event.changedTouches).find(touch => {
+      return touch.identifier === identifier;
     });
   }
 
@@ -1851,17 +1835,12 @@ function getEventObject(event, identifier) {
  * Low-level storage of pointer data based on incoming data from an interaction
  * event.
  *
- * @hideconstructor
+ * @param {Event} event - The event object being wrapped.
+ * @param {number} identifier - The index of touch if applicable
  */
 
 
 class PointerData {
-  /**
-   * @constructor
-   *
-   * @param {Event} event - The event object being wrapped.
-   * @param {number} identifier - The index of touch if applicable
-   */
   constructor(event, identifier) {
     /**
      * The original event object.
@@ -1947,24 +1926,21 @@ const CANCEL_EVENTS = ['pointercancel', 'touchcancel'];
  * input events.
  *
  * @memberof westures-core
+ *
+ * @param {Element} element - The element which should listen to input events.
+ * @param {object} [options]
+ * @param {boolean} [options.capture=false] - Whether the region uses the
+ * capture phase of input events. If false, uses the bubbling phase.
+ * @param {boolean} [options.preventDefault=true] - Whether the default
+ * browser functionality should be disabled. This option should most likely be
+ * ignored. Here there by dragons if set to false.
+ * @param {string} [options.source='page'] - One of 'page', 'client', or
+ * 'screen'. Determines what the source of (x,y) coordinates will be from the
+ * input events. ('X' and 'Y' will be appended, then those are the properties
+ * that will be looked up). *** NOT YET IMPLEMENTED ***
  */
 
 class Region {
-  /**
-   * Constructor function for the Region class.
-   *
-   * @param {Element} element - The element which should listen to input events.
-   * @param {object} [options]
-   * @param {boolean} [options.capture=false] - Whether the region uses the
-   * capture phase of input events. If false, uses the bubbling phase.
-   * @param {boolean} [options.preventDefault=true] - Whether the default
-   * browser functionality should be disabled. This option should most likely be
-   * ignored. Here there by dragons if set to false.
-   * @param {string} [options.source='page'] - One of 'page', 'client', or
-   * 'screen'. Determines what the source of (x,y) coordinates will be from the
-   * input events. ('X' and 'Y' will be appended, then those are the properties
-   * that will be looked up). *** NOT YET IMPLEMENTED ***
-   */
   // constructor(element, options = {}) {
   constructor(element, capture = false, preventDefault = true) {
     // const settings = { ...Region.DEFAULTS, ...options };
@@ -2232,10 +2208,8 @@ function smoothingIsApplicable(isRequested = true) {
     try {
       return window.matchMedia('(pointer: coarse)').matches;
     } catch (e) {
-      console.warn(e);
+      return true;
     }
-
-    return true;
   }
 
   return false;
@@ -2255,16 +2229,15 @@ function smoothingIsApplicable(isRequested = true) {
  *
  * @memberof westures-core
  * @mixin
+ *
+ * @param {string} name - The name of the gesture.
+ * @param {Object} [options]
+ * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
+ * emitted data.
  */
 
 
 const Smoothable = superclass => class Smoothable extends superclass {
-  /**
-   * @param {string} name - The name of the gesture.
-   * @param {Object} [options]
-   * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
-   * emitted data.
-   */
   constructor(name, options = {}) {
     super(name, options);
     /**
@@ -2376,7 +2349,7 @@ const Point2D = require('./Point2D.js');
 const symbols = Object.freeze({
   inputs: Symbol.for('inputs')
 });
-/*
+/**
  * Set of helper functions for updating inputs based on type of input.
  * Must be called with a bound 'this', via bind(), or call(), or apply().
  *
@@ -2404,15 +2377,10 @@ const update_fns = {
  * Keeps track of currently active and ending input points on the interactive
  * surface.
  *
- * @hideconstructor
+ * @param {Element} element - The element underpinning the associated Region.
  */
 
 class State {
-  /**
-   * Constructor for the State class.
-   *
-   * @param {Element} element - The element underpinning the associated Region.
-   */
   constructor(element) {
     /**
      * Keep a reference to the element for the associated region.
@@ -2527,8 +2495,7 @@ class State {
 
         try {
           this.element.setPointerCapture(identifier);
-        } catch (e) {
-          null;
+        } catch (e) {// NOP: Optional operation failed.
         }
 
         break;
@@ -2536,9 +2503,10 @@ class State {
       case 'end':
         try {
           this.element.releasePointerCapture(identifier);
-        } catch (e) {
-          null;
-        }
+        } catch (e) {} // NOP: Optional operation failed.
+        // All of 'end', 'move', and 'cancel' perform updates, hence the
+        // following fall-throughs
+
 
       case 'move':
       case 'cancel':
@@ -2576,7 +2544,8 @@ class State {
     this.inputs = Array.from(this[symbols.inputs].values());
     this.active = this.getInputsNotInPhase('end');
     this.activePoints = this.active.map(i => i.current.point);
-    this.centroid = Point2D.centroid(this.activePoints);
+    this.centroid = Point2D.centroid(this.activePoints); // XXX: Delete this.radius for next released. It is not generally useful.
+
     this.radius = this.activePoints.reduce((acc, cur) => {
       const dist = cur.distanceTo(this.centroid);
       return dist > acc ? dist : acc;
