@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture } = require('westures-core');
+const { Gesture, Point2D } = require('westures-core');
 
 /**
  * Data returned when a Press is recognized.
@@ -60,12 +60,13 @@ class Press extends Gesture {
     this.delay = settings.delay;
 
     /**
-     * The number of inputs that must be active for a Press to be recognized.
+     * The minimum number of inputs that must be active for a Press to be
+     * recognized.
      *
      * @private
      * @type {number}
      */
-    this.numInputs = settings.numInputs;
+    this.minInputs = settings.minInputs;
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end
@@ -102,7 +103,7 @@ class Press extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    if (state.active.length === this.numInputs) {
+    if (state.active.length === this.minInputs) {
       this.initial = state.centroid;
       this.timeout = setTimeout(() => this.recognize(state), this.delay);
     }
@@ -115,12 +116,15 @@ class Press extends Gesture {
    * @param {State} state - current input state.
    */
   recognize(state) {
-    const distance = this.initial.distanceTo(state.centroid);
+    const inputs = state.active.slice(0, this.minInputs);
+    const points = inputs.map(i => i.current.point);
+    const centroid = Point2D.centroid(points);
+    const distance = this.initial.distanceTo(centroid);
     if (distance <= this.tolerance) {
       this.handler({
         distance,
+        centroid,
         initial:  this.initial,
-        centroid: state.centroid,
         type:     this.type,
       });
     }
@@ -132,16 +136,18 @@ class Press extends Gesture {
    * @private
    * @param {State} state - current input state.
    */
-  end() {
-    clearTimeout(this.timeout);
-    this.timeout = null;
+  end(state) {
+    if (state.active.length < this.minInputs) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
   }
 }
 
 Press.DEFAULTS = Object.freeze({
   delay:     1000,
   tolerance: 10,
-  numInputs: 1,
+  minInputs: 1,
 });
 
 module.exports = Press;
