@@ -1,10 +1,10 @@
 
-.PHONY: core lint fix bundle tags docs min
-
-core: lint bundle docs tags
+.PHONY: release lint fix bundle tags docs min
 
 lint:
 	npx eslint src;
+
+release: lint bundle min docs tags
 
 fix:
 	npx eslint src --fix;
@@ -29,7 +29,7 @@ tags:
 
 min:
 	npx terser bundle.js \
-	--compress \
-	--mangle \
-	--output bundle.min.js;
+		--compress \
+		--mangle \
+		--output bundle.min.js;
 
