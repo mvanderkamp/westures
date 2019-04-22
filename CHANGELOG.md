@@ -2,6 +2,7 @@
 
 ## Releases
 
+- [0.7.5](#075)
 - [0.7.4](#074)
 - [0.7.3](#073)
 - [0.7.2](#072)
@@ -15,6 +16,15 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.7.5
+
+- Improvements to the Press gesture. No longer fails as touches are added,
+  supports layering of Presses. For example, you can have presses that respond
+  to 1,2,3,... however many touches all attached to the same element, and they
+  will each fire in turn as touches are added (but not as they are removed!).
+    - [POSSIBLE BREAKING] The 'numInputs' option was renamed to 'minInputs'.
+- Remove confusing and unnceessary console.warn() statements from core engine.
 
 ## 0.7.4
 
