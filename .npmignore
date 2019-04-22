@@ -2,4 +2,10 @@ edit.sh
 usage.sh
 tags
 docs
+test
+coverage
+Makefile
+arkit.json
+.eslintrc.json
+.jsdocrc.json
 
