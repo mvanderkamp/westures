@@ -4,22 +4,21 @@
   "description": "Robust n-pointer multitouch gestures for modern browsers",
   "keywords": [
     "multitouch",
-    "gestures",
+    "gesture",
+    "library",
+    "tap",
     "pan",
     "pinch",
     "rotate",
-    "tap",
     "press",
     "swipe",
     "swivel",
     "track",
     "simultaneous",
+    "gestures",
     "touch",
     "mouse",
-    "pointer",
-    "gesture",
-    "library",
-    "javascript"
+    "pointer"
   ],
   "main": "index.js",
   "directories": {
