@@ -31,41 +31,14 @@
   },
   "homepage": "https://mvanderkamp.github.io/westures/",
   "license": "MIT",
-  "browser": "index.js",
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "presets": [
-            [
-              "@babel/preset-env",
-              {
-                "corejs": "3.x",
-                "targets": {
-                  "edge": "40",
-                  "firefox": "60",
-                  "chrome": "67",
-                  "safari": "11.1"
-                },
-                "useBuiltIns": "usage"
-              }
-            ]
-          ]
-        }
-      ]
-    ]
-  },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "arkit": "^1.5.4",
-    "babelify": "^10.0.0",
-    "browserify": "^16.2.3",
     "eslint": "^5.16.0",
-    "jest": "^24.7.1",
-    "jsdoc": "^3.5.5",
-    "terser": "^3.17.0",
+    "jest": "^24.8.0",
+    "jsdoc": "^3.6.2",
+    "parcel-bundler": "^1.12.3",
     "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
