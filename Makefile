@@ -1,18 +1,16 @@
 
-.PHONY: release lint fix bundle tags docs min
+.PHONY: release lint fix parcel tags docs
 
 lint:
 	npx eslint src;
 
-release: lint bundle min docs tags
+release: lint parcel docs tags
 
 fix:
 	npx eslint src --fix;
 
-bundle:
-	npx browserify 'index.js' \
-		--standalone westures \
-		--outfile 'bundle.js';
+parcel:
+	npx parcel build 'index.js';
 
 docs:
 	npx jsdoc -c .jsdocrc.json;
@@ -26,10 +24,4 @@ redoc:
 
 tags:
 	ctags -R src;
-
-min:
-	npx terser bundle.js \
-		--compress \
-		--mangle \
-		--output bundle.min.js;
 

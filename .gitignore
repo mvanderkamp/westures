@@ -2,6 +2,7 @@
 node_modules/
 ._*
 bower_components/
+.cache/
 .idea/
 playground/
 yarn-error.log
