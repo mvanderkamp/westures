@@ -82,7 +82,7 @@ the bundle (currently) includes a fair amount of bloat from Babel and
 Browserify. In most cases you will probably be better off performing bundling
 and transpilation yourself.</p>
 <p>This module includes
-<a href="https://mvanderkamp.github.io/westures-core/">westures-core</a> 
+<a href="https://mvanderkamp.github.io/westures-core/">westures-core</a>
 as well as a base set of gestures.</p>
 <p>Westures is a fork of <a href="https://github.com/zingchart/zingtouch">ZingTouch</a>.</p>
 <h2 id="quick-example">Quick Example</h2>
@@ -98,7 +98,9 @@ region.addGesture(pannable, new wes.Pan(), (data) => {
   // data.translation.x ...
   // data.translation.y ...
   // and so on, depending on the Gesture
-});</code></pre><h2 id="table-of-contents">Table of Contents</h2>
+});
+</code></pre>
+<h2 id="table-of-contents">Table of Contents</h2>
 <ul>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#basic-usage">Basic Usage</a></li>
@@ -168,7 +170,9 @@ information about each gesture.</p>
 <code>clientY</code> properties of the input event.</p>
 <h2 id="basic-usage">Basic Usage</h2>
 <h3 id="importing-the-module">Importing the module</h3>
-<pre class="prettyprint source lang-javascript"><code>const wes = require('westures');</code></pre><h3 id="declaring-a-region">Declaring a Region</h3>
+<pre class="prettyprint source lang-javascript"><code>const wes = require('westures');
+</code></pre>
+<h3 id="declaring-a-region">Declaring a Region</h3>
 <p>First, decide what region should listen for events. This could be the
 interactable element itself, or a larger region (possibly containing many
 interactable elements). Behaviour may differ slightly based on the approach you
@@ -178,7 +182,9 @@ gestures, and no such locking occurs between Regions.</p>
 <p>If you have lots of interactable elements on your page, you may find it
 convenient to use smaller elements as regions. Test it out in case, and see what
 works better for you.</p>
-<pre class="prettyprint source lang-javascript"><code>const region = new wes.Region(document.body);</code></pre><h3 id="binding-an-element-within-a-region">Binding an element within a Region</h3>
+<pre class="prettyprint source lang-javascript"><code>const region = new wes.Region(document.body);
+</code></pre>
+<h3 id="binding-an-element-within-a-region">Binding an element within a Region</h3>
 <p>When you add a gesture to a region, you need to provide a handler as well as an
 Element along with the gesture. The gesture will only be recognized when the
 first pointer to interact with the region was inside the given Element.
@@ -188,19 +194,23 @@ element.</p>
 <p>Now for an example. Suppose you have a div (id 'pannable') within which you want
 to detect a Pan gesture (assume that such a gesture is available). Your handler
 is called <code>panner</code>.</p>
-<pre class="prettyprint source lang-javascript"><code>region.addGesture(document.querySelector('#pannable'), new wes.Pan(), panner);</code></pre><p>The <code>panner</code> function will now be called whenever a Pan hook returns non-null
+<pre class="prettyprint source lang-javascript"><code>region.addGesture(document.querySelector('#pannable'), new wes.Pan(), panner);
+</code></pre>
+<p>The <code>panner</code> function will now be called whenever a Pan hook returns non-null
 data. The data returned by the hook will be available inside <code>panner</code> as such:</p>
 <pre class="prettyprint source lang-javascript"><code>function panner(data) {
   // data.translation.x ...
   // data.translation.y ...
   // and so on, depending on the Gesture
-}</code></pre><h2 id="implementing-custom-gestures">Implementing Custom Gestures</h2>
+}
+</code></pre>
+<h2 id="implementing-custom-gestures">Implementing Custom Gestures</h2>
 <p>The core technique used by Westures (originally conceived for ZingTouch) is to
 process all user inputs and filter them through four key lifecycle phases:
 <code>start</code>, <code>move</code>, <code>end</code>, and <code>cancel</code>. Gestures are defined by how they respond
 to these phases. To respond to the phases, a gesture extends the <code>Gesture</code> class
 provided by this module and overrides the method (a.k.a. &quot;hook&quot;) corresponding
-to the name of the phase. </p>
+to the name of the phase.</p>
 <p>The hook, when called, will receive the current State object of the region. To
 maintain responsiveness, the functionality within a hook should be short and as
 efficient as possible.</p>
@@ -215,7 +225,9 @@ class Tap extends Gesture {
   end(state) {
     return state.getInputsInPhase('end')[0].current.point;
   }
-}</code></pre><p>There are problems with this example, so it should not be used as an actual Tap
+}
+</code></pre>
+<p>There are problems with this example, so it should not be used as an actual Tap
 gesture, it is just here to represent the basic idea of a custom gesture.</p>
 <p>The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.</p>
@@ -273,8 +285,10 @@ simplifying the code such that it is easier to use and has a wider range of
 capabilities. The most significant of these is full simultaneous multi-touch
 gesture support. Beyond that, here are some specific changes:</p>
 <ul>
-<li>Reorganized and simplified code structure.<ul>
-<li>The arbiter-interpreter-dispatcher scheme has been significantly simplified.<ul>
+<li>Reorganized and simplified code structure.
+<ul>
+<li>The arbiter-interpreter-dispatcher scheme has been significantly simplified.
+<ul>
 <li>There is no arbiter. instead the Region class has an 'arbitrate' function.</li>
 <li>There is no interpreter. Instead the Binding class has an 'evaluateHook'
 function.</li>
@@ -309,7 +323,7 @@ Chrome and Firefox. If you find a problem with it, please let me know.</p>
 Or, even better, figure out why it broke, figure out a solution, and submit a
 pull request!</p>
 <h2 id="links">Links</h2>
-<h3 id="westures">westures</h3>
+<h3 id="westures-2">westures</h3>
 <ul>
 <li><a href="https://www.npmjs.com/package/westures">npm</a></li>
 <li><a href="https://github.com/mvanderkamp/westures">github</a></li>
