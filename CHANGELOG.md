@@ -2,6 +2,7 @@
 
 ## Releases
 
+- [0.7.6](#076)
 - [0.7.5](#075)
 - [0.7.4](#074)
 - [0.7.3](#073)
@@ -16,6 +17,14 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.7.6
+
+- Update dev support packages and switch to parcel-bundler for the distributable
+  instead of browserify. This bundle is now found in the dist/ folder, along
+  with a source map. Support for the old 'bundle.js' and 'bundle.min.js' is
+  approximately maintained by providing two copies of 'dist/index.js' under
+  those names. They will be removed in subsequent releases.
 
 ## 0.7.5
 
