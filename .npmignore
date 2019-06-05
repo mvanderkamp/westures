@@ -1,11 +1,20 @@
+# local script files
 edit.sh
 usage.sh
+
+# tag files
 tags
+
+# documentation
 docs
+
+# test related
 test
 coverage
+
+# development assist files
 Makefile
-arkit.json
-.eslintrc.json
-.jsdocrc.json
+arkit.*
+.*.json
+.cache
 
