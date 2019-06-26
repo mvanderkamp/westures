@@ -124,31 +124,20 @@ class Swivel extends Smoothable(Gesture) {
    * @param {State} state - current input state.
    */
   restart(state) {
-    this.isActive = true;
-    if (this.pivotCenter) {
-      const rect = this.pivotCenter.getBoundingClientRect();
-      this.pivot = new Point2D(
-        rect.left + (rect.width / 2),
-        rect.top + (rect.height / 2)
-      );
-      this.previous = this.pivot.angleTo(state.centroid);
-    } else {
-      this.pivot = state.centroid;
-      this.previous = 0;
-    }
-    super.restart();
-  }
-
-  /**
-   * Refresh the gesture.
-   *
-   * @private
-   * @param {westures.Input[]} inputs - Input list to process.
-   * @param {State} state - current input state.
-   */
-  refresh(inputs, state) {
-    if (inputs.length >= this.minInputs && this.enabled(state.event)) {
-      this.restart(state);
+    if (state.active.length >= this.minInputs && this.enabled(state.event)) {
+      this.isActive = true;
+      if (this.pivotCenter) {
+        const rect = this.pivotCenter.getBoundingClientRect();
+        this.pivot = new Point2D(
+          rect.left + (rect.width / 2),
+          rect.top + (rect.height / 2)
+        );
+        this.previous = this.pivot.angleTo(state.centroid);
+      } else {
+        this.pivot = state.centroid;
+        this.previous = 0;
+      }
+      super.restart();
     }
   }
 
@@ -159,7 +148,7 @@ class Swivel extends Smoothable(Gesture) {
    * @param {State} state - current input state.
    */
   start(state) {
-    this.refresh(state.getInputsInPhase('start'), state);
+    this.restart();
   }
 
   /**
@@ -205,7 +194,7 @@ class Swivel extends Smoothable(Gesture) {
       }
 
       // The enableKey was just pressed again.
-      this.refresh(state.active, state);
+      this.restart();
     } else {
       // The enableKey was released, therefore pivot point is now invalid.
       this.isActive = false;
@@ -221,7 +210,7 @@ class Swivel extends Smoothable(Gesture) {
    * @param {State} state - current input state.
    */
   end(state) {
-    this.refresh(state.active, state);
+    this.restart();
   }
 
   /**
