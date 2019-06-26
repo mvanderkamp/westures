@@ -34,7 +34,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "arkit": "^1.5.4",
+    "arkit": "^1.6.2",
     "eslint": "^5.16.0",
     "jest": "^24.8.0",
     "jsdoc": "^3.6.2",
