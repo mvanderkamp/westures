@@ -1,5 +1,7 @@
 
-.PHONY: release lint fix parcel tags docs
+.PHONY: default release lint fix parcel tags docs
+
+default: lint tags
 
 lint:
 	npx eslint src;
