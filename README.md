@@ -1,4 +1,4 @@
-# westures 
+# westures
 
 [![Maintainability](
 https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
@@ -27,7 +27,7 @@ Browserify. In most cases you will probably be better off performing bundling
 and transpilation yourself.
 
 This module includes
-[westures-core](https://mvanderkamp.github.io/westures-core/) 
+[westures-core](https://mvanderkamp.github.io/westures-core/)
 as well as a base set of gestures.
 
 Westures is a fork of [ZingTouch](https://github.com/zingchart/zingtouch).
@@ -137,7 +137,7 @@ process all user inputs and filter them through four key lifecycle phases:
 `start`, `move`, `end`, and `cancel`. Gestures are defined by how they respond
 to these phases. To respond to the phases, a gesture extends the `Gesture` class
 provided by this module and overrides the method (a.k.a. "hook") corresponding
-to the name of the phase. 
+to the name of the phase.
 
 The hook, when called, will receive the current State object of the region. To
 maintain responsiveness, the functionality within a hook should be short and as

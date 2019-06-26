@@ -12,7 +12,7 @@ describe('Westures', function() {
   });
 
   test('should have constructors for all of the gestures', function() {
-    const gestures = [ 
+    const gestures = [
       'Gesture',
       'Pan',
       'Pinch',
