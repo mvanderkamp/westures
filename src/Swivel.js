@@ -137,7 +137,7 @@ class Swivel extends Smoothable(Gesture) {
         this.pivot = state.centroid;
         this.previous = 0;
       }
-      super.restart();
+      super.restart(state);
     }
   }
 
@@ -148,7 +148,7 @@ class Swivel extends Smoothable(Gesture) {
    * @param {State} state - current input state.
    */
   start(state) {
-    this.restart();
+    this.restart(state);
   }
 
   /**
@@ -194,7 +194,7 @@ class Swivel extends Smoothable(Gesture) {
       }
 
       // The enableKey was just pressed again.
-      this.restart();
+      this.restart(state);
     } else {
       // The enableKey was released, therefore pivot point is now invalid.
       this.isActive = false;
@@ -210,7 +210,7 @@ class Swivel extends Smoothable(Gesture) {
    * @param {State} state - current input state.
    */
   end(state) {
-    this.restart();
+    this.restart(state);
   }
 
   /**
