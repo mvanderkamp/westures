@@ -18,6 +18,10 @@
 - [0.5.2](#052)
 - [0.5.0](#050)
 
+## 0.7.7
+
+- Simplify the Swivel class a bit.
+
 ## 0.7.6
 
 - Update dev support packages and switch to parcel-bundler for the distributable
