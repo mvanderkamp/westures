@@ -17,4 +17,5 @@ Makefile
 arkit.*
 .*.json
 .cache
+.ignore
 
