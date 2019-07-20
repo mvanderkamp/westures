@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: Press | westures</title>
+    <title>Class: Pull | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -53,9 +53,10 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Press<span class="signature">(handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>~</span>Pull<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A Press is defined as one or more input points being held down.</div>
+            <div class="class-description">A Pull is defined as a single input moving away from or towards a pivot
+point.</div>
         
     
 </header>
@@ -68,14 +69,14 @@
 
 <dt>
     
-        <h4 class="name" id="Press">
+        <h4 class="name" id="Pull">
             
-                new <span class="type-signature"></span>Press<span class="signature">(handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Pull<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
-                <code><a href="src_Press.js.html">src/Press.js</a></code>,
-                <code><a href="src_Press.js.html#line41">line 41</a></code>
+                <code><a href="src_Pull.js.html">src/Pull.js</a></code>,
+                <code><a href="src_Pull.js.html#line46">line 46</a></code>
             </div>
             
         </h4>
@@ -121,38 +122,6 @@
 
         <tr>
             
-                <td class="name"><code>handler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">A Press is unique in that the gesture needs to
-store the 'handler' callback directly, so it can be called asynchronously.</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>options</code></td>
             
 
@@ -179,7 +148,7 @@ store the 'handler' callback directly, so it can be called asynchronously.</td>
 
             
 
-            <td class="description last">The options object.
+            <td class="description last">
                 <h6>Properties</h6>
                 
 <table class="params">
@@ -208,7 +177,7 @@ store the 'handler' callback directly, so it can be called asynchronously.</td>
 
         <tr>
             
-                <td class="name"><code>delay</code></td>
+                <td class="name"><code>deadzoneRadius</code></td>
             
 
             <td class="type">
@@ -235,13 +204,54 @@ store the 'handler' callback directly, so it can be called asynchronously.</td>
             
                 <td class="default">
                 
-                    1000
+                    15
                 
                 </td>
             
 
-            <td class="description last">The delay before emitting, during
-which time the number of inputs must not go below minInputs.</td>
+            <td class="description last">The radius in pixels around the
+start point in which to do nothing.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>enableKey</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">One of 'altKey', 'ctrlKey',
+'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
+key is down.</td>
         </tr>
 
     
@@ -280,21 +290,21 @@ which time the number of inputs must not go below minInputs.</td>
                 </td>
             
 
-            <td class="description last">Number of inputs for a Press
-gesture.</td>
+            <td class="description last">The minimum number of inputs that
+must be active for a Pull to be recognized.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>tolerance</code></td>
+                <td class="name"><code>pivotCenter</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Element</span>
 
 
             
@@ -315,13 +325,12 @@ gesture.</td>
             
                 <td class="default">
                 
-                    10
-                
                 </td>
             
 
-            <td class="description last">The tolerance in pixels a user can
-move and still allow the gesture to emit.</td>
+            <td class="description last">If set, the pull's pivot point will
+be set to the center of the given pivotCenter element. Otherwise, the pivot
+will be the location of the first contact point.</td>
         </tr>
 
     
@@ -368,6 +377,14 @@ move and still allow the gesture to emit.</td>
     
 
     
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="westures.Smoothable.html">westures.Smoothable</a></li>
+        
+        </ul></dd>
+    
 
     
 
@@ -385,7 +402,7 @@ move and still allow the gesture to emit.</td>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="ReturnTypes.html#.PressData">ReturnTypes.PressData</a></li>
+            <li><a href="ReturnTypes.html#.PullData">ReturnTypes.PullData</a></li>
         </ul>
     </dd>
     
@@ -451,7 +468,7 @@ move and still allow the gesture to emit.</td>
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'westures.Press_sub'.replace(/"/g, '_');
+        var id = 'westures.Pull_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

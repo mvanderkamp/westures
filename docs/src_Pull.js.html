@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: src/Swipe.js | westures</title>
+    <title>Source: src/Pull.js | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -53,235 +53,251 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/*
- * Contains the Swipe class.
+ * Contains the abstract Pull class.
  */
 
 'use strict';
 
-const { Gesture } = require('westures-core');
-
-const REQUIRED_INPUTS = 1;
-const PROGRESS_STACK_SIZE = 7;
-const MS_THRESHOLD = 300;
+const { Gesture, Point2D, Smoothable } = require('westures-core');
 
 /**
- * Data returned when a Swipe is recognized.
+ * Data returned when a Pull is recognized.
  *
- * @typedef {Object} SwipeData
+ * @typedef {Object} PullData
  * @mixes ReturnTypes.BaseData
  *
- * @property {number} velocity - The velocity of the swipe.
- * @property {number} direction - In radians, the direction of the swipe.
- * @property {westures.Point2D} point - The point at which the swipe ended.
- * @property {number} time - The epoch time, in ms, when the swipe ended.
+ * @property {number} distance - The average distance from an active input to
+ * the centroid.
+ * @property {number} scale - The proportional change in distance since last
+ * emit.
+ * @property {westures.Point2D} pivot - The pivot point.
  *
  * @memberof ReturnTypes
  */
 
 /**
- * Calculates the angle of movement along a series of moves.
- *
- * @private
- * @inner
- * @memberof westures.Swipe
- * @see {@link https://en.wikipedia.org/wiki/Mean_of_circular_quantities}
- *
- * @param {{time: number, point: westures-core.Point2D}} moves - The moves list
- * to process.
- * @param {number} vlim - The number of moves to process.
- *
- * @return {number} The angle of the movement.
- */
-function calc_angle(moves, vlim) {
-  const point = moves[vlim].point;
-  let sin = 0;
-  let cos = 0;
-  for (let i = 0; i &lt; vlim; ++i) {
-    const angle = moves[i].point.angleTo(point);
-    sin += Math.sin(angle);
-    cos += Math.cos(angle);
-  }
-  sin /= vlim;
-  cos /= vlim;
-  return Math.atan2(sin, cos);
-}
-
-/**
- * Local helper function for calculating the velocity between two timestamped
- * points.
- *
- * @private
- * @inner
- * @memberof westures.Swipe
- *
- * @param {object} start
- * @param {westures.Point2D} start.point
- * @param {number} start.time
- * @param {object} end
- * @param {westures.Point2D} end.point
- * @param {number} end.time
- *
- * @return {number} velocity from start to end point.
- */
-function velocity(start, end) {
-  const distance = end.point.distanceTo(start.point);
-  const time = end.time - start.time + 1;
-  return distance / time;
-}
-
-/**
- * Calculates the veloctiy of movement through a series of moves.
- *
- * @private
- * @inner
- * @memberof westures.Swipe
- *
- * @param {{time: number, point: westures-core.Point2D}} moves - The moves list
- * to process.
- * @param {number} vlim - The number of moves to process.
- *
- * @return {number} The velocity of the moves.
- */
-function calc_velocity(moves, vlim) {
-  let max = 0;
-  for (let i = 0; i &lt; vlim; ++i) {
-    const current = velocity(moves[i], moves[i + 1]);
-    if (current > max) max = current;
-  }
-  return max;
-}
-
-/**
- * A swipe is defined as input(s) moving in the same direction in an relatively
- * increasing velocity and leaving the screen at some point before it drops
- * below it's escape velocity.
+ * A Pull is defined as a single input moving away from or towards a pivot
+ * point.
  *
  * @extends westures.Gesture
- * @see ReturnTypes.SwipeData
+ * @mixes westures.Smoothable
+ * @see ReturnTypes.PullData
  * @memberof westures
+ *
+ * @param {Object} [options]
+ * @param {number} [options.deadzoneRadius=15] - The radius in pixels around the
+ * start point in which to do nothing.
+ * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
+ * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
+ * key is down.
+ * @param {number} [options.minInputs=1] The minimum number of inputs that
+ * must be active for a Pull to be recognized.
+ * @param {Element} [options.pivotCenter] - If set, the pull's pivot point will
+ * be set to the center of the given pivotCenter element. Otherwise, the pivot
+ * will be the location of the first contact point.
  */
-class Swipe extends Gesture {
-  constructor() {
-    super('swipe');
+class Pull extends Smoothable(Gesture) {
+  constructor(options = {}) {
+    const settings = { ...Pull.DEFAULTS, ...options };
+    super('pinch', settings);
 
     /**
-     * Moves list.
+     * The radius around the start point in which to do nothing.
      *
      * @private
-     * @type {object[]}
+     * @type {number}
      */
-    this.moves = [];
+    this.deadzoneRadius = settings.deadzoneRadius;
 
     /**
-     * Data to emit when all points have ended.
+     * If this is set, gesture will only respond to events where this property
+     * is truthy. Should be one of 'ctrlKey', 'altKey', or 'shiftKey'.
      *
      * @private
-     * @type {ReturnTypes.SwipeData}
+     * @type {string}
      */
-    this.saved = null;
+    this.enableKey = settings.enableKey;
+
+    /**
+     * The minimum number of inputs that must be active for a Pull to be
+     * recognized.
+     *
+     * @private
+     * @type {number}
+     */
+    this.minInputs = settings.minInputs;
+
+    /**
+     * If this is set, the pull will use the center of the element as its pivot
+     * point. Unreliable if the element is moved during a pull gesture.
+     *
+     * @private
+     * @type {Element}
+     */
+    this.pivotCenter = settings.pivotCenter;
+
+    /**
+     * The pivot point of the pull.
+     *
+     * @private
+     * @type {westures.Point2D}
+     */
+    this.pivot = null;
+
+    /**
+     * The previous distance.
+     *
+     * @private
+     * @type {number}
+     */
+    this.previous = 0;
+
+    /**
+     * Whether the swivel is active.
+     *
+     * @private
+     * @type {boolean}
+     */
+    this.isActive = false;
+
+    /*
+     * The "identity" value for this smoothable gesture.
+     *
+     * @private
+     * @override
+     * @type {number}
+     */
+    this.identity = 1;
   }
 
   /**
-   * Refresh the swipe state.
+   * Returns whether this gesture is currently enabled.
    *
    * @private
+   * @param {Event} event - The state's current input event.
+   * @return {boolean} true if the gesture is enabled, false otherwise.
    */
-  refresh() {
-    this.moves = [];
-    this.saved = null;
+  enabled(event) {
+    return !this.enableKey || event[this.enableKey];
   }
 
   /**
-   * Event hook for the start of a gesture. Resets the swipe state.
+   * Restart the given progress object using the given input object.
    *
    * @private
    * @param {State} state - current input state.
    */
-  start() {
-    this.refresh();
+  restart(state) {
+    if (state.active.length >= this.minInputs &amp;&amp; this.enabled(state.event)) {
+      this.isActive = true;
+      if (this.pivotCenter) {
+        const rect = this.pivotCenter.getBoundingClientRect();
+        this.pivot = new Point2D(
+          rect.left + (rect.width / 2),
+          rect.top + (rect.height / 2)
+        );
+        this.previous = this.pivot.distanceTo(state.centroid);
+      } else {
+        this.pivot = state.centroid;
+        this.previous = 0;
+      }
+      super.restart(state);
+    }
   }
 
   /**
-   * Event hook for the move of a gesture. Captures an input's x/y coordinates
-   * and the time of it's event on a stack.
+   * Determine the data to emit. To be called once valid state for a pull has
+   * been assured, except for deadzone.
    *
    * @private
    * @param {State} state - current input state.
+   * @return {?Returns.PullData} Data to emit.
+   */
+  calculateOutput(state) {
+    const pivot = this.pivot;
+    const distance = pivot.distanceTo(state.centroid);
+    const scale = distance / this.previous;
+
+    let returnValue = null;
+    if (distance > this.deadzoneRadius &amp;&amp; this.previous > this.deadzoneRadius) {
+      returnValue = { distance, scale, pivot };
+    }
+
+    /*
+     * Updating the previous distance regardless of emit prevents sudden changes
+     * when the user exits the deadzone circle.
+     */
+    this.previous = distance;
+
+    return returnValue;
+  }
+
+  /**
+   * Event hook for the start of a Pull.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  start(state) {
+    this.restart(state);
+  }
+
+  /**
+   * Event hook for the move of a Pull.
+   *
+   * @private
+   * @param {State} state - current input state.
+   * @return {?ReturnTypes.PullData} &lt;tt>null&lt;/tt> if not recognized.
    */
   move(state) {
-    if (state.active.length >= REQUIRED_INPUTS) {
-      this.moves.push({
-        time:  Date.now(),
-        point: state.centroid,
-      });
+    if (state.active.length &lt; this.minInputs) return null;
 
-      if (this.moves.length > PROGRESS_STACK_SIZE) {
-        this.moves.splice(0, this.moves.length - PROGRESS_STACK_SIZE);
+    if (this.enabled(state.event)) {
+      if (this.isActive) {
+        const output = this.calculateOutput(state);
+        return output ? this.smooth(output, 'scale') : null;
       }
+
+      // The enableKey was just pressed again.
+      this.restart(state);
+    } else {
+      // The enableKey was released, therefore pivot point is now invalid.
+      this.isActive = false;
     }
+
+    return null;
   }
 
   /**
-   * Determines if the input's history validates a swipe motion.
+   * Event hook for the end of a Pull.
    *
    * @private
-   * @param {State} state - current input state.
-   * @return {?ReturnTypes.SwipeData} &lt;tt>null&lt;/tt> if the gesture is not
-   * recognized.
+   * @param {State} input status object
    */
   end(state) {
-    const result = this.getResult();
-    this.moves = [];
-
-    if (state.active.length > 0) {
-      this.saved = result;
-      return null;
-    }
-
-    this.saved = null;
-    return this.validate(result);
+    this.restart(state);
   }
 
   /**
-   * Event hook for the cancel phase of a Swipe.
+   * Event hook for the cancel of a Pull.
    *
    * @private
-   * @param {State} state - current input state.
+   * @param {State} input status object
    */
-  cancel() {
-    this.refresh();
-  }
-
-  /**
-   * Get the swipe result.
-   *
-   * @private
-   */
-  getResult() {
-    if (this.moves.length &lt; PROGRESS_STACK_SIZE) {
-      return this.saved;
-    }
-    const vlim = PROGRESS_STACK_SIZE - 1;
-    const { point, time } = this.moves[vlim];
-    const velocity = calc_velocity(this.moves, vlim);
-    const direction = calc_angle(this.moves, vlim);
-    const centroid = point;
-    return { point, velocity, direction, time, centroid };
-  }
-
-  /**
-   * Validates that an emit should occur with the given data.
-   *
-   * @private
-   * @param {?ReturnTypes.SwipeData} data
-   */
-  validate(data) {
-    if (data == null) return null;
-    return (Date.now() - data.time > MS_THRESHOLD) ? null : data;
+  cancel(state) {
+    this.restart(state);
   }
 }
 
-module.exports = Swipe;
+Pull.DEFAULTS = Object.freeze({
+  deadzoneRadius: 15,
+  enableKey:      null,
+  minInputs:      1,
+  pivotCenter:    false,
+  smoothing:      true,
+});
+
+module.exports = Pull;
 
 </code></pre>
         </article>
