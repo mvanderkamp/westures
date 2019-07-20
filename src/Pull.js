@@ -164,7 +164,7 @@ class Pull extends Smoothable(Gesture) {
     const distance = pivot.distanceTo(state.centroid);
     const scale = distance / this.previous;
 
-    let returnValue = null
+    let returnValue = null;
     if (distance > this.deadzoneRadius && this.previous > this.deadzoneRadius) {
       returnValue = { distance, scale, pivot };
     }
