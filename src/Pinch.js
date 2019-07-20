@@ -65,8 +65,7 @@ class Pinch extends Smoothable(Gesture) {
   }
 
   /**
-   * Initializes the gesture progress and stores it in the first input for
-   * reference events.
+   * Initializes the gesture progress.
    *
    * @private
    * @param {State} state - current input state.
