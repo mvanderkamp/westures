@@ -30,7 +30,7 @@ const angularMinus = require('./angularMinus.js');
  * @memberof westures
  *
  * @param {Object} [options]
- * @param {number} [options.deadzoneRadius=10] - The radius in pixels around the
+ * @param {number} [options.deadzoneRadius=15] - The radius in pixels around the
  * start point in which to do nothing.
  * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
  * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
