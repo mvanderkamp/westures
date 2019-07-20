@@ -31,7 +31,7 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  * @memberof westures
  *
  * @param {Object} [options]
- * @param {number} [options.deadzoneRadius=10] - The radius in pixels around the
+ * @param {number} [options.deadzoneRadius=15] - The radius in pixels around the
  * start point in which to do nothing.
  * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
  * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
@@ -142,7 +142,7 @@ class Pull extends Smoothable(Gesture) {
           rect.left + (rect.width / 2),
           rect.top + (rect.height / 2)
         );
-        this.previous = this.pivot.averageDistanceTo(state.centroid);
+        this.previous = this.pivot.distanceTo(state.centroid);
       } else {
         this.pivot = state.centroid;
         this.previous = 0;
@@ -161,8 +161,13 @@ class Pull extends Smoothable(Gesture) {
    */
   calculateOutput(state) {
     const pivot = this.pivot;
-    const distance = pivot.averageDistanceTo(state.centroid);
+    const distance = pivot.distanceTo(state.centroid);
     const scale = distance / this.previous;
+
+    let returnValue = null
+    if (distance > this.deadzoneRadius && this.previous > this.deadzoneRadius) {
+      returnValue = { distance, scale, pivot };
+    }
 
     /*
      * Updating the previous distance regardless of emit prevents sudden changes
@@ -170,10 +175,7 @@ class Pull extends Smoothable(Gesture) {
      */
     this.previous = distance;
 
-    if (pivot.distanceTo(state.centroid) > this.deadzoneRadius) {
-      return { distance, scale, pivot };
-    }
-    return null;
+    return returnValue;
   }
 
   /**
@@ -236,7 +238,7 @@ class Pull extends Smoothable(Gesture) {
 Pull.DEFAULTS = Object.freeze({
   deadzoneRadius: 15,
   enableKey:      null,
-  minInputs:      2,
+  minInputs:      1,
   pivotCenter:    false,
   smoothing:      true,
 });
