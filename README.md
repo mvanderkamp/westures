@@ -70,6 +70,7 @@ Rotate | 2+          | Move       | Inputs rotating around each other.
 Pan    | 1+          | Move       | Inputs sliding around the screen.
 Swipe  | 1+          | End        | Inputs swiping the screen.
 Swivel | 1+          | Move       | Inputs rotating around a fixed pivot point.
+Pull   | 1+          | Move       | Inputs moving away from a fixed point.
 Track  | 1+          | All        | Track all active pointers.
 
 See the [documentation](https://mvanderkamp.github.io/westures/) for more

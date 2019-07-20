@@ -2,6 +2,8 @@
 
 ## Releases
 
+- [0.7.8](#078)
+- [0.7.7](#077)
 - [0.7.6](#076)
 - [0.7.5](#075)
 - [0.7.4](#074)
@@ -17,6 +19,12 @@
 - [0.5.3](#053)
 - [0.5.2](#052)
 - [0.5.0](#050)
+
+## 0.7.8
+
+- Add a Pull gesture. Pull is to Pinch as Swivel is to Rotate. In other words,
+  the data is calculated relative to a fixed point, rather than relative to the
+  other input points.
 
 ## 0.7.7
 
