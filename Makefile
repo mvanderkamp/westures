@@ -5,11 +5,15 @@ default: lint tags
 
 lint:
 	npx eslint src;
+	npx eslint test;
+	npx eslint index.js;
 
 release: lint parcel docs tags
 
 fix:
 	npx eslint src --fix;
+	npx eslint test --fix;
+	npx eslint index.js --fix;
 
 parcel:
 	npx parcel build 'index.js';

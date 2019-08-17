@@ -2,16 +2,18 @@
  * Test file for the westures index.
  */
 
+/* global expect, describe, test */
+
 'use strict';
 
 const Westures = require('../index.js');
 
-describe('Westures', function() {
-  test('should be instantiated', function() {
+describe('Westures', () => {
+  test('should be instantiated', () => {
     expect(Westures).toBeTruthy();
   });
 
-  test('should have constructors for all of the gestures', function() {
+  test('should have constructors for all of the gestures', () => {
     const gestures = [
       'Gesture',
       'Pan',

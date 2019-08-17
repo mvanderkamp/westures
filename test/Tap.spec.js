@@ -2,11 +2,13 @@
  * Tests Tap class
  */
 
+/* global expect, describe, test */
+
 'use strict';
 
 const Tap = require('../src/Tap.js');
 
-describe('Tap', function() {
+describe('Tap', () => {
   test('should be instantiated', () => {
     expect(Tap).toBeTruthy();
   });
@@ -16,12 +18,12 @@ describe('Tap', function() {
   });
 
   test('should return accept delay and number of inputs as parameters', () => {
-    let _tap = new Tap({
-      maxDelay: 2000,
+    const tap = new Tap({
+      maxDelay:  2000,
       numInputs: 2,
     });
-    expect(_tap.maxDelay).toEqual(2000);
-    expect(_tap.numInputs).toEqual(2);
+    expect(tap.maxDelay).toEqual(2000);
+    expect(tap.numInputs).toEqual(2);
   });
 });
 
