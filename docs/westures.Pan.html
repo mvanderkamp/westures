@@ -53,7 +53,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Pan<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>~</span>Pan<span class="signature">(element, handler)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A Pan is defined as a normal movement in any direction.</div>
         
@@ -70,12 +70,12 @@
     
         <h4 class="name" id="Pan">
             
-                new <span class="type-signature"></span>Pan<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Pan<span class="signature">(element, handler)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
                 <code><a href="src_Pan.js.html">src/Pan.js</a></code>,
-                <code><a href="src_Pan.js.html#line35">line 35</a></code>
+                <code><a href="src_Pan.js.html#line33">line 33</a></code>
             </div>
             
         </h4>
@@ -107,8 +107,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -121,95 +119,47 @@
 
         <tr>
             
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>element</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Element</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>muteKey</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">If this key is pressed, this
-gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',
-'shiftKey', or 'metaKey'.</td>
+            <td class="description last">The element to which to associate the gesture.</td>
         </tr>
 
     
-    </tbody>
-</table>
 
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
             </td>
+
+            
+
+            
+
+            <td class="description last">The function handler to execute when a gesture
+   is recognized on the associated element.</td>
         </tr>
 
     
@@ -248,14 +198,6 @@ gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',
 
     
 
-    
-        <dt class="mixes">Mixes In:</dt>
-
-        <dd class="mixes"><ul>
-        
-            <li><a href="westures.Smoothable.html">westures.Smoothable</a></li>
-        
-        </ul></dd>
     
 
     

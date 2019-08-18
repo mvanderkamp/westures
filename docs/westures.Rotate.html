@@ -53,7 +53,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Rotate<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>~</span>Rotate<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A Rotate is defined as two inputs moving with a changing angle between them.</div>
         
@@ -70,12 +70,12 @@
     
         <h4 class="name" id="Rotate">
             
-                new <span class="type-signature"></span>Rotate<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Rotate<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
                 <code><a href="src_Rotate.js.html">src/Rotate.js</a></code>,
-                <code><a href="src_Rotate.js.html#line37">line 37</a></code>
+                <code><a href="src_Rotate.js.html#line39">line 39</a></code>
             </div>
             
         </h4>
@@ -117,6 +117,69 @@
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The element to which to associate the gesture.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The function handler to execute when a gesture
+   is recognized on the associated element.</td>
+        </tr>
+
     
 
         <tr>
@@ -295,14 +358,6 @@ emitted data.</td>
 
     
 
-    
-        <dt class="mixes">Mixes In:</dt>
-
-        <dd class="mixes"><ul>
-        
-            <li><a href="westures.Smoothable.html">westures.Smoothable</a></li>
-        
-        </ul></dd>
     
 
     

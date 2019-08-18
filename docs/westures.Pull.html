@@ -53,7 +53,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Pull<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>~</span>Pull<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A Pull is defined as a single input moving away from or towards a pivot
 point.</div>
@@ -71,12 +71,12 @@ point.</div>
     
         <h4 class="name" id="Pull">
             
-                new <span class="type-signature"></span>Pull<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Pull<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
                 <code><a href="src_Pull.js.html">src/Pull.js</a></code>,
-                <code><a href="src_Pull.js.html#line46">line 46</a></code>
+                <code><a href="src_Pull.js.html#line48">line 48</a></code>
             </div>
             
         </h4>
@@ -118,6 +118,69 @@ point.</div>
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The element to which to associate the gesture.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The function handler to execute when a gesture
+   is recognized on the associated element.</td>
+        </tr>
+
     
 
         <tr>
@@ -376,14 +439,6 @@ will be the location of the first contact point.</td>
 
     
 
-    
-        <dt class="mixes">Mixes In:</dt>
-
-        <dd class="mixes"><ul>
-        
-            <li><a href="westures.Smoothable.html">westures.Smoothable</a></li>
-        
-        </ul></dd>
     
 
     

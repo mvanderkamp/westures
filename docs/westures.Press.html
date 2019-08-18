@@ -53,7 +53,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Press<span class="signature">(handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>~</span>Press<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A Press is defined as one or more input points being held down.</div>
         
@@ -70,12 +70,12 @@
     
         <h4 class="name" id="Press">
             
-                new <span class="type-signature"></span>Press<span class="signature">(handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Press<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
                 <code><a href="src_Press.js.html">src/Press.js</a></code>,
-                <code><a href="src_Press.js.html#line41">line 41</a></code>
+                <code><a href="src_Press.js.html#line42">line 42</a></code>
             </div>
             
         </h4>
@@ -121,6 +121,37 @@
 
         <tr>
             
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The element to which to associate the gesture.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>handler</code></td>
             
 
@@ -145,8 +176,8 @@
 
             
 
-            <td class="description last">A Press is unique in that the gesture needs to
-store the 'handler' callback directly, so it can be called asynchronously.</td>
+            <td class="description last">The function handler to execute when a gesture
+   is recognized on the associated element.</td>
         </tr>
 
     

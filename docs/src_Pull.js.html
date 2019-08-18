@@ -80,10 +80,12 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  * point.
  *
  * @extends westures.Gesture
- * @mixes westures.Smoothable
  * @see ReturnTypes.PullData
  * @memberof westures
  *
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
  * @param {Object} [options]
  * @param {number} [options.deadzoneRadius=15] - The radius in pixels around the
  * start point in which to do nothing.
@@ -96,10 +98,10 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  * be set to the center of the given pivotCenter element. Otherwise, the pivot
  * will be the location of the first contact point.
  */
-class Pull extends Smoothable(Gesture) {
-  constructor(options = {}) {
+class Pull extends Gesture {
+  constructor(element, handler, options = {}) {
     const settings = { ...Pull.DEFAULTS, ...options };
-    super('pinch', settings);
+    super('pinch', element, handler, settings);
 
     /**
      * The radius around the start point in which to do nothing.
@@ -108,24 +110,6 @@ class Pull extends Smoothable(Gesture) {
      * @type {number}
      */
     this.deadzoneRadius = settings.deadzoneRadius;
-
-    /**
-     * If this is set, gesture will only respond to events where this property
-     * is truthy. Should be one of 'ctrlKey', 'altKey', or 'shiftKey'.
-     *
-     * @private
-     * @type {string}
-     */
-    this.enableKey = settings.enableKey;
-
-    /**
-     * The minimum number of inputs that must be active for a Pull to be
-     * recognized.
-     *
-     * @private
-     * @type {number}
-     */
-    this.minInputs = settings.minInputs;
 
     /**
      * If this is set, the pull will use the center of the element as its pivot
@@ -152,33 +136,14 @@ class Pull extends Smoothable(Gesture) {
      */
     this.previous = 0;
 
-    /**
-     * Whether the swivel is active.
-     *
-     * @private
-     * @type {boolean}
-     */
-    this.isActive = false;
-
     /*
-     * The "identity" value for this smoothable gesture.
+     * The outgoing data, with optional inertial smoothing.
      *
      * @private
      * @override
-     * @type {number}
+     * @type {westures-core.Smoothable&lt;number>}
      */
-    this.identity = 1;
-  }
-
-  /**
-   * Returns whether this gesture is currently enabled.
-   *
-   * @private
-   * @param {Event} event - The state's current input event.
-   * @return {boolean} true if the gesture is enabled, false otherwise.
-   */
-  enabled(event) {
-    return !this.enableKey || event[this.enableKey];
+    this.outgoing = new Smoothable({ ...settings, identity: 1 });
   }
 
   /**
@@ -188,21 +153,18 @@ class Pull extends Smoothable(Gesture) {
    * @param {State} state - current input state.
    */
   restart(state) {
-    if (state.active.length >= this.minInputs &amp;&amp; this.enabled(state.event)) {
-      this.isActive = true;
-      if (this.pivotCenter) {
-        const rect = this.pivotCenter.getBoundingClientRect();
-        this.pivot = new Point2D(
-          rect.left + (rect.width / 2),
-          rect.top + (rect.height / 2)
-        );
-        this.previous = this.pivot.distanceTo(state.centroid);
-      } else {
-        this.pivot = state.centroid;
-        this.previous = 0;
-      }
-      super.restart(state);
+    if (this.pivotCenter) {
+      const rect = this.pivotCenter.getBoundingClientRect();
+      this.pivot = new Point2D(
+        rect.left + (rect.width / 2),
+        rect.top + (rect.height / 2)
+      );
+      this.previous = this.pivot.distanceTo(state.centroid);
+    } else {
+      this.pivot = state.centroid;
+      this.previous = 0;
     }
+    this.outgoing.restart();
   }
 
   /**
@@ -250,21 +212,10 @@ class Pull extends Smoothable(Gesture) {
    * @return {?ReturnTypes.PullData} &lt;tt>null&lt;/tt> if not recognized.
    */
   move(state) {
-    if (state.active.length &lt; this.minInputs) return null;
-
-    if (this.enabled(state.event)) {
-      if (this.isActive) {
-        const output = this.calculateOutput(state);
-        return output ? this.smooth(output, 'scale') : null;
-      }
-
-      // The enableKey was just pressed again.
-      this.restart(state);
-    } else {
-      // The enableKey was released, therefore pivot point is now invalid.
-      this.isActive = false;
+    const output = this.calculateOutput(state);
+    if (output) {
+      return { scale: this.outgoing.next(output) };
     }
-
     return null;
   }
 
@@ -282,16 +233,14 @@ class Pull extends Smoothable(Gesture) {
    * Event hook for the cancel of a Pull.
    *
    * @private
-   * @param {State} input status object
    */
-  cancel(state) {
-    this.restart(state);
+  cancel() {
+    this.outgoing.restart();
   }
 }
 
 Pull.DEFAULTS = Object.freeze({
   deadzoneRadius: 15,
-  enableKey:      null,
   minInputs:      1,
   pivotCenter:    false,
   smoothing:      true,

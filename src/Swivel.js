@@ -123,14 +123,14 @@ class Swivel extends Gesture {
   }
 
   /**
-   * Determine the data to emit. To be called once valid state for a swivel has
-   * been assured, except for deadzone.
+   * Event hook for the move of a Swivel gesture.
    *
    * @private
    * @param {State} state - current input state.
-   * @return {?Returns.SwivelData} Data to emit.
+   * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
+   * recognized.
    */
-  calculateOutput(state) {
+  move(state) {
     const pivot = this.pivot;
     const angle = pivot.angleTo(state.centroid);
     const rotation = angularMinus(angle, this.previous);
@@ -142,23 +142,7 @@ class Swivel extends Gesture {
     this.previous = angle;
 
     if (pivot.distanceTo(state.centroid) > this.deadzoneRadius) {
-      return { rotation, pivot };
-    }
-    return null;
-  }
-
-  /**
-   * Event hook for the move of a Swivel gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {?ReturnTypes.SwivelData} <tt>null</tt> if the gesture is not
-   * recognized.
-   */
-  move(state) {
-    const output = this.calculateOutput(state);
-    if (output) {
-      return { rotation: this.outgoing.next(output) };
+      return { rotation: this.outgoing.next(rotation), pivot };
     }
     return null;
   }
@@ -170,7 +154,11 @@ class Swivel extends Gesture {
    * @param {State} state - current input state.
    */
   end(state) {
-    this.restart(state);
+    if (state.active.length > 0) {
+      this.restart(state);
+    } else {
+      this.outgoing.restart();
+    }
   }
 
   /**

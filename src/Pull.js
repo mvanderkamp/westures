@@ -114,33 +114,6 @@ class Pull extends Gesture {
   }
 
   /**
-   * Determine the data to emit. To be called once valid state for a pull has
-   * been assured, except for deadzone.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {?Returns.PullData} Data to emit.
-   */
-  calculateOutput(state) {
-    const pivot = this.pivot;
-    const distance = pivot.distanceTo(state.centroid);
-    const scale = distance / this.previous;
-
-    let returnValue = null;
-    if (distance > this.deadzoneRadius && this.previous > this.deadzoneRadius) {
-      returnValue = { distance, scale, pivot };
-    }
-
-    /*
-     * Updating the previous distance regardless of emit prevents sudden changes
-     * when the user exits the deadzone circle.
-     */
-    this.previous = distance;
-
-    return returnValue;
-  }
-
-  /**
    * Event hook for the start of a Pull.
    *
    * @private
@@ -158,11 +131,22 @@ class Pull extends Gesture {
    * @return {?ReturnTypes.PullData} <tt>null</tt> if not recognized.
    */
   move(state) {
-    const output = this.calculateOutput(state);
-    if (output) {
-      return { scale: this.outgoing.next(output) };
+    const pivot = this.pivot;
+    const distance = pivot.distanceTo(state.centroid);
+    const scale = distance / this.previous;
+
+    let rv = null;
+    if (distance > this.deadzoneRadius && this.previous > this.deadzoneRadius) {
+      rv = { distance, scale: this.outgoing.next(scale), pivot };
     }
-    return null;
+
+    /*
+     * Updating the previous distance regardless of emit prevents sudden changes
+     * when the user exits the deadzone circle.
+     */
+    this.previous = distance;
+
+    return rv;
   }
 
   /**
@@ -172,7 +156,11 @@ class Pull extends Gesture {
    * @param {State} input status object
    */
   end(state) {
-    this.restart(state);
+    if (state.active.length > 0) {
+      this.restart(state);
+    } else {
+      this.outgoing.restart();
+    }
   }
 
   /**

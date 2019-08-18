@@ -53,7 +53,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Track<span class="signature">(phases<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>~</span>Track<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A Track gesture forwards a list of active points and their centroid on each
 of the selected phases.</div>
@@ -71,12 +71,12 @@ of the selected phases.</div>
     
         <h4 class="name" id="Track">
             
-                new <span class="type-signature"></span>Track<span class="signature">(phases<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Track<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
                 <code><a href="src_Track.js.html">src/Track.js</a></code>,
-                <code><a href="src_Track.js.html#line34">line 34</a></code>
+                <code><a href="src_Track.js.html#line38">line 38</a></code>
             </div>
             
         </h4>
@@ -98,6 +98,122 @@ of the selected phases.</div>
     <div class="container-params">
         <h5>Parameters:</h5>
         
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The element to which to associate the gesture.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The function handler to execute when a gesture
+   is recognized on the associated element.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
 <table class="params">
     <thead>
     <tr>
@@ -156,8 +272,15 @@ of the selected phases.</div>
                 </td>
             
 
-            <td class="description last">Phases to recognize. Entries can be any or all
-of 'start', 'move', 'end', and 'cancel'.</td>
+            <td class="description last">Phases to recognize. Entries can be any
+or all of 'start', 'move', 'end', and 'cancel'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     

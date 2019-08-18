@@ -81,19 +81,27 @@ const { Gesture } = require('westures-core');
  * @see ReturnTypes.TrackData
  * @memberof westures
  *
- * @param {string[]} [phases=[]] Phases to recognize. Entries can be any or all
- * of 'start', 'move', 'end', and 'cancel'.
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
+ * @param {Object} [options]
+ * @param {string[]} [options.phases=[]] Phases to recognize. Entries can be any
+ * or all of 'start', 'move', 'end', and 'cancel'.
  */
 class Track extends Gesture {
-  constructor(phases = []) {
-    super('track');
-    this.trackStart  = phases.includes('start');
-    this.trackMove   = phases.includes('move');
-    this.trackEnd    = phases.includes('end');
-    this.trackCancel = phases.includes('cancel');
+  constructor(element, handler, options = {}) {
+    const settings = { ...Track.DEFAULTS, ...options };
+    super('track', element, handler, settings);
+
+    this.trackStart  = settings.phases.includes('start');
+    this.trackMove   = settings.phases.includes('move');
+    this.trackEnd    = settings.phases.includes('end');
+    this.trackCancel = settings.phases.includes('cancel');
   }
 
   /**
+   * Filters out the state's data, down to what should be emitted.
+
    * @private
    * @param {State} state - current input state.
    * @return {ReturnTypes.TrackData}
@@ -146,6 +154,11 @@ class Track extends Gesture {
     return this.trackCancel ? this.data(state) : null;
   }
 }
+
+// Default settings.
+Track.DEFAULTS = Object.freeze({
+  phases: [],
+});
 
 module.exports = Track;
 

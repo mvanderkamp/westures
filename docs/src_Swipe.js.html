@@ -60,7 +60,6 @@
 
 const { Gesture } = require('westures-core');
 
-const REQUIRED_INPUTS = 1;
 const PROGRESS_STACK_SIZE = 7;
 const MS_THRESHOLD = 300;
 
@@ -159,10 +158,14 @@ function calc_velocity(moves, vlim) {
  * @extends westures.Gesture
  * @see ReturnTypes.SwipeData
  * @memberof westures
+ *
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
  */
 class Swipe extends Gesture {
-  constructor() {
-    super('swipe');
+  constructor(element, handler, options = {}) {
+    super('swipe', element, handler, options);
 
     /**
      * Moves list.
@@ -186,7 +189,7 @@ class Swipe extends Gesture {
    *
    * @private
    */
-  refresh() {
+  restart() {
     this.moves = [];
     this.saved = null;
   }
@@ -195,10 +198,9 @@ class Swipe extends Gesture {
    * Event hook for the start of a gesture. Resets the swipe state.
    *
    * @private
-   * @param {State} state - current input state.
    */
   start() {
-    this.refresh();
+    this.restart();
   }
 
   /**
@@ -209,15 +211,13 @@ class Swipe extends Gesture {
    * @param {State} state - current input state.
    */
   move(state) {
-    if (state.active.length >= REQUIRED_INPUTS) {
-      this.moves.push({
-        time:  Date.now(),
-        point: state.centroid,
-      });
+    this.moves.push({
+      time:  Date.now(),
+      point: state.centroid,
+    });
 
-      if (this.moves.length > PROGRESS_STACK_SIZE) {
-        this.moves.splice(0, this.moves.length - PROGRESS_STACK_SIZE);
-      }
+    if (this.moves.length > PROGRESS_STACK_SIZE) {
+      this.moves.splice(0, this.moves.length - PROGRESS_STACK_SIZE);
     }
   }
 
@@ -246,10 +246,9 @@ class Swipe extends Gesture {
    * Event hook for the cancel phase of a Swipe.
    *
    * @private
-   * @param {State} state - current input state.
    */
   cancel() {
-    this.refresh();
+    this.restart();
   }
 
   /**

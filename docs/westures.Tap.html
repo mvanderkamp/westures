@@ -53,7 +53,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Tap<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>~</span>Tap<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A Tap is defined as a touchstart to touchend event in quick succession.</div>
         
@@ -70,12 +70,12 @@
     
         <h4 class="name" id="Tap">
             
-                new <span class="type-signature"></span>Tap<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Tap<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
                 <code><a href="src_Tap.js.html">src/Tap.js</a></code>,
-                <code><a href="src_Tap.js.html#line45">line 45</a></code>
+                <code><a href="src_Tap.js.html#line41">line 41</a></code>
             </div>
             
         </h4>
@@ -117,6 +117,69 @@
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The element to which to associate the gesture.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The function handler to execute when a gesture
+   is recognized on the associated element.</td>
+        </tr>
+
     
 
         <tr>
@@ -256,7 +319,7 @@ touchstart and touchend can be configured in milliseconds.</td>
 
         <tr>
             
-                <td class="name"><code>numInputs</code></td>
+                <td class="name"><code>numTaps</code></td>
             
 
             <td class="type">
@@ -288,7 +351,7 @@ touchstart and touchend can be configured in milliseconds.</td>
                 </td>
             
 
-            <td class="description last">Number of inputs for Tap gesture.</td>
+            <td class="description last">Number of taps to require.</td>
         </tr>
 
     

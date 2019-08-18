@@ -60,13 +60,6 @@
 
 const { Gesture, Point2D } = require('westures-core');
 
-const defaults = Object.freeze({
-  MIN_DELAY_MS:      0,
-  MAX_DELAY_MS:      300,
-  NUM_INPUTS:        1,
-  MOVE_PX_TOLERANCE: 10,
-});
-
 /**
  * Data returned when a Tap is recognized.
  *
@@ -86,18 +79,22 @@ const defaults = Object.freeze({
  * @see ReturnTypes.TapData
  * @memberof westures
  *
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
  * @param {Object} [options] - The options object.
  * @param {number} [options.minDelay=0] - The minimum delay between a touchstart
  * and touchend can be configured in milliseconds.
  * @param {number} [options.maxDelay=300] - The maximum delay between a
  * touchstart and touchend can be configured in milliseconds.
- * @param {number} [options.numInputs=1] - Number of inputs for Tap gesture.
+ * @param {number} [options.numTaps=1] - Number of taps to require.
  * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
  * move.
  */
 class Tap extends Gesture {
-  constructor(options = {}) {
-    super('tap');
+  constructor(element, handler, options = {}) {
+    const settings = { ...Tap.DEFAULTS, ...options };
+    super('tap', element, handler, settings);
 
     /**
      * The minimum amount between a touchstart and a touchend can be configured
@@ -108,7 +105,7 @@ class Tap extends Gesture {
      * @private
      * @type {number}
      */
-    this.minDelay = options.minDelay || defaults.MIN_DELAY_MS;
+    this.minDelay = settings.minDelay;
 
     /**
      * The maximum delay between a touchstart and touchend can be configured in
@@ -119,7 +116,7 @@ class Tap extends Gesture {
      * @private
      * @type {number}
      */
-    this.maxDelay = options.maxDelay || defaults.MAX_DELAY_MS;
+    this.maxDelay = settings.maxDelay;
 
     /**
      * The number of inputs to trigger a Tap can be variable, and the maximum
@@ -128,7 +125,7 @@ class Tap extends Gesture {
      * @private
      * @type {number}
      */
-    this.numInputs = options.numInputs || defaults.NUM_INPUTS;
+    this.numTaps = settings.numTaps;
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end
@@ -137,7 +134,7 @@ class Tap extends Gesture {
      * @private
      * @type {number}
      */
-    this.tolerance = options.tolerance || defaults.MOVE_PX_TOLERANCE;
+    this.tolerance = settings.tolerance;
 
     /**
      * An array of inputs that have ended recently.
@@ -145,7 +142,7 @@ class Tap extends Gesture {
      * @private
      * @type {Input[]}
      */
-    this.ended = [];
+    this.taps = [];
   }
 
   /**
@@ -160,24 +157,31 @@ class Tap extends Gesture {
   end(state) {
     const now = Date.now();
 
-    // Save the recently ended inputs.
-    this.ended = this.ended.concat(state.getInputsInPhase('end'))
+    // Save the recently ended inputs as taps.
+    this.taps = this.taps.concat(state.getInputsInPhase('end'))
       .filter(input => {
         const tdiff = now - input.startTime;
         return tdiff &lt;= this.maxDelay &amp;&amp; tdiff >= this.minDelay;
       });
 
-    // Validate the list of ended inputs.
-    if (this.ended.length !== this.numInputs ||
-      this.ended.some(i => i.totalDistance() > this.tolerance)) {
+    // Validate the list of taps.
+    if (this.taps.length !== this.numTaps ||
+      this.taps.some(i => i.totalDistance() > this.tolerance)) {
       return null;
     }
 
-    const centroid = Point2D.centroid(this.ended.map(i => i.current.point));
-    this.ended = []; // Critical! Used inputs need to be cleared!
+    const centroid = Point2D.centroid(this.taps.map(i => i.current.point));
+    this.taps = []; // Critical! Used taps need to be cleared!
     return { centroid, ...centroid };
   }
 }
+
+Tap.DEFAULTS = Object.freeze({
+  minDelay:  0,
+  maxDelay:  300,
+  numTaps:   1,
+  tolerance: 10,
+});
 
 module.exports = Tap;
 
