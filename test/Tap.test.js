@@ -17,13 +17,13 @@ describe('Tap', () => {
     expect(new Tap()).toBeInstanceOf(Tap);
   });
 
-  test('should return accept delay and number of inputs as parameters', () => {
-    const tap = new Tap({
+  test('should return accept delay and number of taps as parameters', () => {
+    const tap = new Tap(null, null, {
       maxDelay:  2000,
-      numInputs: 2,
+      numTaps:   2,
     });
     expect(tap.maxDelay).toEqual(2000);
-    expect(tap.numInputs).toEqual(2);
+    expect(tap.numTaps).toEqual(2);
   });
 });
 
