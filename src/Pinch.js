@@ -24,27 +24,17 @@ const { Gesture, Smoothable } = require('westures-core');
  * A Pinch is defined as two or more inputs moving either together or apart.
  *
  * @extends westures.Gesture
- * @mixes westures.Smoothable
  * @see ReturnTypes.PinchData
  * @memberof westures
  *
- * @param {Object} [options]
- * @param {number} [options.minInputs=2] The minimum number of inputs that
- * must be active for a Pinch to be recognized.
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
  */
-class Pinch extends Smoothable(Gesture) {
-  constructor(options = {}) {
+class Pinch extends Gesture {
+  constructor(element, handler, options = {}) {
     const settings = { ...Pinch.DEFAULTS, ...options };
-    super('pinch', settings);
-
-    /**
-     * The minimum number of inputs that must be active for a Pinch to be
-     * recognized.
-     *
-     * @private
-     * @type {number}
-     */
-    this.minInputs = settings.minInputs;
+    super('pinch', element, handler, settings);
 
     /**
      * The previous distance.
@@ -55,13 +45,13 @@ class Pinch extends Smoothable(Gesture) {
     this.previous = 0;
 
     /*
-     * The "identity" value for this smoothable gesture.
+     * The outgoing data, with optional inertial smoothing.
      *
      * @private
      * @override
-     * @type {number}
+     * @type {westures-core.Smoothable<number>}
      */
-    this.identity = 1;
+    this.outgoing = new Smoothable({ ...settings, identity: 1 });
   }
 
   /**
@@ -71,11 +61,8 @@ class Pinch extends Smoothable(Gesture) {
    * @param {State} state - current input state.
    */
   restart(state) {
-    if (state.active.length >= this.minInputs) {
-      const distance = state.centroid.averageDistanceTo(state.activePoints);
-      this.previous = distance;
-    }
-    super.restart();
+    this.previous = state.centroid.averageDistanceTo(state.activePoints);
+    this.outgoing.restart();
   }
 
   /**
@@ -96,13 +83,11 @@ class Pinch extends Smoothable(Gesture) {
    * @return {?ReturnTypes.PinchData} <tt>null</tt> if not recognized.
    */
   move(state) {
-    if (state.active.length < this.minInputs) return null;
-
     const distance = state.centroid.averageDistanceTo(state.activePoints);
     const scale = distance / this.previous;
-
     this.previous = distance;
-    return this.smooth({ distance, scale }, 'scale');
+
+    return { distance, scale: this.outgoing.next(scale) };
   }
 
   /**
@@ -119,10 +104,10 @@ class Pinch extends Smoothable(Gesture) {
    * Event hook for the cancel of a Pinch.
    *
    * @private
-   * @param {State} input status object
    */
-  cancel(state) {
-    this.restart(state);
+  cancel() {
+    this.previous = 0;
+    this.outgoing.restart();
   }
 }
 

@@ -27,8 +27,9 @@ const { Gesture, Point2D } = require('westures-core');
  * @see ReturnTypes.PressData
  * @memberof westures
  *
- * @param {function} handler - A Press is unique in that the gesture needs to
- * store the 'handler' callback directly, so it can be called asynchronously.
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
  * @param {Object} [options] - The options object.
  * @param {number} [options.delay=1000] - The delay before emitting, during
  * which time the number of inputs must not go below minInputs.
@@ -38,17 +39,9 @@ const { Gesture, Point2D } = require('westures-core');
  * move and still allow the gesture to emit.
  */
 class Press extends Gesture {
-  constructor(handler, options = {}) {
-    super('press');
+  constructor(element, handler, options = {}) {
     const settings = { ...Press.DEFAULTS, ...options };
-
-    /**
-     * The handler to trigger in case a Press is recognized.
-     *
-     * @private
-     * @type {function}
-     */
-    this.handler = handler;
+    super('press', element, handler, settings);
 
     /**
      * The delay before emitting a press event, during which time the number of
@@ -58,15 +51,6 @@ class Press extends Gesture {
      * @type {number}
      */
     this.delay = settings.delay;
-
-    /**
-     * The minimum number of inputs that must be active for a Press to be
-     * recognized.
-     *
-     * @private
-     * @type {number}
-     */
-    this.minInputs = settings.minInputs;
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end
@@ -103,10 +87,8 @@ class Press extends Gesture {
    * @param {State} state - current input state.
    */
   start(state) {
-    if (state.active.length === this.minInputs) {
-      this.initial = state.centroid;
-      this.timeout = setTimeout(() => this.recognize(state), this.delay);
-    }
+    this.initial = state.centroid;
+    this.timeout = setTimeout(() => this.recognize(state), this.delay);
   }
 
   /**

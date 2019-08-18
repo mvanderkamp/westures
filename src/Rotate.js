@@ -23,20 +23,22 @@ const angularMinus = require('./angularMinus.js');
  * A Rotate is defined as two inputs moving with a changing angle between them.
  *
  * @extends westures.Gesture
- * @mixes westures.Smoothable
  * @see ReturnTypes.RotateData
  * @memberof westures
  *
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
  * @param {Object} [options]
  * @param {number} [options.minInputs=2] The minimum number of inputs that must
  * be active for a Rotate to be recognized.
  * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
  * emitted data.
  */
-class Rotate extends Smoothable(Gesture) {
-  constructor(options = {}) {
+class Rotate extends Gesture {
+  constructor(element, handler, options = {}) {
     const settings = { ...Rotate.DEFAULTS, ...options };
-    super('rotate', settings);
+    super('rotate', element, handler, settings);
 
     /**
      * The minimum number of inputs that must be active for a Pinch to be
@@ -54,6 +56,15 @@ class Rotate extends Smoothable(Gesture) {
      * @type {number[]}
      */
     this.previousAngles = [];
+
+    /*
+     * The outgoing data, with optional inertial smoothing.
+     *
+     * @private
+     * @override
+     * @type {westures-core.Smoothable<number>}
+     */
+    this.outgoing = new Smoothable(settings);
   }
 
   /**
@@ -63,8 +74,6 @@ class Rotate extends Smoothable(Gesture) {
    * @param {State} state - current input state.
    */
   getAngle(state) {
-    if (state.active.length < this.minInputs) return null;
-
     let angle = 0;
     const stagedAngles = [];
 
@@ -88,7 +97,7 @@ class Rotate extends Smoothable(Gesture) {
   restart(state) {
     this.previousAngles = [];
     this.getAngle(state);
-    super.restart();
+    this.outgoing.restart();
   }
 
   /**
@@ -111,7 +120,7 @@ class Rotate extends Smoothable(Gesture) {
   move(state) {
     const rotation = this.getAngle(state);
     if (rotation) {
-      return this.smooth({ rotation }, 'rotation');
+      return { rotation: this.outgoing.next(rotation) };
     }
     return null;
   }
@@ -130,10 +139,9 @@ class Rotate extends Smoothable(Gesture) {
    * Event hook for the cancel of a gesture.
    *
    * @private
-   * @param {State} state - current input state.
    */
-  cancel(state) {
-    this.restart(state);
+  cancel() {
+    this.outgoing.restart();
   }
 }
 

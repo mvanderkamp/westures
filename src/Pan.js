@@ -22,36 +22,17 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  * A Pan is defined as a normal movement in any direction.
  *
  * @extends westures.Gesture
- * @mixes westures.Smoothable
  * @see ReturnTypes.PanData
  * @memberof westures
  *
- * @param {Object} [options]
- * @param {string} [options.muteKey=undefined] - If this key is pressed, this
- * gesture will be muted (i.e. not recognized). One of 'altKey', 'ctrlKey',
- * 'shiftKey', or 'metaKey'.
+ * @param {Element} element - The element to which to associate the gesture.
+ * @param {Function} handler - The function handler to execute when a gesture
+ *    is recognized on the associated element.
  */
-class Pan extends Smoothable(Gesture) {
-  constructor(options = {}) {
+class Pan extends Gesture {
+  constructor(element, handler, options = {}) {
     const settings = { ...Pan.DEFAULTS, ...options };
-    super('pan', settings);
-
-    /**
-     * Don't emit any data if this key is pressed.
-     *
-     * @private
-     * @type {string}
-     */
-    this.muteKey = settings.muteKey;
-
-    /**
-     * The minimum number of inputs that must be active for a Pinch to be
-     * recognized.
-     *
-     * @private
-     * @type {number}
-     */
-    this.minInputs = settings.minInputs;
+    super('pan', element, handler, settings);
 
     /**
      * The previous point location.
@@ -62,13 +43,15 @@ class Pan extends Smoothable(Gesture) {
     this.previous = null;
 
     /*
-     * The "identity" value for this smoothable gesture.
+     * The outgoing data, with optional inertial smoothing.
      *
      * @private
      * @override
-     * @type {westures.Point2D}
+     * @type {westures-core.Smoothable<westures-core.Point2D>}
      */
-    this.identity = new Point2D(0, 0);
+    const identity = new Point2D(0, 0);
+    this.outgoing = new Smoothable({ ...settings, identity });
+    this.outgoing.average = (a, b) => Point2D.centroid([a, b]);
   }
 
   /**
@@ -79,10 +62,8 @@ class Pan extends Smoothable(Gesture) {
    * @param {State} state - The state object received by a hook.
    */
   restart(state) {
-    if (state.active.length >= this.minInputs) {
-      this.previous = state.centroid;
-    }
-    super.restart();
+    this.previous = state.centroid;
+    this.outgoing.restart();
   }
 
   /**
@@ -105,19 +86,10 @@ class Pan extends Smoothable(Gesture) {
    * otherwise not recognized.
    */
   move(state) {
-    if (state.active.length < this.minInputs) {
-      return null;
-    }
-
-    if (this.muteKey && state.event[this.muteKey]) {
-      this.restart(state);
-      return null;
-    }
-
     const translation = state.centroid.minus(this.previous);
     this.previous = state.centroid;
 
-    return this.smooth({ translation }, 'translation');
+    return { translation: this.outgoing.next(translation) };
   }
 
   /**
@@ -136,22 +108,10 @@ class Pan extends Smoothable(Gesture) {
    * the inputs.
    *
    * @private
-   * @param {State} state - current input state.
    */
-  cancel(state) {
-    this.restart(state);
-  }
-
-  /*
-   * Averages out two points.
-   *
-   * @override
-   */
-  smoothingAverage(a, b) {
-    return new Point2D(
-      (a.x + b.x) / 2,
-      (a.y + b.y) / 2,
-    );
+  cancel() {
+    this.previous = null;
+    this.outgoing.restart();
   }
 }
 
