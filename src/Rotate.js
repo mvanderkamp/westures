@@ -4,8 +4,7 @@
 
 'use strict';
 
-const { Gesture, Smoothable } = require('westures-core');
-const angularMinus = require('./angularMinus.js');
+const { angularDifference, Gesture, Smoothable } = require('westures-core');
 
 /**
  * Data returned when a Rotate is recognized.
@@ -79,7 +78,7 @@ class Rotate extends Gesture {
 
     state.active.forEach((input, idx) => {
       const currentAngle = state.centroid.angleTo(input.current.point);
-      angle += angularMinus(currentAngle, this.previousAngles[idx]);
+      angle += angularDifference(currentAngle, this.previousAngles[idx]);
       stagedAngles[idx] = currentAngle;
     });
 

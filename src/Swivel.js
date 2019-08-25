@@ -4,8 +4,12 @@
 
 'use strict';
 
-const { Gesture, Point2D, Smoothable } = require('westures-core');
-const angularMinus = require('./angularMinus.js');
+const {
+  angularDifference,
+  Gesture,
+  Point2D,
+  Smoothable,
+} = require('westures-core');
 
 /**
  * Data returned when a Swivel is recognized.
@@ -133,7 +137,7 @@ class Swivel extends Gesture {
   move(state) {
     const pivot = this.pivot;
     const angle = pivot.angleTo(state.centroid);
-    const rotation = angularMinus(angle, this.previous);
+    const rotation = angularDifference(angle, this.previous);
 
     /*
      * Updating the previous angle regardless of emit prevents sudden flips when
