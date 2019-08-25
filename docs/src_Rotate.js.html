@@ -32,7 +32,7 @@
     <div class="title">
         <h1><a href="index.html" class="link">westures</a></h1>
         
-            <span class="version">v0.7.8</span>
+            <span class="version">v1.0.0-alpha.1</span>
         
     </div>
     <div class="search-container" id="search-container">
@@ -58,8 +58,7 @@
 
 'use strict';
 
-const { Gesture, Smoothable } = require('westures-core');
-const angularMinus = require('./angularMinus.js');
+const { angularDifference, Gesture, Smoothable } = require('westures-core');
 
 /**
  * Data returned when a Rotate is recognized.
@@ -133,7 +132,7 @@ class Rotate extends Gesture {
 
     state.active.forEach((input, idx) => {
       const currentAngle = state.centroid.angleTo(input.current.point);
-      angle += angularMinus(currentAngle, this.previousAngles[idx]);
+      angle += angularDifference(currentAngle, this.previousAngles[idx]);
       stagedAngles[idx] = currentAngle;
     });
 

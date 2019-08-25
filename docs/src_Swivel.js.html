@@ -32,7 +32,7 @@
     <div class="title">
         <h1><a href="index.html" class="link">westures</a></h1>
         
-            <span class="version">v0.7.8</span>
+            <span class="version">v1.0.0-alpha.1</span>
         
     </div>
     <div class="search-container" id="search-container">
@@ -58,8 +58,12 @@
 
 'use strict';
 
-const { Gesture, Point2D, Smoothable } = require('westures-core');
-const angularMinus = require('./angularMinus.js');
+const {
+  angularDifference,
+  Gesture,
+  Point2D,
+  Smoothable,
+} = require('westures-core');
 
 /**
  * Data returned when a Swivel is recognized.
@@ -88,14 +92,13 @@ const angularMinus = require('./angularMinus.js');
  * @param {Object} [options]
  * @param {number} [options.deadzoneRadius=15] - The radius in pixels around the
  * start point in which to do nothing.
- * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
+ * @param {string} [options.enableKeys=null] - One of 'altKey', 'ctrlKey',
  * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
  * key is down.
  * @param {number} [options.minInputs=1] - The minimum number of inputs that
  * must be active for a Swivel to be recognized.
- * @param {Element} [options.pivotCenter] - If set, the swivel's pivot point
- * will be set to the center of the given pivotCenter element. Otherwise, the
- * pivot will be the location of the first contact point.
+ * @param {Element} [options.pivotCenter=true] - If set, the swivel's pivot
+ * point will be set to the center of the gesture's element.
  */
 class Swivel extends Gesture {
   constructor(element, handler, options = {}) {
@@ -153,7 +156,7 @@ class Swivel extends Gesture {
    */
   restart(state) {
     if (this.pivotCenter) {
-      const rect = this.pivotCenter.getBoundingClientRect();
+      const rect = this.element.getBoundingClientRect();
       this.pivot = new Point2D(
         rect.left + (rect.width / 2),
         rect.top + (rect.height / 2)
@@ -177,31 +180,6 @@ class Swivel extends Gesture {
   }
 
   /**
-   * Determine the data to emit. To be called once valid state for a swivel has
-   * been assured, except for deadzone.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {?Returns.SwivelData} Data to emit.
-   */
-  calculateOutput(state) {
-    const pivot = this.pivot;
-    const angle = pivot.angleTo(state.centroid);
-    const rotation = angularMinus(angle, this.previous);
-
-    /*
-     * Updating the previous angle regardless of emit prevents sudden flips when
-     * the user exits the deadzone circle.
-     */
-    this.previous = angle;
-
-    if (pivot.distanceTo(state.centroid) > this.deadzoneRadius) {
-      return { rotation, pivot };
-    }
-    return null;
-  }
-
-  /**
    * Event hook for the move of a Swivel gesture.
    *
    * @private
@@ -210,9 +188,18 @@ class Swivel extends Gesture {
    * recognized.
    */
   move(state) {
-    const output = this.calculateOutput(state);
-    if (output) {
-      return { rotation: this.outgoing.next(output) };
+    const pivot = this.pivot;
+    const angle = pivot.angleTo(state.centroid);
+    const rotation = angularDifference(angle, this.previous);
+
+    /*
+     * Updating the previous angle regardless of emit prevents sudden flips when
+     * the user exits the deadzone circle.
+     */
+    this.previous = angle;
+
+    if (pivot.distanceTo(state.centroid) > this.deadzoneRadius) {
+      return { rotation: this.outgoing.next(rotation), pivot };
     }
     return null;
   }
@@ -224,7 +211,11 @@ class Swivel extends Gesture {
    * @param {State} state - current input state.
    */
   end(state) {
-    this.restart(state);
+    if (state.active.length > 0) {
+      this.restart(state);
+    } else {
+      this.outgoing.restart();
+    }
   }
 
   /**
@@ -240,7 +231,7 @@ class Swivel extends Gesture {
 Swivel.DEFAULTS = Object.freeze({
   deadzoneRadius: 15,
   minInputs:      1,
-  pivotCenter:    false,
+  pivotCenter:    true,
 });
 
 module.exports = Swivel;

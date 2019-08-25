@@ -32,7 +32,7 @@
     <div class="title">
         <h1><a href="index.html" class="link">westures</a></h1>
         
-            <span class="version">v0.7.8</span>
+            <span class="version">v1.0.0-alpha.1</span>
         
     </div>
     <div class="search-container" id="search-container">
@@ -62,7 +62,7 @@
 
 'use strict';
 
-const { Gesture, Point2D, Region, Smoothable } = require('westures-core');
+const core = require('westures-core');
 
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
@@ -75,10 +75,6 @@ const Tap     = require('./src/Tap.js');
 const Track   = require('./src/Track.js');
 
 module.exports = {
-  Gesture,
-  Point2D,
-  Region,
-  Smoothable,
   Pan,
   Pinch,
   Press,
@@ -88,6 +84,7 @@ module.exports = {
   Swivel,
   Tap,
   Track,
+  ...core,
 };
 
 /**
