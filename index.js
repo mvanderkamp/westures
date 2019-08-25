@@ -8,7 +8,7 @@
 
 'use strict';
 
-const { Gesture, Point2D, Region, Smoothable } = require('westures-core');
+const core = require('westures-core');
 
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');
@@ -21,10 +21,6 @@ const Tap     = require('./src/Tap.js');
 const Track   = require('./src/Track.js');
 
 module.exports = {
-  Gesture,
-  Point2D,
-  Region,
-  Smoothable,
   Pan,
   Pinch,
   Press,
@@ -34,6 +30,7 @@ module.exports = {
   Swivel,
   Tap,
   Track,
+  ...core,
 };
 
 /**
