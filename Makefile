@@ -1,5 +1,5 @@
 
-.PHONY: default release lint fix parcel tags docs
+.PHONY: default release lint fix parcel tags docs coverage
 
 default: lint tags
 
@@ -30,4 +30,8 @@ redoc:
 
 tags:
 	ctags -R src;
+
+coverage:
+	npx jest --coverage && cat ./coverage/lcov.info | npx coveralls
+
 

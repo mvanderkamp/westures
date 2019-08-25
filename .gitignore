@@ -12,5 +12,6 @@ dist/index.html
 tags
 edit.sh
 usage.sh
+coverage/
 
 
