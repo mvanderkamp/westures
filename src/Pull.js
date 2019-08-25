@@ -35,14 +35,13 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  * @param {Object} [options]
  * @param {number} [options.deadzoneRadius=15] - The radius in pixels around the
  * start point in which to do nothing.
- * @param {string} [options.enableKey=null] - One of 'altKey', 'ctrlKey',
+ * @param {string} [options.enableKeys=null] - One of 'altKey', 'ctrlKey',
  * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
  * key is down.
  * @param {number} [options.minInputs=1] The minimum number of inputs that
  * must be active for a Pull to be recognized.
- * @param {Element} [options.pivotCenter] - If set, the pull's pivot point will
- * be set to the center of the given pivotCenter element. Otherwise, the pivot
- * will be the location of the first contact point.
+ * @param {Element} [options.pivotCenter=true] - If set, the pull's pivot point
+ * will be set to the center of the gesture's element.
  */
 class Pull extends Gesture {
   constructor(element, handler, options = {}) {
@@ -100,7 +99,7 @@ class Pull extends Gesture {
    */
   restart(state) {
     if (this.pivotCenter) {
-      const rect = this.pivotCenter.getBoundingClientRect();
+      const rect = this.element.getBoundingClientRect();
       this.pivot = new Point2D(
         rect.left + (rect.width / 2),
         rect.top + (rect.height / 2)
@@ -176,7 +175,7 @@ class Pull extends Gesture {
 Pull.DEFAULTS = Object.freeze({
   deadzoneRadius: 15,
   minInputs:      1,
-  pivotCenter:    false,
+  pivotCenter:    true,
   smoothing:      true,
 });
 
