@@ -103,7 +103,7 @@ class Track extends Gesture {
 
 // Default settings.
 Track.DEFAULTS = Object.freeze({
-  phases: [],
+  phases: Object.freeze([]),
 });
 
 module.exports = Track;

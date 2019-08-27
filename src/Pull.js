@@ -4,7 +4,8 @@
 
 'use strict';
 
-const { Gesture, Point2D, Smoothable } = require('westures-core');
+const { Smoothable } = require('westures-core');
+const Pivotable = require('./Pivotable.js');
 
 /**
  * Data returned when a Pull is recognized.
@@ -43,43 +44,10 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  * @param {Element} [options.pivotCenter=true] - If set, the pull's pivot point
  * will be set to the center of the gesture's element.
  */
-class Pull extends Gesture {
+class Pull extends Pivotable {
   constructor(element, handler, options = {}) {
     const settings = { ...Pull.DEFAULTS, ...options };
-    super('pinch', element, handler, settings);
-
-    /**
-     * The radius around the start point in which to do nothing.
-     *
-     * @private
-     * @type {number}
-     */
-    this.deadzoneRadius = settings.deadzoneRadius;
-
-    /**
-     * If this is set, the pull will use the center of the element as its pivot
-     * point. Unreliable if the element is moved during a pull gesture.
-     *
-     * @private
-     * @type {Element}
-     */
-    this.pivotCenter = settings.pivotCenter;
-
-    /**
-     * The pivot point of the pull.
-     *
-     * @private
-     * @type {westures.Point2D}
-     */
-    this.pivot = null;
-
-    /**
-     * The previous distance.
-     *
-     * @private
-     * @type {number}
-     */
-    this.previous = 0;
+    super('pull', element, handler, settings);
 
     /*
      * The outgoing data, with optional inertial smoothing.
@@ -92,34 +60,13 @@ class Pull extends Gesture {
   }
 
   /**
-   * Restart the given progress object using the given input object.
+   * Update the previous data. Called by Pivotable.
    *
    * @private
    * @param {State} state - current input state.
    */
-  restart(state) {
-    if (this.pivotCenter) {
-      const rect = this.element.getBoundingClientRect();
-      this.pivot = new Point2D(
-        rect.left + (rect.width / 2),
-        rect.top + (rect.height / 2)
-      );
-      this.previous = this.pivot.distanceTo(state.centroid);
-    } else {
-      this.pivot = state.centroid;
-      this.previous = 0;
-    }
-    this.outgoing.restart();
-  }
-
-  /**
-   * Event hook for the start of a Pull.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
-  start(state) {
-    this.restart(state);
+  updatePrevious(state) {
+    this.previous = this.pivot.distanceTo(state.centroid);
   }
 
   /**
@@ -147,36 +94,11 @@ class Pull extends Gesture {
 
     return rv;
   }
-
-  /**
-   * Event hook for the end of a Pull.
-   *
-   * @private
-   * @param {State} input status object
-   */
-  end(state) {
-    if (state.active.length > 0) {
-      this.restart(state);
-    } else {
-      this.outgoing.restart();
-    }
-  }
-
-  /**
-   * Event hook for the cancel of a Pull.
-   *
-   * @private
-   */
-  cancel() {
-    this.outgoing.restart();
-  }
 }
 
-Pull.DEFAULTS = Object.freeze({
-  deadzoneRadius: 15,
-  minInputs:      1,
-  pivotCenter:    true,
-  smoothing:      true,
+Pivotable.DEFAULTS = Object.freeze({
+  ...Pivotable.DEFAULTS,
+  smoothing: true,
 });
 
 module.exports = Pull;

@@ -4,12 +4,8 @@
 
 'use strict';
 
-const {
-  angularDifference,
-  Gesture,
-  Point2D,
-  Smoothable,
-} = require('westures-core');
+const { angularDifference, Smoothable } = require('westures-core');
+const Pivotable = require('./Pivotable.js');
 
 /**
  * Data returned when a Swivel is recognized.
@@ -46,43 +42,10 @@ const {
  * @param {Element} [options.pivotCenter=true] - If set, the swivel's pivot
  * point will be set to the center of the gesture's element.
  */
-class Swivel extends Gesture {
+class Swivel extends Pivotable {
   constructor(element, handler, options = {}) {
     const settings = { ...Swivel.DEFAULTS, ...options };
     super('swivel', element, handler, settings);
-
-    /**
-     * The radius around the start point in which to do nothing.
-     *
-     * @private
-     * @type {number}
-     */
-    this.deadzoneRadius = settings.deadzoneRadius;
-
-    /**
-     * If this is set, the swivel will use the center of the element as its
-     * pivot point. Unreliable if the element is moved during a swivel gesture.
-     *
-     * @private
-     * @type {Element}
-     */
-    this.pivotCenter = settings.pivotCenter;
-
-    /**
-     * The pivot point of the swivel.
-     *
-     * @private
-     * @type {westures.Point2D}
-     */
-    this.pivot = null;
-
-    /**
-     * The previous angle.
-     *
-     * @private
-     * @type {number}
-     */
-    this.previous = 0;
 
     /*
      * The outgoing data, with optional inertial smoothing.
@@ -95,34 +58,13 @@ class Swivel extends Gesture {
   }
 
   /**
-   * Restart the given progress object using the given input object.
+   * Update the previous data. Called by Pivotable.
    *
    * @private
    * @param {State} state - current input state.
    */
-  restart(state) {
-    if (this.pivotCenter) {
-      const rect = this.element.getBoundingClientRect();
-      this.pivot = new Point2D(
-        rect.left + (rect.width / 2),
-        rect.top + (rect.height / 2)
-      );
-      this.previous = this.pivot.angleTo(state.centroid);
-    } else {
-      this.pivot = state.centroid;
-      this.previous = 0;
-    }
-    this.outgoing.restart();
-  }
-
-  /**
-   * Event hook for the start of a Swivel gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
-  start(state) {
-    this.restart(state);
+  updatePrevious(state) {
+    this.previous = this.pivot.angleTo(state.centroid);
   }
 
   /**
@@ -149,35 +91,10 @@ class Swivel extends Gesture {
     }
     return null;
   }
-
-  /**
-   * Event hook for the end of a Swivel.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
-  end(state) {
-    if (state.active.length > 0) {
-      this.restart(state);
-    } else {
-      this.outgoing.restart();
-    }
-  }
-
-  /**
-   * Event hook for the cancel of a Swivel.
-   *
-   * @private
-   */
-  cancel() {
-    this.outgoing.restart();
-  }
 }
 
 Swivel.DEFAULTS = Object.freeze({
-  deadzoneRadius: 15,
-  minInputs:      1,
-  pivotCenter:    true,
+  ...Pivotable.DEFAULTS,
 });
 
 module.exports = Swivel;
