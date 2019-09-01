@@ -42,7 +42,7 @@ const { Gesture, Point2D } = require('westures-core');
  * point will be set to the center of the gesture's element.
  */
 class Pivotable extends Gesture {
-  constructor(type, element, handler, options = {}) {
+  constructor(type = 'pivotable', element, handler, options = {}) {
     super(type, element, handler, options);
 
     /**

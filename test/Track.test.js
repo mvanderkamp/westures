@@ -6,7 +6,7 @@
 
 'use strict';
 
-const Track = require('../src/Track.js');
+const Track = require('src/Track.js');
 
 describe('Track', () => {
   describe('constructor', () => {
