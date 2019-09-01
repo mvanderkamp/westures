@@ -49,8 +49,7 @@ class Pan extends Gesture {
      * @override
      * @type {westures-core.Smoothable<westures-core.Point2D>}
      */
-    const identity = new Point2D(0, 0);
-    this.outgoing = new Smoothable({ ...settings, identity });
+    this.outgoing = new Smoothable({ ...settings, identity: new Point2D() });
     this.outgoing.average = (a, b) => Point2D.centroid([a, b]);
   }
 
