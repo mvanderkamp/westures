@@ -24,12 +24,12 @@ const { Gesture } = require('westures-core');
  * of the selected phases.
  *
  * @extends westures.Gesture
- * @see ReturnTypes.TrackData
+ * @see {ReturnTypes.TrackData}
  * @memberof westures
  *
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
- *    is recognized on the associated element.
+ * is recognized on the associated element.
  * @param {Object} [options]
  * @param {string[]} [options.phases=[]] Phases to recognize. Entries can be any
  * or all of 'start', 'move', 'end', and 'cancel'.

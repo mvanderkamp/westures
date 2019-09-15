@@ -102,12 +102,12 @@ function calc_velocity(moves, vlim) {
  * below it's escape velocity.
  *
  * @extends westures.Gesture
- * @see ReturnTypes.SwipeData
+ * @see {ReturnTypes.SwipeData}
  * @memberof westures
  *
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
- *    is recognized on the associated element.
+ * is recognized on the associated element.
  */
 class Swipe extends Gesture {
   constructor(element, handler, options = {}) {

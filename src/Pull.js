@@ -27,12 +27,12 @@ const Pivotable = require('./Pivotable.js');
  * point.
  *
  * @extends westures.Gesture
- * @see ReturnTypes.PullData
+ * @see {ReturnTypes.PullData}
  * @memberof westures
  *
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
- *    is recognized on the associated element.
+ * is recognized on the associated element.
  * @param {Object} [options]
  * @param {number} [options.deadzoneRadius=15] - The radius in pixels around the
  * start point in which to do nothing.

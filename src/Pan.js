@@ -22,12 +22,12 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  * A Pan is defined as a normal movement in any direction.
  *
  * @extends westures.Gesture
- * @see ReturnTypes.PanData
+ * @see {ReturnTypes.PanData}
  * @memberof westures
  *
- * @param {Element} element - The element to which to associate the gesture.
+ * @param {Element} element - The element with which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
- *    is recognized on the associated element.
+ * is recognized on the associated element.
  */
 class Pan extends Gesture {
   constructor(element, handler, options = {}) {

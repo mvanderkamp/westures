@@ -24,12 +24,12 @@ const { Gesture, Smoothable } = require('westures-core');
  * A Pinch is defined as two or more inputs moving either together or apart.
  *
  * @extends westures.Gesture
- * @see ReturnTypes.PinchData
+ * @see {ReturnTypes.PinchData}
  * @memberof westures
  *
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
- *    is recognized on the associated element.
+ * is recognized on the associated element.
  */
 class Pinch extends Gesture {
   constructor(element, handler, options = {}) {

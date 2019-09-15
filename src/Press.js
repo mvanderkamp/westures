@@ -24,12 +24,12 @@ const { Gesture, Point2D } = require('westures-core');
  * A Press is defined as one or more input points being held down.
  *
  * @extends westures.Gesture
- * @see ReturnTypes.PressData
+ * @see {ReturnTypes.PressData}
  * @memberof westures
  *
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
- *    is recognized on the associated element.
+ * is recognized on the associated element.
  * @param {Object} [options] - The options object.
  * @param {number} [options.delay=1000] - The delay before emitting, during
  * which time the number of inputs must not go below minInputs.
