@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: Tap | westures</title>
+    <title>Class: Pivotable | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -53,9 +53,10 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Tap<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures.html">westures</a>~</span>Pivotable<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A Tap is defined as a touchstart to touchend event in quick succession.</div>
+            <div class="class-description">A Pivotable is a single input rotating around a fixed point. The fixed point
+is determined by the input's location at its 'start' phase.</div>
         
     
 </header>
@@ -68,14 +69,14 @@
 
 <dt>
     
-        <h4 class="name" id="Tap">
+        <h4 class="name" id="Pivotable">
             
-                new <span class="type-signature"></span>Tap<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Pivotable<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
-                <code><a href="src_Tap.js.html">src/Tap.js</a></code>,
-                <code><a href="src_Tap.js.html#line41">line 41</a></code>
+                <code><a href="src_Pivotable.js.html">src/Pivotable.js</a></code>,
+                <code><a href="src_Pivotable.js.html#line45">line 45</a></code>
             </div>
             
         </h4>
@@ -210,7 +211,7 @@ is recognized on the associated element.</td>
 
             
 
-            <td class="description last">The options object.
+            <td class="description last">
                 <h6>Properties</h6>
                 
 <table class="params">
@@ -239,7 +240,7 @@ is recognized on the associated element.</td>
 
         <tr>
             
-                <td class="name"><code>minDelay</code></td>
+                <td class="name"><code>deadzoneRadius</code></td>
             
 
             <td class="type">
@@ -266,26 +267,26 @@ is recognized on the associated element.</td>
             
                 <td class="default">
                 
-                    0
+                    15
                 
                 </td>
             
 
-            <td class="description last">The minimum delay between a touchstart
-and touchend can be configured in milliseconds.</td>
+            <td class="description last">The radius in pixels around the
+start point in which to do nothing.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>maxDelay</code></td>
+                <td class="name"><code>enableKeys</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
             
@@ -306,20 +307,21 @@ and touchend can be configured in milliseconds.</td>
             
                 <td class="default">
                 
-                    300
+                    null
                 
                 </td>
             
 
-            <td class="description last">The maximum delay between a
-touchstart and touchend can be configured in milliseconds.</td>
+            <td class="description last">One of 'altKey', 'ctrlKey',
+'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
+key is down.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>numTaps</code></td>
+                <td class="name"><code>minInputs</code></td>
             
 
             <td class="type">
@@ -351,20 +353,21 @@ touchstart and touchend can be configured in milliseconds.</td>
                 </td>
             
 
-            <td class="description last">Number of taps to require.</td>
+            <td class="description last">The minimum number of inputs that
+must be active for a Pivotable to be recognized.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>tolerance</code></td>
+                <td class="name"><code>pivotCenter</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Element</span>
 
 
             
@@ -385,13 +388,13 @@ touchstart and touchend can be configured in milliseconds.</td>
             
                 <td class="default">
                 
-                    10
+                    true
                 
                 </td>
             
 
-            <td class="description last">The tolerance in pixels a user can
-move.</td>
+            <td class="description last">If set, the pivotable's pivot
+point will be set to the center of the gesture's element.</td>
         </tr>
 
     
@@ -455,7 +458,7 @@ move.</td>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>{<a href="ReturnTypes.html#.TapData">ReturnTypes.TapData</a>}</li>
+            <li>{<a href="ReturnTypes.html#.SwivelData">ReturnTypes.SwivelData</a>}</li>
         </ul>
     </dd>
     
@@ -521,7 +524,7 @@ move.</td>
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'westures.Tap_sub'.replace(/"/g, '_');
+        var id = 'westures.Pivotable_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

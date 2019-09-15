@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: src/Tap.js | westures</title>
+    <title>Source: src/Pivotable.js | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -53,7 +53,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/*
- * Contains the Tap class.
+ * Contains the Rotate class.
  */
 
 'use strict';
@@ -61,129 +61,141 @@
 const { Gesture, Point2D } = require('westures-core');
 
 /**
- * Data returned when a Tap is recognized.
+ * Data returned when a Pivotable is recognized.
  *
- * @typedef {Object} TapData
+ * @typedef {Object} SwivelData
  * @mixes ReturnTypes.BaseData
  *
- * @property {number} x - x coordinate of tap point.
- * @property {number} y - y coordinate of tap point.
+ * @property {number} rotation - In radians, the change in angle since last
+ * emit.
+ * @property {westures.Point2D} pivot - The pivot point.
  *
  * @memberof ReturnTypes
  */
 
 /**
- * A Tap is defined as a touchstart to touchend event in quick succession.
+ * A Pivotable is a single input rotating around a fixed point. The fixed point
+ * is determined by the input's location at its 'start' phase.
  *
  * @extends westures.Gesture
- * @see {ReturnTypes.TapData}
+ * @see {ReturnTypes.SwivelData}
  * @memberof westures
  *
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
  * is recognized on the associated element.
- * @param {Object} [options] - The options object.
- * @param {number} [options.minDelay=0] - The minimum delay between a touchstart
- * and touchend can be configured in milliseconds.
- * @param {number} [options.maxDelay=300] - The maximum delay between a
- * touchstart and touchend can be configured in milliseconds.
- * @param {number} [options.numTaps=1] - Number of taps to require.
- * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
- * move.
+ * @param {Object} [options]
+ * @param {number} [options.deadzoneRadius=15] - The radius in pixels around the
+ * start point in which to do nothing.
+ * @param {string} [options.enableKeys=null] - One of 'altKey', 'ctrlKey',
+ * 'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
+ * key is down.
+ * @param {number} [options.minInputs=1] - The minimum number of inputs that
+ * must be active for a Pivotable to be recognized.
+ * @param {Element} [options.pivotCenter=true] - If set, the pivotable's pivot
+ * point will be set to the center of the gesture's element.
  */
-class Tap extends Gesture {
-  constructor(element, handler, options = {}) {
-    const settings = { ...Tap.DEFAULTS, ...options };
-    super('tap', element, handler, settings);
+class Pivotable extends Gesture {
+  constructor(type = 'pivotable', element, handler, options = {}) {
+    super(type, element, handler, options);
 
     /**
-     * The minimum amount between a touchstart and a touchend can be configured
-     * in milliseconds. The minimum delay starts to count down when the expected
-     * number of inputs are on the screen, and ends when ALL inputs are off the
-     * screen.
+     * The radius around the start point in which to do nothing.
      *
      * @private
      * @type {number}
      */
-    this.minDelay = settings.minDelay;
+    this.deadzoneRadius = options.deadzoneRadius;
 
     /**
-     * The maximum delay between a touchstart and touchend can be configured in
-     * milliseconds. The maximum delay starts to count down when the expected
-     * number of inputs are on the screen, and ends when ALL inputs are off the
-     * screen.
+     * If this is set, the pivotable will use the center of the element as its
+     * pivot point. Unreliable if the element is moved during a pivotable
+     * gesture.
+     *
+     * @private
+     * @type {Element}
+     */
+    this.pivotCenter = options.pivotCenter;
+
+    /**
+     * The pivot point of the pivotable.
+     *
+     * @private
+     * @type {westures.Point2D}
+     */
+    this.pivot = null;
+
+    /**
+     * The previous data.
      *
      * @private
      * @type {number}
      */
-    this.maxDelay = settings.maxDelay;
-
-    /**
-     * The number of inputs to trigger a Tap can be variable, and the maximum
-     * number being a factor of the browser.
-     *
-     * @private
-     * @type {number}
-     */
-    this.numTaps = settings.numTaps;
-
-    /**
-     * A move tolerance in pixels allows some slop between a user's start to end
-     * events. This allows the Tap gesture to be triggered more easily.
-     *
-     * @private
-     * @type {number}
-     */
-    this.tolerance = settings.tolerance;
-
-    /**
-     * An array of inputs that have ended recently.
-     *
-     * @private
-     * @type {Input[]}
-     */
-    this.taps = [];
+    this.previous = 0;
   }
 
   /**
-   * Event hook for the end of a gesture.  Determines if this the tap event can
-   * be fired if the delay and tolerance constraints are met.
+   * Restart the given progress object using the given input object.
    *
    * @private
    * @param {State} state - current input state.
-   * @return {?ReturnTypes.TapData} &lt;tt>null&lt;/tt> if the gesture is not to be
-   * emitted, Object with information otherwise.
+   */
+  restart(state) {
+    if (this.pivotCenter) {
+      const rect = this.element.getBoundingClientRect();
+      this.pivot = new Point2D(
+        rect.left + (rect.width / 2),
+        rect.top + (rect.height / 2)
+      );
+      this.updatePrevious(state);
+    } else {
+      this.pivot = state.centroid;
+      this.previous = 0;
+    }
+    this.outgoing.restart();
+  }
+
+  /**
+   * Event hook for the start of a Pivotable gesture.
+   *
+   * @private
+   * @param {State} state - current input state.
+   */
+  start(state) {
+    this.restart(state);
+  }
+
+  /**
+   * Event hook for the end of a Pivotable.
+   *
+   * @private
+   * @param {State} state - current input state.
    */
   end(state) {
-    const now = Date.now();
-
-    // Save the recently ended inputs as taps.
-    this.taps = this.taps.concat(state.getInputsInPhase('end'))
-      .filter(input => {
-        const tdiff = now - input.startTime;
-        return tdiff &lt;= this.maxDelay &amp;&amp; tdiff >= this.minDelay;
-      });
-
-    // Validate the list of taps.
-    if (this.taps.length !== this.numTaps ||
-      this.taps.some(i => i.totalDistance() > this.tolerance)) {
-      return null;
+    if (state.active.length > 0) {
+      this.restart(state);
+    } else {
+      this.outgoing.restart();
     }
+  }
 
-    const centroid = Point2D.centroid(this.taps.map(i => i.current.point));
-    this.taps = []; // Critical! Used taps need to be cleared!
-    return { centroid, ...centroid };
+  /**
+   * Event hook for the cancel of a Pivotable.
+   *
+   * @private
+   */
+  cancel() {
+    this.outgoing.restart();
   }
 }
 
-Tap.DEFAULTS = Object.freeze({
-  minDelay:  0,
-  maxDelay:  300,
-  numTaps:   1,
-  tolerance: 10,
+Pivotable.DEFAULTS = Object.freeze({
+  deadzoneRadius: 15,
+  minInputs:      1,
+  pivotCenter:    true,
 });
 
-module.exports = Tap;
+module.exports = Pivotable;
 
 </code></pre>
         </article>
