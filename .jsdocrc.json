@@ -15,7 +15,9 @@
   "source": {
     "include": [
       "src",
-      "index.js"
+      "index.js",
+      "node_modules/westures-core/src",
+      "node_modules/westures-core/index.js"
     ],
     "includePattern": ".js$"
   },
@@ -31,9 +33,13 @@
     ],
     "default": {
       "outputSourceFiles": true,
-      "useLongnameInNav": false
+      "useLongnameInNav": true
     },
-    "footerText": "Westures: Simultaneous Multitouch Gestures",
+    "footerText": "Westures: Robust Multitouch Gestures",
+    "logo": {
+        "width": "0px",
+        "height": "0px"
+    },
     "monospaceLinks": false,
     "name": "westures",
     "useCollapsibles": true

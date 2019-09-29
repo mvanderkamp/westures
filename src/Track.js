@@ -23,7 +23,7 @@ const { Gesture } = require('westures-core');
  * A Track gesture forwards a list of active points and their centroid on each
  * of the selected phases.
  *
- * @extends westures.Gesture
+ * @extends westures-core.Gesture
  * @see {ReturnTypes.TrackData}
  * @memberof westures
  *

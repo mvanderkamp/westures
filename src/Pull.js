@@ -26,7 +26,7 @@ const Pivotable = require('./Pivotable.js');
  * A Pull is defined as a single input moving away from or towards a pivot
  * point.
  *
- * @extends westures.Gesture
+ * @extends westures-core.Gesture
  * @see {ReturnTypes.PullData}
  * @memberof westures
  *

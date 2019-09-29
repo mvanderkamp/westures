@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: Pull | westures</title>
+    <title>Class: PointerData | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -53,10 +53,10 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Pull<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures-core.html">westures-core</a>~</span>PointerData<span class="signature">(event, identifier)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A Pull is defined as a single input moving away from or towards a pivot
-point.</div>
+            <div class="class-description">Low-level storage of pointer data based on incoming data from an interaction
+event.</div>
         
     
 </header>
@@ -69,14 +69,14 @@ point.</div>
 
 <dt>
     
-        <h4 class="name" id="Pull">
+        <h4 class="name" id="PointerData">
             
-                new <span class="type-signature"></span>Pull<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>PointerData<span class="signature">(event, identifier)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
-                <code><a href="src_Pull.js.html">src/Pull.js</a></code>,
-                <code><a href="src_Pull.js.html#line48">line 48</a></code>
+                <code><a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a></code>,
+                <code><a href="node_modules_westures-core_src_PointerData.js.html#line37">line 37</a></code>
             </div>
             
         </h4>
@@ -108,8 +108,6 @@ point.</div>
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -122,125 +120,30 @@ point.</div>
 
         <tr>
             
-                <td class="name"><code>element</code></td>
+                <td class="name"><code>event</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Element</span>
+<span class="param-type">Event</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">The element to which to associate the gesture.</td>
+            <td class="description last">The event object being wrapped.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>handler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The function handler to execute when a gesture
-is recognized on the associated element.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>deadzoneRadius</code></td>
+                <td class="name"><code>identifier</code></td>
             
 
             <td class="type">
@@ -253,155 +156,10 @@ is recognized on the associated element.</td>
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                    15
-                
-                </td>
-            
 
-            <td class="description last">The radius in pixels around the
-start point in which to do nothing.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>enableKeys</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">One of 'altKey', 'ctrlKey',
-'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
-key is down.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>minInputs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    1
-                
-                </td>
-            
-
-            <td class="description last">The minimum number of inputs that
-must be active for a Pull to be recognized.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pivotCenter</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Element</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-
-            <td class="description last">If set, the pull's pivot point
-will be set to the center of the gesture's element.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last">The index of touch if applicable</td>
         </tr>
 
     
@@ -455,13 +213,6 @@ will be set to the center of the gesture's element.</td>
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>{<a href="ReturnTypes.html#.PullData">ReturnTypes.PullData</a>}</li>
-        </ul>
-    </dd>
-    
 
     
 </dl>
@@ -474,17 +225,6 @@ will be set to the center of the gesture's element.</td>
         
         </div>
     
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="westures-core.Gesture.html">westures-core.Gesture</a></li>
-    </ul>
-
 
     
 
@@ -505,12 +245,12 @@ will be set to the center of the gesture's element.</td>
             
 
 <dt>
-<h4 class="name" id="element">
-    <span class="type-signature"></span>element<span class="type-signature"> :Element</span>
+<h4 class="name" id="originalEvent">
+    <span class="type-signature"></span>originalEvent<span class="type-signature"> :Event</span>
     
     <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line61">line 61</a></code>
+        <code><a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a></code>,
+        <code><a href="node_modules_westures-core_src_PointerData.js.html#line43">line 43</a></code>
     </div>
     
 </h4>
@@ -520,7 +260,7 @@ will be set to the center of the gesture's element.</td>
 <dd>
     
     <div class="description">
-        The element to which to associate the gesture.
+        The original event object.
     </div>
     
 
@@ -530,7 +270,7 @@ will be set to the center of the gesture's element.</td>
         <ul>
             <li>
                 
-<span class="param-type">Element</span>
+<span class="param-type">Event</span>
 
 
             </li>
@@ -549,11 +289,6 @@ will be set to the center of the gesture's element.</td>
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#element">westures-core.Gesture#element</a>
-    </li></ul></dd>
     
 
     
@@ -589,12 +324,12 @@ will be set to the center of the gesture's element.</td>
             
 
 <dt>
-<h4 class="name" id="handler">
-    <span class="type-signature"></span>handler<span class="type-signature"> :function</span>
+<h4 class="name" id="point">
+    <span class="type-signature"></span>point<span class="type-signature"> :<a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
     
     <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line69">line 69</a></code>
+        <code><a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a></code>,
+        <code><a href="node_modules_westures-core_src_PointerData.js.html#line67">line 67</a></code>
     </div>
     
 </h4>
@@ -604,8 +339,7 @@ will be set to the center of the gesture's element.</td>
 <dd>
     
     <div class="description">
-        The function handler to execute when the gesture is recognized on the
-associated element.
+        The (x,y) coordinate of the event, wrapped in a Point2D.
     </div>
     
 
@@ -615,7 +349,7 @@ associated element.
         <ul>
             <li>
                 
-<span class="param-type">function</span>
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
 
 
             </li>
@@ -634,11 +368,6 @@ associated element.
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#handler">westures-core.Gesture#handler</a>
-    </li></ul></dd>
     
 
     
@@ -674,12 +403,12 @@ associated element.
             
 
 <dt>
-<h4 class="name" id="id">
-    <span class="type-signature"></span>id<span class="type-signature"> :string</span>
+<h4 class="name" id="time">
+    <span class="type-signature"></span>time<span class="type-signature"> :number</span>
     
     <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line54">line 54</a></code>
+        <code><a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a></code>,
+        <code><a href="node_modules_westures-core_src_PointerData.js.html#line59">line 59</a></code>
     </div>
     
 </h4>
@@ -689,9 +418,8 @@ associated element.
 <dd>
     
     <div class="description">
-        The unique identifier for each gesture. This allows for distinctions
-across instances of Gestures that are created on the fly (e.g.
-gesture-tap-1, gesture-tap-2).
+        The timestamp of the event in milliseconds elapsed since January 1, 1970,
+00:00:00 UTC.
     </div>
     
 
@@ -701,7 +429,7 @@ gesture-tap-1, gesture-tap-2).
         <ul>
             <li>
                 
-<span class="param-type">string</span>
+<span class="param-type">number</span>
 
 
             </li>
@@ -720,95 +448,6 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#id">westures-core.Gesture#id</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        
-            
-
-<dt>
-<h4 class="name" id="options">
-    <span class="type-signature"></span>options<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line76">line 76</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        The options settings.
-    </div>
-    
-
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">object</span>
-
-
-            </li>
-        </ul>
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#options">westures-core.Gesture#options</a>
-    </li></ul></dd>
     
 
     
@@ -848,8 +487,8 @@ gesture-tap-1, gesture-tap-2).
     <span class="type-signature"></span>type<span class="type-signature"> :string</span>
     
     <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line45">line 45</a></code>
+        <code><a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a></code>,
+        <code><a href="node_modules_westures-core_src_PointerData.js.html#line51">line 51</a></code>
     </div>
     
 </h4>
@@ -859,7 +498,8 @@ gesture-tap-1, gesture-tap-2).
 <dd>
     
     <div class="description">
-        The name of the gesture. (e.g. 'pan' or 'tap' or 'pinch').
+        The type or 'phase' of this batch of pointer data. 'start' or 'move' or
+'end' or 'cancel'
     </div>
     
 
@@ -888,11 +528,6 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#type">westures-core.Gesture#type</a>
-    </li></ul></dd>
     
 
     
@@ -935,14 +570,14 @@ gesture-tap-1, gesture-tap-2).
 
 <dt>
     
-        <h4 class="name" id="cancel">
+        <h4 class="name" id="angleTo">
             
-                <span class="type-signature"></span>cancel<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {Object}</span>
+                <span class="type-signature"></span>angleTo<span class="signature">(pdata)</span><span class="type-signature"> &rarr; {number}</span>
                 
             
             <div class="container-source members">
-                <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-                <code><a href="node_modules_westures-core_src_Gesture.js.html#line140">line 140</a></code>
+                <code><a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a></code>,
+                <code><a href="node_modules_westures-core_src_PointerData.js.html#line78">line 78</a></code>
             </div>
             
         </h4>
@@ -954,7 +589,7 @@ gesture-tap-1, gesture-tap-2).
 
     
     <div class="description">
-        Event hook for when an input is cancelled.
+        Calculates the angle between this event and the given event.
     </div>
     
 
@@ -990,13 +625,13 @@ gesture-tap-1, gesture-tap-2).
 
         <tr>
             
-                <td class="name"><code>state</code></td>
+                <td class="name"><code>pdata</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">State</span>
+<span class="param-type">PointerData</span>
 
 
             
@@ -1006,7 +641,7 @@ gesture-tap-1, gesture-tap-2).
 
             
 
-            <td class="description last">The input state object of the current region.</td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -1034,14 +669,14 @@ gesture-tap-1, gesture-tap-2).
 
 
 
-<span class="param-type">Object</span>
+<span class="param-type">number</span>
 
 
 
 
 
-- Gesture is considered recognized if an Object is
-   returned.
+- Radians measurement between this event and the given
+   event's points.
 
 
 
@@ -1061,11 +696,6 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#cancel">westures-core.Gesture#cancel</a>
-    </li></ul></dd>
     
 
     
@@ -1101,14 +731,14 @@ gesture-tap-1, gesture-tap-2).
 
 <dt>
     
-        <h4 class="name" id="end">
+        <h4 class="name" id="distanceTo">
             
-                <span class="type-signature"></span>end<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {Object}</span>
+                <span class="type-signature"></span>distanceTo<span class="signature">(pdata)</span><span class="type-signature"> &rarr; {number}</span>
                 
             
             <div class="container-source members">
-                <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-                <code><a href="node_modules_westures-core_src_Gesture.js.html#line128">line 128</a></code>
+                <code><a href="node_modules_westures-core_src_PointerData.js.html">node_modules/westures-core/src/PointerData.js</a></code>,
+                <code><a href="node_modules_westures-core_src_PointerData.js.html#line90">line 90</a></code>
             </div>
             
         </h4>
@@ -1120,7 +750,7 @@ gesture-tap-1, gesture-tap-2).
 
     
     <div class="description">
-        Event hook for the end phase of a gesture.
+        Calculates the distance between two PointerDatas.
     </div>
     
 
@@ -1156,13 +786,13 @@ gesture-tap-1, gesture-tap-2).
 
         <tr>
             
-                <td class="name"><code>state</code></td>
+                <td class="name"><code>pdata</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">State</span>
+<span class="param-type">PointerData</span>
 
 
             
@@ -1172,7 +802,7 @@ gesture-tap-1, gesture-tap-2).
 
             
 
-            <td class="description last">The input state object of the current region.</td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -1200,14 +830,14 @@ gesture-tap-1, gesture-tap-2).
 
 
 
-<span class="param-type">Object</span>
+<span class="param-type">number</span>
 
 
 
 
 
-- Gesture is considered recognized if an Object is
-   returned.
+- The distance between the two points, a.k.a. the
+   hypoteneuse.
 
 
 
@@ -1227,342 +857,6 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#end">westures-core.Gesture#end</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id="isEnabled">
-            
-                <span class="type-signature"></span>isEnabled<span class="signature">(state)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-                <code><a href="node_modules_westures-core_src_Gesture.js.html#line86">line 86</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Determines whether this gesture is enabled.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">State</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The input state object of the current region.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- true if enabled, false otherwise.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#isEnabled">westures-core.Gesture#isEnabled</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id="start">
-            
-                <span class="type-signature"></span>start<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {Object}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-                <code><a href="node_modules_westures-core_src_Gesture.js.html#line104">line 104</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Event hook for the start phase of a gesture.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">State</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The input state object of the current region.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Object</span>
-
-
-
-
-
-- Gesture is considered recognized if an Object is
-   returned.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#start">westures-core.Gesture#start</a>
-    </li></ul></dd>
     
 
     
@@ -1618,7 +912,7 @@ gesture-tap-1, gesture-tap-2).
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'westures.Pull_sub'.replace(/"/g, '_');
+        var id = 'westures-core.PointerData_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

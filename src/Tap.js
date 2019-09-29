@@ -21,7 +21,7 @@ const { Gesture, Point2D } = require('westures-core');
 /**
  * A Tap is defined as a touchstart to touchend event in quick succession.
  *
- * @extends westures.Gesture
+ * @extends westures-core.Gesture
  * @see {ReturnTypes.TapData}
  * @memberof westures
  *

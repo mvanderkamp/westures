@@ -21,7 +21,7 @@ const { angularDifference, Gesture, Smoothable } = require('westures-core');
 /**
  * A Rotate is defined as two inputs moving with a changing angle between them.
  *
- * @extends westures.Gesture
+ * @extends westures-core.Gesture
  * @see {ReturnTypes.RotateData}
  * @memberof westures
  *

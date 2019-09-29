@@ -101,7 +101,7 @@ function calc_velocity(moves, vlim) {
  * increasing velocity and leaving the screen at some point before it drops
  * below it's escape velocity.
  *
- * @extends westures.Gesture
+ * @extends westures-core.Gesture
  * @see {ReturnTypes.SwipeData}
  * @memberof westures
  *

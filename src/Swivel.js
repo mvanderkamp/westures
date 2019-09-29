@@ -24,7 +24,7 @@ const Pivotable = require('./Pivotable.js');
  * A Swivel is a single input rotating around a fixed point. The fixed point is
  * determined by the input's location at its 'start' phase.
  *
- * @extends westures.Gesture
+ * @extends westures-core.Gesture
  * @see {ReturnTypes.SwivelData}
  * @memberof westures
  *

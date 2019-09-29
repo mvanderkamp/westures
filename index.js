@@ -41,51 +41,6 @@ module.exports = {
  */
 
 /**
- * The base Gesture class which all other classes extend.
- *
- * @see {@link
- * https://mvanderkamp.github.io/westures-core/westures-core.Gesture.html|
- * westures-core.Gesture}
- *
- * @class Gesture
- * @memberof westures
- */
-
-/**
- * The Region class, which is the entry point for the Westures system, through
- * which you bind handlers with gestures and elements.
- *
- * @see {@link
- * https://mvanderkamp.github.io/westures-core/westures-core.Region.html|
- * westures-core.Region}
- *
- * @class Region
- * @memberof westures
- */
-
-/**
- * Provides some basic operations on two-dimensional points.
- *
- * @see {@link
- * https://mvanderkamp.github.io/westures-core/westures-core.Point2D.html|
- * westures-core.Point2D}
- *
- * @class Point2D
- * @memberof westures
- */
-
-/**
- * Allows the enabling of smoothing on Gestures that use this mixin.
- *
- * @see {@link
- * https://mvanderkamp.github.io/westures-core/westures-core.Smoothable.html|
- * westures-core.Smoothable}
- *
- * @mixin Smoothable
- * @memberof westures
- */
-
-/**
  * The base data that is included for all emitted gestures.
  *
  * @typedef {Object} BaseData

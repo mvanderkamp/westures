@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: Pull | westures</title>
+    <title>Class: Point2D | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -53,10 +53,10 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="westures.html">westures</a>~</span>Pull<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="westures-core.html">westures-core</a>~</span>Point2D<span class="signature">(x<span class="signature-attributes">opt</span>, y<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A Pull is defined as a single input moving away from or towards a pivot
-point.</div>
+            <div class="class-description">The Point2D class stores and operates on 2-dimensional points, represented as
+x and y coordinates.</div>
         
     
 </header>
@@ -69,14 +69,14 @@ point.</div>
 
 <dt>
     
-        <h4 class="name" id="Pull">
+        <h4 class="name" id="Point2D">
             
-                new <span class="type-signature"></span>Pull<span class="signature">(element, handler, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                new <span class="type-signature"></span>Point2D<span class="signature">(x<span class="signature-attributes">opt</span>, y<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
-                <code><a href="src_Pull.js.html">src/Pull.js</a></code>,
-                <code><a href="src_Pull.js.html#line48">line 48</a></code>
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line17">line 17</a></code>
             </div>
             
         </h4>
@@ -112,122 +112,6 @@ point.</div>
         
 
         
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>element</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Element</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The element to which to associate the gesture.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>handler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The function handler to execute when a gesture
-is recognized on the associated element.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
         <th>Default</th>
         
 
@@ -240,7 +124,7 @@ is recognized on the associated element.</td>
 
         <tr>
             
-                <td class="name"><code>deadzoneRadius</code></td>
+                <td class="name"><code>x</code></td>
             
 
             <td class="type">
@@ -267,61 +151,19 @@ is recognized on the associated element.</td>
             
                 <td class="default">
                 
-                    15
+                    0
                 
                 </td>
             
 
-            <td class="description last">The radius in pixels around the
-start point in which to do nothing.</td>
+            <td class="description last">The x coordinate of the point.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>enableKeys</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">One of 'altKey', 'ctrlKey',
-'metaKey', or 'shiftKey'. If set, gesture will only be recognized while this
-key is down.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>minInputs</code></td>
+                <td class="name"><code>y</code></td>
             
 
             <td class="type">
@@ -348,60 +190,12 @@ key is down.</td>
             
                 <td class="default">
                 
-                    1
+                    0
                 
                 </td>
             
 
-            <td class="description last">The minimum number of inputs that
-must be active for a Pull to be recognized.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pivotCenter</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Element</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-
-            <td class="description last">If set, the pull's pivot point
-will be set to the center of the gesture's element.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last">The y coordinate of the point.</td>
         </tr>
 
     
@@ -455,13 +249,6 @@ will be set to the center of the gesture's element.</td>
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>{<a href="ReturnTypes.html#.PullData">ReturnTypes.PullData</a>}</li>
-        </ul>
-    </dd>
-    
 
     
 </dl>
@@ -474,17 +261,6 @@ will be set to the center of the gesture's element.</td>
         
         </div>
     
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="westures-core.Gesture.html">westures-core.Gesture</a></li>
-    </ul>
-
 
     
 
@@ -505,12 +281,12 @@ will be set to the center of the gesture's element.</td>
             
 
 <dt>
-<h4 class="name" id="element">
-    <span class="type-signature"></span>element<span class="type-signature"> :Element</span>
+<h4 class="name" id="x">
+    <span class="type-signature"></span>x<span class="type-signature"> :number</span>
     
     <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line61">line 61</a></code>
+        <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+        <code><a href="node_modules_westures-core_src_Point2D.js.html#line23">line 23</a></code>
     </div>
     
 </h4>
@@ -520,7 +296,7 @@ will be set to the center of the gesture's element.</td>
 <dd>
     
     <div class="description">
-        The element to which to associate the gesture.
+        The x coordinate of the point.
     </div>
     
 
@@ -530,7 +306,7 @@ will be set to the center of the gesture's element.</td>
         <ul>
             <li>
                 
-<span class="param-type">Element</span>
+<span class="param-type">number</span>
 
 
             </li>
@@ -549,11 +325,6 @@ will be set to the center of the gesture's element.</td>
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#element">westures-core.Gesture#element</a>
-    </li></ul></dd>
     
 
     
@@ -589,12 +360,12 @@ will be set to the center of the gesture's element.</td>
             
 
 <dt>
-<h4 class="name" id="handler">
-    <span class="type-signature"></span>handler<span class="type-signature"> :function</span>
+<h4 class="name" id="y">
+    <span class="type-signature"></span>y<span class="type-signature"> :number</span>
     
     <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line69">line 69</a></code>
+        <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+        <code><a href="node_modules_westures-core_src_Point2D.js.html#line30">line 30</a></code>
     </div>
     
 </h4>
@@ -604,8 +375,7 @@ will be set to the center of the gesture's element.</td>
 <dd>
     
     <div class="description">
-        The function handler to execute when the gesture is recognized on the
-associated element.
+        The y coordinate of the point.
     </div>
     
 
@@ -615,7 +385,7 @@ associated element.
         <ul>
             <li>
                 
-<span class="param-type">function</span>
+<span class="param-type">number</span>
 
 
             </li>
@@ -634,265 +404,6 @@ associated element.
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#handler">westures-core.Gesture#handler</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        
-            
-
-<dt>
-<h4 class="name" id="id">
-    <span class="type-signature"></span>id<span class="type-signature"> :string</span>
-    
-    <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line54">line 54</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        The unique identifier for each gesture. This allows for distinctions
-across instances of Gestures that are created on the fly (e.g.
-gesture-tap-1, gesture-tap-2).
-    </div>
-    
-
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">string</span>
-
-
-            </li>
-        </ul>
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#id">westures-core.Gesture#id</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        
-            
-
-<dt>
-<h4 class="name" id="options">
-    <span class="type-signature"></span>options<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line76">line 76</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        The options settings.
-    </div>
-    
-
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">object</span>
-
-
-            </li>
-        </ul>
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#options">westures-core.Gesture#options</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        
-            
-
-<dt>
-<h4 class="name" id="type">
-    <span class="type-signature"></span>type<span class="type-signature"> :string</span>
-    
-    <div class="container-source members">
-        <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-        <code><a href="node_modules_westures-core_src_Gesture.js.html#line45">line 45</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        The name of the gesture. (e.g. 'pan' or 'tap' or 'pinch').
-    </div>
-    
-
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">string</span>
-
-
-            </li>
-        </ul>
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#type">westures-core.Gesture#type</a>
-    </li></ul></dd>
     
 
     
@@ -935,14 +446,14 @@ gesture-tap-1, gesture-tap-2).
 
 <dt>
     
-        <h4 class="name" id="cancel">
+        <h4 class="name" id=".centroid">
             
-                <span class="type-signature"></span>cancel<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {Object}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>centroid<span class="signature">(points)</span><span class="type-signature"> &rarr; {<a href="westures-core.Point2D.html">westures-core.Point2D</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-                <code><a href="node_modules_westures-core_src_Gesture.js.html#line140">line 140</a></code>
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line132">line 132</a></code>
             </div>
             
         </h4>
@@ -954,7 +465,7 @@ gesture-tap-1, gesture-tap-2).
 
     
     <div class="description">
-        Event hook for when an input is cancelled.
+        Calculates the centroid of a list of points.
     </div>
     
 
@@ -990,13 +501,13 @@ gesture-tap-1, gesture-tap-2).
 
         <tr>
             
-                <td class="name"><code>state</code></td>
+                <td class="name"><code>points</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">State</span>
+<span class="param-type">Array.&lt;<a href="westures-core.Point2D.html">westures-core.Point2D</a>></span>
 
 
             
@@ -1006,7 +517,8 @@ gesture-tap-1, gesture-tap-2).
 
             
 
-            <td class="description last">The input state object of the current region.</td>
+            <td class="description last">The array of Point2D objects for
+which to calculate the centroid.</td>
         </tr>
 
     
@@ -1034,14 +546,13 @@ gesture-tap-1, gesture-tap-2).
 
 
 
-<span class="param-type">Object</span>
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
 
 
 
 
 
-- Gesture is considered recognized if an Object is
-   returned.
+- The centroid of the provided points.
 
 
 
@@ -1061,11 +572,6 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#cancel">westures-core.Gesture#cancel</a>
-    </li></ul></dd>
     
 
     
@@ -1101,14 +607,14 @@ gesture-tap-1, gesture-tap-2).
 
 <dt>
     
-        <h4 class="name" id="end">
+        <h4 class="name" id=".sum">
             
-                <span class="type-signature"></span>end<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {Object}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>sum<span class="signature">(points)</span><span class="type-signature"> &rarr; {<a href="westures-core.Point2D.html">westures-core.Point2D</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-                <code><a href="node_modules_westures-core_src_Gesture.js.html#line128">line 128</a></code>
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line150">line 150</a></code>
             </div>
             
         </h4>
@@ -1120,7 +626,7 @@ gesture-tap-1, gesture-tap-2).
 
     
     <div class="description">
-        Event hook for the end phase of a gesture.
+        Calculates the sum of the given points.
     </div>
     
 
@@ -1156,13 +662,13 @@ gesture-tap-1, gesture-tap-2).
 
         <tr>
             
-                <td class="name"><code>state</code></td>
+                <td class="name"><code>points</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">State</span>
+<span class="param-type">Array.&lt;<a href="westures-core.Point2D.html">westures-core.Point2D</a>></span>
 
 
             
@@ -1172,7 +678,7 @@ gesture-tap-1, gesture-tap-2).
 
             
 
-            <td class="description last">The input state object of the current region.</td>
+            <td class="description last">The Point2D objects to sum up.</td>
         </tr>
 
     
@@ -1200,14 +706,14 @@ gesture-tap-1, gesture-tap-2).
 
 
 
-<span class="param-type">Object</span>
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
 
 
 
 
 
-- Gesture is considered recognized if an Object is
-   returned.
+- A new Point2D representing the sum of the
+given points.
 
 
 
@@ -1227,11 +733,6 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#end">westures-core.Gesture#end</a>
-    </li></ul></dd>
     
 
     
@@ -1267,14 +768,14 @@ gesture-tap-1, gesture-tap-2).
 
 <dt>
     
-        <h4 class="name" id="isEnabled">
+        <h4 class="name" id="angleTo">
             
-                <span class="type-signature"></span>isEnabled<span class="signature">(state)</span><span class="type-signature"> &rarr; {boolean}</span>
+                <span class="type-signature"></span>angleTo<span class="signature">(point<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {number}</span>
                 
             
             <div class="container-source members">
-                <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-                <code><a href="node_modules_westures-core_src_Gesture.js.html#line86">line 86</a></code>
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line42">line 42</a></code>
             </div>
             
         </h4>
@@ -1286,7 +787,7 @@ gesture-tap-1, gesture-tap-2).
 
     
     <div class="description">
-        Determines whether this gesture is enabled.
+        Calculates the angle between this point and the given point.
     </div>
     
 
@@ -1322,13 +823,13 @@ gesture-tap-1, gesture-tap-2).
 
         <tr>
             
-                <td class="name"><code>state</code></td>
+                <td class="name"><code>point</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">State</span>
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
 
 
             
@@ -1338,7 +839,8 @@ gesture-tap-1, gesture-tap-2).
 
             
 
-            <td class="description last">The input state object of the current region.</td>
+            <td class="description last">Projected point for calculating the
+angle.</td>
         </tr>
 
     
@@ -1366,13 +868,14 @@ gesture-tap-1, gesture-tap-2).
 
 
 
-<span class="param-type">boolean</span>
+<span class="param-type">number</span>
 
 
 
 
 
-- true if enabled, false otherwise.
+- Radians along the unit circle where the projected
+point lies.
 
 
 
@@ -1392,11 +895,6 @@ gesture-tap-1, gesture-tap-2).
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#isEnabled">westures-core.Gesture#isEnabled</a>
-    </li></ul></dd>
     
 
     
@@ -1432,14 +930,14 @@ gesture-tap-1, gesture-tap-2).
 
 <dt>
     
-        <h4 class="name" id="start">
+        <h4 class="name" id="averageDistanceTo">
             
-                <span class="type-signature"></span>start<span class="signature">(state)</span><span class="type-signature"> &rarr; <span class="icon green">nullable</span> {Object}</span>
+                <span class="type-signature"></span>averageDistanceTo<span class="signature">(points<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {number}</span>
                 
             
             <div class="container-source members">
-                <code><a href="node_modules_westures-core_src_Gesture.js.html">node_modules/westures-core/src/Gesture.js</a></code>,
-                <code><a href="node_modules_westures-core_src_Gesture.js.html#line104">line 104</a></code>
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line56">line 56</a></code>
             </div>
             
         </h4>
@@ -1451,7 +949,8 @@ gesture-tap-1, gesture-tap-2).
 
     
     <div class="description">
-        Event hook for the start phase of a gesture.
+        Determine the average distance from this point to the provided array of
+points.
     </div>
     
 
@@ -1487,13 +986,13 @@ gesture-tap-1, gesture-tap-2).
 
         <tr>
             
-                <td class="name"><code>state</code></td>
+                <td class="name"><code>points</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">State</span>
+<span class="param-type">Array.&lt;<a href="westures-core.Point2D.html">westures-core.Point2D</a>></span>
 
 
             
@@ -1503,7 +1002,8 @@ gesture-tap-1, gesture-tap-2).
 
             
 
-            <td class="description last">The input state object of the current region.</td>
+            <td class="description last">the Point2D objects to calculate
+   the average distance to.</td>
         </tr>
 
     
@@ -1531,14 +1031,14 @@ gesture-tap-1, gesture-tap-2).
 
 
 
-<span class="param-type">Object</span>
+<span class="param-type">number</span>
 
 
 
 
 
-- Gesture is considered recognized if an Object is
-   returned.
+- The average distance from this point to the provided
+   points.
 
 
 
@@ -1559,10 +1059,760 @@ gesture-tap-1, gesture-tap-2).
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="westures-core.Gesture.html#start">westures-core.Gesture#start</a>
-    </li></ul></dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="clone">
+            
+                <span class="type-signature"></span>clone<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="westures-core.Point2D.html">westures-core.Point2D</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line65">line 65</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Clone this point.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+
+
+- A new Point2D, identical to this point.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="distanceTo">
+            
+                <span class="type-signature"></span>distanceTo<span class="signature">(point<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {number}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line78">line 78</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Calculates the distance between two points.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>point</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Point to which the distance is
+calculated.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">number</span>
+
+
+
+
+
+- The distance between the two points, a.k.a. the
+   hypoteneuse.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="minus">
+            
+                <span class="type-signature"></span>minus<span class="signature">(point<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {<a href="westures-core.Point2D.html">westures-core.Point2D</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line90">line 90</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Subtract the given point from this point.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>point</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Point to subtract from this point.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+
+
+- A new Point2D, which is the result of (this
+- point).
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="plus">
+            
+                <span class="type-signature"></span>plus<span class="signature">(point<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {<a href="westures-core.Point2D.html">westures-core.Point2D</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line105">line 105</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Return the summation of this point to the given point.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>point</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Point to add to this point.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+
+
+- A new Point2D, which is the addition of the
+two points.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="totalDistanceTo">
+            
+                <span class="type-signature"></span>totalDistanceTo<span class="signature">(points<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {number}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="node_modules_westures-core_src_Point2D.js.html">node_modules/westures-core/src/Point2D.js</a></code>,
+                <code><a href="node_modules_westures-core_src_Point2D.js.html#line120">line 120</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Calculates the total distance from this point to an array of points.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>points</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="westures-core.Point2D.html">westures-core.Point2D</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The array of Point2D objects to
+   calculate the total distance to.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">number</span>
+
+
+
+
+
+- The total distance from this point to the provided points.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
     
 
     
@@ -1618,7 +1868,7 @@ gesture-tap-1, gesture-tap-2).
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'westures.Pull_sub'.replace(/"/g, '_');
+        var id = 'westures-core.Point2D_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

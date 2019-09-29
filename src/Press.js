@@ -23,7 +23,7 @@ const { Gesture, Point2D } = require('westures-core');
 /**
  * A Press is defined as one or more input points being held down.
  *
- * @extends westures.Gesture
+ * @extends westures-core.Gesture
  * @see {ReturnTypes.PressData}
  * @memberof westures
  *
