@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture, Point2D } = require('westures-core');
+const { Gesture, Point2D, Smoothable } = require('westures-core');
 
 /**
  * Data returned when a Pivotable is recognized.
@@ -78,6 +78,14 @@ class Pivotable extends Gesture {
      * @type {number}
      */
     this.previous = 0;
+
+    /**
+     * The outgoing data.
+     *
+     * @private
+     * @type {westures-core.Smoothable}
+     */
+    this.outgoing = new Smoothable(options);
   }
 
   /**
