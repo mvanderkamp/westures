@@ -20,10 +20,28 @@ const { Gesture, Point2D, Smoothable } = require('westures-core');
  */
 
 /**
+ * Determine the center point of the given element's bounding client rectangle.
+ *
+ * @inner
+ * @memberof westures.Pivotable
+ *
+ * @param {Element} element - The DOM element to analyze.
+ * @return {westures.Point2D} - The center of the element's bounding client
+ * rectangle.
+ */
+function getClientCenter(element) {
+  const rect = element.getBoundingClientRect();
+  return new Point2D(
+    rect.left + (rect.width / 2),
+    rect.top + (rect.height / 2)
+  );
+}
+
+/**
  * A Pivotable is a single input rotating around a fixed point. The fixed point
  * is determined by the input's location at its 'start' phase.
  *
- * @extends westures-core.Gesture
+ * @extends westures.Gesture
  * @see {ReturnTypes.SwivelData}
  * @memberof westures
  *
@@ -96,11 +114,7 @@ class Pivotable extends Gesture {
    */
   restart(state) {
     if (this.pivotCenter) {
-      const rect = this.element.getBoundingClientRect();
-      this.pivot = new Point2D(
-        rect.left + (rect.width / 2),
-        rect.top + (rect.height / 2)
-      );
+      this.pivot = getClientCenter(this.element);
       this.updatePrevious(state);
     } else {
       this.pivot = state.centroid;
