@@ -41,8 +41,9 @@ const Pivotable = require('./Pivotable.js');
  * key is down.
  * @param {number} [options.minInputs=1] The minimum number of inputs that
  * must be active for a Pull to be recognized.
- * @param {Element} [options.pivotCenter=true] - If set, the pull's pivot point
- * will be set to the center of the gesture's element.
+ * @param {Element} [options.dynamicPivot=false] - Normally the center point of
+ * the gesture's element is used as the pivot. If this option is set, the
+ * initial contact point with the element is used as the pivot instead.
  */
 class Pull extends Pivotable {
   constructor(element, handler, options = {}) {

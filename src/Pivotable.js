@@ -56,8 +56,9 @@ function getClientCenter(element) {
  * key is down.
  * @param {number} [options.minInputs=1] - The minimum number of inputs that
  * must be active for a Pivotable to be recognized.
- * @param {Element} [options.pivotCenter=true] - If set, the pivotable's pivot
- * point will be set to the center of the gesture's element.
+ * @param {Element} [options.dynamicPivot=false] - Normally the center point of
+ * the gesture's element is used as the pivot. If this option is set, the
+ * initial contact point with the element is used as the pivot instead.
  */
 class Pivotable extends Gesture {
   constructor(type = 'pivotable', element, handler, options = {}) {
@@ -72,14 +73,14 @@ class Pivotable extends Gesture {
     this.deadzoneRadius = options.deadzoneRadius;
 
     /**
-     * If this is set, the pivotable will use the center of the element as its
-     * pivot point. Unreliable if the element is moved during a pivotable
-     * gesture.
+     * Normally the center point of the gesture's element is used as the pivot.
+     * If this option is set, the initial contact point with the element is used
+     * as the pivot instead.
      *
      * @private
-     * @type {Element}
+     * @type {boolean}
      */
-    this.pivotCenter = options.pivotCenter;
+    this.dynamicPivot = options.dynamicPivot;
 
     /**
      * The pivot point of the pivotable.
@@ -107,18 +108,27 @@ class Pivotable extends Gesture {
   }
 
   /**
+   * Subclasses shoudl implement this method for updating the 'previous' data.
+   * It will be called during the 'start' and 'end' phases, and should also be
+   * called during the 'move' phase implemented by the subclass.
+   *
+   * @param {State} state - the current input state.
+   */
+  updatePrevious() {}
+
+  /**
    * Restart the given progress object using the given input object.
    *
    * @private
    * @param {State} state - current input state.
    */
   restart(state) {
-    if (this.pivotCenter) {
-      this.pivot = getClientCenter(this.element);
-      this.updatePrevious(state);
-    } else {
+    if (this.dynamicPivot) {
       this.pivot = state.centroid;
       this.previous = 0;
+    } else {
+      this.pivot = getClientCenter(this.element);
+      this.updatePrevious(state);
     }
     this.outgoing.restart();
   }
@@ -160,7 +170,7 @@ class Pivotable extends Gesture {
 Pivotable.DEFAULTS = Object.freeze({
   deadzoneRadius: 15,
   minInputs:      1,
-  pivotCenter:    true,
+  dynamicPivot:   false,
 });
 
 module.exports = Pivotable;
