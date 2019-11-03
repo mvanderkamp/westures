@@ -33,7 +33,7 @@ function getClientCenter(element) {
   const rect = element.getBoundingClientRect();
   return new Point2D(
     rect.left + (rect.width / 2),
-    rect.top + (rect.height / 2)
+    rect.top + (rect.height / 2),
   );
 }
 
@@ -172,6 +172,8 @@ Pivotable.DEFAULTS = Object.freeze({
   minInputs:      1,
   dynamicPivot:   false,
 });
+
+Pivotable.getClientCenter = getClientCenter;
 
 module.exports = Pivotable;
 

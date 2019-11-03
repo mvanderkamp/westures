@@ -14,6 +14,13 @@ let handler = null;
 
 beforeAll(() => {
   element = document.createElement('div');
+  element.getBoundingClientRect = jest.fn();
+  element.getBoundingClientRect.mockReturnValue({
+    left:   0,
+    top:    0,
+    width:  50,
+    height: 80,
+  });
 });
 
 beforeEach(() => {
@@ -68,6 +75,40 @@ describe('Pivotable', () => {
   });
 
   describe('other prototype methods', () => {
+    let pivotable = null;
+    let state = null;
+
+    beforeEach(() => {
+      const options = { applySmoothing: false };
+      pivotable = new Pivotable('testing', element, handler, options);
+      state = {
+        active:   [],
+        centroid: new Point2D(42, 117),
+      };
+    });
+
+    describe('updatePrevious(state)', () => {
+      test('is a NOP in the Pivotable base class', () => {
+        const previous = pivotable.previous;
+        expect(pivotable.updatePrevious(state)).toBeFalsy();
+        expect(pivotable.previous).toBe(previous);
+      });
+    });
+
+    describe('restart(state)', () => {
+      test('by default, sets the pivot to the center of the element', () => {
+        expect(pivotable.restart(state)).toBeFalsy();
+        expect(pivotable.pivot)
+          .toMatchObject(Pivotable.getClientCenter(pivotable.element));
+      });
+
+      test('if using dynamicPivot, sets the pivot to the centroid', () => {
+        const options = { applySmoothing: false, dynamicPivot: true };
+        pivotable = new Pivotable('testing', element, handler, options);
+        expect(pivotable.restart(state)).toBeFalsy();
+        expect(pivotable.pivot).toBe(state.centroid);
+      });
+    });
   });
 });
 

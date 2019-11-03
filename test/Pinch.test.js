@@ -121,7 +121,7 @@ describe('Pinch', () => {
           const expected = state.centroid.averageDistanceTo(state.activePoints);
           pinch.restart(state);
           expect(pinch.previous).toBe(expected);
-        }
+        },
       );
     });
   });
