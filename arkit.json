@@ -2,10 +2,6 @@
   "$schema": "https://arkit.js.org/schema.json",
   "components": [
     {
-      "type": "Entry",
-      "patterns": ["index.js"]
-    },
-    {
       "type": "Component",
       "patterns": ["src/**/*.js"],
       "excludePatterns": ["**/__tests__/**", "**/*-test.js"]
@@ -24,7 +20,7 @@
         "patterns": ["src/*.js"]
       },
       {
-        "components": ["Component", "Entry"]
+        "components": ["Component"]
       }
     ]
   }
