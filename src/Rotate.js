@@ -50,7 +50,7 @@ class Rotate extends Gesture {
     super('rotate', element, handler, settings);
 
     /**
-     * Track the previously emitted rotation angle.
+     * Track the previous angles for each input.
      *
      * @type {number[]}
      */
@@ -66,23 +66,28 @@ class Rotate extends Gesture {
   }
 
   /**
-   * Store individual angle progress on each input, return average angle change.
+   * Determine the angle from the state's centroid to each of the active inputs.
    *
    * @param {State} state - current input state.
+   * @returns {number[]}
    */
-  getAngle(state) {
-    let angle = 0;
-    const stagedAngles = [];
+  anglesFromCentroid(state) {
+    return state.active.map((i) => state.centroid.angleTo(i.current.point));
+  }
 
-    state.active.forEach((input, idx) => {
-      const currentAngle = state.centroid.angleTo(input.current.point);
-      angle += angularDifference(currentAngle, this.previousAngles[idx]);
-      stagedAngles[idx] = currentAngle;
-    });
-
-    angle /= (state.active.length);
+  /**
+   * Calculate the per-input angle progress.
+   *
+   * @param {State} state - current input state.
+   * @returns {number} The average change in angle.
+   */
+  getRotation(state) {
+    const stagedAngles = this.anglesFromCentroid(state);
+    const angle = stagedAngles.reduce((total, current, index) => {
+      return total + angularDifference(current, this.previousAngles[index]);
+    }, 0);
     this.previousAngles = stagedAngles;
-    return angle;
+    return angle / state.active.length;
   }
 
   /**
@@ -91,8 +96,7 @@ class Rotate extends Gesture {
    * @param {State} state - current input state.
    */
   restart(state) {
-    this.previousAngles = [];
-    this.getAngle(state);
+    this.previousAngles = this.anglesFromCentroid(state);
     this.outgoing.restart();
   }
 
@@ -101,11 +105,8 @@ class Rotate extends Gesture {
   }
 
   move(state) {
-    const rotation = this.getAngle(state);
-    if (rotation) {
-      return { rotation: this.outgoing.next(rotation) };
-    }
-    return null;
+    const rotation = this.getRotation(state);
+    return rotation ? { rotation: this.outgoing.next(rotation) } : null;
   }
 
   end(state) {
