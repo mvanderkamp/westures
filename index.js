@@ -45,7 +45,8 @@ module.exports = {
  *
  * @typedef {Object} BaseData
  *
- * @property {westures.Point2D} centroid - The centroid of the input points.
+ * @property {westures-core.Point2D} centroid - The centroid of the input
+ * points.
  * @property {Event} event - The input event which caused the gesture to be
  * recognized.
  * @property {string} phase - 'start', 'move', 'end', or 'cancel'.

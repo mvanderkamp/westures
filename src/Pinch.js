@@ -30,6 +30,21 @@ const { Gesture, Smoothable } = require('westures-core');
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
  * is recognized on the associated element.
+ * @param {object} [options] - Gesture customization options.
+ * @param {westures-core.STATE_KEYS[]} [options.enableKeys=[]] - List of keys
+ * which will enable the gesture. The gesture will not be recognized unless one
+ * of these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the enable key is always down.
+ * @param {westures-core.STATE_KEYS[]} [options.disableKeys=[]] - List of keys
+ * which will disable the gesture. The gesture will not be recognized if one of
+ * these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the disable key is never down.
+ * @param {number} [options.minInputs=2] - The minimum number of pointers that
+ * must be active for the gesture to be recognized. Uses >=.
+ * @param {number} [options.maxInputs=Number.MAX_VALUE] - The maximum number of
+ * pointers that may be active for the gesture to be recognized. Uses <=.
+ * @param {boolean} [options.applySmoothing=true] - Whether to apply inertial
+ * smoothing for systems with coarse pointers.
  */
 class Pinch extends Gesture {
   constructor(element, handler, options = {}) {
@@ -39,7 +54,6 @@ class Pinch extends Gesture {
     /**
      * The previous distance.
      *
-     * @private
      * @type {number}
      */
     this.previous = 0;
@@ -47,7 +61,6 @@ class Pinch extends Gesture {
     /*
      * The outgoing data, with optional inertial smoothing.
      *
-     * @private
      * @override
      * @type {westures-core.Smoothable<number>}
      */
@@ -57,7 +70,6 @@ class Pinch extends Gesture {
   /**
    * Initializes the gesture progress.
    *
-   * @private
    * @param {State} state - current input state.
    */
   restart(state) {
@@ -65,46 +77,21 @@ class Pinch extends Gesture {
     this.outgoing.restart();
   }
 
-  /**
-   * Event hook for the start of a Pinch.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
   start(state) {
     this.restart(state);
   }
 
-  /**
-   * Event hook for the move of a Pinch.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {?ReturnTypes.PinchData} <tt>null</tt> if not recognized.
-   */
   move(state) {
     const distance = state.centroid.averageDistanceTo(state.activePoints);
     const scale = distance / this.previous;
     this.previous = distance;
-
     return { distance, scale: this.outgoing.next(scale) };
   }
 
-  /**
-   * Event hook for the end of a Pinch.
-   *
-   * @private
-   * @param {State} input status object
-   */
   end(state) {
     this.restart(state);
   }
 
-  /**
-   * Event hook for the cancel of a Pinch.
-   *
-   * @private
-   */
   cancel() {
     this.previous = 0;
     this.outgoing.restart();
@@ -113,7 +100,6 @@ class Pinch extends Gesture {
 
 Pinch.DEFAULTS = Object.freeze({
   minInputs: 2,
-  smoothing: true,
 });
 
 module.exports = Pinch;

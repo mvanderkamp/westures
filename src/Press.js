@@ -4,16 +4,16 @@
 
 'use strict';
 
-const { Gesture, Point2D } = require('westures-core');
+const { Gesture, Point2D, MOVE } = require('westures-core');
 
 /**
  * Data returned when a Press is recognized.
  *
  * @typedef {Object} PressData
  *
- * @property {westures.Point2D} centroid - The current centroid of the input
- * points.
- * @property {westures.Point2D} initial - The initial centroid of the input
+ * @property {westures-core.Point2D} centroid - The current centroid of the
+ * input points.
+ * @property {westures-core.Point2D} initial - The initial centroid of the input
  * points.
  * @property {number} distance - The total movement since initial contact.
  *
@@ -30,11 +30,21 @@ const { Gesture, Point2D } = require('westures-core');
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
  * is recognized on the associated element.
- * @param {Object} [options] - The options object.
+ * @param {object} [options] - Gesture customization options.
+ * @param {westures-core.STATE_KEYS[]} [options.enableKeys=[]] - List of keys
+ * which will enable the gesture. The gesture will not be recognized unless one
+ * of these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the enable key is always down.
+ * @param {westures-core.STATE_KEYS[]} [options.disableKeys=[]] - List of keys
+ * which will disable the gesture. The gesture will not be recognized if one of
+ * these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the disable key is never down.
+ * @param {number} [options.minInputs=1] - The minimum number of pointers that
+ * must be active for the gesture to be recognized. Uses >=.
+ * @param {number} [options.maxInputs=Number.MAX_VALUE] - The maximum number of
+ * pointers that may be active for the gesture to be recognized. Uses <=.
  * @param {number} [options.delay=1000] - The delay before emitting, during
  * which time the number of inputs must not go below minInputs.
- * @param {number} [options.minInputs=1] - Number of inputs for a Press
- * gesture.
  * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
  * move and still allow the gesture to emit.
  */
@@ -47,7 +57,6 @@ class Press extends Gesture {
      * The delay before emitting a press event, during which time the number of
      * inputs must not change.
      *
-     * @private
      * @type {number}
      */
     this.delay = settings.delay;
@@ -56,7 +65,6 @@ class Press extends Gesture {
      * A move tolerance in pixels allows some slop between a user's start to end
      * events. This allows the Press gesture to be triggered more easily.
      *
-     * @private
      * @type {number}
      */
     this.tolerance = settings.tolerance;
@@ -64,60 +72,51 @@ class Press extends Gesture {
     /**
      * The initial centroid.
      *
-     * @private
-     * @type {westures.Point2D}
+     * @type {westures-core.Point2D}
      */
     this.initial = null;
+
+    /**
+     * The identities of the pointers that were active when initiated.
+     *
+     * @type {Array.<number>};
+     */
+    this.identifiers = [];
 
     /**
      * Saves the timeout callback reference in case it needs to be cleared for
      * some reason.
      *
-     * @private
      * @type {number}
      */
     this.timeout = null;
   }
 
-  /**
-   * Event hook for the start of a gesture. If the number of active inputs is
-   * correct, initializes the timeout.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
   start(state) {
     this.initial = state.centroid;
-    this.timeout = setTimeout(() => this.recognize(state), this.delay);
+    this.identifiers = state.active.map(i => i.identifier);
+    this.timeout = setTimeout(() => this.attempt(state), this.delay);
   }
 
   /**
-   * Recognize a Press.
+   * Try to recognize a Press.
    *
-   * @private
-   * @param {State} state - current input state.
+   * @param {westures-core.State} state - current input state.
    */
-  recognize(state) {
+  attempt(state) {
     const inputs = state.active.slice(0, this.minInputs);
     const points = inputs.map(i => i.current.point);
     const centroid = Point2D.centroid(points);
-    const distance = this.initial.distanceTo(centroid);
-    if (distance <= this.tolerance) {
-      this.handler({
-        distance,
-        centroid,
-        initial:  this.initial,
-        type:     this.type,
-      });
+    const data = {
+      centroid,
+      distance: this.initial.distanceTo(centroid),
+      initial:  this.initial,
+    };
+    if (data.distance <= this.tolerance) {
+      super.recognize(MOVE, state, data);
     }
   }
 
-  /**
-   * Event hook for the end of a gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
   end(state) {
     if (state.active.length < this.minInputs) {
       clearTimeout(this.timeout);
@@ -129,7 +128,6 @@ class Press extends Gesture {
 Press.DEFAULTS = Object.freeze({
   delay:     1000,
   tolerance: 10,
-  minInputs: 1,
 });
 
 module.exports = Press;

@@ -17,7 +17,7 @@ const MS_THRESHOLD = 300;
  *
  * @property {number} velocity - The velocity of the swipe.
  * @property {number} direction - In radians, the direction of the swipe.
- * @property {westures.Point2D} point - The point at which the swipe ended.
+ * @property {westures-core.Point2D} point - The point at which the swipe ended.
  * @property {number} time - The epoch time, in ms, when the swipe ended.
  *
  * @memberof ReturnTypes
@@ -26,7 +26,6 @@ const MS_THRESHOLD = 300;
 /**
  * Calculates the angle of movement along a series of moves.
  *
- * @private
  * @inner
  * @memberof westures.Swipe
  * @see {@link https://en.wikipedia.org/wiki/Mean_of_circular_quantities}
@@ -55,15 +54,14 @@ function calc_angle(moves, vlim) {
  * Local helper function for calculating the velocity between two timestamped
  * points.
  *
- * @private
  * @inner
  * @memberof westures.Swipe
  *
  * @param {object} start
- * @param {westures.Point2D} start.point
+ * @param {westures-core.Point2D} start.point
  * @param {number} start.time
  * @param {object} end
- * @param {westures.Point2D} end.point
+ * @param {westures-core.Point2D} end.point
  * @param {number} end.time
  *
  * @return {number} velocity from start to end point.
@@ -77,7 +75,6 @@ function velocity(start, end) {
 /**
  * Calculates the veloctiy of movement through a series of moves.
  *
- * @private
  * @inner
  * @memberof westures.Swipe
  *
@@ -108,6 +105,19 @@ function calc_velocity(moves, vlim) {
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
  * is recognized on the associated element.
+ * @param {object} [options] - Gesture customization options.
+ * @param {westures-core.STATE_KEYS[]} [options.enableKeys=[]] - List of keys
+ * which will enable the gesture. The gesture will not be recognized unless one
+ * of these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the enable key is always down.
+ * @param {westures-core.STATE_KEYS[]} [options.disableKeys=[]] - List of keys
+ * which will disable the gesture. The gesture will not be recognized if one of
+ * these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the disable key is never down.
+ * @param {number} [options.minInputs=1] - The minimum number of pointers that
+ * must be active for the gesture to be recognized. Uses >=.
+ * @param {number} [options.maxInputs=Number.MAX_VALUE] - The maximum number of
+ * pointers that may be active for the gesture to be recognized. Uses <=.
  */
 class Swipe extends Gesture {
   constructor(element, handler, options = {}) {
@@ -116,7 +126,6 @@ class Swipe extends Gesture {
     /**
      * Moves list.
      *
-     * @private
      * @type {object[]}
      */
     this.moves = [];
@@ -124,38 +133,23 @@ class Swipe extends Gesture {
     /**
      * Data to emit when all points have ended.
      *
-     * @private
      * @type {ReturnTypes.SwipeData}
      */
     this.saved = null;
   }
 
   /**
-   * Refresh the swipe state.
-   *
-   * @private
+   * Restart the swipe state for a new numper of inputs.
    */
   restart() {
     this.moves = [];
     this.saved = null;
   }
 
-  /**
-   * Event hook for the start of a gesture. Resets the swipe state.
-   *
-   * @private
-   */
   start() {
     this.restart();
   }
 
-  /**
-   * Event hook for the move of a gesture. Captures an input's x/y coordinates
-   * and the time of it's event on a stack.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
   move(state) {
     this.moves.push({
       time:  Date.now(),
@@ -167,14 +161,6 @@ class Swipe extends Gesture {
     }
   }
 
-  /**
-   * Determines if the input's history validates a swipe motion.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {?ReturnTypes.SwipeData} <tt>null</tt> if the gesture is not
-   * recognized.
-   */
   end(state) {
     const result = this.getResult();
     this.moves = [];
@@ -188,11 +174,6 @@ class Swipe extends Gesture {
     return this.validate(result);
   }
 
-  /**
-   * Event hook for the cancel phase of a Swipe.
-   *
-   * @private
-   */
   cancel() {
     this.restart();
   }
@@ -200,7 +181,7 @@ class Swipe extends Gesture {
   /**
    * Get the swipe result.
    *
-   * @private
+   * @returns {?ReturnTypes.SwipeData}
    */
   getResult() {
     if (this.moves.length < PROGRESS_STACK_SIZE) {
@@ -217,8 +198,8 @@ class Swipe extends Gesture {
   /**
    * Validates that an emit should occur with the given data.
    *
-   * @private
    * @param {?ReturnTypes.SwipeData} data
+   * @returns {?ReturnTypes.SwipeData}
    */
   validate(data) {
     if (data == null) return null;

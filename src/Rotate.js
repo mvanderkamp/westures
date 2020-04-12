@@ -28,11 +28,21 @@ const { angularDifference, Gesture, Smoothable } = require('westures-core');
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
  * is recognized on the associated element.
- * @param {Object} [options]
- * @param {number} [options.minInputs=2] The minimum number of inputs that must
- * be active for a Rotate to be recognized.
- * @param {boolean} [options.smoothing=true] Whether to apply smoothing to
- * emitted data.
+ * @param {object} [options] - Gesture customization options.
+ * @param {westures-core.STATE_KEYS[]} [options.enableKeys=[]] - List of keys
+ * which will enable the gesture. The gesture will not be recognized unless one
+ * of these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the enable key is always down.
+ * @param {westures-core.STATE_KEYS[]} [options.disableKeys=[]] - List of keys
+ * which will disable the gesture. The gesture will not be recognized if one of
+ * these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the disable key is never down.
+ * @param {number} [options.minInputs=2] - The minimum number of pointers that
+ * must be active for the gesture to be recognized. Uses >=.
+ * @param {number} [options.maxInputs=Number.MAX_VALUE] - The maximum number of
+ * pointers that may be active for the gesture to be recognized. Uses <=.
+ * @param {boolean} [options.applySmoothing=true] - Whether to apply inertial
+ * smoothing for systems with coarse pointers.
  */
 class Rotate extends Gesture {
   constructor(element, handler, options = {}) {
@@ -40,18 +50,8 @@ class Rotate extends Gesture {
     super('rotate', element, handler, settings);
 
     /**
-     * The minimum number of inputs that must be active for a Pinch to be
-     * recognized.
-     *
-     * @private
-     * @type {number}
-     */
-    this.minInputs = settings.minInputs;
-
-    /**
      * Track the previously emitted rotation angle.
      *
-     * @private
      * @type {number[]}
      */
     this.previousAngles = [];
@@ -59,7 +59,6 @@ class Rotate extends Gesture {
     /*
      * The outgoing data, with optional inertial smoothing.
      *
-     * @private
      * @override
      * @type {westures-core.Smoothable<number>}
      */
@@ -69,7 +68,6 @@ class Rotate extends Gesture {
   /**
    * Store individual angle progress on each input, return average angle change.
    *
-   * @private
    * @param {State} state - current input state.
    */
   getAngle(state) {
@@ -88,9 +86,8 @@ class Rotate extends Gesture {
   }
 
   /**
-   * Restart the gesture;
+   * Restart the gesture for a new number of inputs.
    *
-   * @private
    * @param {State} state - current input state.
    */
   restart(state) {
@@ -99,23 +96,10 @@ class Rotate extends Gesture {
     this.outgoing.restart();
   }
 
-  /**
-   * Event hook for the start of a gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
   start(state) {
     this.restart(state);
   }
 
-  /**
-   * Event hook for the move of a Rotate gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {?ReturnTypes.RotateData} <tt>null</tt> if this event did not occur
-   */
   move(state) {
     const rotation = this.getAngle(state);
     if (rotation) {
@@ -124,21 +108,10 @@ class Rotate extends Gesture {
     return null;
   }
 
-  /**
-   * Event hook for the end of a gesture.
-   *
-   * @private
-   * @param {State} state - current input state.
-   */
   end(state) {
     this.restart(state);
   }
 
-  /**
-   * Event hook for the cancel of a gesture.
-   *
-   * @private
-   */
   cancel() {
     this.outgoing.restart();
   }
@@ -146,7 +119,6 @@ class Rotate extends Gesture {
 
 Rotate.DEFAULTS = Object.freeze({
   minInputs: 2,
-  smoothing: true,
 });
 
 module.exports = Rotate;

@@ -28,7 +28,19 @@ const { Gesture, Point2D } = require('westures-core');
  * @param {Element} element - The element to which to associate the gesture.
  * @param {Function} handler - The function handler to execute when a gesture
  * is recognized on the associated element.
- * @param {Object} [options] - The options object.
+ * @param {object} [options] - Gesture customization options.
+ * @param {westures-core.STATE_KEYS[]} [options.enableKeys=[]] - List of keys
+ * which will enable the gesture. The gesture will not be recognized unless one
+ * of these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the enable key is always down.
+ * @param {westures-core.STATE_KEYS[]} [options.disableKeys=[]] - List of keys
+ * which will disable the gesture. The gesture will not be recognized if one of
+ * these keys is pressed while the interaction occurs. If not specified or an
+ * empty list, the gesture is treated as though the disable key is never down.
+ * @param {number} [options.minInputs=1] - The minimum number of pointers that
+ * must be active for the gesture to be recognized. Uses >=.
+ * @param {number} [options.maxInputs=Number.MAX_VALUE] - The maximum number of
+ * pointers that may be active for the gesture to be recognized. Uses <=.
  * @param {number} [options.minDelay=0] - The minimum delay between a touchstart
  * and touchend can be configured in milliseconds.
  * @param {number} [options.maxDelay=300] - The maximum delay between a
@@ -48,7 +60,6 @@ class Tap extends Gesture {
      * number of inputs are on the screen, and ends when ALL inputs are off the
      * screen.
      *
-     * @private
      * @type {number}
      */
     this.minDelay = settings.minDelay;
@@ -59,7 +70,6 @@ class Tap extends Gesture {
      * number of inputs are on the screen, and ends when ALL inputs are off the
      * screen.
      *
-     * @private
      * @type {number}
      */
     this.maxDelay = settings.maxDelay;
@@ -68,7 +78,6 @@ class Tap extends Gesture {
      * The number of inputs to trigger a Tap can be variable, and the maximum
      * number being a factor of the browser.
      *
-     * @private
      * @type {number}
      */
     this.numTaps = settings.numTaps;
@@ -77,7 +86,6 @@ class Tap extends Gesture {
      * A move tolerance in pixels allows some slop between a user's start to end
      * events. This allows the Tap gesture to be triggered more easily.
      *
-     * @private
      * @type {number}
      */
     this.tolerance = settings.tolerance;
@@ -85,21 +93,11 @@ class Tap extends Gesture {
     /**
      * An array of inputs that have ended recently.
      *
-     * @private
      * @type {Input[]}
      */
     this.taps = [];
   }
 
-  /**
-   * Event hook for the end of a gesture.  Determines if this the tap event can
-   * be fired if the delay and tolerance constraints are met.
-   *
-   * @private
-   * @param {State} state - current input state.
-   * @return {?ReturnTypes.TapData} <tt>null</tt> if the gesture is not to be
-   * emitted, Object with information otherwise.
-   */
   end(state) {
     const now = Date.now();
 

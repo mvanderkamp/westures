@@ -41,6 +41,7 @@ describe('Pivotable', () => {
     beforeEach(() => {
       const options = { applySmoothing: false };
       pivotable = new Pivotable('testing', element, handler, options);
+      pivotable.updatePrevious = () => {};
       state = {
         active:   [],
         centroid: new Point2D(42, 117),
@@ -81,6 +82,7 @@ describe('Pivotable', () => {
     beforeEach(() => {
       const options = { applySmoothing: false };
       pivotable = new Pivotable('testing', element, handler, options);
+      pivotable.updatePrevious = () => {};
       state = {
         active:   [],
         centroid: new Point2D(42, 117),
