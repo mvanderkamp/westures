@@ -94,31 +94,44 @@ class Press extends Gesture {
 
   start(state) {
     this.initial = state.centroid;
-    this.identifiers = state.active.map(i => i.identifier);
+    this.identifiers = new Set(state.active.map(i => i.identifier));
+
+    clearTimeout(this.timeout);
     this.timeout = setTimeout(() => this.attempt(state), this.delay);
+  }
+
+  /**
+   * Retrieve the inputs that were present initially.
+   *
+   * @param {westures-core.State} state - current input state.
+   */
+  initialInputs(state) {
+    return state.active.filter(i => this.identifiers.has(i.identifier));
   }
 
   /**
    * Try to recognize a Press.
    *
-   * @param {westures-core.State} state - current input state.
+   * @param {westures-core.State} state - current input state. Note that
+   * although it was bound when the timeout was set, it is expected to be the
+   * same state object as the current active one, and thus reflective of the
+   * current state.
    */
   attempt(state) {
-    const inputs = state.active.slice(0, this.minInputs);
-    const points = inputs.map(i => i.current.point);
-    const centroid = Point2D.centroid(points);
-    const data = {
-      centroid,
-      distance: this.initial.distanceTo(centroid),
-      initial:  this.initial,
-    };
-    if (data.distance <= this.tolerance) {
-      super.recognize(MOVE, state, data);
+    const inputs = this.initialInputs(state);
+    const centroid = Point2D.centroid(inputs.map(i => i.current.point));
+    const distance = this.initial.distanceTo(centroid);
+    if (distance <= this.tolerance) {
+      super.recognize(MOVE, state, {
+        centroid,
+        distance,
+        initial:  this.initial,
+      });
     }
   }
 
   end(state) {
-    if (state.active.length < this.minInputs) {
+    if (this.initialInputs(state).length !== this.identifiers.length) {
       clearTimeout(this.timeout);
       this.timeout = null;
     }
