@@ -70,7 +70,7 @@ class Pan extends Gesture {
    * Resets the gesture's progress by saving the current centroid of the active
    * inputs. To be called whenever the number of inputs changes.
    *
-   * @param {State} state - The state object received by a hook.
+   * @param {State} state
    */
   restart(state) {
     this.previous = state.centroid;
@@ -91,9 +91,8 @@ class Pan extends Gesture {
     this.restart(state);
   }
 
-  cancel() {
-    this.previous = null;
-    this.outgoing.restart();
+  cancel(state) {
+    this.restart(state);
   }
 }
 

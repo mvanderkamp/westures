@@ -92,9 +92,8 @@ class Pinch extends Gesture {
     this.restart(state);
   }
 
-  cancel() {
-    this.previous = 0;
-    this.outgoing.restart();
+  cancel(state) {
+    this.restart(state);
   }
 }
 
