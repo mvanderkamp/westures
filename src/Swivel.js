@@ -74,16 +74,18 @@ class Swivel extends Pivotable {
     const angle = pivot.angleTo(state.centroid);
     const rotation = angularDifference(angle, this.previous);
 
+    let rv = null;
+    if (pivot.distanceTo(state.centroid) > this.deadzoneRadius) {
+      rv = { rotation: this.outgoing.next(rotation), pivot };
+    }
+
     /*
      * Updating the previous angle regardless of emit prevents sudden flips when
      * the user exits the deadzone circle.
      */
     this.previous = angle;
 
-    if (pivot.distanceTo(state.centroid) > this.deadzoneRadius) {
-      return { rotation: this.outgoing.next(rotation), pivot };
-    }
-    return null;
+    return rv;
   }
 }
 
