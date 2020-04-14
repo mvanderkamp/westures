@@ -50,8 +50,8 @@ const { Gesture, Point2D, MOVE } = require('westures-core');
  */
 class Press extends Gesture {
   constructor(element, handler, options = {}) {
-    const settings = { ...Press.DEFAULTS, ...options };
-    super('press', element, handler, settings);
+    options = { ...Press.DEFAULTS, ...options };
+    super('press', element, handler, options);
 
     /**
      * The delay before emitting a press event, during which time the number of
@@ -59,7 +59,7 @@ class Press extends Gesture {
      *
      * @type {number}
      */
-    this.delay = settings.delay;
+    this.delay = options.delay;
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end
@@ -67,7 +67,7 @@ class Press extends Gesture {
      *
      * @type {number}
      */
-    this.tolerance = settings.tolerance;
+    this.tolerance = options.tolerance;
 
     /**
      * The initial centroid.

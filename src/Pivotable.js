@@ -72,6 +72,7 @@ function getClientCenter(element) {
 class Pivotable extends Gesture {
   constructor(type = 'pivotable', element, handler, options = {}) {
     super(type, element, handler, options);
+    options = { ...Pivotable.DEFAULTS, ...options };
 
     /**
      * The radius around the start point in which to do nothing.

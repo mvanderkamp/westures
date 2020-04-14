@@ -47,13 +47,13 @@ const { Gesture } = require('westures-core');
  */
 class Track extends Gesture {
   constructor(element, handler, options = {}) {
-    const settings = { ...Track.DEFAULTS, ...options };
-    super('track', element, handler, settings);
+    options = { ...Track.DEFAULTS, ...options };
+    super('track', element, handler, options);
 
-    this.trackStart  = settings.phases.includes('start');
-    this.trackMove   = settings.phases.includes('move');
-    this.trackEnd    = settings.phases.includes('end');
-    this.trackCancel = settings.phases.includes('cancel');
+    this.trackStart  = options.phases.includes('start');
+    this.trackMove   = options.phases.includes('move');
+    this.trackEnd    = options.phases.includes('end');
+    this.trackCancel = options.phases.includes('cancel');
   }
 
   /**
@@ -83,7 +83,6 @@ class Track extends Gesture {
   }
 }
 
-// Default settings.
 Track.DEFAULTS = Object.freeze({
   phases: Object.freeze([]),
 });

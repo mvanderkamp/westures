@@ -46,8 +46,8 @@ const { angularDifference, Gesture, Smoothable } = require('westures-core');
  */
 class Rotate extends Gesture {
   constructor(element, handler, options = {}) {
-    const settings = { ...Rotate.DEFAULTS, ...options };
-    super('rotate', element, handler, settings);
+    options = { ...Rotate.DEFAULTS, ...options };
+    super('rotate', element, handler, options);
 
     /**
      * Track the previous angles for each input.
@@ -62,7 +62,7 @@ class Rotate extends Gesture {
      * @override
      * @type {westures-core.Smoothable<number>}
      */
-    this.outgoing = new Smoothable(settings);
+    this.outgoing = new Smoothable(options);
   }
 
   /**

@@ -51,8 +51,8 @@ const { Gesture, Point2D } = require('westures-core');
  */
 class Tap extends Gesture {
   constructor(element, handler, options = {}) {
-    const settings = { ...Tap.DEFAULTS, ...options };
-    super('tap', element, handler, settings);
+    options = { ...Tap.DEFAULTS, ...options };
+    super('tap', element, handler, options);
 
     /**
      * The minimum amount between a touchstart and a touchend can be configured
@@ -62,7 +62,7 @@ class Tap extends Gesture {
      *
      * @type {number}
      */
-    this.minDelay = settings.minDelay;
+    this.minDelay = options.minDelay;
 
     /**
      * The maximum delay between a touchstart and touchend can be configured in
@@ -72,7 +72,7 @@ class Tap extends Gesture {
      *
      * @type {number}
      */
-    this.maxDelay = settings.maxDelay;
+    this.maxDelay = options.maxDelay;
 
     /**
      * The number of inputs to trigger a Tap can be variable, and the maximum
@@ -80,7 +80,7 @@ class Tap extends Gesture {
      *
      * @type {number}
      */
-    this.numTaps = settings.numTaps;
+    this.numTaps = options.numTaps;
 
     /**
      * A move tolerance in pixels allows some slop between a user's start to end
@@ -88,7 +88,7 @@ class Tap extends Gesture {
      *
      * @type {number}
      */
-    this.tolerance = settings.tolerance;
+    this.tolerance = options.tolerance;
 
     /**
      * An array of inputs that have ended recently.

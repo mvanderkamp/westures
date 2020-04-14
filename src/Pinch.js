@@ -48,8 +48,8 @@ const { Gesture, Smoothable } = require('westures-core');
  */
 class Pinch extends Gesture {
   constructor(element, handler, options = {}) {
-    const settings = { ...Pinch.DEFAULTS, ...options };
-    super('pinch', element, handler, settings);
+    options = { ...Pinch.DEFAULTS, ...options };
+    super('pinch', element, handler, options);
 
     /**
      * The previous distance.
@@ -64,7 +64,7 @@ class Pinch extends Gesture {
      * @override
      * @type {westures-core.Smoothable<number>}
      */
-    this.outgoing = new Smoothable({ ...settings, identity: 1 });
+    this.outgoing = new Smoothable({ ...options, identity: 1 });
   }
 
   /**
