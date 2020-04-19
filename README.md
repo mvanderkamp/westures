@@ -14,17 +14,15 @@ number of touch points, and with each touch point contributing to the gesture.
 It should also be capable of working across a wide range of devices.
 
 Visit this page for an example of the system in action: [Westures Example](
-https://mvanderkamp.github.io/westures-example/). Note that this is best viewed
-on a touch device.
+https://mvanderkamp.github.io/westures-example/).
 
 The library aims to achieve its goals without using any dependencies except for
 its own core engine, yet maintain usability across the main modern browsers.
 Transpilation may be necessary for this last point to be achieved, as the
 library is written using many of the newer features of the JavaScript language.
 A transpiled bundle is provided, but the browser target list is arbitrary and
-the bundle (currently) includes a fair amount of bloat from Babel and
-Browserify. In most cases you will probably be better off performing bundling
-and transpilation yourself.
+likely includes some bloat. In most cases you will be better off performing
+bundling, transpilation, and minification yourself.
 
 This module includes
 [westures-core](https://mvanderkamp.github.io/westures-core/)
@@ -60,18 +58,19 @@ region.addGesture(pannable, new wes.Pan(), (data) => {
 
 ## Overview
 
-There are seven gestures defined in this module:
+There are nine gestures defined in this module:
 
-Name   | # of Inputs | Emit Phase | Description
--------|-------------|------------|------------
-Tap    | 1+          | End        | Generic taps. Configure with options.
-Pinch  | 2+          | Move       | Inputs moving together or apart.
-Rotate | 2+          | Move       | Inputs rotating around each other.
-Pan    | 1+          | Move       | Inputs sliding around the screen.
-Swipe  | 1+          | End        | Inputs swiping the screen.
-Swivel | 1+          | Move       | Inputs rotating around a fixed pivot point.
-Pull   | 1+          | Move       | Inputs moving away from a fixed point.
-Track  | 1+          | All        | Track all active pointers.
+Name   | # of Inputs | Emit Phase | Brief Description
+------ | ----------- | ---------- | -----------------
+Pan    | 1+          | Move       | Sliding around the screen
+Pinch  | 2+          | Move       | Moving together or apart
+Press  | 1+          | Move       | Held down without moving
+Pull   | 1+          | Move       | Moving away from or toward a fixed point
+Rotate | 2+          | Move       | Rotating around each other
+Swipe  | 1+          | End        | Moving quickly then released
+Swivel | 1+          | Move       | Rotating around a fixed pivot point
+Tap    | 1+          | End        | Quickly pressing and releasing
+Track  | 1+          | All        | Track locations of all active pointers
 
 See the [documentation](https://mvanderkamp.github.io/westures/) for more
 information about each gesture.
@@ -80,6 +79,10 @@ Note that all x,y positions are obtained from the corresponding `clientX` and
 `clientY` properties of the input event.
 
 ## Basic Usage
+
+- [Declaring a Region](#declaring-a-region)
+- [Instantiating a Gesture](#instantiating-a-gesture)
+- [Adding a Gesture to a Region](#adding-a-gesture-to-a-region)
 
 ### Importing the module
 
@@ -222,16 +225,26 @@ gesture support. Beyond that, here are some specific changes:
   inside the 'details' property of an event object.
 - Renamed 'bind' to 'addGesture' and 'unbind' to 'removeGestures'.
 - Implemented a Smoothable mixin to be used for movement-based gestures.
+- Implemented pivot versions of both Pinch and Rotate (Pull and Swivel) instead
+  of trying to give those gestures a pivot mode.
+
+## Nomenclature and Origins
+
+In my last year of univerisity, I was working on an API for building
+multi-device interfaces called "WAMS" (Workspaces Across Multiple Surfaces),
+which included the goal of supporting multi-device gestures.
+
+After an extensive search I found that none of the available multitouch
+libraries for JavaScript provided the fidelity I needed, and concluded that I
+would need to write my own, or at least fork an existing one. ZingTouch proved
+to the be the most approachable, so I decided it would make a good starting
+point.
+
+The name "westures" is a mash-up of "WAMS" and "gestures".
 
 ## Advisory
 
-This is an alpha release of this project. It is very much still in development,
-and has not been tested beyond a handful of devices using the latest versions of
-Chrome and Firefox. If you find a problem with it, please let me know.
-
-That said, please do give it a try, and if something breaks, please let me know!
-Or, even better, figure out why it broke, figure out a solution, and submit a
-pull request!
+If you find any issues, please let me know!
 
 ## Links
 
