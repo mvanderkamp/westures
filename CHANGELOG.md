@@ -1,24 +1,30 @@
 # Changelog
 
-## Releases
+## 1.0.0
 
-- [0.7.8](#078)
-- [0.7.7](#077)
-- [0.7.6](#076)
-- [0.7.5](#075)
-- [0.7.4](#074)
-- [0.7.3](#073)
-- [0.7.2](#072)
-- [0.7.1](#071)
-- [0.7.0](#070)
-- [0.6.3](#063)
-- [0.6.2](#062)
-- [0.6.1](#061)
-- [0.6.0](#060)
-- [0.5.4](#054)
-- [0.5.3](#053)
-- [0.5.2](#052)
-- [0.5.0](#050)
+- Official first release! The engine is no longer considered to be in beta.
+- Refactor Smoothable to be a data type, not a mixin.
+- Remove the Binding class and integrate with the Gesture class. It was more of
+  a hindrance than a help on its own.
+- Provide automatic detection of enabled and disabled gestures, including using
+  keys to enable and disable, in a simple way such that gestures don't need to
+  check if their enabled inside their hooks.
+- 'cancel' phase is now properly called.
+- Region class now takes an optional 'options' object instead of lots of
+  arguments.
+- Remove the 'getProgressOfGesture' method from the Input class. Gestures should
+  track their progress internally, on their own instance!
+- Remove the 'radius' property from the outgoing data. It didn't seem useful and
+  was just cluttering the output.
+- Use Sets for tracking Gestures inside the Region instead of Arrays. (Faster
+  access operations).
+- Update the Press gesture to allow multiple presses, one after the other, by
+  adding successive inputs. Effectively makes it a multi-touch press! Single
+  touch press is still possible using the min/maxInputs options!
+- Use a Pivotable base gesture type for Swivel and Pull.
+- Improved documentation by showing all of westures-core
+- Change pivotCenter -> dynamicPivot, default to false
+- Clean up Rotate implementation to reduce reliance on side effects
 
 ## 0.7.8
 
