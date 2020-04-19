@@ -21,7 +21,10 @@ const { Gesture, Point2D, MOVE } = require('westures-core');
  */
 
 /**
- * A Press is defined as one or more input points being held down.
+ * A Press is defined as one or more input points being held down without
+ * moving. Press gestures may be stacked by pressing with additional pointers
+ * beyond the minimum, so long as none of the points move or are lifted, a Press
+ * will be recognized for each additional pointer.
  *
  * @extends westures-core.Gesture
  * @see {ReturnTypes.PressData}
@@ -68,73 +71,19 @@ class Press extends Gesture {
      * @type {number}
      */
     this.tolerance = options.tolerance;
-
-    /**
-     * The initial centroid.
-     *
-     * @type {westures-core.Point2D}
-     */
-    this.initial = null;
-
-    /**
-     * The identities of the pointers that were active when initiated.
-     *
-     * @type {Array.<number>};
-     */
-    this.identifiers = [];
-
-    /**
-     * Saves the timeout callback reference in case it needs to be cleared for
-     * some reason.
-     *
-     * @type {number}
-     */
-    this.timeout = null;
   }
 
   start(state) {
-    this.initial = state.centroid;
-    this.identifiers = new Set(state.active.map(i => i.identifier));
-
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => this.attempt(state), this.delay);
-  }
-
-  /**
-   * Retrieve the inputs that were present initially.
-   *
-   * @param {westures-core.State} state - current input state.
-   */
-  initialInputs(state) {
-    return state.active.filter(i => this.identifiers.has(i.identifier));
-  }
-
-  /**
-   * Try to recognize a Press.
-   *
-   * @param {westures-core.State} state - current input state. Note that
-   * although it was bound when the timeout was set, it is expected to be the
-   * same state object as the current active one, and thus reflective of the
-   * current state.
-   */
-  attempt(state) {
-    const inputs = this.initialInputs(state);
-    const centroid = Point2D.centroid(inputs.map(i => i.current.point));
-    const distance = this.initial.distanceTo(centroid);
-    if (distance <= this.tolerance) {
-      super.recognize(MOVE, state, {
-        centroid,
-        distance,
-        initial:  this.initial,
-      });
-    }
-  }
-
-  end(state) {
-    if (this.initialInputs(state).length !== this.identifiers.length) {
-      clearTimeout(this.timeout);
-      this.timeout = null;
-    }
+    const initial = state.centroid;
+    const identifiers = new Set(state.active.map(i => i.identifier));
+    setTimeout(() => {
+      const inputs = state.active.filter(i => identifiers.has(i.identifier));
+      const centroid = Point2D.centroid(inputs.map(i => i.current.point));
+      const distance = initial.distanceTo(centroid);
+      if (distance <= this.tolerance && inputs.length === identifiers.size) {
+        this.recognize(MOVE, state, { centroid, distance, initial });
+      }
+    }, this.delay);
   }
 }
 
