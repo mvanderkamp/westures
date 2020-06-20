@@ -25,6 +25,13 @@
 - Improved documentation by showing all of westures-core
 - Change pivotCenter -> dynamicPivot, default to false
 - Clean up Rotate implementation to reduce reliance on side effects
+- Switch to using pointer events by default, combined with setting touch-action:
+  none on the gesture elements (not the region itself).
+- Provide options on the Region for choosing whether to prefer pointer events
+  over mouse/touch events (preferPointer) and what to set the touch-action
+  property to on gesture elements (touchAction).
+- Default to using the window as the region if no element provided.
+- Add mouseleave to the CANCEL_EVENTS
 
 ## 0.7.8
 
