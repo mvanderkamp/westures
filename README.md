@@ -175,21 +175,31 @@ efficient as possible.
 For example, a simple way to implement a 'Tap' gesture would be as follows:
 
 ```javascript
-const { Gesture } = require('westures');
+const { Gesture } = require('westures-core');
+
+const TIMEOUT = 100;
 
 class Tap extends Gesture {
   constructor() {
     super('tap');
+    this.startTime = null;
+  }
+
+  start(state) {
+    this.startTime = Date.now();
   }
 
   end(state) {
-    return state.getInputsInPhase('end')[0].current.point;
+    if (Date.now() - this.startTime <= TIMEOUT) {
+        return state.getInputsInPhase('end')[0].current.point;
+    }
+    return null;
   }
 }
 ```
 
-There are problems with this example, so it should not be used as an actual Tap
-gesture, it is just here to represent the basic idea of a custom gesture.
+There are problems with this example, and it should probably not be used as an
+actual Tap gesture, it is merely to illustrate the basic idea.
 
 The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.

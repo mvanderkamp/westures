@@ -244,20 +244,30 @@ to the name of the phase.</p>
 maintain responsiveness, the functionality within a hook should be short and as
 efficient as possible.</p>
 <p>For example, a simple way to implement a 'Tap' gesture would be as follows:</p>
-<pre class="prettyprint source lang-javascript"><code>const { Gesture } = require('westures');
+<pre class="prettyprint source lang-javascript"><code>const { Gesture } = require('westures-core');
+
+const TIMEOUT = 100;
 
 class Tap extends Gesture {
   constructor() {
     super('tap');
+    this.startTime = null;
+  }
+
+  start(state) {
+    this.startTime = Date.now();
   }
 
   end(state) {
-    return state.getInputsInPhase('end')[0].current.point;
+    if (Date.now() - this.startTime &lt;= TIMEOUT) {
+        return state.getInputsInPhase('end')[0].current.point;
+    }
+    return null;
   }
 }
 </code></pre>
-<p>There are problems with this example, so it should not be used as an actual Tap
-gesture, it is just here to represent the basic idea of a custom gesture.</p>
+<p>There are problems with this example, and it should probably not be used as an
+actual Tap gesture, it is merely to illustrate the basic idea.</p>
 <p>The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.
 Returned values should be packed inside an object. For example, instead of just
