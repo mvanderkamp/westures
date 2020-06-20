@@ -7,17 +7,17 @@ https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
 https://david-dm.org/mvanderkamp/westures/dev-status.svg)
 ](https://david-dm.org/mvanderkamp/westures?type=dev)
 
-The goal of Westures is to be a robust n-pointer multitouch gesture detection
-library for JavaScript. This means that each gesture should be capable of
-working seamlessly as touch points are added and removed, with no limit on the
-number of touch points, and with each touch point contributing to the gesture.
-It should also be capable of working across a wide range of devices.
+Westures is a robust n-pointer multitouch gesture detection library for
+JavaScript. This means that each gesture is capable of working seamlessly as
+touch points are added and removed, with no limit on the number of touch points,
+and with each touch point contributing to the gesture. It is also be capable of
+working across a wide range of devices.
 
 Visit this page for an example of the system in action: [Westures Example](
 https://mvanderkamp.github.io/westures-example/).
 
-The library aims to achieve its goals without using any dependencies except for
-its own core engine, yet maintain usability across the main modern browsers.
+The library achieves its goals without using any dependencies except for its own
+core engine, yet maintains usability across the main modern browsers.
 Transpilation may be necessary for this last point to be achieved, as the
 library is written using many of the newer features of the JavaScript language.
 A transpiled bundle is provided, but the browser target list is arbitrary and
@@ -36,16 +36,18 @@ Westures is a fork of [ZingTouch](https://github.com/zingchart/zingtouch).
 // Import the module.
 const wes = require('westures');
 
-// Declare a region.
-const region = new wes.Region(document.body);
+// Declare a region. The default is the window object, but other elements like
+// the document body work too.
+const region = new wes.Region();
 
-// Add a gesture to an element within the region.
-const pannable = document.querySelector('#pannable');
-region.addGesture(pannable, new wes.Pan(), (data) => {
-  // data.translation.x ...
-  // data.translation.y ...
-  // and so on, depending on the Gesture
-});
+// Combine an element and a handler into a Gesture. (An element with id
+// 'pannable' must be available).
+const pan = new wes.Pan(document.querySelector('#pannable'), (data) => {
+  console.log(data.translation.x, data.translation.y);
+})
+
+// And add the gesture to the region.
+region.addGesture(pan)
 ```
 
 ## Table of Contents
@@ -54,13 +56,15 @@ region.addGesture(pannable, new wes.Pan(), (data) => {
 - [Basic Usage](#basic-usage)
 - [Implementing Custom Gestures](#implementing-custom-gestures)
 - [What's Changed](#changes)
+- [Nomenclature and Origins](#nomenclature-and-origins)
+- [Issues](#Issues)
 - [Links](#links)
 
 ## Overview
 
 There are nine gestures defined in this module:
 
-Name   | # of Inputs | Emit Phase | Brief Description
+Name   | # of Inputs | Emit Phase | Recognized Input Behaviour
 ------ | ----------- | ---------- | -----------------
 Pan    | 1+          | Move       | Sliding around the screen
 Pinch  | 2+          | Move       | Moving together or apart
@@ -103,36 +107,57 @@ If you have lots of interactable elements on your page, you may find it
 convenient to use smaller elements as regions. Test it out in case, and see what
 works better for you.
 
-```javascript
-const region = new wes.Region(document.body);
-```
-### Binding an element within a Region
+By default, the window object is used.
 
-When you add a gesture to a region, you need to provide a handler as well as an
-Element along with the gesture. The gesture will only be recognized when the
-first pointer to interact with the region was inside the given Element.
-Therefore unless you want to try something fancy the gesture element should
-probably be contained inside the region element. It could even be the region
-element.
+```javascript
+const region = new wes.Region();
+```
+
+### Instantiating a Gesture
+
+When you instantiate a gesture, you need to provide a handler as well as an
+Element. The gesture will only be recognized when the first pointer to interact
+with the region was inside the given Element. Therefore unless you want to try
+something fancy the gesture element should probably be contained inside the
+region element. It could even be the region element.
 
 Now for an example. Suppose you have a div (id 'pannable') within which you want
-to detect a Pan gesture (assume that such a gesture is available). Your handler
-is called `panner`.
+to detect a Pan gesture. First we need to find the element.
 
 ```javascript
-region.addGesture(document.querySelector('#pannable'), new wes.Pan(), panner);
+const pannable = document.querySelector('#pannable');
 ```
 
-The `panner` function will now be called whenever a Pan hook returns non-null
-data. The data returned by the hook will be available inside `panner` as such:
+And we also need a handler. This function will be called whenever a gesture hook
+returns non-null data. For Pan, this is just the move phase, but the handler
+doesn't need to know that. The data returned by the hook will be available
+inside the handler.
 
 ```javascript
-function panner(data) {
-  // data.translation.x ...
-  // data.translation.y ...
-  // and so on, depending on the Gesture
+function panLogger(data) {
+  console.log(data.translation.x, data.translation.y);
 }
 ```
+
+Now we're ready to combine the element and its handler into a gesture.
+
+```javascript
+pan = new wes.Pan(pannable, panLogger);
+```
+
+We're not quite done though, as none of this will actually work until you add
+the gesture to the region.
+
+### Adding a Gesture to a Region
+
+Simple:
+
+```javascript
+region.addGesture(pan);
+```
+
+Now the `panLogger` function will be called whenever a `pan` gesture is
+detected on the `#pannable` element inside the region.
 
 ## Implementing Custom Gestures
 
@@ -168,6 +193,11 @@ gesture, it is just here to represent the basic idea of a custom gesture.
 
 The default hooks for all Gestures simply return null. Data will only be
 forwarded to bound handlers when a non-null value is returned by a hook.
+Returned values should be packed inside an object. For example, instead of just
+`return 42;`, a custom hook should do `return { value: 42 };`
+
+If your Gesture subclass needs to track any kind of complex state, remember that
+it may be necessary to reset the state in the `cancel` phase.
 
 For information about what data is accessible via the State object, see the full
 documentation [here](https://mvanderkamp.github.io/westures-core/State.html).
@@ -177,56 +207,26 @@ Note that his documentation was generated with `jsdoc`.
 
 As you can see from above, it is the gesture which decides when data gets passed
 to handlers, and for the most part what that data will be. Note though that a
-few propertiess will get added to the outgoing data object before the handler is
+few properties will get added to the outgoing data object before the handler is
 called. Those properties are:
 
-Name     | Type    | Value
----------|---------|-------
-centroid | Point2D | The centroid of the input points.
-event    | Event   | The input event which caused the gesture to be recognized
-phase    | String  | 'start', 'move', or 'end'
-type     | String  | The name of the gesture as specified by its designer.
-target   | Element | The Element that is associated with the recognized gesture.
+Name     | Type     | Value
+-------- | -------- | -----
+centroid | Point2D  | The centroid of the input points.
+event    | Event    | The input event which caused the gesture to be recognized
+phase    | String   | `'start'`, `'move'`, `'end'`, or `'cancel'`
+type     | String   | The name of the gesture as specified by its designer.
+target   | Element  | The Element that is associated with the recognized gesture.
+
+If data properties returned by a hook have a name collision with one of these
+properties, the value from the hook gets precedent and the default is
+overwritten.
 
 ## Changes
 
 See the [changelog](
 https://github.com/mvanderkamp/westures/blob/master/CHANGELOG.md) for the most
 recent updates.
-
-### Changes From ZingTouch
-
-The fundamental idea of ZingTouch, the three-phase hook structure, remains more
-or less the same. Most of the changes have to do with streamlining and
-simplifying the code such that it is easier to use and has a wider range of
-capabilities. The most significant of these is full simultaneous multi-touch
-gesture support. Beyond that, here are some specific changes:
-
-- Reorganized and simplified code structure.
-  - The arbiter-interpreter-dispatcher scheme has been significantly simplified.
-    - There is no arbiter. instead the Region class has an 'arbitrate' function.
-    - There is no interpreter. Instead the Binding class has an 'evaluateHook'
-      function.
-    - There is no dispatcher. The handlers are called directly.
-  - Fewer levels of code and fewer attempts to ram multiple types of
-    functionality into a single function. I've tried to keep all functions clear
-    and simple.
-- Creation and use of a Point2D class.
-- Redesigned technique for handling inputs allows continuous use of touches.
-  ZingTouch had a tendency to stop responding to touches if some gesture ended,
-  this should no longer be the case. Users should now be able to seamlessly flow
-  from one gesture to another (or even multiple simultaneously) without having
-  to restart their touches.
-- Support for using the window object as a region.
-- Simplified hook interaction. A single 'state' object is passed, as that is
-  all that is really needed.
-- Simplified handler interaction. As the handlers are called directly instead of
-  as the callback for an event, the parameters do not need to be wrapped up
-  inside the 'details' property of an event object.
-- Renamed 'bind' to 'addGesture' and 'unbind' to 'removeGestures'.
-- Implemented a Smoothable mixin to be used for movement-based gestures.
-- Implemented pivot versions of both Pinch and Rotate (Pull and Swivel) instead
-  of trying to give those gestures a pivot mode.
 
 ## Nomenclature and Origins
 
@@ -242,7 +242,7 @@ point.
 
 The name "westures" is a mash-up of "WAMS" and "gestures".
 
-## Advisory
+## Issues
 
 If you find any issues, please let me know!
 
