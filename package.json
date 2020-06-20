@@ -1,7 +1,7 @@
 {
   "name": "westures",
   "version": "1.0.0-alpha.2",
-  "description": "Robust n-pointer multitouch gestures for modern browsers",
+  "description": "Robust n-pointer multitouch gesture detection library for JavaScript",
   "keywords": [
     "multitouch",
     "gesture",
@@ -40,17 +40,17 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
     "arkit": "^1.6.4",
-    "coveralls": "^3.0.11",
-    "eslint": "^6.8.0",
-    "jest": "^25.3.0",
+    "coveralls": "^3.1.0",
+    "eslint": "^7.3.0",
+    "jest": "^26.0.1",
     "jsdoc": "^3.6.4",
     "parcel-bundler": "^1.12.4",
     "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
-    "westures-core": "^1.0.1"
+    "westures-core": "^1.1.0"
   }
 }
