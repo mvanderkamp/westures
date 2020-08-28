@@ -92,7 +92,7 @@ describe('Press', () => {
         press.start(state);
         state.active.push(new Input(new MouseEvent(
           0, element, MouseEvent.start,
-          107, 222
+          107, 222,
         )));
         jest.runAllTimers();
         expect(press.handler).toHaveBeenCalled();

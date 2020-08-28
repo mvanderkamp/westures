@@ -32,7 +32,7 @@
     <div class="title">
         <h1><a href="index.html" class="link">westures</a></h1>
         
-            <span class="version">v1.0.0-alpha.3</span>
+            <span class="version">v1.0.0-alpha.4</span>
         
     </div>
     <div class="search-container" id="search-container">
@@ -129,15 +129,15 @@ class Press extends Gesture {
 
   start(state) {
     const initial = state.centroid;
-    const identifiers = new Set(state.active.map(i => i.identifier));
+    const originalInputs = Array.from(state.active);
     setTimeout(() => {
-      const inputs = state.active.filter(i => identifiers.has(i.identifier));
-      const centroid = Point2D.centroid(inputs.map(i => i.current.point));
+      const inputs = state.active.filter(i => originalInputs.includes(i));
 
       // Due to the timeout, possible that centroid is null...
-      if (centroid != null) {
+      if (inputs.length === originalInputs.length) {
+        const centroid = Point2D.centroid(inputs.map(i => i.current.point));
         const distance = initial.distanceTo(centroid);
-        if (distance &lt;= this.tolerance &amp;&amp; inputs.length === identifiers.size) {
+        if (distance &lt;= this.tolerance) {
           this.recognize(MOVE, state, { centroid, distance, initial });
         }
       }
