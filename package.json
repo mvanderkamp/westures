@@ -40,12 +40,12 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "arkit": "^1.6.4",
     "coveralls": "^3.1.0",
-    "eslint": "^7.6.0",
-    "jest": "^26.2.2",
+    "eslint": "^7.7.0",
+    "jest": "^26.4.2",
     "jsdoc": "^3.6.5",
     "parcel-bundler": "^1.12.4",
     "tui-jsdoc-template": "^1.2.2"
