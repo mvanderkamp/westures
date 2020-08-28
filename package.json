@@ -1,6 +1,6 @@
 {
   "name": "westures",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "Robust n-pointer multitouch gesture detection library for JavaScript",
   "keywords": [
     "multitouch",
