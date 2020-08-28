@@ -18,4 +18,9 @@ arkit.*
 .*.json
 .cache
 .ignore
+.gitmodules
 
+# unneeded core-related files
+core/dist
+core/*.yml
+core/package-lock.json
