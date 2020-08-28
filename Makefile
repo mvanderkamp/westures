@@ -1,7 +1,7 @@
 
 .PHONY: default release lint fix parcel tags docs coverage
 
-default: lint tags
+default: lint
 
 lint:
 	npx eslint src;
@@ -28,10 +28,5 @@ redoc:
 	mv custom.css docs/styles/;
 	npx jsdoc -c .jsdocrc.json;
 
-tags:
-	ctags -R src;
-
 coverage:
 	npx jest --coverage && cat ./coverage/lcov.info | npx coveralls
-
-

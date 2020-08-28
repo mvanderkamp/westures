@@ -21,6 +21,7 @@ beforeAll(() => {
     width:  50,
     height: 80,
   });
+  document.body.appendChild(element);
 });
 
 beforeEach(() => {

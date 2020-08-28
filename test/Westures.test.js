@@ -6,25 +6,30 @@
 
 'use strict';
 
-const Westures = require('../index.js');
+const westures = require('index.js');
+const core = require('core/index.js');
 
-describe('Westures', () => {
-  test('should be instantiated', () => {
-    expect(Westures).toBeTruthy();
-  });
 
-  test('should have constructors for all of the gestures', () => {
+describe('westures', () => {
+  test('has constructors for all of the gestures', () => {
     const gestures = [
       'Gesture',
       'Pan',
       'Pinch',
+      'Press',
+      'Pull',
       'Rotate',
       'Swipe',
+      'Swivel',
       'Tap',
-      'Region',
-      'Point2D',
+      'Track',
     ];
-    expect(Object.keys(Westures)).toEqual(expect.arrayContaining(gestures));
+    expect(Object.keys(westures)).toEqual(expect.arrayContaining(gestures));
+  });
+
+  test('includes all of westures-core', () => {
+    const coreKeys = Object.keys(core);
+    expect(Object.keys(westures)).toEqual(expect.arrayContaining(coreKeys));
   });
 });
 

@@ -75,15 +75,15 @@ class Press extends Gesture {
 
   start(state) {
     const initial = state.centroid;
-    const identifiers = new Set(state.active.map(i => i.identifier));
+    const originalInputs = Array.from(state.active);
     setTimeout(() => {
-      const inputs = state.active.filter(i => identifiers.has(i.identifier));
-      const centroid = Point2D.centroid(inputs.map(i => i.current.point));
+      const inputs = state.active.filter(i => originalInputs.includes(i));
 
       // Due to the timeout, possible that centroid is null...
-      if (centroid != null) {
+      if (inputs.length === originalInputs.length) {
+        const centroid = Point2D.centroid(inputs.map(i => i.current.point));
         const distance = initial.distanceTo(centroid);
-        if (distance <= this.tolerance && inputs.length === identifiers.size) {
+        if (distance <= this.tolerance) {
           this.recognize(MOVE, state, { centroid, distance, initial });
         }
       }

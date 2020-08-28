@@ -14,6 +14,7 @@ let handler = null;
 
 beforeAll(() => {
   element = document.createElement('div');
+  document.body.appendChild(element);
 });
 
 beforeEach(() => {
