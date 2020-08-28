@@ -7,7 +7,7 @@
 'use strict';
 
 const Pinch = require('src/Pinch.js');
-const { Point2D } = require('westures-core');
+const { Point2D } = require('../core');
 
 let element = null;
 let handler = null;

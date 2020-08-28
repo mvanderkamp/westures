@@ -14,10 +14,9 @@
   "recurseDepth": 10,
   "source": {
     "include": [
+      "core",
       "src",
-      "index.js",
-      "node_modules/westures-core/src",
-      "node_modules/westures-core/index.js"
+      "index.js"
     ],
     "includePattern": ".js$"
   },

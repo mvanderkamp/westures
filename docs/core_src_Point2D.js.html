@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: node_modules/westures-core/src/State.js | westures</title>
+    <title>Source: core/src/Point2D.js | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -54,213 +54,161 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-const {
-  CANCEL,
-  END,
-  MOVE,
-  PHASE,
-  START,
-} = require('./constants.js');
-const Input     = require('./Input.js');
-const Point2D   = require('./Point2D.js');
-
-const symbols = {
-  inputs: Symbol.for('inputs'),
-};
-
 /**
- * Set of helper functions for updating inputs based on type of input.
- * Must be called with a bound 'this', via bind(), or call(), or apply().
- *
- * @private
- * @inner
- * @memberof westure-core.State
- */
-const update_fns = {
-  TouchEvent: function TouchEvent(event) {
-    Array.from(event.changedTouches).forEach(touch => {
-      this.updateInput(event, touch.identifier);
-    });
-  },
-
-  PointerEvent: function PointerEvent(event) {
-    this.updateInput(event, event.pointerId);
-  },
-
-  MouseEvent: function MouseEvent(event) {
-    if (event.button === 0) {
-      this.updateInput(event, event.button);
-    }
-  },
-};
-
-/**
- * Keeps track of currently active and ending input points on the interactive
- * surface.
+ * The Point2D class stores and operates on 2-dimensional points, represented as
+ * x and y coordinates.
  *
  * @memberof westures-core
  *
- * @param {Element} element - The element underpinning the associated Region.
+ * @param {number} [ x=0 ] - The x coordinate of the point.
+ * @param {number} [ y=0 ] - The y coordinate of the point.
  */
-class State {
-  constructor(element) {
+class Point2D {
+  constructor(x = 0, y = 0) {
     /**
-     * Keep a reference to the element for the associated region.
+     * The x coordinate of the point.
      *
-     * @type {Element}
+     * @type {number}
      */
-    this.element = element;
+    this.x = x;
 
     /**
-     * Keeps track of the current Input objects.
+     * The y coordinate of the point.
      *
-     * @alias [@@inputs]
-     * @type {Map.&lt;westures-core.Input>}
-     * @memberof westure-core.State
+     * @type {number}
      */
-    this[symbols.inputs] = new Map();
-
-    /**
-     * All currently valid inputs, including those that have ended.
-     *
-     * @type {westures-core.Input[]}
-     */
-    this.inputs = [];
-
-    /**
-     * The array of currently active inputs, sourced from the current Input
-     * objects. "Active" is defined as not being in the 'end' phase.
-     *
-     * @type {westures-core.Input[]}
-     */
-    this.active = [];
-
-    /**
-     * The array of latest point data for the currently active inputs, sourced
-     * from this.active.
-     *
-     * @type {westures-core.Point2D[]}
-     */
-    this.activePoints = [];
-
-    /**
-     * The centroid of the currently active points.
-     *
-     * @type {westures-core.Point2D}
-     */
-    this.centroid = {};
-
-    /**
-     * The latest event that the state processed.
-     *
-     * @type {Event}
-     */
-    this.event = null;
+    this.y = y;
   }
 
   /**
-   * Deletes all inputs that are in the 'end' phase.
-   */
-  clearEndedInputs() {
-    this[symbols.inputs].forEach((v, k) => {
-      if (v.phase === 'end') this[symbols.inputs].delete(k);
-    });
-  }
-
-  /**
-   * @param {string} phase - One of 'start', 'move', 'end', or 'cancel'.
+   * Calculates the angle between this point and the given point.
    *
-   * @return {westures-core.Input[]} Inputs in the given phase.
+   * @param {!westures-core.Point2D} point - Projected point for calculating the
+   * angle.
+   *
+   * @return {number} Radians along the unit circle where the projected
+   * point lies.
    */
-  getInputsInPhase(phase) {
-    return this.inputs.filter(i => i.phase === phase);
+  angleTo(point) {
+    return Math.atan2(point.y - this.y, point.x - this.x);
   }
 
   /**
-   * @param {string} phase - One of 'start', 'move', 'end', or 'cancel'.
+   * Determine the average distance from this point to the provided array of
+   * points.
    *
-   * @return {westures-core.Input[]} Inputs &lt;b>not&lt;/b> in the given phase.
+   * @param {!westures-core.Point2D[]} points - the Point2D objects to calculate
+   *    the average distance to.
+   *
+   * @return {number} The average distance from this point to the provided
+   *    points.
    */
-  getInputsNotInPhase(phase) {
-    return this.inputs.filter(i => i.phase !== phase);
+  averageDistanceTo(points) {
+    return this.totalDistanceTo(points) / points.length;
   }
 
   /**
-   * @return {boolean} True if there are no active inputs. False otherwise.
+   * Clone this point.
+   *
+   * @return {westures-core.Point2D} A new Point2D, identical to this point.
    */
-  hasNoInputs() {
-    return this[symbols.inputs].size === 0;
+  clone() {
+    return new Point2D(this.x, this.y);
   }
 
   /**
-   * Update the input with the given identifier using the given event.
+   * Calculates the distance between two points.
    *
-   * @private
+   * @param {!westures-core.Point2D} point - Point to which the distance is
+   * calculated.
    *
-   * @param {Event} event - The event being captured.
-   * @param {number} identifier - The identifier of the input to update.
+   * @return {number} The distance between the two points, a.k.a. the
+   *    hypoteneuse.
    */
-  updateInput(event, identifier) {
-    switch (PHASE[event.type]) {
-    case START:
-      this[symbols.inputs].set(
-        identifier,
-        new Input(event, identifier),
-      );
-      try {
-        this.element.setPointerCapture(identifier);
-      } catch (e) {
-        // NOP: Optional operation failed.
-      }
-      break;
-
-    // All of 'end', 'move', and 'cancel' perform updates, hence the
-    // following fall-throughs
-    case END:
-      try {
-        this.element.releasePointerCapture(identifier);
-      } catch (e) {
-        // NOP: Optional operation failed.
-      }
-    case CANCEL:
-    case MOVE:
-      if (this[symbols.inputs].has(identifier)) {
-        this[symbols.inputs].get(identifier).update(event);
-      }
-      break;
-
-    default:
-      console.warn(`Unrecognized event type: ${event.type}`);
-    }
+  distanceTo(point) {
+    return Math.hypot(point.x - this.x, point.y - this.y);
   }
 
   /**
-   * Updates the inputs with new information based upon a new event being fired.
+   * Subtract the given point from this point.
    *
-   * @private
-   * @param {Event} event - The event being captured.
+   * @param {!westures-core.Point2D} point - Point to subtract from this point.
+   *
+   * @return {westures-core.Point2D} A new Point2D, which is the result of (this
+   * - point).
    */
-  updateAllInputs(event) {
-    update_fns[event.constructor.name].call(this, event);
-    this.updateFields(event);
+  minus(point) {
+    return new Point2D(
+      this.x - point.x,
+      this.y - point.y,
+    );
   }
 
   /**
-   * Updates the convenience fields.
+   * Return the summation of this point to the given point.
    *
-   * @private
-   * @param {Event} event - Event with which to update the convenience fields.
+   * @param {!westures-core.Point2D} point - Point to add to this point.
+   *
+   * @return {westures-core.Point2D} A new Point2D, which is the addition of the
+   * two points.
    */
-  updateFields(event) {
-    this.inputs = Array.from(this[symbols.inputs].values());
-    this.active = this.getInputsNotInPhase('end');
-    this.activePoints = this.active.map(i => i.current.point);
-    this.centroid = Point2D.centroid(this.activePoints);
-    this.event = event;
+  plus(point) {
+    return new Point2D(
+      this.x + point.x,
+      this.y + point.y,
+    );
+  }
+
+  /**
+   * Calculates the total distance from this point to an array of points.
+   *
+   * @param {!westures-core.Point2D[]} points - The array of Point2D objects to
+   *    calculate the total distance to.
+   *
+   * @return {number} The total distance from this point to the provided points.
+   */
+  totalDistanceTo(points) {
+    return points.reduce((d, p) => d + this.distanceTo(p), 0);
+  }
+
+  /**
+   * Calculates the centroid of a list of points.
+   *
+   * @param {westures-core.Point2D[]} points - The array of Point2D objects for
+   * which to calculate the centroid.
+   *
+   * @return {westures-core.Point2D} The centroid of the provided points.
+   */
+  static centroid(points = []) {
+    if (points.length === 0) return null;
+
+    const total = Point2D.sum(points);
+    total.x /= points.length;
+    total.y /= points.length;
+    return total;
+  }
+
+  /**
+   * Calculates the sum of the given points.
+   *
+   * @param {westures-core.Point2D[]} points - The Point2D objects to sum up.
+   *
+   * @return {westures-core.Point2D} A new Point2D representing the sum of the
+   * given points.
+   */
+  static sum(points = []) {
+    return points.reduce(
+      (total, pt) => {
+        total.x += pt.x;
+        total.y += pt.y;
+        return total;
+      },
+      new Point2D(0, 0),
+    );
   }
 }
 
-module.exports = State;
+module.exports = Point2D;
 
 </code></pre>
         </article>

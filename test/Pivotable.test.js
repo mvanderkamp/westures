@@ -7,7 +7,7 @@
 'use strict';
 
 const Pivotable = require('src/Pivotable.js');
-const { Point2D } = require('westures-core');
+const { Point2D } = require('../core');
 
 let element = null;
 let handler = null;

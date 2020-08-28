@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { angularDifference, Gesture, Smoothable } = require('westures-core');
+const { angularDifference, Gesture, Smoothable } = require('../core');
 
 /**
  * Data returned when a Rotate is recognized.

@@ -175,7 +175,7 @@ efficient as possible.
 For example, a simple way to implement a 'Tap' gesture would be as follows:
 
 ```javascript
-const { Gesture } = require('westures-core');
+const { Gesture } = require('westures');
 
 const TIMEOUT = 100;
 

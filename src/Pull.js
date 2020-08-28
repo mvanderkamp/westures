@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Smoothable } = require('westures-core');
+const { Smoothable } = require('../core');
 const Pivotable = require('./Pivotable.js');
 
 /**

@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture } = require('westures-core');
+const { Gesture } = require('../core');
 
 const PROGRESS_STACK_SIZE = 7;
 const MS_THRESHOLD = 300;

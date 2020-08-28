@@ -36,7 +36,11 @@
   },
   "jest": {
     "modulePaths": [
-      "<rootDir>"
+      "<rootDir>",
+      "<rootDir>/src/"
+    ],
+    "setupFilesAfterEnv": [
+      "./core/test/setup.js"
     ]
   },
   "devDependencies": {
@@ -50,7 +54,5 @@
     "parcel-bundler": "^1.12.4",
     "tui-jsdoc-template": "^1.2.2"
   },
-  "dependencies": {
-    "westures-core": "^1.1.0"
-  }
+  "dependencies": {}
 }

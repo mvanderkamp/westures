@@ -8,7 +8,7 @@
 
 'use strict';
 
-const core = require('westures-core');
+const core = require('./core');
 
 const Pan     = require('./src/Pan.js');
 const Pinch   = require('./src/Pinch.js');

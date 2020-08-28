@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture, Point2D, MOVE } = require('westures-core');
+const { Gesture, Point2D, MOVE } = require('../core');
 
 /**
  * Data returned when a Press is recognized.

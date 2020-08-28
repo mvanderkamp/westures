@@ -32,6 +32,8 @@
   property to on gesture elements (touchAction).
 - Default to using the window as the region if no element provided.
 - Add mouseleave to the CANCEL_EVENTS
+- Include the core engine as a git submodule instead of relying on the npm package.
+    - Keeps the core code out of node_modules which simplifies a lot of things...
 
 ## 0.7.8
 

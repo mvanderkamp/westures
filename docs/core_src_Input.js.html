@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: node_modules/westures-core/src/Region.js | westures</title>
+    <title>Source: core/src/Input.js | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -54,328 +54,101 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-const State = require('./State.js');
-const {
-  CANCEL_EVENTS,
-  KEYBOARD_EVENTS,
-  MOUSE_EVENTS,
-  POINTER_EVENTS,
-  TOUCH_EVENTS,
-
-  STATE_KEY_STRINGS,
-
-  PHASE,
-
-  CANCEL,
-  END,
-  START,
-} = require('./constants.js');
-const {
-  setDifference,
-  setFilter,
-} = require('./utils.js');
+const PointerData = require('./PointerData.js');
+const { getPropagationPath } = require('./utils.js');
 
 /**
- * Allows the user to specify the control region which will listen for user
- * input events.
+ * Tracks a single input and contains information about the current, previous,
+ * and initial events. Contains the progress of each Input and its associated
+ * gestures.
  *
  * @memberof westures-core
  *
- * @param {Element} element=window - The element which should listen to input
- * events.
- * @param {object} [options]
- * @param {boolean} [options.capture=false] - Whether the region uses the
- * capture phase of input events. If false, uses the bubbling phase.
- * @param {boolean} [options.preferPointer=true] - If false, the region listens
- * to mouse/touch events instead of pointer events.
- * @param {boolean} [options.preventDefault=true] - Whether the default
- * browser functionality should be disabled. This option should most likely be
- * ignored. Here there by dragons if set to false.
- * @param {string} [options.touchAction='none'] - Value to set the CSS
- * 'touch-action' property to on elements added to the region.
+ * @param {(PointerEvent | MouseEvent | TouchEvent)} event - The input event
+ * which will initialize this Input object.
+ * @param {number} identifier - The identifier for this input, so that it can
+ * be located in subsequent Event objects.
  */
-class Region {
-  constructor(element = window, options = {}) {
-    options = { ...Region.DEFAULTS, ...options };
+class Input {
+  constructor(event, identifier) {
+    const currentData = new PointerData(event, identifier);
 
     /**
-     * The list of relations between elements, their gestures, and the handlers.
+     * The set of elements along the original event's propagation path at the
+     * time it was dispatched.
      *
-     * @type {Set.&lt;westures-core.Gesture>}
+     * @type {WeakSet.&lt;Element>}
      */
-    this.gestures = new Set();
+    this.initialElements = new WeakSet(getPropagationPath(event));
 
     /**
-     * The list of active gestures for the current input session.
+     * Holds the initial data from the mousedown / touchstart / pointerdown that
+     * began this input.
      *
-     * @type {Set.&lt;westures-core.Gesture>}
+     * @type {westures-core.PointerData}
      */
-    this.activeGestures = new Set();
+    this.initial = currentData;
 
     /**
-     * The base list of potentially active gestures for the current input
-     * session.
+     * Holds the most current pointer data for this Input.
      *
-     * @type {Set.&lt;westures-core.Gesture>}
+     * @type {westures-core.PointerData}
      */
-    this.potentialGestures = new Set();
+    this.current = currentData;
 
     /**
-     * The element being bound to.
+     * Holds the previous pointer data for this Input.
      *
-     * @type {Element}
+     * @type {westures-core.PointerData}
      */
-    this.element = element;
+    this.previous = currentData;
 
     /**
-     * The user-supplied options for the Region.
+     * The identifier for the pointer / touch / mouse button associated with
+     * this input.
      *
-     * @type {object}
+     * @type {number}
      */
-    this.options = options;
-
-    /**
-     * The internal state object for a Region.  Keeps track of inputs.
-     *
-     * @type {westures-core.State}
-     */
-    this.state = new State(this.element);
-
-    // Begin operating immediately.
-    this.activate();
+    this.identifier = identifier;
   }
 
   /**
-   * Activates the region by adding event listeners for all appropriate input
-   * events to the region's element.
+   * The phase of the input: 'start' or 'move' or 'end' or 'cancel'
    *
-   * @private
+   * @type {string}
    */
-  activate() {
-    /*
-     * Listening to both mouse and touch comes with the difficulty that
-     * preventDefault() must be called to prevent both events from iterating
-     * through the system. However I have left it as an option to the end user,
-     * which defaults to calling preventDefault(), in case there's a use-case I
-     * haven't considered or am not aware of.
-     *
-     * It also may be a good idea to keep regions small in large pages.
-     *
-     * See:
-     *  https://www.html5rocks.com/en/mobile/touchandmouse/
-     *  https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
-     *  https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events
-     */
-    let eventNames = [];
-    if (this.options.preferPointer &amp;&amp; window.PointerEvent) {
-      eventNames = POINTER_EVENTS;
-    } else {
-      eventNames = MOUSE_EVENTS.concat(TOUCH_EVENTS);
-    }
+  get phase() { return this.current.type; }
 
-    // Bind detected browser events to the region element.
-    const arbitrate = this.arbitrate.bind(this);
-    eventNames.forEach(eventName => {
-      this.element.addEventListener(eventName, arbitrate, {
-        capture: this.options.capture,
-        once:    false,
-        passive: false,
-      });
-    });
+  /**
+   * The timestamp of the initiating event for this input.
+   *
+   * @type {number}
+   */
+  get startTime() { return this.initial.time; }
 
-    const cancel = this.cancel.bind(this);
-    CANCEL_EVENTS.forEach(eventName => {
-      window.addEventListener(eventName, cancel);
-    });
-
-    const handleKeyboardEvent = this.handleKeyboardEvent.bind(this);
-    KEYBOARD_EVENTS.forEach(eventName => {
-      window.addEventListener(eventName, handleKeyboardEvent);
-    });
+  /**
+   * @return {number} The distance between the initiating event for this input
+   *    and its current event.
+   */
+  totalDistance() {
+    return this.initial.point.distanceTo(this.current.point);
   }
 
   /**
-   * Handles a cancel event. Resets the state and the active / potential gesture
-   * lists.
+   * Saves the given raw event in PointerData form as the current data for this
+   * input, pushing the old current data into the previous slot, and tossing
+   * out the old previous data.
    *
-   * @private
-   * @param {Event} event - The event emitted from the window object.
+   * @param {Event} event - The event object to wrap with a PointerData.
    */
-  cancel(event) {
-    if (this.options.preventDefault) event.preventDefault();
-    this.state.inputs.forEach(input => {
-      input.update(event);
-    });
-    this.activeGestures.forEach(gesture => {
-      gesture.evaluateHook(CANCEL, this.state);
-    });
-    this.state = new State(this.element);
-    this.resetActiveGestures();
-  }
-
-  /**
-   * Handles a keyboard event, triggering a restart of any gestures that need
-   * it.
-   *
-   * @private
-   * @param {KeyboardEvent} event - The keyboard event.
-   */
-  handleKeyboardEvent(event) {
-    if (STATE_KEY_STRINGS.indexOf(event.key) >= 0) {
-      this.state.event = event;
-      const oldActiveGestures = this.activeGestures;
-      this.setActiveGestures();
-
-      setDifference(oldActiveGestures, this.activeGestures).forEach(gesture => {
-        gesture.evaluateHook(END, this.state);
-      });
-      setDifference(this.activeGestures, oldActiveGestures).forEach(gesture => {
-        gesture.evaluateHook(START, this.state);
-      });
-    }
-  }
-
-  /**
-   * Resets the active gestures.
-   *
-   * @private
-   */
-  resetActiveGestures() {
-    this.potentialGestures = new Set();
-    this.activeGestures = new Set();
-  }
-
-  /**
-   * Selects active gestures from the list of potentially active gestures.
-   *
-   * @private
-   */
-  setActiveGestures() {
-    this.activeGestures = setFilter(this.potentialGestures, gesture => {
-      return gesture.isEnabled(this.state);
-    });
-  }
-
-  /**
-   * Selects the potentially active gestures.
-   *
-   * @private
-   */
-  setPotentialGestures() {
-    const input = this.state.inputs[0];
-    this.potentialGestures = setFilter(this.gestures, gesture => {
-      return input.initialElements.has(gesture.element);
-    });
-  }
-
-  /**
-   * Selects the gestures that are active for the current input sequence.
-   *
-   * @private
-   * @param {Event} event - The event emitted from the window object.
-   * @param {boolean} isInitial - Whether this is an initial contact.
-   */
-  updateActiveGestures(event, isInitial) {
-    if (PHASE[event.type] === START) {
-      if (isInitial) {
-        this.setPotentialGestures();
-      }
-      this.setActiveGestures();
-    }
-  }
-
-  /**
-   * Evaluates whether the current input session has completed.
-   *
-   * @private
-   * @param {Event} event - The event emitted from the window object.
-   */
-  pruneActiveGestures(event) {
-    if (PHASE[event.type] === END) {
-      if (this.state.hasNoInputs()) {
-        this.resetActiveGestures();
-      } else {
-        this.setActiveGestures();
-      }
-    }
-  }
-
-  /**
-   * All input events flow through this function. It makes sure that the input
-   * state is maintained, determines which gestures to analyze based on the
-   * initial position of the inputs, calls the relevant gesture hooks, and
-   * dispatches gesture data.
-   *
-   * @private
-   * @param {Event} event - The event emitted from the window object.
-   */
-  arbitrate(event) {
-    const isInitial = this.state.hasNoInputs();
-    this.state.updateAllInputs(event);
-    this.updateActiveGestures(event, isInitial);
-
-    if (this.activeGestures.size > 0) {
-      if (this.options.preventDefault) event.preventDefault();
-
-      this.activeGestures.forEach(gesture => {
-        gesture.evaluateHook(PHASE[event.type], this.state);
-      });
-    }
-
-    this.state.clearEndedInputs();
-    this.pruneActiveGestures(event);
-  }
-
-  /**
-   * Adds the given gesture to the region.
-   *
-   * @param {westures-core.Gesture} gesture - Instantiated gesture to add.
-   */
-  addGesture(gesture) {
-    gesture.element.style.touchAction = this.options.touchAction;
-    this.gestures.add(gesture);
-  }
-
-  /**
-   * Removes the given gesture from the region.
-   *
-   * @param {westures-core.Gesture} gesture - Instantiated gesture to add.
-   */
-  removeGesture(gesture) {
-    this.gestures.delete(gesture);
-    this.potentialGestures.delete(gesture);
-    this.activeGestures.delete(gesture);
-  }
-
-  /**
-   * Retrieves Gestures by their associated element.
-   *
-   * @param {Element} element - The element for which to find gestures.
-   *
-   * @return {westures-core.Gesture[]} Gestures to which the element is bound.
-   */
-  getGesturesByElement(element) {
-    return setFilter(this.gestures, gesture => gesture.element === element);
-  }
-
-  /**
-   * Remove all gestures bound to the given element.
-   *
-   * @param {Element} element - The element to unbind.
-   */
-  removeGesturesByElement(element) {
-    this.getGesturesByElement(element).forEach(g => this.removeGesture(g));
+  update(event) {
+    this.previous = this.current;
+    this.current = new PointerData(event, this.identifier);
   }
 }
 
-Region.DEFAULTS = {
-  capture:        false,
-  preferPointer:  true,
-  preventDefault: true,
-  touchAction:    'none',
-};
+module.exports = Input;
 
-module.exports = Region;
 </code></pre>
         </article>
     </section>

@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: node_modules/westures-core/src/constants.js | westures</title>
+    <title>Source: core/index.js | westures</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -52,169 +52,35 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-
-/**
- * List of events that trigger the cancel phase.
+            <pre class="prettyprint source linenums"><code>/**
+ * The global API interface for westures-core. Exposes all classes, constants,
+ * and routines used by the package. Use responsibly.
  *
- * @memberof westures-core
- * @type {string[]}
+ * @namespace westures-core
  */
-const CANCEL_EVENTS = [
-  'blur',
-  'pointercancel',
-  'touchcancel',
-  'mouseleave',
-];
 
-/**
- * List of keyboard events that trigger a restart.
- *
- * @memberof westures-core
- * @type {string[]}
- */
-const KEYBOARD_EVENTS = [
-  'keydown',
-  'keyup',
-];
+'use strict';
 
-/**
- * List of mouse events to listen to.
- *
- * @memberof westures-core
- * @type {string[]}
- */
-const MOUSE_EVENTS = [
-  'mousedown',
-  'mousemove',
-  'mouseup',
-];
-
-/**
- * List of pointer events to listen to.
- *
- * @memberof westures-core
- * @type {string[]}
- */
-const POINTER_EVENTS = [
-  'pointerdown',
-  'pointermove',
-  'pointerup',
-];
-
-/**
- * List of touch events to listen to.
- *
- * @memberof westures-core
- * @type {string[]}
- */
-const TOUCH_EVENTS = [
-  'touchend',
-  'touchmove',
-  'touchstart',
-];
-
-/**
- * List of potentially state-modifying keys.
- * Entries are: ['altKey', 'ctrlKey', 'metaKey', 'shiftKey'].
- *
- * @memberof westures-core
- * @type {string[]}
- */
-const STATE_KEYS = [
-  'altKey',
-  'ctrlKey',
-  'metaKey',
-  'shiftKey',
-];
-
-/**
- * List of the 'key' values on KeyboardEvent objects of the potentially
- * state-modifying keys.
- *
- * @memberof westures-core
- * @type {string[]}
- */
-const STATE_KEY_STRINGS = [
-  'Alt',
-  'Control',
-  'Meta',
-  'Shift',
-];
-
-/**
- * The cancel phase.
- *
- * @memberof westures-core
- * @type {string}
- */
-const CANCEL = 'cancel';
-
-/**
- * The end phase.
- *
- * @memberof westures-core
- * @type {string}
- */
-const END = 'end';
-
-/**
- * The move phase.
- *
- * @memberof westures-core
- * @type {string}
- */
-const MOVE = 'move';
-
-/**
- * The start phase.
- *
- * @memberof westures-core
- * @type {string}
- */
-const START = 'start';
-
-/**
- * Object that normalizes the names of window events to be either of type start,
- * move, end, or cancel.
- *
- * @memberof westures-core
- * @type {object}
- */
-const PHASE = {
-  blur:           CANCEL,
-  pointercancel:  CANCEL,
-  touchcancel:    CANCEL,
-
-  mouseup:       END,
-  pointerup:     END,
-  touchend:      END,
-
-  mousemove:   MOVE,
-  pointermove: MOVE,
-  touchmove:   MOVE,
-
-  mousedown:   START,
-  pointerdown: START,
-  touchstart:  START,
-};
+const Gesture = require('./src/Gesture.js');
+const Input = require('./src/Input.js');
+const Point2D = require('./src/Point2D.js');
+const PointerData = require('./src/PointerData.js');
+const Region = require('./src/Region.js');
+const Smoothable = require('./src/Smoothable.js');
+const State = require('./src/State.js');
+const constants = require('./src/constants.js');
+const utils = require('./src/utils.js');
 
 module.exports = {
-  CANCEL_EVENTS,
-  KEYBOARD_EVENTS,
-  MOUSE_EVENTS,
-  POINTER_EVENTS,
-  TOUCH_EVENTS,
-
-  STATE_KEYS,
-  STATE_KEY_STRINGS,
-
-  CANCEL,
-  END,
-  MOVE,
-  START,
-
-  PHASE,
+  Gesture,
+  Input,
+  Point2D,
+  PointerData,
+  Region,
+  Smoothable,
+  State,
+  ...constants,
+  ...utils,
 };
 
 </code></pre>

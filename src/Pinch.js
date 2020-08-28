@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { Gesture, Smoothable } = require('westures-core');
+const { Gesture, Smoothable } = require('../core');
 
 /**
  * Data returned when a Pinch is recognized.
