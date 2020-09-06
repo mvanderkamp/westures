@@ -7,17 +7,16 @@ https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
 https://david-dm.org/mvanderkamp/westures/dev-status.svg)
 ](https://david-dm.org/mvanderkamp/westures?type=dev)
 
-Westures is a robust n-pointer multitouch gesture detection library for
-JavaScript. This means that each gesture is capable of working seamlessly as
-touch points are added and removed, with no limit on the number of touch points,
-and with each touch point contributing to the gesture. It is also be capable of
-working across a wide range of devices.
+Westures is a robust multitouch gesture engine for JavaScript. Each gesture is
+capable of working seamlessly as touch points are added and removed, with no
+limit on the number of touch points, and with each touch point contributing to
+the gesture.
 
 Visit this page for an example of the system in action: [Westures Example](
 https://mvanderkamp.github.io/westures-example/).
 
-The library achieves its goals without using any dependencies except for its own
-core engine, yet maintains usability across the main modern browsers.
+The library achieves its goals without using any dependencies except for its
+own core, yet maintains usability across the main modern browsers.
 Transpilation may be necessary for this last point to be achieved, as the
 library is written using many of the newer features of the JavaScript language.
 A transpiled bundle is provided, but the browser target list is arbitrary and
@@ -40,8 +39,7 @@ const wes = require('westures');
 // the document body work too.
 const region = new wes.Region();
 
-// Combine an element and a handler into a Gesture. (An element with id
-// 'pannable' must be available).
+// Combine an element and a handler into a Gesture.
 const pan = new wes.Pan(document.querySelector('#pannable'), (data) => {
   console.log(data.translation.x, data.translation.y);
 })
@@ -99,9 +97,9 @@ const wes = require('westures');
 First, decide what region should listen for events. This could be the
 interactable element itself, or a larger region (possibly containing many
 interactable elements). Behaviour may differ slightly based on the approach you
-take, as a Region will perform locking operations on its interactable elements
-and their bound gestures so as to limit interference between elements during
-gestures, and no such locking occurs between Regions.
+take, as a `Region` will perform locking operations on its interactable
+elements and their bound gestures so as to limit interference between elements
+during gestures, and no such locking occurs between Regions.
 
 If you have lots of interactable elements on your page, you may find it
 convenient to use smaller elements as regions. Test it out in case, and see what
@@ -121,17 +119,18 @@ with the region was inside the given Element. Therefore unless you want to try
 something fancy the gesture element should probably be contained inside the
 region element. It could even be the region element.
 
-Now for an example. Suppose you have a div (id 'pannable') within which you want
-to detect a Pan gesture. First we need to find the element.
+Now for an example. Suppose you have a div (id 'pannable', although this is
+irrelevant from Westures' perspective) within which you want to detect a Pan
+gesture. First we need to find the element.
 
 ```javascript
 const pannable = document.querySelector('#pannable');
 ```
 
-And we also need a handler. This function will be called whenever a gesture hook
-returns non-null data. For Pan, this is just the move phase, but the handler
-doesn't need to know that. The data returned by the hook will be available
-inside the handler.
+And we also need a handler. This function will be called whenever a gesture
+hook returns non-null data. For `Pan`, this is just the move phase, but the
+handler doesn't need to know that. The data returned by the hook will be
+available inside the handler.
 
 ```javascript
 function panLogger(data) {
@@ -161,18 +160,18 @@ detected on the `#pannable` element inside the region.
 
 ## Implementing Custom Gestures
 
-The core technique used by Westures (originally conceived for ZingTouch) is to
-process all user inputs and filter them through four key lifecycle phases:
-`start`, `move`, `end`, and `cancel`. Gestures are defined by how they respond
-to these phases. To respond to the phases, a gesture extends the `Gesture` class
-provided by this module and overrides the method (a.k.a. "hook") corresponding
-to the name of the phase.
+The technique used by Westures (originally conceived for ZingTouch) is to
+filter all user inputs through four key lifecycle phases: `start`, `move`,
+`end`, and `cancel`. Gestures are defined by how they respond to these phases.
+To respond to the phases, a gesture extends the `Gesture` class provided by
+this module and overrides the method (a.k.a. "hook") corresponding to the name
+of the phase.
 
-The hook, when called, will receive the current State object of the region. To
-maintain responsiveness, the functionality within a hook should be short and as
-efficient as possible.
+The hook, when called, will receive the current `State` object of the region.
+To maintain responsiveness, the functionality within a hook should be short and
+as efficient as possible.
 
-For example, a simple way to implement a 'Tap' gesture would be as follows:
+For example, a simple way to implement a `Tap` gesture would be as follows:
 
 ```javascript
 const { Gesture } = require('westures');
