@@ -78,8 +78,6 @@ class Press extends Gesture {
     const originalInputs = Array.from(state.active);
     setTimeout(() => {
       const inputs = state.active.filter(i => originalInputs.includes(i));
-
-      // Due to the timeout, possible that centroid is null...
       if (inputs.length === originalInputs.length) {
         const centroid = Point2D.centroid(inputs.map(i => i.current.point));
         const distance = initial.distanceTo(centroid);
