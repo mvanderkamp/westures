@@ -40,8 +40,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.12.7",
-    "@babel/preset-env": "^7.12.7",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "arkit": "^1.6.4",
     "coveralls": "^3.1.0",
     "eslint": "^6.8.0",
