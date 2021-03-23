@@ -35,6 +35,12 @@ describe('Pivotable', () => {
     });
   });
 
+  describe('updatePrevious()', () => {
+    test('throws: is abstract interface', () => {
+      expect(() => new Pivotable().updatePrevious()).toThrow();
+    });
+  });
+
   describe('phase hooks', () => {
     let pivotable = null;
     let state = null;
