@@ -2,11 +2,12 @@
  * Tests Track class
  */
 
-/* global expect, describe, test, jest */
+/* global expect, describe, test, jest, beforeAll, beforeEach */
 
 'use strict';
 
 const Track = require('src/Track.js');
+const { Point2D, PHASES } = require('../core');
 
 describe('Track', () => {
   describe('constructor', () => {
@@ -40,6 +41,38 @@ describe('Track', () => {
         phases: ['start'],
       };
       expect(() => new Track(element, handler, options)).not.toThrow();
+    });
+  });
+
+  describe('phase hooks', () => {
+    let element = null;
+    let expected_data = null;
+    let handler = null;
+    let options = null;
+    let state = null;
+
+    beforeAll(() => {
+      const points = [new Point2D(42, 117)];
+      state = { activePoints: points };
+      expected_data = { active: points };
+      element = document.createElement('div');
+    });
+
+    beforeEach(() => {
+      handler = jest.fn();
+    });
+
+    describe.each(PHASES)('%s(state)', (phase) => {
+      test('Returns null if not included in "phases" option', () => {
+        const track = new Track(element, handler);
+        expect(track[phase](state)).toBeFalsy();
+      });
+
+      test('If specified in "phases", returns active points', () => {
+        options = { phases: [phase] };
+        const track = new Track(element, handler, options);
+        expect(track[phase](state)).toMatchObject(expected_data);
+      });
     });
   });
 });
