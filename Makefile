@@ -1,14 +1,14 @@
 
 .PHONY: default release lint fix parcel tags docs coverage
 
-default: lint
+default: lint tags
 
 lint:
 	npx eslint src;
 	npx eslint test;
 	npx eslint index.js;
 
-release: lint parcel docs tags
+release: lint parcel docs tags coverage
 
 fix:
 	npx eslint src --fix;
