@@ -39,8 +39,8 @@ describe('Tap', () => {
     let state = null;
     let real_Date_now = null;
 
-    function add_event(state, identifier, phase, x, y, time_offs = 0) {
-      Date.now = () => start_time + time_offs;
+    function add_event(identifier, phase, x, y, time_offset = 0) {
+      Date.now = () => start_time + time_offset;
       const event = new PointerEvent(
         identifier, element,
         PointerEvent[phase],
@@ -57,24 +57,25 @@ describe('Tap', () => {
 
     afterEach(() => {
       Date.now = real_Date_now;
+      state = null;  // Just to make sure there's no cross-contamination
     });
 
     beforeEach(() => {
       Date.now = () => start_time;
       handler = jest.fn();
       state = new State(element);
-      add_event(state, 0, 'start', 0, 0);
+      add_event(0, 'start', 0, 0);
     });
 
     describe('Return Value', () => {
       test('Returns the ended point position for a single tap', () => {
-        add_event(state, 0, 'end', 1, 2);
+        add_event(0, 'end', 1, 2);
         const tap = new Tap(element, handler, { numTaps: 1 });
         expect(tap.end(state)).toMatchObject({ x: 1, y: 2 });
       });
 
       test('Return object includes centroid point object', () => {
-        add_event(state, 0, 'end', 1, 2);
+        add_event(0, 'end', 1, 2);
         const tap = new Tap(element, handler, { numTaps: 1 });
         expect(tap.end(state)).toMatchObject({
           centroid: new Point2D(1, 2),
@@ -82,9 +83,9 @@ describe('Tap', () => {
       });
 
       test('Returns centroid of end points', () => {
-        add_event(state, 1, 'start', 0, 0);
-        add_event(state, 0, 'end', 10, 100);
-        add_event(state, 1, 'end', 20, 200);
+        add_event(1, 'start', 0, 0);
+        add_event(0, 'end', 10, 100);
+        add_event(1, 'end', 20, 200);
         const tap = new Tap(element, handler, {
           numTaps:   2,
           tolerance: 500,
@@ -95,13 +96,13 @@ describe('Tap', () => {
 
     describe('Accepts', () => {
       test('Correct number of taps', () => {
-        add_event(state, 0, 'end', 3, 4);
+        add_event(0, 'end', 3, 4);
         const tap = new Tap(element, handler, { numTaps: 1 });
         expect(tap.end(state)).toMatchObject({ x: 3, y: 4 });
       });
 
       test('Input travel is inside tolerance', () => {
-        add_event(state, 0, 'end', 3, 4);
+        add_event(0, 'end', 3, 4);
         const tap = new Tap(element, handler, {
           numTaps:   1,
           tolerance: 100,  // expected distance is 5
@@ -110,7 +111,7 @@ describe('Tap', () => {
       });
 
       test('Input travel tolerance bound is inclusive', () => {
-        add_event(state, 0, 'end', 3, 4);
+        add_event(0, 'end', 3, 4);
         const tap = new Tap(element, handler, {
           numTaps:   1,
           tolerance: 5,  // expected distance is 5
@@ -119,7 +120,7 @@ describe('Tap', () => {
       });
 
       test('Tap time is between minDelay and maxDelay', () => {
-        add_event(state, 0, 'end', 3, 4, 150);
+        add_event(0, 'end', 3, 4, 150);
         const tap = new Tap(element, handler, {
           numTaps:  1,
           minDelay: 100,
@@ -129,7 +130,7 @@ describe('Tap', () => {
       });
 
       test('minDelay and maxDelay bounds are inclusive', () => {
-        add_event(state, 0, 'end', 3, 4, 150);
+        add_event(0, 'end', 3, 4, 150);
         const tap = new Tap(element, handler, {
           numTaps:  1,
           minDelay: 150,
@@ -141,21 +142,21 @@ describe('Tap', () => {
 
     describe('Rejects', () => {
       test('Too few taps', () => {
-        add_event(state, 0, 'end', 3, 4);
+        add_event(0, 'end', 3, 4);
         const tap = new Tap(element, handler, { numTaps: 2 });
         expect(tap.end(state)).toBeNull();
       });
 
       test('Too many taps', () => {
-        add_event(state, 1, 'start', 0, 0);
-        add_event(state, 0, 'end', 10, 100);
-        add_event(state, 1, 'end', 20, 200);
+        add_event(1, 'start', 0, 0);
+        add_event(0, 'end', 10, 100);
+        add_event(1, 'end', 20, 200);
         const tap = new Tap(element, handler, { numTaps: 1 });
         expect(tap.end(state)).toBeNull();
       });
 
       test('Input travel is outside tolerance', () => {
-        add_event(state, 0, 'end', 3, 4);
+        add_event(0, 'end', 3, 4);
         const tap = new Tap(element, handler, {
           numTaps:   1,
           tolerance: 4.9999,  // expected distance is 5
@@ -164,7 +165,7 @@ describe('Tap', () => {
       });
 
       test('Tap time is less than minDelay', () => {
-        add_event(state, 0, 'end', 3, 4, 150);
+        add_event(0, 'end', 3, 4, 150);
         const tap = new Tap(element, handler, {
           numTaps:  1,
           minDelay: 151,
@@ -173,7 +174,7 @@ describe('Tap', () => {
       });
 
       test('Tap time is greater than maxDelay', () => {
-        add_event(state, 0, 'end', 3, 4, 150);
+        add_event(0, 'end', 3, 4, 150);
         const tap = new Tap(element, handler, {
           numTaps:  1,
           maxDelay: 149,
@@ -191,13 +192,13 @@ describe('Tap', () => {
           maxDelay: 250,
         });
 
-        add_event(state, 1, 'start', 0, 0, 100);
-        add_event(state, 0, 'end',   2, 4, 150);
+        add_event(1, 'start', 0, 0, 100);
+        add_event(0, 'end',   2, 4, 150);
 
         expect(tap.end(state)).toBeNull();
         state.clearEndedInputs();
 
-        add_event(state, 1, 'end', 4, 6, 200);
+        add_event(1, 'end', 4, 6, 200);
         expect(tap.end(state)).toMatchObject({ x: 3, y: 5 });
       });
 
@@ -207,15 +208,15 @@ describe('Tap', () => {
           maxDelay: 250,
         });
 
-        add_event(state, 1, 'start', 0, 0, 100);
-        add_event(state, 0, 'end',   2, 4, 150);
-        add_event(state, 1, 'end',   4, 6, 200);
+        add_event(1, 'start', 0, 0, 100);
+        add_event(0, 'end',   2, 4, 150);
+        add_event(1, 'end',   4, 6, 200);
 
         expect(tap.end(state)).toMatchObject({ x: 3, y: 5 });
         state.clearEndedInputs();
 
-        add_event(state, 2, 'start', 0, 0, 250);
-        add_event(state, 2, 'end',   0, 0, 300);
+        add_event(2, 'start', 0, 0, 250);
+        add_event(2, 'end',   0, 0, 300);
 
         expect(tap.end(state)).toBeNull();
       });
@@ -227,23 +228,27 @@ describe('Tap', () => {
           tolerance: 10,
         });
 
-        add_event(state, 1, 'start', 0,   0,   100);
-        add_event(state, 0, 'end',   200, 400, 150);
+        add_event(1, 'start', 0,   0,   100);
+        add_event(0, 'end',   200, 400, 150);
 
         expect(tap.end(state)).toBeNull();
         state.clearEndedInputs();
 
-        add_event(state, 1, 'end',   4,   6,   200);
+        add_event(1, 'end',   4,   6,   200);
 
         // Should fail because input 0 traveled too far
         expect(tap.end(state)).toBeNull();
         state.clearEndedInputs();
 
-        add_event(state, 2, 'start', 0,   0,   250);
-        add_event(state, 2, 'end',   0,   0,   300);
+        add_event(2, 'start', 0,   0,   250);
+        add_event(2, 'end',   0,   0,   300);
 
         // input 0 should now be cleared
         expect(tap.end(state)).toMatchObject({ x: 2, y: 3 });
+      });
+
+      test('Inputs that are too young are ignored', () => {
+        // there is a bug here... I think
       });
     });
   });
