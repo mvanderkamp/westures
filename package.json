@@ -41,7 +41,9 @@
     ],
     "setupFilesAfterEnv": [
       "./core/test/setup.js"
-    ]
+    ],
+    "testEnvironment": "jsdom",
+    "timers": "legacy"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

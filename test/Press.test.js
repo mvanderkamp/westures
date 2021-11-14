@@ -13,8 +13,6 @@ const MouseEvent = require('core/test/MouseEvent.js');
 let element = null;
 let handler = null;
 
-jest.useFakeTimers();
-
 beforeAll(() => {
   element = document.createElement('div');
   element.getBoundingClientRect = jest.fn();
