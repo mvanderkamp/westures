@@ -32,7 +32,8 @@
   "homepage": "https://mvanderkamp.github.io/westures/",
   "license": "MIT",
   "scripts": {
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "jest:debug": "node inspect $(npm bin)/jest --runInBand"
   },
   "jest": {
     "modulePaths": [
