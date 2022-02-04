@@ -45,6 +45,9 @@ const { Gesture, Point2D } = require('../core');
  * and touchend can be configured in milliseconds.
  * @param {number} [options.maxDelay=300] - The maximum delay between a
  * touchstart and touchend can be configured in milliseconds.
+ * @param {number} [options.maxRetain=300] - The maximum time after a tap ends
+ * before it is discarded can be configured in milliseconds. Useful for
+ * multi-tap gestures.
  * @param {number} [options.numTaps=1] - Number of taps to require.
  * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
  * move.
@@ -56,9 +59,7 @@ class Tap extends Gesture {
 
     /**
      * The minimum amount between a touchstart and a touchend can be configured
-     * in milliseconds. The minimum delay starts to count down when the expected
-     * number of inputs are on the screen, and ends when ALL inputs are off the
-     * screen.
+     * in milliseconds.
      *
      * @type {number}
      */
@@ -66,13 +67,20 @@ class Tap extends Gesture {
 
     /**
      * The maximum delay between a touchstart and touchend can be configured in
-     * milliseconds. The maximum delay starts to count down when the expected
-     * number of inputs are on the screen, and ends when ALL inputs are off the
-     * screen.
+     * milliseconds.
      *
      * @type {number}
      */
     this.maxDelay = options.maxDelay;
+
+    /**
+     * The maximum delay after a touchend before an as-yet-unused tap is
+     * discarded can be configured in milliseconds. Useful for multi-tap
+     * gestures, to allow things like slow "double clicks".
+     *
+     * @type {number}
+     */
+    this.maxRetain = options.maxRetain;
 
     /**
      * The number of inputs to trigger a Tap can be variable, and the maximum
@@ -104,8 +112,13 @@ class Tap extends Gesture {
     // Save the recently ended inputs as taps.
     this.taps = this.taps.concat(state.getInputsInPhase('end'))
       .filter(input => {
-        const tdiff = now - input.startTime;
-        return tdiff <= this.maxDelay && tdiff >= this.minDelay;
+        const elapsed = input.elapsedTime;
+        const tdiff = now - input.current.time;
+        return (
+          elapsed <= this.maxDelay
+          && elapsed >= this.minDelay
+          && tdiff <= this.maxRetain
+        );
       });
 
     // Validate the list of taps.
@@ -123,6 +136,7 @@ class Tap extends Gesture {
 Tap.DEFAULTS = Object.freeze({
   minDelay:  0,
   maxDelay:  300,
+  maxRetain: 300,
   numTaps:   1,
   tolerance: 10,
 });
