@@ -53,24 +53,7 @@ const { Gesture, Point2D, MOVE } = require('../core');
  */
 class Press extends Gesture {
   constructor(element, handler, options = {}) {
-    options = { ...Press.DEFAULTS, ...options };
-    super('press', element, handler, options);
-
-    /**
-     * The delay before emitting a press event, during which time the number of
-     * inputs must not change.
-     *
-     * @type {number}
-     */
-    this.delay = options.delay;
-
-    /**
-     * A move tolerance in pixels allows some slop between a user's start to end
-     * events. This allows the Press gesture to be triggered more easily.
-     *
-     * @type {number}
-     */
-    this.tolerance = options.tolerance;
+    super('press', element, handler, { ...Press.DEFAULTS, ...options });
   }
 
   start(state) {
@@ -81,11 +64,11 @@ class Press extends Gesture {
       if (inputs.length === originalInputs.length) {
         const centroid = Point2D.centroid(inputs.map(i => i.current.point));
         const distance = initial.distanceTo(centroid);
-        if (distance <= this.tolerance) {
+        if (distance <= this.options.tolerance) {
           this.recognize(MOVE, state, { centroid, distance, initial });
         }
       }
-    }, this.delay);
+    }, this.options.delay);
   }
 }
 

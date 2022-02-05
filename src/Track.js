@@ -47,13 +47,7 @@ const { Gesture } = require('../core');
  */
 class Track extends Gesture {
   constructor(element, handler, options = {}) {
-    options = { ...Track.DEFAULTS, ...options };
-    super('track', element, handler, options);
-
-    this.trackStart  = options.phases.includes('start');
-    this.trackMove   = options.phases.includes('move');
-    this.trackEnd    = options.phases.includes('end');
-    this.trackCancel = options.phases.includes('cancel');
+    super('track', element, handler, { ...Track.DEFAULTS, ...options });
   }
 
   /**
@@ -66,20 +60,24 @@ class Track extends Gesture {
     return { active: activePoints };
   }
 
+  tracks(phase) {
+    return this.options.phases.includes(phase);
+  }
+
   start(state) {
-    return this.trackStart ? this.data(state) : null;
+    return this.tracks('start') ? this.data(state) : null;
   }
 
   move(state) {
-    return this.trackMove ? this.data(state) : null;
+    return this.tracks('move') ? this.data(state) : null;
   }
 
   end(state) {
-    return this.trackEnd ? this.data(state) : null;
+    return this.tracks('end') ? this.data(state) : null;
   }
 
   cancel(state) {
-    return this.trackCancel ? this.data(state) : null;
+    return this.tracks('cancel') ? this.data(state) : null;
   }
 }
 

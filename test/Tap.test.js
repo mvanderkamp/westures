@@ -20,13 +20,15 @@ describe('Tap', () => {
       const tap = new Tap(null, null, {
         maxDelay:  2000,
         minDelay:  500,
+        maxRetain: 1200,
         numTaps:   2,
         tolerance: 42,
       });
-      expect(tap.maxDelay).toEqual(2000);
-      expect(tap.minDelay).toEqual(500);
-      expect(tap.numTaps).toEqual(2);
-      expect(tap.tolerance).toEqual(42);
+      expect(tap.options.maxRetain).toEqual(1200);
+      expect(tap.options.maxDelay).toEqual(2000);
+      expect(tap.options.minDelay).toEqual(500);
+      expect(tap.options.numTaps).toEqual(2);
+      expect(tap.options.tolerance).toEqual(42);
     });
   });
 

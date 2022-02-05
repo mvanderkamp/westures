@@ -75,7 +75,7 @@ class Swivel extends Pivotable {
     const rotation = angularDifference(angle, this.previous);
 
     let rv = null;
-    if (pivot.distanceTo(state.centroid) > this.deadzoneRadius) {
+    if (pivot.distanceTo(state.centroid) > this.options.deadzoneRadius) {
       rv = { rotation: this.outgoing.next(rotation), pivot };
     }
 

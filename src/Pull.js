@@ -75,9 +75,10 @@ class Pull extends Pivotable {
     const pivot = this.pivot;
     const distance = pivot.distanceTo(state.centroid);
     const scale = distance / this.previous;
+    const { deadzoneRadius } = this.options;
 
     let rv = null;
-    if (distance > this.deadzoneRadius && this.previous > this.deadzoneRadius) {
+    if (distance > deadzoneRadius && this.previous > deadzoneRadius) {
       rv = { distance, scale: this.outgoing.next(scale), pivot };
     }
 

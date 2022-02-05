@@ -53,24 +53,7 @@ const { Gesture, Point2D, Smoothable } = require('../core');
  */
 class Pivotable extends Gesture {
   constructor(type = 'pivotable', element, handler, options = {}) {
-    super(type, element, handler, options);
-    options = { ...Pivotable.DEFAULTS, ...options };
-
-    /**
-     * The radius around the start point in which to do nothing.
-     *
-     * @type {number}
-     */
-    this.deadzoneRadius = options.deadzoneRadius;
-
-    /**
-     * Normally the center point of the gesture's element is used as the pivot.
-     * If this option is set, the initial contact point with the element is used
-     * as the pivot instead.
-     *
-     * @type {boolean}
-     */
-    this.dynamicPivot = options.dynamicPivot;
+    super(type, element, handler, { ...Pivotable.DEFAULTS, ...options });
 
     /**
      * The pivot point of the pivotable.
@@ -130,7 +113,7 @@ class Pivotable extends Gesture {
    * @param {State} state - current input state.
    */
   restart(state) {
-    if (this.dynamicPivot) {
+    if (this.options.dynamicPivot) {
       this.pivot = state.centroid;
       this.previous = 0;
     } else {

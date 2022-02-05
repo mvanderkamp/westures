@@ -47,56 +47,14 @@ const { Gesture, Point2D } = require('../core');
  * touchstart and touchend can be configured in milliseconds.
  * @param {number} [options.maxRetain=300] - The maximum time after a tap ends
  * before it is discarded can be configured in milliseconds. Useful for
- * multi-tap gestures.
+ * multi-tap gestures, to allow things like slow "double clicks".
  * @param {number} [options.numTaps=1] - Number of taps to require.
- * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
- * move.
+ * @param {number} [options.tolerance=10] - The tolerance in pixels an input can
+ * move before it will no longer be considered part of a tap.
  */
 class Tap extends Gesture {
   constructor(element, handler, options = {}) {
-    options = { ...Tap.DEFAULTS, ...options };
-    super('tap', element, handler, options);
-
-    /**
-     * The minimum amount between a touchstart and a touchend can be configured
-     * in milliseconds.
-     *
-     * @type {number}
-     */
-    this.minDelay = options.minDelay;
-
-    /**
-     * The maximum delay between a touchstart and touchend can be configured in
-     * milliseconds.
-     *
-     * @type {number}
-     */
-    this.maxDelay = options.maxDelay;
-
-    /**
-     * The maximum delay after a touchend before an as-yet-unused tap is
-     * discarded can be configured in milliseconds. Useful for multi-tap
-     * gestures, to allow things like slow "double clicks".
-     *
-     * @type {number}
-     */
-    this.maxRetain = options.maxRetain;
-
-    /**
-     * The number of inputs to trigger a Tap can be variable, and the maximum
-     * number being a factor of the browser.
-     *
-     * @type {number}
-     */
-    this.numTaps = options.numTaps;
-
-    /**
-     * A move tolerance in pixels allows some slop between a user's start to end
-     * events. This allows the Tap gesture to be triggered more easily.
-     *
-     * @type {number}
-     */
-    this.tolerance = options.tolerance;
+    super('tap', element, handler, { ...Tap.DEFAULTS, ...options });
 
     /**
      * An array of inputs that have ended recently.
@@ -108,6 +66,7 @@ class Tap extends Gesture {
 
   end(state) {
     const now = Date.now();
+    const { minDelay, maxDelay, maxRetain, numTaps, tolerance } = this.options;
 
     // Save the recently ended inputs as taps.
     this.taps = this.taps.concat(state.getInputsInPhase('end'))
@@ -115,15 +74,15 @@ class Tap extends Gesture {
         const elapsed = input.elapsedTime;
         const tdiff = now - input.current.time;
         return (
-          elapsed <= this.maxDelay
-          && elapsed >= this.minDelay
-          && tdiff <= this.maxRetain
+          elapsed <= maxDelay
+          && elapsed >= minDelay
+          && tdiff <= maxRetain
         );
       });
 
     // Validate the list of taps.
-    if (this.taps.length !== this.numTaps ||
-      this.taps.some(i => i.totalDistance() > this.tolerance)) {
+    if (this.taps.length !== numTaps ||
+      this.taps.some(i => i.totalDistance() > tolerance)) {
       return null;
     }
 
