@@ -66,21 +66,6 @@ class Rotate extends Gesture {
   }
 
   /**
-   * Calculate the per-input angle progress.
-   *
-   * @param {State} state - current input state.
-   * @returns {number} The average change in angle.
-   */
-  getRotation(state) {
-    const stagedAngles = state.centroid.anglesTo(state.activePoints);
-    const angle = stagedAngles.reduce((total, current, index) => {
-      return total + angularDifference(current, this.previousAngles[index]);
-    }, 0);
-    this.previousAngles = stagedAngles;
-    return angle / state.activePoints.length;
-  }
-
-  /**
    * Restart the gesture for a new number of inputs.
    *
    * @param {State} state - current input state.
@@ -95,7 +80,12 @@ class Rotate extends Gesture {
   }
 
   move(state) {
-    const rotation = this.getRotation(state);
+    const stagedAngles = state.centroid.anglesTo(state.activePoints);
+    const angle = stagedAngles.reduce((total, current, index) => {
+      return total + angularDifference(current, this.previousAngles[index]);
+    }, 0);
+    this.previousAngles = stagedAngles;
+    const rotation = angle / state.activePoints.length;
     return { rotation: this.outgoing.next(rotation) };
   }
 
