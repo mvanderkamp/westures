@@ -96,7 +96,7 @@ class Rotate extends Gesture {
 
   move(state) {
     const rotation = this.getRotation(state);
-    return rotation ? { rotation: this.outgoing.next(rotation) } : null;
+    return { rotation: this.outgoing.next(rotation) };
   }
 
   end(state) {
