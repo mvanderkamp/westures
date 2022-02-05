@@ -20,24 +20,6 @@ const { Gesture, Point2D, Smoothable } = require('../core');
  */
 
 /**
- * Determine the center point of the given element's bounding client rectangle.
- *
- * @inner
- * @memberof westures.Pivotable
- *
- * @param {Element} element - The DOM element to analyze.
- * @return {westures-core.Point2D} - The center of the element's bounding client
- * rectangle.
- */
-function getClientCenter(element) {
-  const rect = element.getBoundingClientRect();
-  return new Point2D(
-    rect.left + (rect.width / 2),
-    rect.top + (rect.height / 2),
-  );
-}
-
-/**
  * A Pivotable is a single input rotating around a fixed point. The fixed point
  * is determined by the input's location at its 'start' phase.
  *
@@ -113,6 +95,24 @@ class Pivotable extends Gesture {
   }
 
   /**
+   * Determine the center point of the given element's bounding client
+   * rectangle.
+   *
+   * @static
+   *
+   * @param {Element} element - The DOM element to analyze.
+   * @return {westures-core.Point2D} - The center of the element's bounding
+   * client rectangle.
+   */
+  static getClientCenter(element) {
+    const rect = element.getBoundingClientRect();
+    return new Point2D(
+      rect.left + (rect.width / 2),
+      rect.top + (rect.height / 2),
+    );
+  }
+
+  /**
    * Updates the previous data. It will be called during the 'start' and 'end'
    * phases, and should also be called during the 'move' phase implemented by
    * the subclass.
@@ -134,7 +134,7 @@ class Pivotable extends Gesture {
       this.pivot = state.centroid;
       this.previous = 0;
     } else {
-      this.pivot = getClientCenter(this.element);
+      this.pivot = Pivotable.getClientCenter(this.element);
       this.updatePrevious(state);
     }
     this.outgoing.restart();
@@ -162,7 +162,4 @@ Pivotable.DEFAULTS = Object.freeze({
   dynamicPivot:   false,
 });
 
-Pivotable.getClientCenter = getClientCenter;
-
 module.exports = Pivotable;
-
