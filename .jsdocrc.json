@@ -18,7 +18,10 @@
       "src",
       "index.js"
     ],
-    "includePattern": ".js$"
+    "includePattern": ".js$",
+    "exclude": [
+      "core/dist"
+    ]
   },
   "sourceType": "module",
   "tags": {

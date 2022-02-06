@@ -1,6 +1,6 @@
 {
   "name": "westures",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0",
   "description": "Robust n-pointer multitouch gesture detection library for JavaScript",
   "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "keywords": [
@@ -47,6 +47,15 @@
       "./core/test/setup.js"
     ],
     "testEnvironment": "jsdom",
+    "testPathIgnorePatterns": [
+        "/node_modules/",
+        "/dist/"
+    ],
+    "coveragePathIgnorePatterns": [
+        "/node_modules/",
+        "/dist/",
+        "/test/"
+    ],
     "timers": "legacy"
   },
   "devDependencies": {

@@ -34,6 +34,7 @@
 - Add mouseleave to the CANCEL_EVENTS
 - Include the core engine as a git submodule instead of relying on the npm package.
     - Keeps the core code out of node_modules which simplifies a lot of things...
+- Store all options in a consistent Gesture.options object
 
 ## 0.7.8
 
