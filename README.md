@@ -1,14 +1,8 @@
 # westures
 
-[![Build Status](
-https://travis-ci.org/mvanderkamp/westures.svg?branch=master)
-](https://travis-ci.org/mvanderkamp/westures)
-[![Coverage Status](
-https://coveralls.io/repos/github/mvanderkamp/westures/badge.svg?branch=master)
-](https://coveralls.io/github/mvanderkamp/westures?branch=master)
-[![Maintainability](
-https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)
-](https://codeclimate.com/github/mvanderkamp/westures/maintainability)
+[![Node.js CI](https://github.com/mvanderkamp/westures/actions/workflows/node.js.yml/badge.svg)](https://github.com/mvanderkamp/westures/actions/workflows/node.js.yml)
+[![Coverage Status](https://coveralls.io/repos/github/mvanderkamp/westures/badge.svg?branch=master)](https://coveralls.io/github/mvanderkamp/westures?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fc7d7ace5a3018dc4071/maintainability)](https://codeclimate.com/github/mvanderkamp/westures/maintainability)
 
 Westures is a robust multitouch gesture engine for JavaScript. Each gesture is
 capable of working seamlessly as touch points are added and removed, with no
