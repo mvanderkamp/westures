@@ -3,11 +3,7 @@
 
 name: Node.js CI
 
-on:
-  push:
-    branches: [ test-workflow ]
-  pull_request:
-    branches: [ test-workflow ]
+on: [push, pull_request]
 
 jobs:
   build:
