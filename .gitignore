@@ -13,5 +13,4 @@ tags
 edit.sh
 usage.sh
 coverage/
-
-
+.parcel-cache/

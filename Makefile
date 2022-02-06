@@ -16,7 +16,7 @@ fix:
 	npx eslint index.js --fix;
 
 parcel:
-	npx parcel build 'index.js';
+	npm run build;
 
 docs:
 	npx jsdoc -c .jsdocrc.json;

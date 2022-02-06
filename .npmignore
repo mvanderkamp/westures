@@ -24,3 +24,6 @@ arkit.*
 core/dist
 core/*.yml
 core/package-lock.json
+.parcel-cache/
+.travis.yml
+.coveralls.yml

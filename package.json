@@ -2,6 +2,7 @@
   "name": "westures",
   "version": "1.0.0-alpha.4",
   "description": "Robust n-pointer multitouch gesture detection library for JavaScript",
+  "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "keywords": [
     "multitouch",
     "gesture",
@@ -20,11 +21,11 @@
     "mouse",
     "pointer"
   ],
-  "main": "index.js",
+  "source": "index.js",
+  "main": "dist/index.js",
   "directories": {
     "test": "test"
   },
-  "author": "Michael van der Kamp <michael.vanderkamp@usask.ca>",
   "repository": {
     "type": "git",
     "url": "https://github.com/mvanderkamp/westures"
@@ -32,8 +33,9 @@
   "homepage": "https://mvanderkamp.github.io/westures/",
   "license": "MIT",
   "scripts": {
+    "build": "PARCEL_WORKER_BACKEND=process parcel build",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "test": "node $(npm bin)/jest",
+    "test": "jest",
     "test:debug": "node inspect $(npm bin)/jest --runInBand"
   },
   "jest": {
@@ -55,7 +57,7 @@
     "eslint": "^7.19.0",
     "jest": "^27.3.1",
     "jsdoc": "^3.6.6",
-    "parcel-bundler": "^1.9.4",
+    "parcel": "^2.2.1",
     "tui-jsdoc-template": "^1.2.2",
     "underscore": "^1.13.2"
   }
