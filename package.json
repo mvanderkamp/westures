@@ -49,25 +49,29 @@
     ],
     "testEnvironment": "jsdom",
     "testPathIgnorePatterns": [
-        "/node_modules/",
-        "/dist/"
+      "/node_modules/",
+      "/dist/"
     ],
     "coveragePathIgnorePatterns": [
-        "/node_modules/",
-        "/dist/",
-        "/test/"
+      "/node_modules/",
+      "/dist/",
+      "/test/"
     ],
-    "timers": "legacy"
+    "fakeTimers": {
+      "enableGlobally": true,
+      "legacyFakeTimers": true
+    }
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "coveralls": "^3.1.0",
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "coveralls": "^3.1.1",
     "docdash": "^2.0.1",
-    "eslint": "^7.19.0",
-    "jest": "^27.3.1",
+    "eslint": "^8.41.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "jsdoc": "^4.0.2",
-    "parcel": "^2.2.1",
-    "underscore": "^1.13.2"
+    "parcel": "^2.8.3",
+    "underscore": "^1.13.6"
   }
 }
