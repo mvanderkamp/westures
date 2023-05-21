@@ -36,6 +36,8 @@
     "build": "PARCEL_WORKER_BACKEND=process parcel build",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "docs": "jsdoc -c .jsdocrc.json",
+    "lint": "eslint src test index.js",
+    "lint:fix": "eslint --fix src test index.js",
     "test": "jest",
     "test:debug": "node inspect $(npm bin)/jest --runInBand"
   },
