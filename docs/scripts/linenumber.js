@@ -7,7 +7,6 @@
     var lines;
     var totalLines;
     var anchorHash;
-    var lineNumberHTML = '';
 
     if (source && source[0]) {
         anchorHash = document.location.hash.substring(1);
@@ -18,10 +17,6 @@
             lineNumber++;
             lineId = 'line' + lineNumber;
             lines[i].id = lineId;
-
-            lineNumberHTML = '<span class="number">' + (i + 1) + ' : </span>';
-
-            lines[i].insertAdjacentHTML('afterBegin', lineNumberHTML);
             if (lineId === anchorHash) {
                 lines[i].className += ' selected';
             }
