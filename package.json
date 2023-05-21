@@ -62,7 +62,6 @@
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
-    "arkit": "^1.0.4",
     "coveralls": "^3.1.0",
     "docdash": "^2.0.1",
     "eslint": "^7.19.0",
