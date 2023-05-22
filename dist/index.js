@@ -4,25 +4,16 @@
  * https://mvanderkamp.github.io/westures-core/index.html|westures-core}.
  *
  * @namespace westures
- */ 'use strict';
+ */ "use strict";
 var $17807945cdde5d67$exports = {};
 /**
  * The global API interface for westures-core. Exposes all classes, constants,
  * and routines used by the package. Use responsibly.
  *
  * @namespace westures-core
- */ 'use strict';
-'use strict';
-'use strict';
-'use strict';
-'use strict';
-'use strict';
-'use strict';
-'use strict';
-'use strict';
-'use strict';
-var $17807945cdde5d67$var$$de0d6a332419bf3c$exports = {
-};
+ */ "use strict";
+var $17807945cdde5d67$var$$de0d6a332419bf3c$exports = {};
+"use strict";
 let $17807945cdde5d67$var$$de0d6a332419bf3c$var$g_id = 0;
 /**
  * The Gesture class that all gestures inherit from. A custom gesture class will
@@ -49,9 +40,8 @@ let $17807945cdde5d67$var$$de0d6a332419bf3c$var$g_id = 0;
  * @param {number} [options.maxInputs=Number.MAX_VALUE] - The maximum number of
  * pointers that may be active for the gesture to be recognized. Uses <=.
  */ class $17807945cdde5d67$var$$de0d6a332419bf3c$var$Gesture {
-    constructor(type, element, handler, options = {
-    }){
-        if (typeof type !== 'string') throw new TypeError('Gestures require a string type / name');
+    constructor(type, element, handler, options = {}){
+        if (typeof type !== "string") throw new TypeError("Gestures require a string type / name");
         /**
      * The name of the gesture. (e.g. 'pan' or 'tap' or 'pinch').
      *
@@ -95,9 +85,7 @@ let $17807945cdde5d67$var$$de0d6a332419bf3c$var$g_id = 0;
         const count = state.active.length;
         const event = state.event;
         const { enableKeys: enableKeys , disableKeys: disableKeys , minInputs: minInputs , maxInputs: maxInputs  } = this.options;
-        return minInputs <= count && maxInputs >= count && (enableKeys.length === 0 || enableKeys.some((k)=>event[k]
-        )) && !disableKeys.some((k)=>event[k]
-        );
+        return minInputs <= count && maxInputs >= count && (enableKeys.length === 0 || enableKeys.some((k)=>event[k])) && !disableKeys.some((k)=>event[k]);
     }
     /**
    * Event hook for the start phase of a gesture.
@@ -183,12 +171,12 @@ $17807945cdde5d67$var$$de0d6a332419bf3c$var$Gesture.DEFAULTS = {
     maxInputs: Number.MAX_VALUE
 };
 $17807945cdde5d67$var$$de0d6a332419bf3c$exports = $17807945cdde5d67$var$$de0d6a332419bf3c$var$Gesture;
-var $17807945cdde5d67$var$$e2125e2e71e37a0c$exports = {
-};
-var $17807945cdde5d67$var$$0ca7bfe1c074e8ca$exports = {
-};
-var $17807945cdde5d67$var$$6c3676f10a43b740$exports = {
-};
+var $17807945cdde5d67$var$$e2125e2e71e37a0c$exports = {};
+"use strict";
+var $17807945cdde5d67$var$$0ca7bfe1c074e8ca$exports = {};
+"use strict";
+var $17807945cdde5d67$var$$6c3676f10a43b740$exports = {};
+"use strict";
 /**
  * The Point2D class stores and operates on 2-dimensional points, represented as
  * x and y coordinates.
@@ -229,8 +217,7 @@ var $17807945cdde5d67$var$$6c3676f10a43b740$exports = {
    *
    * @returns {number[]}
    */ anglesTo(points) {
-        return points.map((point)=>this.angleTo(point)
-        );
+        return points.map((point)=>this.angleTo(point));
     }
     /**
    * Determine the average distance from this point to the provided array of
@@ -290,8 +277,7 @@ var $17807945cdde5d67$var$$6c3676f10a43b740$exports = {
    *
    * @return {number} The total distance from this point to the provided points.
    */ totalDistanceTo(points) {
-        return points.reduce((d, p)=>d + this.distanceTo(p)
-        , 0);
+        return points.reduce((d, p)=>d + this.distanceTo(p), 0);
     }
     /**
    * Calculates the centroid of a list of points.
@@ -323,18 +309,18 @@ var $17807945cdde5d67$var$$6c3676f10a43b740$exports = {
     }
 }
 $17807945cdde5d67$var$$6c3676f10a43b740$exports = $17807945cdde5d67$var$$6c3676f10a43b740$var$Point2D;
-var $17807945cdde5d67$var$$be6f0e84320366a7$exports = {
-};
+var $17807945cdde5d67$var$$be6f0e84320366a7$exports = {};
+"use strict";
 /**
  * List of events that trigger the cancel phase.
  *
  * @memberof westures-core
  * @type {string[]}
  */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$CANCEL_EVENTS = [
-    'blur',
-    'pointercancel',
-    'touchcancel',
-    'mouseleave', 
+    "blur",
+    "pointercancel",
+    "touchcancel",
+    "mouseleave"
 ];
 /**
  * List of keyboard events that trigger a restart.
@@ -342,8 +328,8 @@ var $17807945cdde5d67$var$$be6f0e84320366a7$exports = {
  * @memberof westures-core
  * @type {string[]}
  */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$KEYBOARD_EVENTS = [
-    'keydown',
-    'keyup', 
+    "keydown",
+    "keyup"
 ];
 /**
  * List of mouse events to listen to.
@@ -351,9 +337,9 @@ var $17807945cdde5d67$var$$be6f0e84320366a7$exports = {
  * @memberof westures-core
  * @type {string[]}
  */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$MOUSE_EVENTS = [
-    'mousedown',
-    'mousemove',
-    'mouseup', 
+    "mousedown",
+    "mousemove",
+    "mouseup"
 ];
 /**
  * List of pointer events to listen to.
@@ -361,9 +347,9 @@ var $17807945cdde5d67$var$$be6f0e84320366a7$exports = {
  * @memberof westures-core
  * @type {string[]}
  */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$POINTER_EVENTS = [
-    'pointerdown',
-    'pointermove',
-    'pointerup', 
+    "pointerdown",
+    "pointermove",
+    "pointerup"
 ];
 /**
  * List of touch events to listen to.
@@ -371,9 +357,9 @@ var $17807945cdde5d67$var$$be6f0e84320366a7$exports = {
  * @memberof westures-core
  * @type {string[]}
  */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$TOUCH_EVENTS = [
-    'touchend',
-    'touchmove',
-    'touchstart', 
+    "touchend",
+    "touchmove",
+    "touchstart"
 ];
 /**
  * List of potentially state-modifying keys.
@@ -382,10 +368,10 @@ var $17807945cdde5d67$var$$be6f0e84320366a7$exports = {
  * @memberof westures-core
  * @type {string[]}
  */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$STATE_KEYS = [
-    'altKey',
-    'ctrlKey',
-    'metaKey',
-    'shiftKey', 
+    "altKey",
+    "ctrlKey",
+    "metaKey",
+    "shiftKey"
 ];
 /**
  * List of the 'key' values on KeyboardEvent objects of the potentially
@@ -394,35 +380,35 @@ var $17807945cdde5d67$var$$be6f0e84320366a7$exports = {
  * @memberof westures-core
  * @type {string[]}
  */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$STATE_KEY_STRINGS = [
-    'Alt',
-    'Control',
-    'Meta',
-    'Shift', 
+    "Alt",
+    "Control",
+    "Meta",
+    "Shift"
 ];
 /**
  * The cancel phase.
  *
  * @memberof westures-core
  * @type {string}
- */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$CANCEL = 'cancel';
+ */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$CANCEL = "cancel";
 /**
  * The end phase.
  *
  * @memberof westures-core
  * @type {string}
- */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$END = 'end';
+ */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$END = "end";
 /**
  * The move phase.
  *
  * @memberof westures-core
  * @type {string}
- */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$MOVE = 'move';
+ */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$MOVE = "move";
 /**
  * The start phase.
  *
  * @memberof westures-core
  * @type {string}
- */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$START = 'start';
+ */ const $17807945cdde5d67$var$$be6f0e84320366a7$var$START = "start";
 /**
  * The recognized phases.
  *
@@ -519,8 +505,8 @@ var $17807945cdde5d67$var$$0ca7bfe1c074e8ca$require$PHASE = $17807945cdde5d67$va
     }
 }
 $17807945cdde5d67$var$$0ca7bfe1c074e8ca$exports = $17807945cdde5d67$var$$0ca7bfe1c074e8ca$var$PointerData;
-var $17807945cdde5d67$var$$4559ecf940edc78d$exports = {
-};
+var $17807945cdde5d67$var$$4559ecf940edc78d$exports = {};
+"use strict";
 const $17807945cdde5d67$var$$4559ecf940edc78d$var$PI_2 = 2 * Math.PI;
 const $17807945cdde5d67$var$$4559ecf940edc78d$var$PI_NVE = -Math.PI;
 /**
@@ -548,7 +534,7 @@ const $17807945cdde5d67$var$$4559ecf940edc78d$var$PI_NVE = -Math.PI;
  *
  * @return {Element[]} The elements along the composed path of the event.
  */ function $17807945cdde5d67$var$$4559ecf940edc78d$var$getPropagationPath(event) {
-    if (typeof event.composedPath === 'function') return event.composedPath();
+    if (typeof event.composedPath === "function") return event.composedPath();
     const path = [];
     for(let node = event.target; node !== document; node = node.parentNode)path.push(node);
     path.push(document);
@@ -584,8 +570,7 @@ const $17807945cdde5d67$var$$4559ecf940edc78d$var$PI_NVE = -Math.PI;
  * @return {Set} Set consisting of elements in 'left' that are not in
  * 'right'.
  */ function $17807945cdde5d67$var$$4559ecf940edc78d$var$setDifference(left, right) {
-    return $17807945cdde5d67$var$$4559ecf940edc78d$var$setFilter(left, (element)=>!right.has(element)
-    );
+    return $17807945cdde5d67$var$$4559ecf940edc78d$var$setFilter(left, (element)=>!right.has(element));
 }
 $17807945cdde5d67$var$$4559ecf940edc78d$exports = {
     angularDifference: $17807945cdde5d67$var$$4559ecf940edc78d$var$angularDifference,
@@ -676,17 +661,17 @@ var $17807945cdde5d67$var$$e2125e2e71e37a0c$require$getPropagationPath = $178079
     }
 }
 $17807945cdde5d67$var$$e2125e2e71e37a0c$exports = $17807945cdde5d67$var$$e2125e2e71e37a0c$var$Input;
-var $17807945cdde5d67$var$$b66a0f22c18e3e3d$exports = {
-};
-var $17807945cdde5d67$var$$639be6fb478a6d5a$exports = {
-};
+var $17807945cdde5d67$var$$b66a0f22c18e3e3d$exports = {};
+"use strict";
+var $17807945cdde5d67$var$$639be6fb478a6d5a$exports = {};
+"use strict";
 var $17807945cdde5d67$var$$639be6fb478a6d5a$require$CANCEL = $17807945cdde5d67$var$$be6f0e84320366a7$exports.CANCEL;
 var $17807945cdde5d67$var$$639be6fb478a6d5a$require$END = $17807945cdde5d67$var$$be6f0e84320366a7$exports.END;
 var $17807945cdde5d67$var$$639be6fb478a6d5a$require$MOVE = $17807945cdde5d67$var$$be6f0e84320366a7$exports.MOVE;
 var $17807945cdde5d67$var$$639be6fb478a6d5a$require$PHASE = $17807945cdde5d67$var$$be6f0e84320366a7$exports.PHASE;
 var $17807945cdde5d67$var$$639be6fb478a6d5a$require$START = $17807945cdde5d67$var$$be6f0e84320366a7$exports.START;
 const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
-    inputs: Symbol.for('inputs')
+    inputs: Symbol.for("inputs")
 };
 /**
  * Set of helper functions for updating inputs based on type of input.
@@ -750,8 +735,7 @@ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
      * The centroid of the currently active points.
      *
      * @type {westures-core.Point2D}
-     */ this.centroid = {
-        };
+     */ this.centroid = {};
         /**
      * The latest event that the state processed.
      *
@@ -762,7 +746,7 @@ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
    * Deletes all inputs that are in the 'end' phase.
    */ clearEndedInputs() {
         this[$17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols.inputs].forEach((v, k)=>{
-            if (v.phase === 'end') this[$17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols.inputs].delete(k);
+            if (v.phase === "end") this[$17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols.inputs].delete(k);
         });
     }
     /**
@@ -770,16 +754,14 @@ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
    *
    * @return {westures-core.Input[]} Inputs in the given phase.
    */ getInputsInPhase(phase) {
-        return this.inputs.filter((i)=>i.phase === phase
-        );
+        return this.inputs.filter((i)=>i.phase === phase);
     }
     /**
    * @param {string} phase - One of 'start', 'move', 'end', or 'cancel'.
    *
    * @return {westures-core.Input[]} Inputs <b>not</b> in the given phase.
    */ getInputsNotInPhase(phase) {
-        return this.inputs.filter((i)=>i.phase !== phase
-        );
+        return this.inputs.filter((i)=>i.phase !== phase);
     }
     /**
    * @return {boolean} True if there are no active inputs. False otherwise.
@@ -835,9 +817,8 @@ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
    * @param {Event} event - Event with which to update the convenience fields.
    */ updateFields(event) {
         this.inputs = Array.from(this[$17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols.inputs].values());
-        this.active = this.getInputsNotInPhase('end');
-        this.activePoints = this.active.map((i)=>i.current.point
-        );
+        this.active = this.getInputsNotInPhase("end");
+        this.activePoints = this.active.map((i)=>i.current.point);
         this.centroid = $17807945cdde5d67$var$$6c3676f10a43b740$exports.centroid(this.activePoints);
         this.event = event;
     }
@@ -874,8 +855,7 @@ var $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter = $17807945cdde5d6
  * @param {string} [options.touchAction='none'] - Value to set the CSS
  * 'touch-action' property to on elements added to the region.
  */ class $17807945cdde5d67$var$$b66a0f22c18e3e3d$var$Region {
-    constructor(element = window, options = {
-    }){
+    constructor(element = window, options = {}){
         options = {
             ...$17807945cdde5d67$var$$b66a0f22c18e3e3d$var$Region.DEFAULTS,
             ...options
@@ -1085,29 +1065,27 @@ var $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter = $17807945cdde5d6
    *
    * @return {westures-core.Gesture[]} Gestures to which the element is bound.
    */ getGesturesByElement(element) {
-        return $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter(this.gestures, (gesture)=>gesture.element === element
-        );
+        return $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter(this.gestures, (gesture)=>gesture.element === element);
     }
     /**
    * Remove all gestures bound to the given element.
    *
    * @param {Element} element - The element to unbind.
    */ removeGesturesByElement(element) {
-        this.getGesturesByElement(element).forEach((g)=>this.removeGesture(g)
-        );
+        this.getGesturesByElement(element).forEach((g)=>this.removeGesture(g));
     }
 }
 $17807945cdde5d67$var$$b66a0f22c18e3e3d$var$Region.DEFAULTS = {
     capture: false,
     preferPointer: true,
     preventDefault: true,
-    touchAction: 'none'
+    touchAction: "none"
 };
 $17807945cdde5d67$var$$b66a0f22c18e3e3d$exports = $17807945cdde5d67$var$$b66a0f22c18e3e3d$var$Region;
-var $17807945cdde5d67$var$$01c3d7b128023e4f$exports = {
-};
-const $17807945cdde5d67$var$$01c3d7b128023e4f$var$cascade = Symbol('cascade');
-const $17807945cdde5d67$var$$01c3d7b128023e4f$var$smooth = Symbol('smooth');
+var $17807945cdde5d67$var$$01c3d7b128023e4f$exports = {};
+"use strict";
+const $17807945cdde5d67$var$$01c3d7b128023e4f$var$cascade = Symbol("cascade");
+const $17807945cdde5d67$var$$01c3d7b128023e4f$var$smooth = Symbol("smooth");
 /**
  * Determines whether to apply smoothing. Smoothing is on by default but turned
  * off if either:<br>
@@ -1125,7 +1103,7 @@ const $17807945cdde5d67$var$$01c3d7b128023e4f$var$smooth = Symbol('smooth');
  * @returns {boolean} Whether to apply smoothing.
  */ function $17807945cdde5d67$var$$01c3d7b128023e4f$var$smoothingIsApplicable(isRequested) {
     if (isRequested) try {
-        return window.matchMedia('(pointer: coarse)').matches;
+        return window.matchMedia("(pointer: coarse)").matches;
     } catch (e) {
         return true;
     }
@@ -1156,8 +1134,7 @@ const $17807945cdde5d67$var$$01c3d7b128023e4f$var$smooth = Symbol('smooth');
  * the data.
  * @param {*} [options.identity=0] The identity value of this smoothable data.
  */ class $17807945cdde5d67$var$$01c3d7b128023e4f$var$Smoothable {
-    constructor(options = {
-    }){
+    constructor(options = {}){
         const final_options = {
             ...$17807945cdde5d67$var$$01c3d7b128023e4f$var$Smoothable.DEFAULTS,
             ...options
@@ -1171,8 +1148,7 @@ const $17807945cdde5d67$var$$01c3d7b128023e4f$var$smooth = Symbol('smooth');
      * @return {*} The smoothed out data.
      */ this.next = null;
         if ($17807945cdde5d67$var$$01c3d7b128023e4f$var$smoothingIsApplicable(final_options.applySmoothing)) this.next = this[$17807945cdde5d67$var$$01c3d7b128023e4f$var$smooth].bind(this);
-        else this.next = (data)=>data
-        ;
+        else this.next = (data)=>data;
         /**
      * The "identity" value of the data that will be smoothed.
      *
@@ -1238,7 +1214,7 @@ $17807945cdde5d67$exports = {
 var $edded22326d64913$exports = {};
 /*
  * Contains the Pan class.
- */ 'use strict';
+ */ "use strict";
 
 var $edded22326d64913$require$Gesture = $17807945cdde5d67$exports.Gesture;
 var $edded22326d64913$require$Point2D = $17807945cdde5d67$exports.Point2D;
@@ -1280,9 +1256,8 @@ var $edded22326d64913$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
  * @param {boolean} [options.applySmoothing=true] - Whether to apply inertial
  * smoothing for systems with coarse pointers.
  */ class $edded22326d64913$var$Pan extends $edded22326d64913$require$Gesture {
-    constructor(element, handler, options = {
-    }){
-        super('pan', element, handler, options);
+    constructor(element, handler, options = {}){
+        super("pan", element, handler, options);
         /**
      * The previous point location.
      *
@@ -1300,8 +1275,7 @@ var $edded22326d64913$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
         this.outgoing.average = (a, b)=>$edded22326d64913$require$Point2D.centroid([
                 a,
                 b
-            ])
-        ;
+            ]);
     }
     /**
    * Resets the gesture's progress by saving the current centroid of the active
@@ -1335,7 +1309,7 @@ $edded22326d64913$exports = $edded22326d64913$var$Pan;
 var $a29eb49c9650e38a$exports = {};
 /*
  * Contains the abstract Pinch class.
- */ 'use strict';
+ */ "use strict";
 
 var $a29eb49c9650e38a$require$Gesture = $17807945cdde5d67$exports.Gesture;
 var $a29eb49c9650e38a$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
@@ -1377,13 +1351,12 @@ var $a29eb49c9650e38a$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
  * @param {boolean} [options.applySmoothing=true] - Whether to apply inertial
  * smoothing for systems with coarse pointers.
  */ class $a29eb49c9650e38a$var$Pinch extends $a29eb49c9650e38a$require$Gesture {
-    constructor(element, handler, options = {
-    }){
+    constructor(element, handler, options = {}){
         options = {
             ...$a29eb49c9650e38a$var$Pinch.DEFAULTS,
             ...options
         };
-        super('pinch', element, handler, options);
+        super("pinch", element, handler, options);
         /**
      * The previous distance.
      *
@@ -1435,7 +1408,7 @@ $a29eb49c9650e38a$exports = $a29eb49c9650e38a$var$Pinch;
 var $044241a6e313bbcb$exports = {};
 /*
  * Contains the Press class.
- */ 'use strict';
+ */ "use strict";
 
 var $044241a6e313bbcb$require$Gesture = $17807945cdde5d67$exports.Gesture;
 var $044241a6e313bbcb$require$Point2D = $17807945cdde5d67$exports.Point2D;
@@ -1483,9 +1456,8 @@ var $044241a6e313bbcb$require$MOVE = $17807945cdde5d67$exports.MOVE;
  * @param {number} [options.tolerance=10] - The tolerance in pixels a user can
  * move and still allow the gesture to emit.
  */ class $044241a6e313bbcb$var$Press extends $044241a6e313bbcb$require$Gesture {
-    constructor(element, handler, options = {
-    }){
-        super('press', element, handler, {
+    constructor(element, handler, options = {}){
+        super("press", element, handler, {
             ...$044241a6e313bbcb$var$Press.DEFAULTS,
             ...options
         });
@@ -1494,11 +1466,9 @@ var $044241a6e313bbcb$require$MOVE = $17807945cdde5d67$exports.MOVE;
         const initial = state.centroid;
         const originalInputs = Array.from(state.active);
         setTimeout(()=>{
-            const inputs = state.active.filter((i)=>originalInputs.includes(i)
-            );
+            const inputs = state.active.filter((i)=>originalInputs.includes(i));
             if (inputs.length === originalInputs.length) {
-                const centroid = $044241a6e313bbcb$require$Point2D.centroid(inputs.map((i)=>i.current.point
-                ));
+                const centroid = $044241a6e313bbcb$require$Point2D.centroid(inputs.map((i)=>i.current.point));
                 const distance = initial.distanceTo(centroid);
                 if (distance <= this.options.tolerance) this.recognize($044241a6e313bbcb$require$MOVE, state, {
                     centroid: centroid,
@@ -1519,13 +1489,13 @@ $044241a6e313bbcb$exports = $044241a6e313bbcb$var$Press;
 var $b6747a8030ff7e4d$exports = {};
 /*
  * Contains the abstract Pull class.
- */ 'use strict';
+ */ "use strict";
 
 var $b6747a8030ff7e4d$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
 var $5618dc3399c82d06$exports = {};
 /*
  * Contains the Rotate class.
- */ 'use strict';
+ */ "use strict";
 
 var $5618dc3399c82d06$require$Gesture = $17807945cdde5d67$exports.Gesture;
 var $5618dc3399c82d06$require$Point2D = $17807945cdde5d67$exports.Point2D;
@@ -1573,8 +1543,7 @@ var $5618dc3399c82d06$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
  * the gesture's element is used as the pivot. If this option is set, the
  * initial contact point with the element is used as the pivot instead.
  */ class $5618dc3399c82d06$var$Pivotable extends $5618dc3399c82d06$require$Gesture {
-    constructor(type = 'pivotable', element, handler, options = {
-    }){
+    constructor(type = "pivotable", element, handler, options = {}){
         super(type, element, handler, {
             ...$5618dc3399c82d06$var$Pivotable.DEFAULTS,
             ...options
@@ -1616,7 +1585,7 @@ var $5618dc3399c82d06$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
    * @abstract
    * @param {State} state - the current input state.
    */ updatePrevious() {
-        throw 'Gestures which extend Pivotable must implement updatePrevious()';
+        throw "Gestures which extend Pivotable must implement updatePrevious()";
     }
     /**
    * Restart the given progress object using the given input object.
@@ -1695,9 +1664,8 @@ $5618dc3399c82d06$exports = $5618dc3399c82d06$var$Pivotable;
  * the gesture's element is used as the pivot. If this option is set, the
  * initial contact point with the element is used as the pivot instead.
  */ class $b6747a8030ff7e4d$var$Pull extends $5618dc3399c82d06$exports {
-    constructor(element, handler, options = {
-    }){
-        super('pull', element, handler, options);
+    constructor(element, handler, options = {}){
+        super("pull", element, handler, options);
         /*
      * The outgoing data, with optional inertial smoothing.
      *
@@ -1735,7 +1703,7 @@ $b6747a8030ff7e4d$exports = $b6747a8030ff7e4d$var$Pull;
 var $2779699df4dafe8f$exports = {};
 /*
  * Contains the Rotate class.
- */ 'use strict';
+ */ "use strict";
 
 var $2779699df4dafe8f$require$angularDifference = $17807945cdde5d67$exports.angularDifference;
 var $2779699df4dafe8f$require$Gesture = $17807945cdde5d67$exports.Gesture;
@@ -1776,13 +1744,12 @@ var $2779699df4dafe8f$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
  * @param {boolean} [options.applySmoothing=true] - Whether to apply inertial
  * smoothing for systems with coarse pointers.
  */ class $2779699df4dafe8f$var$Rotate extends $2779699df4dafe8f$require$Gesture {
-    constructor(element, handler, options = {
-    }){
+    constructor(element, handler, options = {}){
         options = {
             ...$2779699df4dafe8f$var$Rotate.DEFAULTS,
             ...options
         };
-        super('rotate', element, handler, options);
+        super("rotate", element, handler, options);
         /**
      * Track the previous angles for each input.
      *
@@ -1833,7 +1800,7 @@ $2779699df4dafe8f$exports = $2779699df4dafe8f$var$Rotate;
 var $29f6d3783b0fe128$exports = {};
 /*
  * Contains the Swipe class.
- */ 'use strict';
+ */ "use strict";
 
 var $29f6d3783b0fe128$require$Gesture = $17807945cdde5d67$exports.Gesture;
 const $29f6d3783b0fe128$var$PROGRESS_STACK_SIZE = 7;
@@ -1876,9 +1843,8 @@ const $29f6d3783b0fe128$var$MS_THRESHOLD = 300;
  * @param {number} [options.maxInputs=Number.MAX_VALUE] - The maximum number of
  * pointers that may be active for the gesture to be recognized. Uses <=.
  */ class $29f6d3783b0fe128$var$Swipe extends $29f6d3783b0fe128$require$Gesture {
-    constructor(element, handler, options = {
-    }){
-        super('swipe', element, handler, options);
+    constructor(element, handler, options = {}){
+        super("swipe", element, handler, options);
         /**
      * Moves list.
      *
@@ -2014,7 +1980,7 @@ $29f6d3783b0fe128$exports = $29f6d3783b0fe128$var$Swipe;
 var $5bf1e923ca9fec67$exports = {};
 /*
  * Contains the Rotate class.
- */ 'use strict';
+ */ "use strict";
 
 var $5bf1e923ca9fec67$require$angularDifference = $17807945cdde5d67$exports.angularDifference;
 var $5bf1e923ca9fec67$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
@@ -2062,9 +2028,8 @@ var $5bf1e923ca9fec67$require$Smoothable = $17807945cdde5d67$exports.Smoothable;
  * the gesture's element is used as the pivot. If this option is set, the
  * initial contact point with the element is used as the pivot instead.
  */ class $5bf1e923ca9fec67$var$Swivel extends $5618dc3399c82d06$exports {
-    constructor(element, handler, options = {
-    }){
-        super('swivel', element, handler, options);
+    constructor(element, handler, options = {}){
+        super("swivel", element, handler, options);
         /*
      * The outgoing data, with optional inertial smoothing.
      *
@@ -2097,7 +2062,7 @@ $5bf1e923ca9fec67$exports = $5bf1e923ca9fec67$var$Swivel;
 var $2f0219f585763ab0$exports = {};
 /*
  * Contains the Tap class.
- */ 'use strict';
+ */ "use strict";
 
 var $2f0219f585763ab0$require$Gesture = $17807945cdde5d67$exports.Gesture;
 var $2f0219f585763ab0$require$Point2D = $17807945cdde5d67$exports.Point2D;
@@ -2145,9 +2110,8 @@ var $2f0219f585763ab0$require$Point2D = $17807945cdde5d67$exports.Point2D;
  * @param {number} [options.tolerance=10] - The tolerance in pixels an input can
  * move before it will no longer be considered part of a tap.
  */ class $2f0219f585763ab0$var$Tap extends $2f0219f585763ab0$require$Gesture {
-    constructor(element, handler, options = {
-    }){
-        super('tap', element, handler, {
+    constructor(element, handler, options = {}){
+        super("tap", element, handler, {
             ...$2f0219f585763ab0$var$Tap.DEFAULTS,
             ...options
         });
@@ -2161,16 +2125,14 @@ var $2f0219f585763ab0$require$Point2D = $17807945cdde5d67$exports.Point2D;
         const now = Date.now();
         const { minDelay: minDelay , maxDelay: maxDelay , maxRetain: maxRetain , numTaps: numTaps , tolerance: tolerance  } = this.options;
         // Save the recently ended inputs as taps.
-        this.taps = this.taps.concat(state.getInputsInPhase('end')).filter((input)=>{
+        this.taps = this.taps.concat(state.getInputsInPhase("end")).filter((input)=>{
             const elapsed = input.elapsedTime;
             const tdiff = now - input.current.time;
             return elapsed <= maxDelay && elapsed >= minDelay && tdiff <= maxRetain;
         });
         // Validate the list of taps.
-        if (this.taps.length !== numTaps || this.taps.some((i)=>i.totalDistance() > tolerance
-        )) return null;
-        const centroid = $2f0219f585763ab0$require$Point2D.centroid(this.taps.map((i)=>i.current.point
-        ));
+        if (this.taps.length !== numTaps || this.taps.some((i)=>i.totalDistance() > tolerance)) return null;
+        const centroid = $2f0219f585763ab0$require$Point2D.centroid(this.taps.map((i)=>i.current.point));
         this.taps = []; // Critical! Used taps need to be cleared!
         return {
             centroid: centroid,
@@ -2191,7 +2153,7 @@ $2f0219f585763ab0$exports = $2f0219f585763ab0$var$Tap;
 var $13a50dd07826f9eb$exports = {};
 /*
  * Contains the Track class.
- */ 'use strict';
+ */ "use strict";
 
 var $13a50dd07826f9eb$require$Gesture = $17807945cdde5d67$exports.Gesture;
 /**
@@ -2231,9 +2193,8 @@ var $13a50dd07826f9eb$require$Gesture = $17807945cdde5d67$exports.Gesture;
  * @param {string[]} [options.phases=[]] Phases to recognize. Entries can be any
  * or all of 'start', 'move', 'end', and 'cancel'.
  */ class $13a50dd07826f9eb$var$Track extends $13a50dd07826f9eb$require$Gesture {
-    constructor(element, handler, options = {
-    }){
-        super('track', element, handler, {
+    constructor(element, handler, options = {}){
+        super("track", element, handler, {
             ...$13a50dd07826f9eb$var$Track.DEFAULTS,
             ...options
         });
@@ -2252,16 +2213,16 @@ var $13a50dd07826f9eb$require$Gesture = $17807945cdde5d67$exports.Gesture;
         return this.options.phases.includes(phase);
     }
     start(state) {
-        return this.tracks('start') ? this.data(state) : null;
+        return this.tracks("start") ? this.data(state) : null;
     }
     move(state) {
-        return this.tracks('move') ? this.data(state) : null;
+        return this.tracks("move") ? this.data(state) : null;
     }
     end(state) {
-        return this.tracks('end') ? this.data(state) : null;
+        return this.tracks("end") ? this.data(state) : null;
     }
     cancel(state) {
-        return this.tracks('cancel') ? this.data(state) : null;
+        return this.tracks("cancel") ? this.data(state) : null;
     }
 }
 $13a50dd07826f9eb$var$Track.DEFAULTS = Object.freeze({
@@ -2296,8 +2257,6 @@ module.exports = {
  * @property {Event} event - The input event which caused the gesture to be
  * recognized.
  * @property {string} phase - 'start', 'move', 'end', or 'cancel'.
- * @property {number} radius - The distance of the furthest input to the
- * centroid.
  * @property {string} type - The name of the gesture as specified by its
  * designer.
  * @property {Element} target - The bound target of the gesture.
