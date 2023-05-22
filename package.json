@@ -33,7 +33,8 @@
   "homepage": "https://mvanderkamp.github.io/westures/",
   "license": "MIT",
   "scripts": {
-    "build": "PARCEL_WORKER_BACKEND=process parcel build",
+    "build": "parcel build",
+    "build:debug": "parcel build --no-optimize",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "docs": "jsdoc -c .jsdocrc.json",
     "lint": "eslint src test index.js",
