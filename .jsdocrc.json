@@ -22,7 +22,10 @@
     ],
     "includePattern": ".js$",
     "exclude": [
-      "core/dist"
+      "core/dist",
+      "core/docs",
+      "core/node_modules",
+      "core/test"
     ]
   },
   "sourceType": "module",
