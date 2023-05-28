@@ -79,7 +79,7 @@ input events.</div>
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Region"><span class="type-signature"></span>new Region<span class="signature">(element, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Region"><span class="type-signature"></span>new Region<span class="signature">(element<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -92,7 +92,7 @@ input events.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line43">line 43</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line54">line 54</a>
     </li></ul></dd>
     
 
@@ -184,6 +184,8 @@ input events.</div>
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
 
@@ -194,13 +196,14 @@ input events.</div>
             
                 <td class="default">
                 
-                    <code>window</code>
+                    <code>null</code>
                 
                 </td>
             
 
             <td class="description last">The element which should listen to input
-events.</td>
+events. If not provided, will be set to the window unless operating in
+"headless" mode.</td>
         </tr>
 
     
@@ -430,6 +433,55 @@ ignored. Here there by dragons if set to false.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>headless</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last">Set to true to turn on "headless"
+mode. This mode is intended for use outside of a browser environment. It does
+not listen to window events, so instead you will have to send events directly
+into the region. Pointer down/move/up events should be sent to
+Region.arbitrate(event), cancel events should be sent to
+Region.cancel(event), and keyboard events should be sent to
+Region.handleKeyboardEvent(event). You do not need to supply an element to
+the Region constructor in this mode, but you will still need to attach
+elements to Gestures, and the events you pass in should specify event.target
+appropriately, in order to select which gestures to run.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -494,7 +546,7 @@ ignored. Here there by dragons if set to false.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line59">line 59</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -572,7 +624,7 @@ ignored. Here there by dragons if set to false.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line74">line 74</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -650,7 +702,7 @@ ignored. Here there by dragons if set to false.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line52">line 52</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line70">line 70</a>
     </li></ul></dd>
     
 
@@ -728,7 +780,7 @@ ignored. Here there by dragons if set to false.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line81">line 81</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line99">line 99</a>
     </li></ul></dd>
     
 
@@ -807,7 +859,7 @@ session.</li></ul></dd>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line67">line 67</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line85">line 85</a>
     </li></ul></dd>
     
 
@@ -886,7 +938,7 @@ session.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line88">line 88</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line106">line 106</a>
     </li></ul></dd>
     
 
@@ -974,7 +1026,7 @@ session.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line280">line 280</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line307">line 307</a>
     </li></ul></dd>
     
 
@@ -1109,7 +1161,7 @@ session.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line303">line 303</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line332">line 332</a>
     </li></ul></dd>
     
 
@@ -1267,7 +1319,7 @@ session.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line290">line 290</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line319">line 319</a>
     </li></ul></dd>
     
 
@@ -1402,7 +1454,7 @@ session.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line312">line 312</a>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line341">line 341</a>
     </li></ul></dd>
     
 
@@ -1536,7 +1588,7 @@ session.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sun May 21 2023 15:29:27 GMT-0700 (Pacific Daylight Saving Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sun May 28 2023 13:56:44 GMT-0700 (Pacific Daylight Saving Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
