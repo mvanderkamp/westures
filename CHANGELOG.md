@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+
+- Switch to docdash for documentation.
+- Update westures-core to 1.3.0. This introces a "headless" mode which allows westures to be run from a server.
+
 ## 1.0.0
 
 - Official first release! The engine is no longer considered to be in beta.
