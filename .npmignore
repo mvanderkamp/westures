@@ -24,6 +24,14 @@ arkit.*
 core/dist
 core/*.yml
 core/package-lock.json
+core/CHANGELOG.md
+core/README.md
+
+# build and development artifacts
 .parcel-cache/
 .travis.yml
 .coveralls.yml
+.github
+
+# Shouldn't have to exclude this, but here we are
+node_modules
