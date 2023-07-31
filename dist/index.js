@@ -84,7 +84,7 @@ let $17807945cdde5d67$var$$de0d6a332419bf3c$var$g_id = 0;
    */ isEnabled(state) {
         const count = state.active.length;
         const event = state.event;
-        const { enableKeys: enableKeys , disableKeys: disableKeys , minInputs: minInputs , maxInputs: maxInputs  } = this.options;
+        const { enableKeys: enableKeys, disableKeys: disableKeys, minInputs: minInputs, maxInputs: maxInputs } = this.options;
         return minInputs <= count && maxInputs >= count && (enableKeys.length === 0 || enableKeys.some((k)=>event[k])) && !disableKeys.some((k)=>event[k]);
     }
     /**
@@ -479,7 +479,7 @@ var $17807945cdde5d67$var$$0ca7bfe1c074e8ca$require$PHASE = $17807945cdde5d67$va
  * @param {number} identifier - The index of touch if applicable
  */ class $17807945cdde5d67$var$$0ca7bfe1c074e8ca$var$PointerData {
     constructor(event, identifier){
-        const { clientX: clientX , clientY: clientY  } = $17807945cdde5d67$var$$0ca7bfe1c074e8ca$var$getEventObject(event, identifier);
+        const { clientX: clientX, clientY: clientY } = $17807945cdde5d67$var$$0ca7bfe1c074e8ca$var$getEventObject(event, identifier);
         /**
      * The original event object.
      *
@@ -590,14 +590,17 @@ var $17807945cdde5d67$var$$e2125e2e71e37a0c$require$getPropagationPath = $178079
  * @param {number} identifier - The identifier for this input, so that it can
  * be located in subsequent Event objects.
  */ class $17807945cdde5d67$var$$e2125e2e71e37a0c$var$Input {
-    constructor(event, identifier){
+    constructor(event, identifier, headless = false){
         const currentData = new $17807945cdde5d67$var$$0ca7bfe1c074e8ca$exports(event, identifier);
         /**
      * The set of elements along the original event's propagation path at the
      * time it was dispatched.
      *
      * @type {WeakSet.<Element>}
-     */ this.initialElements = new WeakSet($17807945cdde5d67$var$$e2125e2e71e37a0c$require$getPropagationPath(event));
+     */ if (headless) this.initialElements = new WeakSet([
+            event.target
+        ]);
+        else this.initialElements = new WeakSet($17807945cdde5d67$var$$e2125e2e71e37a0c$require$getPropagationPath(event));
         /**
      * Holds the initial data from the mousedown / touchstart / pointerdown that
      * began this input.
@@ -670,28 +673,11 @@ var $17807945cdde5d67$var$$639be6fb478a6d5a$require$END = $17807945cdde5d67$var$
 var $17807945cdde5d67$var$$639be6fb478a6d5a$require$MOVE = $17807945cdde5d67$var$$be6f0e84320366a7$exports.MOVE;
 var $17807945cdde5d67$var$$639be6fb478a6d5a$require$PHASE = $17807945cdde5d67$var$$be6f0e84320366a7$exports.PHASE;
 var $17807945cdde5d67$var$$639be6fb478a6d5a$require$START = $17807945cdde5d67$var$$be6f0e84320366a7$exports.START;
+var $17807945cdde5d67$var$$639be6fb478a6d5a$require$MOUSE_EVENTS = $17807945cdde5d67$var$$be6f0e84320366a7$exports.MOUSE_EVENTS;
+var $17807945cdde5d67$var$$639be6fb478a6d5a$require$POINTER_EVENTS = $17807945cdde5d67$var$$be6f0e84320366a7$exports.POINTER_EVENTS;
+var $17807945cdde5d67$var$$639be6fb478a6d5a$require$TOUCH_EVENTS = $17807945cdde5d67$var$$be6f0e84320366a7$exports.TOUCH_EVENTS;
 const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
     inputs: Symbol.for("inputs")
-};
-/**
- * Set of helper functions for updating inputs based on type of input.
- * Must be called with a bound 'this', via bind(), or call(), or apply().
- *
- * @private
- * @inner
- * @memberof westure-core.State
- */ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$update_fns = {
-    TouchEvent: function TouchEvent(event) {
-        Array.from(event.changedTouches).forEach((touch)=>{
-            this.updateInput(event, touch.identifier);
-        });
-    },
-    PointerEvent: function PointerEvent(event) {
-        this.updateInput(event, event.pointerId);
-    },
-    MouseEvent: function MouseEvent(event) {
-        if (event.button === 0) this.updateInput(event, event.button);
-    }
 };
 /**
  * Keeps track of currently active and ending input points on the interactive
@@ -700,13 +686,20 @@ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
  * @memberof westures-core
  *
  * @param {Element} element - The element underpinning the associated Region.
+ * @param {boolean} [headless=false] - Whether westures is operating in
+ * "headless" mode.
  */ class $17807945cdde5d67$var$$639be6fb478a6d5a$var$State {
-    constructor(element){
+    constructor(element, headless = false){
         /**
      * Keep a reference to the element for the associated region.
      *
      * @type {Element}
      */ this.element = element;
+        /**
+     * Whether westures is operating in "headless" mode.
+     *
+     * @type {boolean}
+     */ this.headless = headless;
         /**
      * Keeps track of the current Input objects.
      *
@@ -778,8 +771,8 @@ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
    */ updateInput(event, identifier) {
         switch($17807945cdde5d67$var$$639be6fb478a6d5a$require$PHASE[event.type]){
             case $17807945cdde5d67$var$$639be6fb478a6d5a$require$START:
-                this[$17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols.inputs].set(identifier, new $17807945cdde5d67$var$$e2125e2e71e37a0c$exports(event, identifier));
-                try {
+                this[$17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols.inputs].set(identifier, new $17807945cdde5d67$var$$e2125e2e71e37a0c$exports(event, identifier, this.headless));
+                if (!this.headless) try {
                     this.element.setPointerCapture(identifier);
                 } catch (e) {
                 // NOP: Optional operation failed.
@@ -788,9 +781,9 @@ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
             // All of 'end', 'move', and 'cancel' perform updates, hence the
             // following fall-throughs
             case $17807945cdde5d67$var$$639be6fb478a6d5a$require$END:
-                try {
+                if (!this.headless) try {
                     this.element.releasePointerCapture(identifier);
-                } catch (e1) {
+                } catch (e) {
                 // NOP: Optional operation failed.
                 }
             case $17807945cdde5d67$var$$639be6fb478a6d5a$require$CANCEL:
@@ -807,7 +800,13 @@ const $17807945cdde5d67$var$$639be6fb478a6d5a$var$symbols = {
    * @private
    * @param {Event} event - The event being captured.
    */ updateAllInputs(event) {
-        $17807945cdde5d67$var$$639be6fb478a6d5a$var$update_fns[event.constructor.name].call(this, event);
+        if ($17807945cdde5d67$var$$639be6fb478a6d5a$require$POINTER_EVENTS.includes(event.type)) this.updateInput(event, event.pointerId);
+        else if ($17807945cdde5d67$var$$639be6fb478a6d5a$require$MOUSE_EVENTS.includes(event.type)) {
+            if (event.button === 0) this.updateInput(event, event.button);
+        } else if ($17807945cdde5d67$var$$639be6fb478a6d5a$require$TOUCH_EVENTS.includes(event.type)) Array.from(event.changedTouches).forEach((touch)=>{
+            this.updateInput(event, touch.identifier);
+        });
+        else throw new Error(`Unexpected event type: ${event.type}`);
         this.updateFields(event);
     }
     /**
@@ -842,8 +841,9 @@ var $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter = $17807945cdde5d6
  *
  * @memberof westures-core
  *
- * @param {Element} element=window - The element which should listen to input
- * events.
+ * @param {Element} [element=null] - The element which should listen to input
+ * events. If not provided, will be set to the window unless operating in
+ * "headless" mode.
  * @param {object} [options]
  * @param {boolean} [options.capture=false] - Whether the region uses the
  * capture phase of input events. If false, uses the bubbling phase.
@@ -854,12 +854,26 @@ var $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter = $17807945cdde5d6
  * ignored. Here there by dragons if set to false.
  * @param {string} [options.touchAction='none'] - Value to set the CSS
  * 'touch-action' property to on elements added to the region.
+ * @param {boolean} [options.headless=false] - Set to true to turn on "headless"
+ * mode. This mode is intended for use outside of a browser environment. It does
+ * not listen to window events, so instead you will have to send events directly
+ * into the region. Pointer down/move/up events should be sent to
+ * Region.arbitrate(event), cancel events should be sent to
+ * Region.cancel(event), and keyboard events should be sent to
+ * Region.handleKeyboardEvent(event). You do not need to supply an element to
+ * the Region constructor in this mode, but you will still need to attach
+ * elements to Gestures, and the events you pass in should specify event.target
+ * appropriately, in order to select which gestures to run.
  */ class $17807945cdde5d67$var$$b66a0f22c18e3e3d$var$Region {
-    constructor(element = window, options = {}){
+    constructor(element = null, options = {}){
         options = {
             ...$17807945cdde5d67$var$$b66a0f22c18e3e3d$var$Region.DEFAULTS,
             ...options
         };
+        if (element === null) {
+            if (options.headless) element = null;
+            else element = window;
+        }
         /**
      * The list of relations between elements, their gestures, and the handlers.
      *
@@ -890,9 +904,8 @@ var $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter = $17807945cdde5d6
      * The internal state object for a Region.  Keeps track of inputs.
      *
      * @type {westures-core.State}
-     */ this.state = new $17807945cdde5d67$var$$639be6fb478a6d5a$exports(this.element);
-        // Begin operating immediately.
-        this.activate();
+     */ this.state = new $17807945cdde5d67$var$$639be6fb478a6d5a$exports(this.element, options.headless);
+        if (!options.headless) this.activate();
     }
     /**
    * Activates the region by adding event listeners for all appropriate input
@@ -941,14 +954,14 @@ var $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter = $17807945cdde5d6
    * @private
    * @param {Event} event - The event emitted from the window object.
    */ cancel(event) {
-        if (this.options.preventDefault) event.preventDefault();
+        if (this.options.preventDefault && typeof event.preventDefault === "function") event.preventDefault();
         this.state.inputs.forEach((input)=>{
             input.update(event);
         });
         this.activeGestures.forEach((gesture)=>{
             gesture.evaluateHook($17807945cdde5d67$var$$b66a0f22c18e3e3d$require$CANCEL, this.state);
         });
-        this.state = new $17807945cdde5d67$var$$639be6fb478a6d5a$exports(this.element);
+        this.state = new $17807945cdde5d67$var$$639be6fb478a6d5a$exports(this.element, this.options.headless);
         this.resetActiveGestures();
     }
     /**
@@ -1033,7 +1046,7 @@ var $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter = $17807945cdde5d6
         this.state.updateAllInputs(event);
         this.updateActiveGestures(event, isInitial);
         if (this.activeGestures.size > 0) {
-            if (this.options.preventDefault) event.preventDefault();
+            if (this.options.preventDefault && typeof event.preventDefault === "function") event.preventDefault();
             this.activeGestures.forEach((gesture)=>{
                 gesture.evaluateHook($17807945cdde5d67$var$$b66a0f22c18e3e3d$require$PHASE[event.type], this.state);
             });
@@ -1046,7 +1059,7 @@ var $17807945cdde5d67$var$$b66a0f22c18e3e3d$require$setFilter = $17807945cdde5d6
    *
    * @param {westures-core.Gesture} gesture - Instantiated gesture to add.
    */ addGesture(gesture) {
-        gesture.element.style.touchAction = this.options.touchAction;
+        if (!this.options.headless) gesture.element.style.touchAction = this.options.touchAction;
         this.gestures.add(gesture);
     }
     /**
@@ -1079,7 +1092,8 @@ $17807945cdde5d67$var$$b66a0f22c18e3e3d$var$Region.DEFAULTS = {
     capture: false,
     preferPointer: true,
     preventDefault: true,
-    touchAction: "none"
+    touchAction: "none",
+    headless: false
 };
 $17807945cdde5d67$var$$b66a0f22c18e3e3d$exports = $17807945cdde5d67$var$$b66a0f22c18e3e3d$var$Region;
 var $17807945cdde5d67$var$$01c3d7b128023e4f$exports = {};
@@ -1683,7 +1697,7 @@ $5618dc3399c82d06$exports = $5618dc3399c82d06$var$Pivotable;
         const pivot = this.pivot;
         const distance = pivot.distanceTo(state.centroid);
         const scale = distance / this.previous;
-        const { deadzoneRadius: deadzoneRadius  } = this.options;
+        const { deadzoneRadius: deadzoneRadius } = this.options;
         let rv = null;
         if (distance > deadzoneRadius && this.previous > deadzoneRadius) rv = {
             distance: distance,
@@ -1892,7 +1906,7 @@ const $29f6d3783b0fe128$var$MS_THRESHOLD = 300;
    */ getResult() {
         if (this.moves.length < $29f6d3783b0fe128$var$PROGRESS_STACK_SIZE) return this.saved;
         const vlim = $29f6d3783b0fe128$var$PROGRESS_STACK_SIZE - 1;
-        const { point: point , time: time  } = this.moves[vlim];
+        const { point: point, time: time } = this.moves[vlim];
         const velocity = $29f6d3783b0fe128$var$Swipe.calc_velocity(this.moves, vlim);
         const direction = $29f6d3783b0fe128$var$Swipe.calc_angle(this.moves, vlim);
         const centroid = point;
@@ -2123,7 +2137,7 @@ var $2f0219f585763ab0$require$Point2D = $17807945cdde5d67$exports.Point2D;
     }
     end(state) {
         const now = Date.now();
-        const { minDelay: minDelay , maxDelay: maxDelay , maxRetain: maxRetain , numTaps: numTaps , tolerance: tolerance  } = this.options;
+        const { minDelay: minDelay, maxDelay: maxDelay, maxRetain: maxRetain, numTaps: numTaps, tolerance: tolerance } = this.options;
         // Save the recently ended inputs as taps.
         this.taps = this.taps.concat(state.getInputsInPhase("end")).filter((input)=>{
             const elapsed = input.elapsedTime;
@@ -2204,7 +2218,7 @@ var $13a50dd07826f9eb$require$Gesture = $17807945cdde5d67$exports.Gesture;
 
    * @param {State} state - current input state.
    * @return {ReturnTypes.TrackData}
-   */ data({ activePoints: activePoints  }) {
+   */ data({ activePoints: activePoints }) {
         return {
             active: activePoints
         };
