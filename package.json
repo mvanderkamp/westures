@@ -68,7 +68,7 @@
   "devDependencies": {
     "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.5",
-    "coveralls": "^3.1.1",
+    "coveralls-next": "^4.2.1",
     "docdash": "^2.0.1",
     "eslint": "^8.41.0",
     "jest": "^29.5.0",
