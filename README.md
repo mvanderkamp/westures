@@ -48,6 +48,7 @@ region.addGesture(pan)
 ## Table of Contents
 
 - [Overview](#overview)
+- [Installation & Import](#installation--import)
 - [Basic Usage](#basic-usage)
 - [Implementing Custom Gestures](#implementing-custom-gestures)
 - [What's Changed](#changes)
@@ -77,7 +78,57 @@ information about each gesture.
 Note that all x,y positions are obtained from the corresponding `clientX` and
 `clientY` properties of the input event.
 
-## Basic Usage
+## Installation & Import
+
+Install via npm:
+
+```bash
+npm install westures
+```
+
+The package ships three pre-built bundles and selects the right one
+automatically based on your environment:
+
+### Bundler (webpack / Rollup / Vite / esbuild)
+
+Import the ES module build for full tree-shaking support:
+
+```javascript
+import { Region, Pan } from 'westures';
+```
+
+### Browser — `<script>` tag / CDN
+
+A UMD/IIFE build is available that exposes a `window.westures` global:
+
+```html
+<script src="node_modules/westures/dist/westures.umd.js"></script>
+<script>
+  const region = new westures.Region();
+</script>
+```
+
+### Node.js — headless / server-side
+
+When you `require` or `import` westures in a Node.js process, you
+automatically get the **headless** build. In headless mode the `Region` does
+not attach DOM event listeners; instead, you feed events to it manually via
+`Region.arbitrate(event)`, `Region.cancel(event)`, and
+`Region.handleKeyboardEvent(event)`. This makes westures usable in JSDOM,
+testing frameworks, and server-side gesture processing.
+
+```javascript
+// CommonJS — headless mode is the default in Node.js
+const { Region, Pan } = require('westures');
+
+// ES module in Node.js — same headless default
+import { Region, Pan } from 'westures';
+```
+
+You can still opt out of headless mode on a per-region basis by passing
+`{ headless: false }` to the `Region` constructor.
+
+
 
 - [Declaring a Region](#declaring-a-region)
 - [Instantiating a Gesture](#instantiating-a-gesture)
