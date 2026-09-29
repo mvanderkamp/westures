@@ -22,7 +22,51 @@
     "pointer"
   ],
   "source": "index.js",
-  "main": "dist/index.js",
+  "main": "dist/westures.cjs.js",
+  "module": "dist/westures.esm.js",
+  "browser": "dist/westures.umd.js",
+  "nodeHeadless": "dist/westures.node.cjs.js",
+  "exports": {
+    ".": {
+      "node": "./dist/westures.node.cjs.js",
+      "import": "./dist/westures.esm.js",
+      "require": "./dist/westures.cjs.js",
+      "browser": "./dist/westures.umd.js"
+    }
+  },
+  "targets": {
+    "main": {
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "optimize": true,
+      "engines": {
+        "node": ">=12"
+      }
+    },
+    "module": {
+      "outputFormat": "esmodule",
+      "isLibrary": true,
+      "optimize": true
+    },
+    "browser": {
+      "outputFormat": "global",
+      "global": "westures",
+      "isLibrary": true,
+      "optimize": true,
+      "engines": {
+        "browsers": "> 0.5%, last 2 versions"
+      }
+    },
+    "nodeHeadless": {
+      "source": "index.headless.js",
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "optimize": true,
+      "engines": {
+        "node": ">=12"
+      }
+    }
+  },
   "directories": {
     "test": "test"
   },
