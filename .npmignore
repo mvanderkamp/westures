@@ -30,7 +30,6 @@ core/README.md
 # build and development artifacts
 .parcel-cache/
 .travis.yml
-.coveralls.yml
 .github
 
 # Shouldn't have to exclude this, but here we are
