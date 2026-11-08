@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.0
+
+- Add multi-format build targets (CJS, ESM, UMD) via Parcel 2, replacing the
+  single `dist/index.js` bundle.
+- Add `"module"` field (`dist/westures.esm.js`) for tree-shaking with modern
+  bundlers (webpack 5, Rollup, Vite, esbuild).
+- Add `"browser"` field (`dist/westures.umd.js`) for direct `<script>` tag
+  usage; exposes a `window.westures` global.
+- Add `"exports"` map with conditional exports so that bundlers and Node.js
+  automatically receive the correct bundle for their environment.
+- Add headless Node.js entry point (`index.headless.js`). Node.js consumers
+  receive this build automatically via the `"node"` condition in the exports
+  map; `Region` defaults to `headless: true` so no DOM is required.
+- Add `"nodeHeadless"` Parcel target that bundles `index.headless.js` into
+  `dist/westures.node.cjs.js`.
+- Document the three consumption patterns (bundler / script tag / Node.js
+  headless) in `README.md`.
+
 ## 1.1.0
 
 - Switch to docdash for documentation.
