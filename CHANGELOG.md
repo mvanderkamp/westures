@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Update `westures-core` to v1.3.1. Active gestures now cancel when a `contextmenu`
+  event occurs.
+
 ## 1.1.0
 
 - Switch to docdash for documentation.
@@ -211,4 +216,3 @@
 - Removed Region#getBindingsByInitialPos
 - Removed State#someInputWasInitiallyInside
 - Improved test coverage a bit
-
