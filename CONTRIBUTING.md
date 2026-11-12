@@ -87,3 +87,10 @@ and release tag refer to the same source.
 10. Publish the package to npm.
 11. Push the tag.
 12. Create the GitHub release from the pushed tag.
+
+Publishing the GitHub release deploys documentation for that exact tag. The
+**Deploy release documentation** workflow checks out the tag (including the
+pinned `core` submodule), regenerates `docs/`, and publishes it to `gh-pages`.
+The Pages root remains the latest release, while that release is retained at
+`/<tag>/` for example, `/v1.1.1/`. For a one-off redeployment, run the workflow
+manually and provide the release tag; do not deploy documentation from `main`.
