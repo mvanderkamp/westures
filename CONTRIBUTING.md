@@ -89,8 +89,8 @@ and release tag refer to the same source.
 12. Create the GitHub release from the pushed tag.
 
 Publishing the GitHub release deploys documentation for that exact tag. The
-**Deploy release documentation** workflow checks out the tag (including the
+**Deploy release documentation** workflow checks out that tag (including its
 pinned `core` submodule), regenerates `docs/`, and publishes it to `gh-pages`.
-The Pages root remains the latest release, while that release is retained at
-`/<tag>/` for example, `/v1.1.1/`. For a one-off redeployment, run the workflow
-manually and provide the release tag; do not deploy documentation from `main`.
+To deliberately restore documentation from an earlier release, run the
+workflow manually and provide that release tag; do not deploy documentation
+from `main`.
