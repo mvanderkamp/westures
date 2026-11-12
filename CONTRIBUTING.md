@@ -92,5 +92,5 @@ Publishing the GitHub release deploys documentation for that exact tag. The
 **Deploy release documentation** workflow checks out that tag (including its
 pinned `core` submodule), regenerates `docs/`, and publishes it to `gh-pages`.
 To deliberately restore documentation from an earlier release, run the
-workflow manually and provide that release tag; do not deploy documentation
-from `main`.
+workflow manually and provide that release tag (or omit its `v` prefix); do
+not deploy documentation from `main`.

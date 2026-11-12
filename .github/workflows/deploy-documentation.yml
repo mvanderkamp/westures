@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: Release tag to deploy or roll back to
+        description: Release tag (or version without v) to deploy or roll back to
         required: true
         type: string
 
@@ -27,8 +27,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: github.event_name == 'workflow_dispatch'
         with:
-          ref: refs/tags/${{ env.RELEASE_TAG }}
+          fetch-tags: true
+
+      - name: Resolve manual release tag
+        if: github.event_name == 'workflow_dispatch'
+        id: resolve-tag
+        run: |
+          tag="$RELEASE_TAG"
+          if ! git check-ref-format "refs/tags/$tag"; then
+            echo "::error::Invalid release tag"
+            exit 1
+          fi
+          if ! git show-ref --verify --quiet "refs/tags/$tag"; then
+            if [[ "$tag" == v* ]] || ! git show-ref --verify --quiet "refs/tags/v$tag"; then
+              echo "::error::Release tag not found"
+              exit 1
+            fi
+            tag="v$tag"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ steps.resolve-tag.outputs.tag || env.RELEASE_TAG }}
           submodules: true
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
