@@ -1,0 +1,2099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>ReturnTypes - Westures Documentation</title>
+    
+    <meta name="description" content="Reference documentation for the Westures multitouch gesture library for JavaScript" />
+    
+        <meta name="keywords" content="javascript, multitouch, gesture" />
+        <meta name="keyword" content="javascript, multitouch, gesture" />
+    
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="westures-core.Gesture.html">Gesture</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#start">start</a></li></ul></li><li><a href="westures-core.Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Input.html#totalDistance">totalDistance</a></li><li data-type='method' style='display: none;'><a href="westures-core.Input.html#update">update</a></li></ul></li><li><a href="westures-core.Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#anglesTo">anglesTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#totalDistanceTo">totalDistanceTo</a></li></ul></li><li><a href="westures-core.PointerData.html">PointerData</a></li><li><a href="westures-core.Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Region.html#addGesture">addGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#getGesturesByElement">getGesturesByElement</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesture">removeGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesturesByElement">removeGesturesByElement</a></li></ul></li><li><a href="westures-core.Smoothable.html">Smoothable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html">[@@smooth]</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#average">average</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#next">next</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#~smoothingIsApplicable">smoothingIsApplicable</a></li></ul></li><li><a href="westures-core.State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.State.html#clearEndedInputs">clearEndedInputs</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsNotInPhase">getInputsNotInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#hasNoInputs">hasNoInputs</a></li></ul></li><li><a href="westures.Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pan.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#start">start</a></li></ul></li><li><a href="westures.Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pinch.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#start">start</a></li></ul></li><li><a href="westures.Pivotable.html">Pivotable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#updatePrevious">updatePrevious</a></li></ul></li><li><a href="westures.Press.html">Press</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Press.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#start">start</a></li></ul></li><li><a href="westures.Pull.html">Pull</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pull.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#start">start</a></li></ul></li><li><a href="westures.Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Rotate.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#start">start</a></li></ul></li><li><a href="westures.Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swipe.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#getResult">getResult</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#start">start</a></li></ul></li><li><a href="westures.Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swivel.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#start">start</a></li></ul></li><li><a href="westures.Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Tap.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#start">start</a></li></ul></li><li><a href="westures.Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Track.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#data">data</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#start">start</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="ReturnTypes.html">ReturnTypes</a></li><li><a href="westures.html">westures</a></li><li><a href="westures-core.html">westures-core</a><ul class='methods'></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ReturnTypes</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+            Namespace
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+
+    
+
+    <h4 class="name" id="ReturnTypes">ReturnTypes</h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Here are the return "types" of the gestures that are included in this
+package.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id=".BaseData">BaseData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The base data that is included for all emitted gestures.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>centroid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The centroid of the input
+points.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input event which caused the gesture to be
+recognized.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phase</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">'start', 'move', 'end', or 'cancel'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The name of the gesture as specified by its
+designer.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The bound target of the gesture.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    The base data that is included for all emitted gestures.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".PanData">PanData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Pan is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Pan.js.html">src/Pan.js</a>, <a href="src_Pan.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>translation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The change vector from the
+last emit.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Pan is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".PinchData">PinchData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Pinch is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Pinch.js.html">src/Pinch.js</a>, <a href="src_Pinch.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>distance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The average distance from an active input to
+   the centroid.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The proportional change in distance since last
+emit.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Pinch is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".PressData">PressData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Press is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Press.js.html">src/Press.js</a>, <a href="src_Press.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>centroid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current centroid of the
+input points.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>initial</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The initial centroid of the input
+points.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>distance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The total movement since initial contact.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Press is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".PullData">PullData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Pull is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Pull.js.html">src/Pull.js</a>, <a href="src_Pull.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>distance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The average distance from an active input to
+the centroid.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The proportional change in distance since last
+emit.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pivot</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The pivot point.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Pull is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".RotateData">RotateData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Rotate is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Rotate.js.html">src/Rotate.js</a>, <a href="src_Rotate.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rotation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">In radians, the change in angle since last
+emit.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Rotate is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".SwipeData">SwipeData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Swipe is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Swipe.js.html">src/Swipe.js</a>, <a href="src_Swipe.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>velocity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The velocity of the swipe.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>direction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">In radians, the direction of the swipe.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>point</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The point at which the swipe ended.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>time</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The epoch time, in ms, when the swipe ended.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Swipe is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".SwivelData">SwivelData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Pivotable is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Pivotable.js.html">src/Pivotable.js</a>, <a href="src_Pivotable.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rotation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">In radians, the change in angle since last
+emit.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pivot</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The pivot point.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Pivotable is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".SwivelData">SwivelData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Swivel is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Swivel.js.html">src/Swivel.js</a>, <a href="src_Swivel.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rotation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">In radians, the change in angle since last
+emit.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pivot</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Point2D.html">westures-core.Point2D</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The pivot point.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Swivel is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".TapData">TapData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Tap is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Tap.js.html">src/Tap.js</a>, <a href="src_Tap.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">x coordinate of tap point.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">y coordinate of tap point.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Tap is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".TrackData">TrackData</h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Data returned when a Track is recognized.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_Track.js.html">src/Track.js</a>, <a href="src_Track.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        
+            <li><a href="ReturnTypes.html#.BaseData">ReturnTypes.BaseData</a></li>
+        
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>active</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="westures-core.Point2D.html">westures-core.Point2D</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Points currently in 'start' or
+   'move' phase.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    Data returned when a Track is recognized.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Nov 12 2026 05:04:50 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

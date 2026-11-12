@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>core/src/Input.js - Westures Documentation</title>
+    
+    <meta name="description" content="Reference documentation for the Westures multitouch gesture library for JavaScript" />
+    
+        <meta name="keywords" content="javascript, multitouch, gesture" />
+        <meta name="keyword" content="javascript, multitouch, gesture" />
+    
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="westures-core.Gesture.html">Gesture</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#start">start</a></li></ul></li><li><a href="westures-core.Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Input.html#totalDistance">totalDistance</a></li><li data-type='method' style='display: none;'><a href="westures-core.Input.html#update">update</a></li></ul></li><li><a href="westures-core.Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#anglesTo">anglesTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#totalDistanceTo">totalDistanceTo</a></li></ul></li><li><a href="westures-core.PointerData.html">PointerData</a></li><li><a href="westures-core.Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Region.html#addGesture">addGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#getGesturesByElement">getGesturesByElement</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesture">removeGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesturesByElement">removeGesturesByElement</a></li></ul></li><li><a href="westures-core.Smoothable.html">Smoothable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html">[@@smooth]</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#average">average</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#next">next</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#~smoothingIsApplicable">smoothingIsApplicable</a></li></ul></li><li><a href="westures-core.State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.State.html#clearEndedInputs">clearEndedInputs</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsNotInPhase">getInputsNotInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#hasNoInputs">hasNoInputs</a></li></ul></li><li><a href="westures.Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pan.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#start">start</a></li></ul></li><li><a href="westures.Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pinch.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#start">start</a></li></ul></li><li><a href="westures.Pivotable.html">Pivotable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#updatePrevious">updatePrevious</a></li></ul></li><li><a href="westures.Press.html">Press</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Press.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#start">start</a></li></ul></li><li><a href="westures.Pull.html">Pull</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pull.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#start">start</a></li></ul></li><li><a href="westures.Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Rotate.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#start">start</a></li></ul></li><li><a href="westures.Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swipe.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#getResult">getResult</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#start">start</a></li></ul></li><li><a href="westures.Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swivel.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#start">start</a></li></ul></li><li><a href="westures.Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Tap.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#start">start</a></li></ul></li><li><a href="westures.Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Track.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#data">data</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#start">start</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="ReturnTypes.html">ReturnTypes</a></li><li><a href="westures.html">westures</a></li><li><a href="westures-core.html">westures-core</a><ul class='methods'></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">core/src/Input.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+const PointerData = require('./PointerData.js');
+const { getPropagationPath } = require('./utils.js');
+
+/**
+ * Tracks a single input and contains information about the current, previous,
+ * and initial events.
+ *
+ * @memberof westures-core
+ *
+ * @param {(PointerEvent | MouseEvent | TouchEvent)} event - The input event
+ * which will initialize this Input object.
+ * @param {number} identifier - The identifier for this input, so that it can
+ * be located in subsequent Event objects.
+ */
+class Input {
+  constructor(event, identifier, headless = false) {
+    const currentData = new PointerData(event, identifier);
+
+    /**
+     * The set of elements along the original event's propagation path at the
+     * time it was dispatched.
+     *
+     * @type {WeakSet.&lt;Element>}
+     */
+    if (headless) {
+      this.initialElements = new WeakSet([event.target]);
+    } else {
+      this.initialElements = new WeakSet(getPropagationPath(event));
+    }
+
+    /**
+     * Holds the initial data from the mousedown / touchstart / pointerdown that
+     * began this input.
+     *
+     * @type {westures-core.PointerData}
+     */
+    this.initial = currentData;
+
+    /**
+     * Holds the most current pointer data for this Input.
+     *
+     * @type {westures-core.PointerData}
+     */
+    this.current = currentData;
+
+    /**
+     * Holds the previous pointer data for this Input.
+     *
+     * @type {westures-core.PointerData}
+     */
+    this.previous = currentData;
+
+    /**
+     * The identifier for the pointer / touch / mouse button associated with
+     * this input.
+     *
+     * @type {number}
+     */
+    this.identifier = identifier;
+  }
+
+  /**
+   * The phase of the input: 'start' or 'move' or 'end' or 'cancel'
+   *
+   * @type {string}
+   */
+  get phase() { return this.current.type; }
+
+  /**
+   * The timestamp of the initiating event for this input.
+   *
+   * @type {number}
+   */
+  get startTime() { return this.initial.time; }
+
+  /**
+   * The amount of time elapsed between the start of this input and its latest
+   * event.
+   *
+   * @type {number}
+   */
+  get elapsedTime() { return this.current.time - this.initial.time; }
+
+  /**
+   * @return {number} The distance between the initiating event for this input
+   *    and its current event.
+   */
+  totalDistance() {
+    return this.initial.point.distanceTo(this.current.point);
+  }
+
+  /**
+   * Saves the given raw event in PointerData form as the current data for this
+   * input, pushing the old current data into the previous slot, and tossing
+   * out the old previous data.
+   *
+   * @param {Event} event - The event object to wrap with a PointerData.
+   */
+  update(event) {
+    this.previous = this.current;
+    this.current = new PointerData(event, this.identifier);
+  }
+}
+
+module.exports = Input;
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Nov 12 2026 05:04:49 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Input - Westures Documentation</title>
+    
+    <meta name="description" content="Reference documentation for the Westures multitouch gesture library for JavaScript" />
+    
+        <meta name="keywords" content="javascript, multitouch, gesture" />
+        <meta name="keyword" content="javascript, multitouch, gesture" />
+    
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="westures-core.Gesture.html">Gesture</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#start">start</a></li></ul></li><li><a href="westures-core.Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Input.html#totalDistance">totalDistance</a></li><li data-type='method' style='display: none;'><a href="westures-core.Input.html#update">update</a></li></ul></li><li><a href="westures-core.Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#anglesTo">anglesTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#totalDistanceTo">totalDistanceTo</a></li></ul></li><li><a href="westures-core.PointerData.html">PointerData</a></li><li><a href="westures-core.Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Region.html#addGesture">addGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#getGesturesByElement">getGesturesByElement</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesture">removeGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesturesByElement">removeGesturesByElement</a></li></ul></li><li><a href="westures-core.Smoothable.html">Smoothable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html">[@@smooth]</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#average">average</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#next">next</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#~smoothingIsApplicable">smoothingIsApplicable</a></li></ul></li><li><a href="westures-core.State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.State.html#clearEndedInputs">clearEndedInputs</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsNotInPhase">getInputsNotInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#hasNoInputs">hasNoInputs</a></li></ul></li><li><a href="westures.Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pan.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#start">start</a></li></ul></li><li><a href="westures.Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pinch.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#start">start</a></li></ul></li><li><a href="westures.Pivotable.html">Pivotable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#updatePrevious">updatePrevious</a></li></ul></li><li><a href="westures.Press.html">Press</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Press.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#start">start</a></li></ul></li><li><a href="westures.Pull.html">Pull</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pull.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#start">start</a></li></ul></li><li><a href="westures.Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Rotate.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#start">start</a></li></ul></li><li><a href="westures.Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swipe.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#getResult">getResult</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#start">start</a></li></ul></li><li><a href="westures.Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swivel.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#start">start</a></li></ul></li><li><a href="westures.Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Tap.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#start">start</a></li></ul></li><li><a href="westures.Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Track.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#data">data</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#start">start</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="ReturnTypes.html">ReturnTypes</a></li><li><a href="westures.html">westures</a></li><li><a href="westures-core.html">westures-core</a><ul class='methods'></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Input</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="westures-core.html">westures-core</a>.</span>
+        
+        
+            Input
+        
+        </h2>
+        
+            <div class="class-description usertext">Tracks a single input and contains information about the current, previous,
+and initial events.</div>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Input"><span class="type-signature"></span>new Input<span class="signature">(event, identifier)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">PointerEvent</span>
+|
+
+<span class="param-type">MouseEvent</span>
+|
+
+<span class="param-type">TouchEvent</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input event
+which will initialize this Input object.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>identifier</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The identifier for this input, so that it can
+be located in subsequent Event objects.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="current"><span class="type-signature"></span>current<span class="type-signature"> :<a href="westures-core.PointerData.html">westures-core.PointerData</a></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Holds the most current pointer data for this Input.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line46">line 46</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    Holds the most current pointer data for this Input.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="westures-core.PointerData.html">westures-core.PointerData</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="elapsedTime"><span class="type-signature"></span>elapsedTime<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The amount of time elapsed between the start of this input and its latest
+event.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line84">line 84</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The amount of time elapsed between the start of this input and its latest
+event.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="identifier"><span class="type-signature"></span>identifier<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The identifier for the pointer / touch / mouse button associated with
+this input.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The identifier for the pointer / touch / mouse button associated with
+this input.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="initial"><span class="type-signature"></span>initial<span class="type-signature"> :<a href="westures-core.PointerData.html">westures-core.PointerData</a></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Holds the initial data from the mousedown / touchstart / pointerdown that
+began this input.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    Holds the initial data from the mousedown / touchstart / pointerdown that
+began this input.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="westures-core.PointerData.html">westures-core.PointerData</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="phase"><span class="type-signature"></span>phase<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The phase of the input: 'start' or 'move' or 'end' or 'cancel'</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line69">line 69</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The phase of the input: 'start' or 'move' or 'end' or 'cancel'
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="previous"><span class="type-signature"></span>previous<span class="type-signature"> :<a href="westures-core.PointerData.html">westures-core.PointerData</a></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Holds the previous pointer data for this Input.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    Holds the previous pointer data for this Input.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="westures-core.PointerData.html">westures-core.PointerData</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="startTime"><span class="type-signature"></span>startTime<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The timestamp of the initiating event for this input.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line76">line 76</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The timestamp of the initiating event for this input.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="totalDistance"><span class="type-signature"></span>totalDistance<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    The distance between the initiating event for this input
+   and its current event.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Saves the given raw event in PointerData form as the current data for this
+input, pushing the old current data into the previous slot, and tossing
+out the old previous data.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Input.js.html">core/src/Input.js</a>, <a href="core_src_Input.js.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The event object to wrap with a PointerData.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Nov 12 2026 05:04:50 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

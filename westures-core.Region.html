@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Region - Westures Documentation</title>
+    
+    <meta name="description" content="Reference documentation for the Westures multitouch gesture library for JavaScript" />
+    
+        <meta name="keywords" content="javascript, multitouch, gesture" />
+        <meta name="keyword" content="javascript, multitouch, gesture" />
+    
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="westures-core.Gesture.html">Gesture</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#start">start</a></li></ul></li><li><a href="westures-core.Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Input.html#totalDistance">totalDistance</a></li><li data-type='method' style='display: none;'><a href="westures-core.Input.html#update">update</a></li></ul></li><li><a href="westures-core.Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#anglesTo">anglesTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#totalDistanceTo">totalDistanceTo</a></li></ul></li><li><a href="westures-core.PointerData.html">PointerData</a></li><li><a href="westures-core.Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Region.html#addGesture">addGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#getGesturesByElement">getGesturesByElement</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesture">removeGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesturesByElement">removeGesturesByElement</a></li></ul></li><li><a href="westures-core.Smoothable.html">Smoothable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html">[@@smooth]</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#average">average</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#next">next</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#~smoothingIsApplicable">smoothingIsApplicable</a></li></ul></li><li><a href="westures-core.State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.State.html#clearEndedInputs">clearEndedInputs</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsNotInPhase">getInputsNotInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#hasNoInputs">hasNoInputs</a></li></ul></li><li><a href="westures.Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pan.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#start">start</a></li></ul></li><li><a href="westures.Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pinch.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#start">start</a></li></ul></li><li><a href="westures.Pivotable.html">Pivotable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#updatePrevious">updatePrevious</a></li></ul></li><li><a href="westures.Press.html">Press</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Press.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#start">start</a></li></ul></li><li><a href="westures.Pull.html">Pull</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pull.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#start">start</a></li></ul></li><li><a href="westures.Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Rotate.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#start">start</a></li></ul></li><li><a href="westures.Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swipe.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#getResult">getResult</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#start">start</a></li></ul></li><li><a href="westures.Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swivel.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#start">start</a></li></ul></li><li><a href="westures.Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Tap.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#start">start</a></li></ul></li><li><a href="westures.Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Track.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#data">data</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#start">start</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="ReturnTypes.html">ReturnTypes</a></li><li><a href="westures.html">westures</a></li><li><a href="westures-core.html">westures-core</a><ul class='methods'></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Region</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="westures-core.html">westures-core</a>.</span>
+        
+        
+            Region
+        
+        </h2>
+        
+            <div class="class-description usertext">Allows the user to specify the control region which will listen for user
+input events.</div>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Region"><span class="type-signature"></span>new Region<span class="signature">(element<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last">The element which should listen to input
+events. If not provided, will be set to the window unless operating in
+"headless" mode.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>capture</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last">Whether the region uses the
+capture phase of input events. If false, uses the bubbling phase.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>preferPointer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>true</code>
+                
+                </td>
+            
+
+            <td class="description last">If false, the region listens
+to mouse/touch events instead of pointer events.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>preventDefault</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>true</code>
+                
+                </td>
+            
+
+            <td class="description last">Whether the default
+browser functionality should be disabled. This option should most likely be
+ignored. Here there by dragons if set to false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>touchAction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'none'</code>
+                
+                </td>
+            
+
+            <td class="description last">Value to set the CSS
+'touch-action' property to on elements added to the region.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>headless</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last">Set to true to turn on "headless"
+mode. This mode is intended for use outside of a browser environment. It does
+not listen to window events, so instead you will have to send events directly
+into the region. Pointer down/move/up events should be sent to
+Region.arbitrate(event), cancel events should be sent to
+Region.cancel(event), and keyboard events should be sent to
+Region.handleKeyboardEvent(event). You do not need to supply an element to
+the Region constructor in this mode, but you will still need to attach
+elements to Gestures, and the events you pass in should specify event.target
+appropriately, in order to select which gestures to run.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="activeGestures"><span class="type-signature"></span>activeGestures<span class="type-signature"> :Set.&lt;<a href="westures-core.Gesture.html">westures-core.Gesture</a>></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The list of active gestures for the current input session.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line77">line 77</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The list of active gestures for the current input session.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Set.&lt;<a href="westures-core.Gesture.html">westures-core.Gesture</a>></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="element"><span class="type-signature"></span>element<span class="type-signature"> :Element</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The element being bound to.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line92">line 92</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The element being bound to.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Element</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="gestures"><span class="type-signature"></span>gestures<span class="type-signature"> :Set.&lt;<a href="westures-core.Gesture.html">westures-core.Gesture</a>></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The list of relations between elements, their gestures, and the handlers.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The list of relations between elements, their gestures, and the handlers.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Set.&lt;<a href="westures-core.Gesture.html">westures-core.Gesture</a>></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="options"><span class="type-signature"></span>options<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The user-supplied options for the Region.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line99">line 99</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The user-supplied options for the Region.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="potentialGestures"><span class="type-signature"></span>potentialGestures<span class="type-signature"> :Set.&lt;<a href="westures-core.Gesture.html">westures-core.Gesture</a>></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The base list of potentially active gestures for the current input
+session.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line85">line 85</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The base list of potentially active gestures for the current input
+session.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Set.&lt;<a href="westures-core.Gesture.html">westures-core.Gesture</a>></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="state"><span class="type-signature"></span>state<span class="type-signature"> :<a href="westures-core.State.html">westures-core.State</a></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>The internal state object for a Region.  Keeps track of inputs.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line106">line 106</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    The internal state object for a Region.  Keeps track of inputs.
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="westures-core.State.html">westures-core.State</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="addGesture"><span class="type-signature"></span>addGesture<span class="signature">(gesture)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Adds the given gesture to the region.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line307">line 307</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gesture</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Gesture.html">westures-core.Gesture</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Instantiated gesture to add.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getGesturesByElement"><span class="type-signature"></span>getGesturesByElement<span class="signature">(element)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="westures-core.Gesture.html">westures-core.Gesture</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Retrieves Gestures by their associated element.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line332">line 332</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The element for which to find gestures.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    Gestures to which the element is bound.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="westures-core.Gesture.html">westures-core.Gesture</a>></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeGesture"><span class="type-signature"></span>removeGesture<span class="signature">(gesture)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Removes the given gesture from the region.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line319">line 319</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gesture</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="westures-core.Gesture.html">westures-core.Gesture</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Instantiated gesture to add.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeGesturesByElement"><span class="type-signature"></span>removeGesturesByElement<span class="signature">(element)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Remove all gestures bound to the given element.</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_src_Region.js.html">core/src/Region.js</a>, <a href="core_src_Region.js.html#line341">line 341</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The element to unbind.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Nov 12 2026 05:04:50 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

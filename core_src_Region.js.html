@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>core/src/Region.js - Westures Documentation</title>
+    
+    <meta name="description" content="Reference documentation for the Westures multitouch gesture library for JavaScript" />
+    
+        <meta name="keywords" content="javascript, multitouch, gesture" />
+        <meta name="keyword" content="javascript, multitouch, gesture" />
+    
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="westures-core.Gesture.html">Gesture</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures-core.Gesture.html#start">start</a></li></ul></li><li><a href="westures-core.Input.html">Input</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Input.html#totalDistance">totalDistance</a></li><li data-type='method' style='display: none;'><a href="westures-core.Input.html#update">update</a></li></ul></li><li><a href="westures-core.Point2D.html">Point2D</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#angleTo">angleTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#anglesTo">anglesTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#averageDistanceTo">averageDistanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#distanceTo">distanceTo</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#minus">minus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#plus">plus</a></li><li data-type='method' style='display: none;'><a href="westures-core.Point2D.html#totalDistanceTo">totalDistanceTo</a></li></ul></li><li><a href="westures-core.PointerData.html">PointerData</a></li><li><a href="westures-core.Region.html">Region</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Region.html#addGesture">addGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#getGesturesByElement">getGesturesByElement</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesture">removeGesture</a></li><li data-type='method' style='display: none;'><a href="westures-core.Region.html#removeGesturesByElement">removeGesturesByElement</a></li></ul></li><li><a href="westures-core.Smoothable.html">Smoothable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html">[@@smooth]</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#average">average</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#next">next</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures-core.Smoothable.html#~smoothingIsApplicable">smoothingIsApplicable</a></li></ul></li><li><a href="westures-core.State.html">State</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures-core.State.html#clearEndedInputs">clearEndedInputs</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsInPhase">getInputsInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#getInputsNotInPhase">getInputsNotInPhase</a></li><li data-type='method' style='display: none;'><a href="westures-core.State.html#hasNoInputs">hasNoInputs</a></li></ul></li><li><a href="westures.Pan.html">Pan</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pan.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pan.html#start">start</a></li></ul></li><li><a href="westures.Pinch.html">Pinch</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pinch.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pinch.html#start">start</a></li></ul></li><li><a href="westures.Pivotable.html">Pivotable</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Pivotable.html#updatePrevious">updatePrevious</a></li></ul></li><li><a href="westures.Press.html">Press</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Press.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Press.html#start">start</a></li></ul></li><li><a href="westures.Pull.html">Pull</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Pull.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Pull.html#start">start</a></li></ul></li><li><a href="westures.Rotate.html">Rotate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Rotate.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Rotate.html#start">start</a></li></ul></li><li><a href="westures.Swipe.html">Swipe</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swipe.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#getResult">getResult</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#restart">restart</a></li><li data-type='method' style='display: none;'><a href="westures.Swipe.html#start">start</a></li></ul></li><li><a href="westures.Swivel.html">Swivel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Swivel.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Swivel.html#start">start</a></li></ul></li><li><a href="westures.Tap.html">Tap</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Tap.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Tap.html#start">start</a></li></ul></li><li><a href="westures.Track.html">Track</a><ul class='methods'><li data-type='method' style='display: none;'><a href="westures.Track.html#cancel">cancel</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#data">data</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#end">end</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#evaluateHook">evaluateHook</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#isEnabled">isEnabled</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#move">move</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#recognize">recognize</a></li><li data-type='method' style='display: none;'><a href="westures.Track.html#start">start</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="ReturnTypes.html">ReturnTypes</a></li><li><a href="westures.html">westures</a></li><li><a href="westures-core.html">westures-core</a><ul class='methods'></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">core/src/Region.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+const State = require('./State.js');
+const {
+  CANCEL_EVENTS,
+  KEYBOARD_EVENTS,
+  MOUSE_EVENTS,
+  POINTER_EVENTS,
+  TOUCH_EVENTS,
+
+  STATE_KEY_STRINGS,
+
+  PHASE,
+
+  CANCEL,
+  END,
+  START,
+} = require('./constants.js');
+const {
+  setDifference,
+  setFilter,
+} = require('./utils.js');
+
+/**
+ * Allows the user to specify the control region which will listen for user
+ * input events.
+ *
+ * @memberof westures-core
+ *
+ * @param {Element} [element=null] - The element which should listen to input
+ * events. If not provided, will be set to the window unless operating in
+ * "headless" mode.
+ * @param {object} [options]
+ * @param {boolean} [options.capture=false] - Whether the region uses the
+ * capture phase of input events. If false, uses the bubbling phase.
+ * @param {boolean} [options.preferPointer=true] - If false, the region listens
+ * to mouse/touch events instead of pointer events.
+ * @param {boolean} [options.preventDefault=true] - Whether the default
+ * browser functionality should be disabled. This option should most likely be
+ * ignored. Here there by dragons if set to false.
+ * @param {string} [options.touchAction='none'] - Value to set the CSS
+ * 'touch-action' property to on elements added to the region.
+ * @param {boolean} [options.headless=false] - Set to true to turn on "headless"
+ * mode. This mode is intended for use outside of a browser environment. It does
+ * not listen to window events, so instead you will have to send events directly
+ * into the region. Pointer down/move/up events should be sent to
+ * Region.arbitrate(event), cancel events should be sent to
+ * Region.cancel(event), and keyboard events should be sent to
+ * Region.handleKeyboardEvent(event). You do not need to supply an element to
+ * the Region constructor in this mode, but you will still need to attach
+ * elements to Gestures, and the events you pass in should specify event.target
+ * appropriately, in order to select which gestures to run.
+ */
+class Region {
+  constructor(element = null, options = {}) {
+    options = { ...Region.DEFAULTS, ...options };
+    if (element === null) {
+      if (options.headless) {
+        element = null;
+      } else {
+        element = window;
+      }
+    }
+
+    /**
+     * The list of relations between elements, their gestures, and the handlers.
+     *
+     * @type {Set.&lt;westures-core.Gesture>}
+     */
+    this.gestures = new Set();
+
+    /**
+     * The list of active gestures for the current input session.
+     *
+     * @type {Set.&lt;westures-core.Gesture>}
+     */
+    this.activeGestures = new Set();
+
+    /**
+     * The base list of potentially active gestures for the current input
+     * session.
+     *
+     * @type {Set.&lt;westures-core.Gesture>}
+     */
+    this.potentialGestures = new Set();
+
+    /**
+     * The element being bound to.
+     *
+     * @type {Element}
+     */
+    this.element = element;
+
+    /**
+     * The user-supplied options for the Region.
+     *
+     * @type {object}
+     */
+    this.options = options;
+
+    /**
+     * The internal state object for a Region.  Keeps track of inputs.
+     *
+     * @type {westures-core.State}
+     */
+    this.state = new State(this.element, options.headless);
+
+    if (!options.headless) {
+      // Begin operating immediately.
+      this.activate();
+    }
+  }
+
+  /**
+   * Activates the region by adding event listeners for all appropriate input
+   * events to the region's element.
+   *
+   * @private
+   */
+  activate() {
+    /*
+     * Listening to both mouse and touch comes with the difficulty that
+     * preventDefault() must be called to prevent both events from iterating
+     * through the system. However I have left it as an option to the end user,
+     * which defaults to calling preventDefault(), in case there's a use-case I
+     * haven't considered or am not aware of.
+     *
+     * It also may be a good idea to keep regions small in large pages.
+     *
+     * See:
+     *  https://www.html5rocks.com/en/mobile/touchandmouse/
+     *  https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
+     *  https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events
+     */
+    let eventNames = [];
+    if (this.options.preferPointer &amp;&amp; window.PointerEvent) {
+      eventNames = POINTER_EVENTS;
+    } else {
+      eventNames = MOUSE_EVENTS.concat(TOUCH_EVENTS);
+    }
+
+    // Bind detected browser events to the region element.
+    const arbitrate = this.arbitrate.bind(this);
+    eventNames.forEach(eventName => {
+      this.element.addEventListener(eventName, arbitrate, {
+        capture: this.options.capture,
+        once:    false,
+        passive: false,
+      });
+    });
+
+    const cancel = this.cancel.bind(this);
+    CANCEL_EVENTS.forEach(eventName => {
+      window.addEventListener(eventName, cancel);
+    });
+
+    const handleKeyboardEvent = this.handleKeyboardEvent.bind(this);
+    KEYBOARD_EVENTS.forEach(eventName => {
+      window.addEventListener(eventName, handleKeyboardEvent);
+    });
+  }
+
+  /**
+   * Handles a cancel event. Resets the state and the active / potential gesture
+   * lists.
+   *
+   * @private
+   * @param {Event} event - The event emitted from the window object.
+   */
+  cancel(event) {
+    if (
+      this.options.preventDefault &amp;&amp; typeof event.preventDefault === 'function'
+    ) {
+      event.preventDefault();
+    }
+    this.state.inputs.forEach(input => {
+      input.update(event);
+    });
+    this.activeGestures.forEach(gesture => {
+      gesture.evaluateHook(CANCEL, this.state);
+    });
+    this.state = new State(this.element, this.options.headless);
+    this.resetActiveGestures();
+  }
+
+  /**
+   * Handles a keyboard event, triggering a restart of any gestures that need
+   * it.
+   *
+   * @private
+   * @param {KeyboardEvent} event - The keyboard event.
+   */
+  handleKeyboardEvent(event) {
+    if (STATE_KEY_STRINGS.indexOf(event.key) >= 0) {
+      this.state.event = event;
+      const oldActiveGestures = this.activeGestures;
+      this.setActiveGestures();
+
+      setDifference(oldActiveGestures, this.activeGestures).forEach(gesture => {
+        gesture.evaluateHook(END, this.state);
+      });
+      setDifference(this.activeGestures, oldActiveGestures).forEach(gesture => {
+        gesture.evaluateHook(START, this.state);
+      });
+    }
+  }
+
+  /**
+   * Resets the active gestures.
+   *
+   * @private
+   */
+  resetActiveGestures() {
+    this.potentialGestures = new Set();
+    this.activeGestures = new Set();
+  }
+
+  /**
+   * Selects active gestures from the list of potentially active gestures.
+   *
+   * @private
+   */
+  setActiveGestures() {
+    this.activeGestures = setFilter(this.potentialGestures, gesture => {
+      return gesture.isEnabled(this.state);
+    });
+  }
+
+  /**
+   * Selects the potentially active gestures.
+   *
+   * @private
+   */
+  setPotentialGestures() {
+    const input = this.state.inputs[0];
+    this.potentialGestures = setFilter(this.gestures, gesture => {
+      return input.initialElements.has(gesture.element);
+    });
+  }
+
+  /**
+   * Selects the gestures that are active for the current input sequence.
+   *
+   * @private
+   * @param {Event} event - The event emitted from the window object.
+   * @param {boolean} isInitial - Whether this is an initial contact.
+   */
+  updateActiveGestures(event, isInitial) {
+    if (PHASE[event.type] === START) {
+      if (isInitial) {
+        this.setPotentialGestures();
+      }
+      this.setActiveGestures();
+    }
+  }
+
+  /**
+   * Evaluates whether the current input session has completed.
+   *
+   * @private
+   * @param {Event} event - The event emitted from the window object.
+   */
+  pruneActiveGestures(event) {
+    if (PHASE[event.type] === END) {
+      if (this.state.hasNoInputs()) {
+        this.resetActiveGestures();
+      } else {
+        this.setActiveGestures();
+      }
+    }
+  }
+
+  /**
+   * All input events flow through this function. It makes sure that the input
+   * state is maintained, determines which gestures to analyze based on the
+   * initial position of the inputs, calls the relevant gesture hooks, and
+   * dispatches gesture data.
+   *
+   * @private
+   * @param {Event} event - The event emitted from the window object.
+   */
+  arbitrate(event) {
+    const isInitial = this.state.hasNoInputs();
+    this.state.updateAllInputs(event);
+    this.updateActiveGestures(event, isInitial);
+
+    if (this.activeGestures.size > 0) {
+      if (
+        this.options.preventDefault &amp;&amp;
+        typeof event.preventDefault === 'function'
+      ) event.preventDefault();
+
+      this.activeGestures.forEach(gesture => {
+        gesture.evaluateHook(PHASE[event.type], this.state);
+      });
+    }
+
+    this.state.clearEndedInputs();
+    this.pruneActiveGestures(event);
+  }
+
+  /**
+   * Adds the given gesture to the region.
+   *
+   * @param {westures-core.Gesture} gesture - Instantiated gesture to add.
+   */
+  addGesture(gesture) {
+    if (!this.options.headless) {
+      gesture.element.style.touchAction = this.options.touchAction;
+    }
+    this.gestures.add(gesture);
+  }
+
+  /**
+   * Removes the given gesture from the region.
+   *
+   * @param {westures-core.Gesture} gesture - Instantiated gesture to add.
+   */
+  removeGesture(gesture) {
+    this.gestures.delete(gesture);
+    this.potentialGestures.delete(gesture);
+    this.activeGestures.delete(gesture);
+  }
+
+  /**
+   * Retrieves Gestures by their associated element.
+   *
+   * @param {Element} element - The element for which to find gestures.
+   *
+   * @return {westures-core.Gesture[]} Gestures to which the element is bound.
+   */
+  getGesturesByElement(element) {
+    return setFilter(this.gestures, gesture => gesture.element === element);
+  }
+
+  /**
+   * Remove all gestures bound to the given element.
+   *
+   * @param {Element} element - The element to unbind.
+   */
+  removeGesturesByElement(element) {
+    this.getGesturesByElement(element).forEach(g => this.removeGesture(g));
+  }
+}
+
+Region.DEFAULTS = {
+  capture:        false,
+  preferPointer:  true,
+  preventDefault: true,
+  touchAction:    'none',
+  headless:       false,
+};
+
+module.exports = Region;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Nov 12 2026 05:04:49 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>
