@@ -259,6 +259,7 @@ If you find any issues, please let me know!
 - [npm](https://www.npmjs.com/package/westures)
 - [github](https://github.com/mvanderkamp/westures)
 - [documentation](https://mvanderkamp.github.io/westures/)
+- [contributing guide](./CONTRIBUTING.md)
 
 ### westures-core
 

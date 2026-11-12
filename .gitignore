@@ -3,6 +3,7 @@ node_modules/
 ._*
 bower_components/
 .cache/
+.gutctags
 .idea/
 playground/
 yarn-error.log
