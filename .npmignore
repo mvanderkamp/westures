@@ -17,7 +17,7 @@ Makefile
 arkit.*
 .*.json
 .cache
-.ignore
+.gutctags
 .gitmodules
 
 # unneeded core-related files
